@@ -2,6 +2,8 @@
 
 import numpy as np
 import pandas as pd
+from scipy.interpolate import interp1d
+from numpy.polynomial import Polynomial
 
 from itertools import combinations
 
