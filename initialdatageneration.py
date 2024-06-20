@@ -1,77 +1,119 @@
+
 import numpy as np 
 import pandas as pd
 from mp_api.client import MPRester
 from emmet.core.xas import Edge, XASDoc, Type
 from pymatgen.analysis.local_env import CrystalNN
 from spectrascope.features import spectral_features
+import json
+from tqdm import tqdm 
+import time
+from multiprocessing import Process, Queue
+from spectrascope.utils import oxidation_state_worker 
 
 
 # TODO: Figure out how to pull xas and structure information with the same query, right now not doing that 
-# TODO: Add a progress bar to the function
-# TODO: figure out how to cancel calculation if it is taking too long
 # TODO: MP has multiple spectrum per structure, and is returning a linear combination here, need to think about
 
-mykey = 'HrWPbvhi2NRaOjrofHmVEOcCi8ElPurB'
 
-def get_data(mykey, elements=['Ti', 'Ni'], subset=-1, cnalgo=CrystalNN()): 
+def get_data(mykey, fn, elements=['Ti', 'Ni'], subset=-1, cnalgo=CrystalNN(), chunks=50, add_oxidation_state=False): 
     """
-    Retrieves XAS (X-ray Absorption Spectroscopy) documents for specified
-    elements using the Materials Project API.
-    It creates a dataframe consisting of the XAS docs information, the structure (pymatgen.core.structure.Structure),
-    the oxidation number calculated by pymatgen.core.structure.Structure.add_oxidation_state_by_guess(), and the 
-    coordination number calculated by pymatgen.analysis.local_env.CrystalNN algorithm, taking the guessed
+    Retrieves XAS (X-ray Absorption Spectroscopy) documents for specified elements using the Materials Project API.
+    It creates a dictionary consisting of the XAS docs information, the structure (pymatgen.core.structure.Structure.as_dict()) the
+    coordination number calculated by cnalgo, a pymatgen.analysis.local_env.CrystalNN algorithm, taking the guessed
     oxidation state into account 
+    
+    This dictionary is saved to a json file every 'chunks' number of entries.
     
     Args: 
         mykey (str): Materials Project API key (https://materialsproject.org/open)
+        fn (str): filename to save data to; will be written over every 'chunks' number of entries
         elements (list): elements to get spectra of 
         subset (int): number of documents to retrieve (default=-1, all documents)
         cnalgo (pymatgen.analysis.local_env): algorithm to calculate coordination number (default=CrystalNN(),good option:VoronoiNN(tol=0.5))
+        chunks (int): number of entries to save to file at a time (default=50)
+        add_oxidation_state (bool): whether to add oxidation state to the dictionary (default=False); necessary if CrystalNN() cn algo is used
     Returns: 
-        data (pd.DataFrame) : index: materials project id 
+        data (dict) : dictionary of information 
     """
     
-    a  = MPRester(mykey)
-
-    with MPRester(mykey,use_document_model=False, monty_decode=False) as mpr: 
-        data = {}
+    a  = MPRester(mykey,  mute_progress_bars=True)
+    counter = 0
+    
+    data = {}
+    
+    if cnalgo == CrystalNN():
+        assert(add_oxidation_state == True), 'Cannot use CrystalNN algorithm with add_oxidation_state=False, please use a different algorithm or set add_oxidation_state=True'
+        
+    with MPRester(mykey,use_document_model=False, monty_decode=False, mute_progress_bars=False) as mpr:
+        
         for element in elements: 
             docs = mpr.materials.xas.search(edge=Edge.K, 
                             spectrum_type=Type.XANES, 
                             absorbing_element=element,
                             fields=["material_id", "xas_id", "spectrum", "formula_pretty"])
-            for doc in (docs[:subset]): 
+            
+            for doc in tqdm(docs[:subset]): 
                 mpid = doc['material_id']
-                struct = a.get_structure_by_material_id(mpid)
-                try: 
+                struct = a.get_structure_by_material_id(mpid)   
+                
+                try: # not sure if this try is still necessary actually  
+                    # sometimes query returns empty structure
                     if struct == []: 
-                        print(f'{mpid} has xas but no structure information')
                         pass
                     else: 
                         cn_arr = []
-                        oxidation_arr = []
-                        for n, label in enumerate(struct.labels):    
-                            if label == element:                 
-                                    oxidation = struct.add_oxidation_state_by_guess()[n].specie.oxi_state
-                                    cn = cnalgo.get_cn(struct,n)
+                        if add_oxidation_state:
+                            oxidation_arr = []
+                            # Sometimes guessing the oxidation state in this way gets stuck indefinitely, so create a Process to cancel it if it takes too long
+                            q = Queue()
+                            p = Process(target=oxidation_state_worker, args=(q, struct))
+                            p.start()
+                            time.sleep(3) # determined as how long it takes for regular oxidation state calculation to finish
+                            if p.is_alive():
+                                p.terminate()
+                                p.join()
+                                continue 
+                            else: 
+                                struct = q.get()
+                                for n, label in enumerate(struct.labels):    
+                                    if label == element:                 
+                                        cn = cnalgo.get_cn(struct,n)
+                                        oxidation = struct[n].specie.oxi_state
                                     if cn not in cn_arr: 
                                         cn_arr.append(cn)
                                     if oxidation not in oxidation_arr: 
-                                        oxidation_arr.append(oxidation)            
-                        doc['structure'] = struct 
+                                        oxidation_arr.append(oxidation) 
+                                    doc['oxidation'] = oxidation_arr
+                        else: 
+                            for n, label in enumerate(struct.labels):
+                                if label == element: 
+                                    cn = cnalgo.get_cn(struct,n)
+                                    if cn not in cn_arr: 
+                                        cn_arr.append(cn) 
+                                        
+                        doc['structure'] = struct.as_dict() 
                         doc['CN'] = cn_arr
-                        doc['CN_mean'] = np.mean(cn_arr)
-                        doc['oxidation'] = oxidation_arr
                         xas = doc['spectrum']
                         temp = spectral_features(xas['x'], xas['y'])
                         temp.pointwise_features(ne=100)
                         temp.polynomial_featuresall(interpolate=True, Narr=np.array([4,5,10,20]))
-                        doc['spectrum_point'] = temp.yinterp # gives (array (array ))
-                        doc['spectrum_poly'] = temp.polyfeatures_all
+                        doc['spectrum_point'] = temp.yinterp.tolist() # gives (array (array ))
+                        doc['spectrum_poly'] = temp.polyfeatures_all.tolist()
+                        
                         data[mpid] = doc
+                        
+                        if counter % chunks == 0 or counter == (subset-1):
+                            with open(fn, 'w') as f: 
+                                json.dump(data,f) 
+                    
                 except: 
-                    pass 
+                    pass
                 
-    
-    data = pd.DataFrame(data).T
-    return data 
+                counter += 1
+                
+    print(f'Data saved to {fn} with {len(data.keys())} entries. structure information saved as a dictionary in data[mpid][\'structure\'].\n',
+          'To convert structure information back to pymatgen.core.structure.Structure, use data[\'structure\'] = data[\'structure\'].apply(lambda x: Structure.from_dict(x))')      
+    if add_oxidation_state:
+        print('oxidation state added by Structure.add_oxidation_state_by_guess()')  
+    return data
