@@ -12,3 +12,15 @@ def oxidation_state_worker(queue, struct):
     """
     ret = struct.add_oxidation_state_by_guess()
     queue.put(ret)
+    
+def linear(x, m, b):
+    """
+    Calculates the linear function y = m*x + b.
+    Args:
+        x (float): The input value.
+        m (float): The slope of the line.
+        b (float): The y-intercept of the line.
+    Returns:
+        float: The calculated value of y.
+    """
+    return m*x + b
