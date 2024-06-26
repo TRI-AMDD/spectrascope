@@ -17,7 +17,7 @@ from spectrascope.utils import oxidation_state_worker
 # TODO: Add mean nearest neighbor distance calculation 
 
 def get_data(mykey, fn, elements=['Ti', 'Ni'], subset=-1, cnalgo=CrystalNN(), chunks=50, add_oxidation_state=False, has_oxygen=True, 
-             nn_algo=CrystalNN(distance_cutoffs=None, x_diff_weight=0, porous_adjustment=False)): 
+             nn_algo=CrystalNN(distance_cutoffs=None, x_diff_weight=0, porous_adjustment=False), remove_duplicates=True): 
     """
     Retrieves XAS (X-ray Absorption Spectroscopy) documents for specified elements using the Materials Project API.
     It creates a dictionary consisting of the XAS docs information, the structure (pymatgen.core.structure.Structure.as_dict()) the
@@ -36,6 +36,7 @@ def get_data(mykey, fn, elements=['Ti', 'Ni'], subset=-1, cnalgo=CrystalNN(), ch
         add_oxidation_state (bool): whether to add oxidation state to the dictionary (default=False); necessary if CrystalNN() cn algo is used
         has_oxygen (bool): whether to only return spectra that have at least one oxygen atom in structure (default=True)
         nn_algo (pymatgen.analysis.local_env): algorithm to calculate mean nearest neighbor distance (default=CrystalNN(distance_cutoffs=None, x_diff_weight=0, porous_adjustment=False))
+        remove_duplicates (bool): whether to remove entries with multiple coordination numbers or oxidation states(default=True)
     Returns: 
         data (dict) : dictionary of information 
     """
@@ -84,31 +85,30 @@ def get_data(mykey, fn, elements=['Ti', 'Ni'], subset=-1, cnalgo=CrystalNN(), ch
                                 for n, label in enumerate(struct.labels):    
                                     if label == element:                 
                                         cn = cnalgo.get_cn(struct,n)
-                                        # nn_arr.append()
-                                        # for i, site in enumerate(nn_info): 
-                                            # nn_arr.append(struct.get_distance(Ni, info[i]['site_index'])) # get distance of nn for each 
+                                        nn_info = nn_algo.get_nn_info(struct, n)
+                                        for j, neighbor in enumerate(nn_info): 
+                                            nn_arr.append(struct.get_distance(n, neighbor['site_index']))
+
                                         oxidation = struct[n].specie.oxi_state
                                         if cn not in cn_arr: 
                                             cn_arr.append(cn)
                                         if oxidation not in oxidation_arr: 
                                             oxidation_arr.append(oxidation) 
-                                        doc['oxidation'] = oxidation_arr
+                                doc['oxidation'] = oxidation_arr
+                                doc['mean_nn_distance'] = np.nanmean(nn_arr)
                         else: 
                             for n, label in enumerate(struct.labels):
                                 if label == element: 
                                     cn = cnalgo.get_cn(struct,n)
+                                    nn_info = nn_algo.get_nn_info(struct, n)
+                                    for j, neighbor in enumerate(nn_info): 
+                                        nn_arr.append(struct.get_distance(n, neighbor['site_index']))
                                     if cn not in cn_arr: 
                                         cn_arr.append(cn) 
+                            doc['mean_nn_distance'] = np.nanmean(nn_arr)
                                         
                         doc['structure'] = struct.as_dict() 
                         doc['CN'] = cn_arr
-                        xas = doc['spectrum']
-                        temp = spectral_features(xas['x'], xas['y'])
-                        temp.pointwise_features(ne=100)
-                        temp.polynomial_featuresall(interpolate=True, Narr=np.array([4,5,10,20]))
-                        doc['spectrum_point'] = temp.yinterp.tolist() # gives (array (array ))
-                        doc['spectrum_poly'] = temp.polyfeatures_all.tolist()
-                        
                         data[mpid] = doc
                         
                         if counter % chunks == 0 or counter == (subset-1):
@@ -119,6 +119,11 @@ def get_data(mykey, fn, elements=['Ti', 'Ni'], subset=-1, cnalgo=CrystalNN(), ch
                     pass
                 
                 counter += 1
+                
+    if remove_duplicates: 
+        data = {key:data[key] for key in data if len(data[key]['CN']) == 1}
+        if add_oxidation_state: 
+            data = {key:data[key] for key in data if len(data[key]['oxidation']) == 1}
                 
     print(f'Data saved to {fn} with {len(data.keys())} entries. structure information saved as a dictionary in data[mpid][\'structure\'].\n',
           'To convert structure information back to pymatgen.core.structure.Structure, use data[\'structure\'] = data[\'structure\'].apply(lambda x: Structure.from_dict(x))')      
