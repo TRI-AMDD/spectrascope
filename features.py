@@ -6,6 +6,7 @@ from scipy.interpolate import interp1d
 from numpy.polynomial import Polynomial
 from itertools import combinations
 from spectrascope.utils import find_nearest
+import matplotlib.pyplot as plt
 
 
 def degree_based_features(X,
@@ -188,11 +189,11 @@ class spectral_features:
         if use_default_energies:
             setattr(self, f'polyfeatures_{N}_{degree}deg', featuresN)
             if verbose: 
-                print(f'Generated {N} polynomial features using a degree {degree} polynomial for energies across the full energy range, attribute: polyfeatures_{N}_{degree}deg')
+                print(f'Generated {N*(degree+1)} polynomial features using a degree {degree} polynomial for energies across the full energy range split into {N} equivalent sections; attribute: polyfeatures_{N}_{degree}deg')
         else:
             setattr(self, f'polyfeatures_{round(x.min())}_{round(x.max())}_{N}_{degree}deg', featuresN)
             if verbose: 
-                print(f'Generated {N} polynomial features using a degree {degree} polynomial for energies between {round(x.min(),2)} and {round(x.max(),2)}, attribute: polyfeatures_{round(x.min())}_{round(x.max())}_{N}_{degree}deg')
+                print(f'Generated {N*(degree+1)} polynomial features using a degree {degree} polynomial for energies between {round(x.min(),2)} and {round(x.max(),2)} split into {N} equivalent sections, attribute: polyfeatures_{round(x.min())}_{round(x.max())}_{N}_{degree}deg')
             
         if return_features:
             return featuresN
@@ -223,7 +224,7 @@ class spectral_features:
             return self.polyfeatures_all
         
 
-    def uneven_features(self, interpolate: bool = True, eV_splits: list[int] = [20,40], N_dict: dict = {0:10, 1:4, 2:5}, degree_dict: dict = {0:3,1:5,2:3}, verbose: bool =True): 
+    def uneven_features(self, interpolate: bool = True, eV_splits: list[int] = [20,40], N_dict: dict = {0:10, 1:4, 2:5}, degree_dict: dict = {0:3,1:5,2:3}, verbose: bool =True, plot:bool = False): 
             """
             Split the data into uneven sections and perform polynomial fitting on each section 
             Option to split each section into different N values and degreess
@@ -232,7 +233,8 @@ class spectral_features:
                     eV_splits: list[int], the energy values to split the data at
                     N_dict: dict, the N values for each split {0:N, 1:N, 2:N}, must have len(ev_splits) + 1
                     degree_dict: dict, the degree values for each split {0:degree, 1:degree, 2:degree}, must have len(N_dict)
-                    verbose: bool, whether to print names of attributes             
+                    verbose: bool, whether to print names of attributes     
+                    plot: plot subsections         
             """
             idx_arr = [find_nearest(self.energies, self.energies.min() + eV) for eV in eV_splits]
             assert len(N_dict) == len(eV_splits) + 1, 'There are not enough N values for the number of splits'
@@ -254,13 +256,18 @@ class spectral_features:
                             start, stop = 0, idx
                             x, y = x_full[start:stop], y_full[start:stop]
                             self.polynomial_featuresN(N, interpolate=False, degree=degree, x=x, y=y, verbose=verbose)
+                            if plot: 
+                                plt.plot(x,y)
                     elif i < len(idx_arr):
                             start, stop = idx_arr[i-1], idx
                             x, y = x_full[start:stop], y_full[start:stop]
+                            if plot: 
+                                plt.plot(x,y)
                             self.polynomial_featuresN(N, interpolate=False, degree=degree, x=x, y=y, verbose=verbose)
             N = N_dict[i+1]
             degree = degree_dict[i+1]
             start, stop = idx, -1  
             x, y = x_full[start:], y_full[start:]
             self.polynomial_featuresN(N, interpolate=False, degree=degree, x=x, y=y, verbose=verbose) 
-            
+            if plot: 
+                plt.plot(x,y)
