@@ -55,3 +55,4 @@ def get_mean_nn(struct, nnalgo, el):
             for j, neighbor in enumerate(nn_info): 
                 nn_distances.append(struct.get_distance(i, neighbor['site_index']))
     return np.nanmean(nn_distances)
+
