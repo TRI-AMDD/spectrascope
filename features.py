@@ -71,7 +71,7 @@ class spectral_features:
         self.energies = np.array(energies)
         self.intensities = np.array(intensities)
         
-    def pointwise_features(self, ne: int = 100, return_features: bool = False):
+    def pointwise_features(self, ne: int = 100, return_features: bool = False, custom_range : float = None):
         """
         Interpolates self.energies, self.intensities onto ne evenly spaced points.
         
@@ -80,7 +80,14 @@ class spectral_features:
             return_features (bool): Flag indicating whether to return the features.
         """
         f = interp1d(self.energies, self.intensities)
-        self.xinterp = np.linspace(min(self.energies), max(self.energies), ne)
+        
+        if custom_range is not None: 
+            min_x, min_y = custom_range
+            # this gives an error when min(self.energies) < min_x 
+        else: 
+            min_x, min_y = min(self.energies), max(self.energies)
+        
+        self.xinterp = np.linspace(min_x, min_y, ne)
         self.yinterp = f(self.xinterp)
         
         if return_features:
