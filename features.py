@@ -7,6 +7,12 @@ from numpy.polynomial import Polynomial
 from itertools import combinations
 from spectrascope.utils import find_nearest
 import matplotlib.pyplot as plt
+import pywt
+from scipy.optimize import curve_fit
+
+from scipy.fft import fft, fftfreq
+from pyts.bag_of_words import BagOfWords
+from pyts.transformation import BagOfPatterns, ShapeletTransform, BOSS, ROCKET, WEASEL 
 
 
 def degree_based_features(X,
@@ -90,6 +96,7 @@ class spectral_features:
         
         self.xinterp = np.linspace(min_x, min_y, ne)
         self.yinterp = f(self.xinterp)
+        self.de = np.diff(self.xinterp)[0]
         
         if return_features:
             return self.yinterp
@@ -271,3 +278,93 @@ class spectral_features:
             self.polynomial_featuresN(N, interpolate=False, degree=degree, x=x, y=y, verbose=verbose) 
             if plot: 
                 plt.plot(x,y)
+                
+                
+    def cdf(self): 
+        """
+        Compute cumulative distribution function: probability that f(x) will take on a value less than or equal to x at x 
+
+        Args:
+            intensity (arr): spectrum intensity 
+
+        Attributes:
+            cdf (np.array): cumulative distribution function for spectrum 
+        """
+        #TODO: interpolation
+        intensity = self.intensities
+        self.cdf = np.array([i/np.max(np.cumsum(intensity)) for i in np.cumsum(intensity)])
+    
+    def cwt(self, widths=np.arange(1,11), psi = 'mexh'): 
+        """
+        Compute continuous wavelet transform on spectrum: uses inner products to measure the similarity between a signal and an analyzing function (wavelet). 
+        Compare signal to shifted and compressed or stretched versions of a wavelet. Can choose different wavelets 
+
+        Args:
+            intensity (arr): spectrum intensity
+            widths (arr of ints, optional, default: np.arange(1,11)): _description_. Defaults to np.arange(1,11).
+            wavelet (pywt.ContinuousWavelet, optional, default: 'mexh') : mother wavelet to compare spectrum to
+            
+        Attributes: 
+            coefs (2D np.array) : continuous wavlet transform of the imput signal for the given scales and wavelet. First axis corresponds to the scales, 
+            remaining axes match the shape of intensity 
+            frequencies: if the unit of sampling period are seconds and given, then frequencies are in herts, otherwise a sampling period of 1 assumed 
+        """
+        #TODO: interpolation
+        intensity = self.intensities
+        self.cwt_coefs, self.cwt_frequencies  = pywt.cwt(intensity, widths, psi)
+        
+    
+    def func_unfix_width_reg(self, eng, *params):
+        #TODO: interpolation
+        # print(params)
+        y = np.zeros_like(eng)
+        for i in range(0, len(params), 3):
+            ctr = params[i]
+            amp = params[i+1]
+            wid = params[i+2]
+            y = y + amp * np.exp(-((eng - ctr)**2/(2*(wid/2.355)**2)))
+        return y 
+    
+    def get_peak_fitting(self,num_peaks=20):
+        eng = self.energies 
+        mu = self.intensities
+        idxes = [int(i) for i in np.linspace(0, len(eng)-1, num_peaks+1)]
+        idxes_2 = [int((idxes[i] + idxes[i+1]) / 2) for i in range(len(idxes)-1)]
+        guess = np.ravel([[eng[i], mu[i], 2] for i in idxes_2])
+        lower = np.ravel([[eng[i], min(mu), 0] for i in idxes[:-1]])
+        upper = np.ravel([[eng[i], max(mu), 6] for i in idxes[1:]])
+        popt, pcov = curve_fit(self.func_unfix_width_reg, eng, mu, p0=guess, bounds=(lower,upper))
+        
+        self.peak_features = popt 
+        
+    def fft_features(self): 
+        try: 
+            getattr(self, 'xinterp')
+        except AttributeError: 
+            self.pointwise_features()
+            
+        N = len(self.xinterp)
+        self.fft_feat = fft(self.yinterp)[:N//2]
+        self.fft_freq = np.abs(fftfreq(N, self.de))[:N//2]
+        
+    def b_splines(self): 
+        pass 
+    
+    def shapelet_features(self, **kwargs): 
+        st = ShapeletTransform(**kwargs)  
+    
+    def bow_features(self, **kwargs): 
+        bow = BagOfWords(**kwargs)
+        
+    def bop_features(self, **kwargs): 
+        bop = BagOfPatterns(**kwargs)
+        
+    
+    def boss_features(self, **kwargs): 
+        boss = BOSS(**kwargs)
+        
+    def WEASEL_features(self, **kwargs): 
+        wsl = WEASEL(**kwargs)
+        
+    def ROCKET_featrues(self, **kwargs): 
+        rkt = ROCKET(**kwargs)
