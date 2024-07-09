@@ -5,7 +5,7 @@ import pandas as pd
 from scipy.interpolate import interp1d
 from numpy.polynomial import Polynomial
 from itertools import combinations
-from spectrascope.utils import find_nearest
+from spectrascope.utils import find_nearest, func_unfix_width_reg
 import matplotlib.pyplot as plt
 import pywt
 from scipy.optimize import curve_fit
@@ -62,10 +62,11 @@ class spectral_features:
         intensities (np.array): Intensity values from XAS spectrum.
 
     Methods:
-        pointwise_features(ne: int = 100): Interpolates energies and intensities onto evenly spaced points.
-        generate_bins(N: int, interpolate: bool = True): Generates N bins even in energy for polynomial featurization
-        polynomial_featuresN(N: int, interpolate: bool = True): Performs polynomial fitting on N energy equivalent sections.
-        polynomial_featuresall(Narr: np.array = np.array([4,5,10,20]), interpolate: bool = True): Performs polynomial fitting on a range of N energy equivalent sections.
+        Every feature generation method assumes you want to perform on the interpolated spectrum 
+        pointwise_features(xrange): Interpolates energies and intensities onto evenly spaced points.
+        generate_bins(N: int): Generates N bins even in energy for polynomial featurization
+        polynomial_featuresN(N: int): Performs polynomial fitting on N energy equivalent sections.
+        polynomial_featuresall(Narr: np.array = np.array([4,5,10,20])): Performs polynomial fitting on a range of N energy equivalent sections.
     """
     def __init__(self, energies: np.array, intensities: np.array):
         """
@@ -78,49 +79,44 @@ class spectral_features:
         self.energies = np.array(energies)
         self.intensities = np.array(intensities)
         
-    def pointwise_features(self, ne: int = 100, return_features: bool = False, custom_range : float = None):
+    def pointwise_features(self, xrange, return_features: bool = False, fill_value = 'extrapolate'):
         """
         Interpolates self.energies, self.intensities onto ne evenly spaced points.
         
         Args:
-            ne (int): The number of evenly spaced points to interpolate onto.
+            xrange (np.linspace(xmin,xmax)): range of x values to perform interpolation on 
             return_features (bool): Flag indicating whether to return the features.
+            fill_value (array, (tup), 'extrapolate') : fill value for scipy.interp1d for values outside of xrange (see scipy.interpolate.interp1d)
         """
-        f = interp1d(self.energies, self.intensities)
+        f = interp1d(self.energies, self.intensities, bounds_error=False,fill_value='extrapolate')
         
-        if custom_range is not None: 
-            min_x, min_y = custom_range
-            # this gives an error when min(self.energies) < min_x 
-        else: 
-            min_x, min_y = min(self.energies), max(self.energies)
-        
-        self.xinterp = np.linspace(min_x, min_y, ne)
+        self.xinterp = xrange
         self.yinterp = f(self.xinterp)
         self.de = np.diff(self.xinterp)[0]
         
         if return_features:
             return self.yinterp
-    
-    def generate_bins(self, N: int, interpolate: bool = True, x: np.array = None, y: np.array = None, verbose=False):
-        """
-        Generate N bins even in energy for self.energies.
         
+    
+    def generate_bins(self, N: int, x: np.array = None, y: np.array = None, verbose=False):
+        """
+        Generate N bins even in energy for self.energies. If custom x and y not given, performs binning on 
+        interpolated data if it exists. Otherwise, performs on self.energies, self.intensities 
         Args:
             N (int): The number of bins to generate.
-            interpolate (bool): Flag indicating whether to interpolate the data before generating bins.
-            x,y (np.array): Energy and intensity values to generate bins for. Default None uses self.energies and self.intensities.
+            x,y (np.array, optional): Energy and intensity values to generate bins for. Default None uses full spectrum
         """
         if x is None: 
             # use default energies and intensities
-            if interpolate: 
-                if hasattr(self, 'xinterp') == False: 
-                    self.pointwise_features()
-                    
-                x = self.xinterp
-                y = self.yinterp
-            else: 
+            # always perform functions on interpolated data 
+            if hasattr(self, 'xinterp') == False: 
+                if verbose: 
+                    print('performing binning on self.energies, self.intensities...are these already interpolated? ')  
                 x = self.energies
                 y = self.intensities
+            else: 
+                x = self.xinterp
+                y = self.yinterp
                 
             use_default_energies = True
         else: 
@@ -138,46 +134,48 @@ class spectral_features:
                 
         # if bin_indices.max() != N-1:
         #     raise ValueError('Cannot generate even bins with the given N on this range')
-        if use_default_energies: 
-            setattr(self, f'bin_indices_{N}', bin_indices)
-            if verbose: 
-                print(f'Generated {N} bins for energies across the full energy range, attribute: bin_indices_{N}')
+        if len(np.unique(bin_indices)) == len(np.arange(N)): 
+            if (np.unique(bin_indices) == np.arange(N)).all(): 
+        
+                if use_default_energies: 
+                    setattr(self, f'bin_indices_{N}', bin_indices)
+                    if verbose: 
+                        print(f'Generated {N} bins for energies across the full energy range, attribute: bin_indices_{N}')
+                else: 
+                    setattr(self, f'bin_indices_{round(x.min())}_{round(x.max())}_{N}', bin_indices)
+                    if verbose: 
+                        print(f'Generated {N} bins for energies between {round(x.min(),2)} and {round(x.max(),2)}, attribute: bin_indices_{round(x.min())}_{round(x.max())}_{N}')
+
         else: 
-            setattr(self, f'bin_indices_{round(x.min())}_{round(x.max())}_{N}', bin_indices)
-            if verbose: 
-                print(f'Generated {N} bins for energies between {round(x.min(),2)} and {round(x.max(),2)}, attribute: bin_indices_{round(x.min())}_{round(x.max())}_{N}')
-    def polynomial_featuresN(self, N: int, interpolate: bool = True, degree:int = 3, return_features: bool = False,verbose=True, **kwargs): 
+            print('proper number of bins not generated, attribute not created')
+    def polynomial_featuresN(self, N: int, degree:int = 3, return_features: bool = False,verbose=False, **kwargs): 
         """
         Performs polynomial fitting on N energy equivalent sections.
         
         Args:
             N (int): The number of energy equivalent sections to perform polynomial fitting on.
-            interpolate (bool): Flag indicating whether to interpolate the data before performing polynomial fitting.
             return_features (bool): Flag indicating whether to return the features.
         """
         featuresN = np.zeros([N,degree+1])
 
         use_default_energies = not 'x' in kwargs 
+        
         if use_default_energies: 
-            if interpolate: 
-                if hasattr(self, 'xinterp') == False: 
-                    self.pointwise_features()
-                    
-                x = self.xinterp
-                y = self.yinterp
-            else: 
+            if hasattr(self, 'xinterp') == False: 
+                if verbose: 
+                    print('generating features on self.energies, self.intensities...are these already interpolated? ')  
                 x = self.energies
                 y = self.intensities
+            else: 
+                x = self.xinterp
+                y = self.yinterp
         else: 
             x = kwargs['x']
             y = kwargs['y']
         
         for i in range(0,N):
-            # try: 
+            
             self.generate_bins(N, **kwargs)
-            # except ValueError: 
-            #     print('Could not generate even bins with the given N on this energy range')
-            #     continue 
             
             if use_default_energies: 
                 bin_indices = getattr(self, f'bin_indices_{N}')
@@ -219,7 +217,7 @@ class spectral_features:
         
         for N in Narr: 
             
-            self.polynomial_featuresN(N, interpolate, degree=degree, **kwargs)
+            self.polynomial_featuresN(N, degree=degree, **kwargs)
             featuresN = getattr(self, f'polyfeatures_{N}_{degree}deg')
             self.polyfeatures_all = np.append(self.polyfeatures_all, featuresN.ravel())
             
@@ -231,10 +229,10 @@ class spectral_features:
             return self.polyfeatures_all
         
 
-    def uneven_features(self, interpolate: bool = True, eV_splits: list[int] = [20,40], N_dict: dict = {0:10, 1:4, 2:5}, degree_dict: dict = {0:3,1:5,2:3}, verbose: bool =True, plot:bool = False): 
+    def uneven_features(self, eV_splits: list[int] = [20,40], N_dict: dict = {0:10, 1:4, 2:5}, degree_dict: dict = {0:3,1:5,2:3}, verbose: bool =False, plot:bool = False): 
             """
             Split the data into uneven sections and perform polynomial fitting on each section 
-            Option to split each section into different N values and degreess
+            Option to split each section into different N values and degrees
             args: 
                     interpolate: bool, whether to interpolate the data before function 
                     eV_splits: list[int], the energy values to split the data at
@@ -244,17 +242,19 @@ class spectral_features:
                     plot: plot subsections         
             """
             idx_arr = [find_nearest(self.energies, self.energies.min() + eV) for eV in eV_splits]
+
             assert len(N_dict) == len(eV_splits) + 1, 'There are not enough N values for the number of splits'
             assert len(degree_dict) == len(N_dict), 'There are not enough degree values for the number of N values'
                     
-            if interpolate: 
-                    if hasattr(self, 'xinterp') == False: 
-                            self.pointwise_features()
-                    x_full = self.xinterp
-                    y_full = self.yinterp
+            if hasattr(self, 'xinterp') == False: 
+                x_full = self.energies
+                y_full = self.intensities
+                    
             else: 
-                    x_full = self.energies
-                    y_full = self.intensities
+                x_full = self.xinterp
+                y_full = self.yinterp
+                
+
                     
             for i,idx in enumerate(idx_arr): 
                     N = N_dict[i]
@@ -262,7 +262,7 @@ class spectral_features:
                     if i == 0: 
                             start, stop = 0, idx
                             x, y = x_full[start:stop], y_full[start:stop]
-                            self.polynomial_featuresN(N, interpolate=False, degree=degree, x=x, y=y, verbose=verbose)
+                            self.polynomial_featuresN(N, degree=degree, x=x, y=y, verbose=verbose)
                             if plot: 
                                 plt.plot(x,y)
                     elif i < len(idx_arr):
@@ -270,31 +270,37 @@ class spectral_features:
                             x, y = x_full[start:stop], y_full[start:stop]
                             if plot: 
                                 plt.plot(x,y)
-                            self.polynomial_featuresN(N, interpolate=False, degree=degree, x=x, y=y, verbose=verbose)
+                            self.polynomial_featuresN(N, degree=degree, x=x, y=y, verbose=verbose)
             N = N_dict[i+1]
             degree = degree_dict[i+1]
             start, stop = idx, -1  
             x, y = x_full[start:], y_full[start:]
-            self.polynomial_featuresN(N, interpolate=False, degree=degree, x=x, y=y, verbose=verbose) 
+            self.polynomial_featuresN(N, degree=degree, x=x, y=y, verbose=verbose) 
             if plot: 
                 plt.plot(x,y)
                 
                 
-    def cdf(self): 
+    def cdf(self, verbose=False): 
         """
         Compute cumulative distribution function: probability that f(x) will take on a value less than or equal to x at x 
 
         Args:
             intensity (arr): spectrum intensity 
+            verbose (bool) : print progress 
 
         Attributes:
             cdf (np.array): cumulative distribution function for spectrum 
         """
-        #TODO: interpolation
-        intensity = self.intensities
+        if hasattr(self, 'xinterp') == False: 
+            if verbose: 
+                print('generating features on self.energies, self.intensities...are these already interpolated? ')  
+            intensity = self.intensities
+        else: 
+            intensity = self.yinterp
+                
         self.cdf = np.array([i/np.max(np.cumsum(intensity)) for i in np.cumsum(intensity)])
     
-    def cwt(self, widths=np.arange(1,11), psi = 'mexh'): 
+    def cwt(self, widths=np.arange(1,11), psi = 'mexh', verbose=False): 
         """
         Compute continuous wavelet transform on spectrum: uses inner products to measure the similarity between a signal and an analyzing function (wavelet). 
         Compare signal to shifted and compressed or stretched versions of a wavelet. Can choose different wavelets 
@@ -303,45 +309,62 @@ class spectral_features:
             intensity (arr): spectrum intensity
             widths (arr of ints, optional, default: np.arange(1,11)): _description_. Defaults to np.arange(1,11).
             wavelet (pywt.ContinuousWavelet, optional, default: 'mexh') : mother wavelet to compare spectrum to
-            
+            verbose (bool, default False) : print progress
         Attributes: 
             coefs (2D np.array) : continuous wavlet transform of the imput signal for the given scales and wavelet. First axis corresponds to the scales, 
             remaining axes match the shape of intensity 
             frequencies: if the unit of sampling period are seconds and given, then frequencies are in herts, otherwise a sampling period of 1 assumed 
         """
-        #TODO: interpolation
-        intensity = self.intensities
+        if hasattr(self, 'xinterp') == False: 
+            if verbose: 
+                print('generating features on self.energies, self.intensities...are these already interpolated? ')  
+            intensity = self.intensities
+        else: 
+            intensity = self.yinterp
+            
         self.cwt_coefs, self.cwt_frequencies  = pywt.cwt(intensity, widths, psi)
         
     
-    def func_unfix_width_reg(self, eng, *params):
-        #TODO: interpolation
-        # print(params)
-        y = np.zeros_like(eng)
-        for i in range(0, len(params), 3):
-            ctr = params[i]
-            amp = params[i+1]
-            wid = params[i+2]
-            y = y + amp * np.exp(-((eng - ctr)**2/(2*(wid/2.355)**2)))
-        return y 
     
-    def get_peak_fitting(self,num_peaks=20):
-        eng = self.energies 
-        mu = self.intensities
+    def get_peak_fitting(self,num_peaks=20, verbose=False):
+        """
+        Fit {num_peaks} gaussians to intensity 
+
+        Args:
+            num_peaks (int, default 20): Number of gaussians to fit 
+            verbose (bool, default False): print progress
+        """
+        
+        if hasattr(self, 'xinterp') == False: 
+            if verbose: 
+                print('generating features on self.energies, self.intensities...are these already interpolated? ')  
+            eng = self.energies
+            mu = self.intensities
+        else: 
+            eng = self.xinterp
+            mu = self.yinterp
+            
         idxes = [int(i) for i in np.linspace(0, len(eng)-1, num_peaks+1)]
         idxes_2 = [int((idxes[i] + idxes[i+1]) / 2) for i in range(len(idxes)-1)]
         guess = np.ravel([[eng[i], mu[i], 2] for i in idxes_2])
         lower = np.ravel([[eng[i], min(mu), 0] for i in idxes[:-1]])
         upper = np.ravel([[eng[i], max(mu), 6] for i in idxes[1:]])
-        popt, pcov = curve_fit(self.func_unfix_width_reg, eng, mu, p0=guess, bounds=(lower,upper))
+        popt, pcov = curve_fit(func_unfix_width_reg, eng, mu, p0=guess, bounds=(lower,upper))
         
         self.peak_features = popt 
         
-    def fft_features(self): 
-        try: 
-            getattr(self, 'xinterp')
-        except AttributeError: 
-            self.pointwise_features()
+    def fft_features(self, **kwargs):
+        """
+        FFT Spectra and return positive real FT values
+        Args: 
+        """ 
+        if hasattr(self, 'xinterp') == False: 
+            if 'xrange' not in kwargs: 
+                print('to perform fft need evenly spaced data, please provide xrange to perform interpolation need to perform interpolation')  
+                return 
+            else: 
+                self.pointwise_features(kwargs['xrange'])
+
             
         N = len(self.xinterp)
         self.fft_feat = fft(self.yinterp)[:N//2]
@@ -351,6 +374,10 @@ class spectral_features:
         pass 
     
     def shapelet_features(self, **kwargs): 
+        """
+        Transforms a data set to identify shapelets. Takes a really long time to run? Need to dig a bit deeper 
+        
+        """
         st = ShapeletTransform(**kwargs)  
     
     def bow_features(self, **kwargs): 
