@@ -123,12 +123,13 @@ class spectral_features:
             assert len(x) == len(y), 'x and y must be the same length'
             use_default_energies = False
             
-            
         bin_width = (max(x) - min(x)) / N
         bin_indices = np.zeros(len(x), dtype=int)
+        # bin_indices = []
         
         for i, val in enumerate(x):
-            bin_indices[i] = int((val) - min(x)) / bin_width
+            index = int(((val) - min(x) )/ bin_width)
+            bin_indices[i] = index
             if bin_indices[i] == N:
                 bin_indices[i] -= 1
                 
@@ -229,7 +230,7 @@ class spectral_features:
             return self.polyfeatures_all
         
 
-    def uneven_features(self, eV_splits: list[int] = [20,40], N_dict: dict = {0:10, 1:4, 2:5}, degree_dict: dict = {0:3,1:5,2:3}, verbose: bool =False, plot:bool = False): 
+    def uneven_features(self, eV_splits: list[int] = [20,40], N_dict: dict = {0:10, 1:4, 2:5}, degree_dict: dict = {0:3,1:5,2:3}, verbose: bool =False, plot:bool = False, return_features: bool = False): 
             """
             Split the data into uneven sections and perform polynomial fitting on each section 
             Option to split each section into different N values and degrees
@@ -278,9 +279,11 @@ class spectral_features:
             self.polynomial_featuresN(N, degree=degree, x=x, y=y, verbose=verbose) 
             if plot: 
                 plt.plot(x,y)
+            if return_features: 
+                pass 
                 
                 
-    def cdf(self, verbose=False): 
+    def cdf(self, verbose=False, return_features:bool = False): 
         """
         Compute cumulative distribution function: probability that f(x) will take on a value less than or equal to x at x 
 
@@ -299,8 +302,11 @@ class spectral_features:
             intensity = self.yinterp
                 
         self.cdf = np.array([i/np.max(np.cumsum(intensity)) for i in np.cumsum(intensity)])
+        
+        if return_features: 
+            return self.cdf 
     
-    def cwt(self, widths=np.arange(1,11), psi = 'mexh', verbose=False): 
+    def cwt(self, widths=np.arange(1,11), psi = 'mexh', verbose=False, return_features:bool = False): 
         """
         Compute continuous wavelet transform on spectrum: uses inner products to measure the similarity between a signal and an analyzing function (wavelet). 
         Compare signal to shifted and compressed or stretched versions of a wavelet. Can choose different wavelets 
@@ -324,9 +330,10 @@ class spectral_features:
             
         self.cwt_coefs, self.cwt_frequencies  = pywt.cwt(intensity, widths, psi)
         
+        if return_features: 
+            return self.cwt_coefs.ravel()
     
-    
-    def get_peak_fitting(self,num_peaks=20, verbose=False):
+    def gaussian_peaks(self,num_peaks=20, verbose=False, return_features=True):
         """
         Fit {num_peaks} gaussians to intensity 
 
@@ -353,7 +360,10 @@ class spectral_features:
         
         self.peak_features = popt 
         
-    def fft_features(self, **kwargs):
+        if return_features: 
+            return popt
+        
+    def fft_features(self, return_features:bool = False, **kwargs):
         """
         FFT Spectra and return positive real FT values
         Args: 
@@ -369,6 +379,9 @@ class spectral_features:
         N = len(self.xinterp)
         self.fft_feat = fft(self.yinterp)[:N//2]
         self.fft_freq = np.abs(fftfreq(N, self.de))[:N//2]
+        
+        if return_features: 
+            return self.fft_feat 
         
     def b_splines(self): 
         pass 

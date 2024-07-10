@@ -57,12 +57,12 @@ def get_mean_nn(struct, nnalgo, el):
     return np.nanmean(nn_distances)
 
 def func_unfix_width_reg(eng, *params):
-        #TODO: interpolation
-        # print(params)
-        y = np.zeros_like(eng)
-        for i in range(0, len(params), 3):
-            ctr = params[i]
-            amp = params[i+1]
-            wid = params[i+2]
-            y = y + amp * np.exp(-((eng - ctr)**2/(2*(wid/2.355)**2)))
-        return y 
+    #TODO: interpolation
+    # print(params)
+    y = np.zeros_like(eng)
+    for i in range(0, len(params), 3):
+        ctr = params[i]
+        amp = params[i+1]
+        wid = params[i+2]
+        y = y + amp * np.exp(-((eng - ctr)**2/(2*(wid/2.355)**2)))
+    return y 
