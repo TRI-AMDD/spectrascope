@@ -155,11 +155,11 @@ def test_peak_fitting():
     x, y = np.load('test_data/test_xas.npy')
     temp = spectral_features(x, y)
     
-    temp.get_peak_fitting()
+    temp.gaussian_peaks()
     assert hasattr(temp, 'peak_features')
     assert temp.peak_features.shape == (60,)
     
-    temp.get_peak_fitting(num_peaks=10)
+    temp.gaussian_peaks(num_peaks=10)
     assert hasattr(temp, 'peak_features')
     assert temp.peak_features.shape == (30,)
 
@@ -186,5 +186,21 @@ def test_fft():
     assert hasattr(temp, 'fft_freq')
     assert temp.fft_freq.shape == temp.fft_feat.shape == (300//2,)    
 
+def test_gaussian_filter(): 
+    x, y = np.load('test_data/test_xas.npy')
+    temp = spectral_features(x,y)
+    temp.pointwise_features(np.linspace(x.min(), x.max()),100)
     
+    temp.gaussian_filter_features(sigma=1)
+    assert hasattr(temp, 'gaussian_filter') 
+    assert len(temp.gaussian_filter) == len(temp.yinterp)
+    
+    temp.pointwise_features(np.linspace(x.min(), x.max()),200)
+    temp.gaussian_filter_features(sigma=5)
+    assert hasattr(temp, 'gaussian_filter') 
+    assert len(temp.gaussian_filter) == len(temp.yinterp)
+    
+    temp.gaussian_filter_features(sigma=0.5)
+    assert hasattr(temp, 'gaussian_filter') 
+    assert len(temp.gaussian_filter) == len(temp.yinterp)
     

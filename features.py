@@ -11,9 +11,9 @@ import pywt
 from scipy.optimize import curve_fit
 
 from scipy.fft import fft, fftfreq
-from pyts.bag_of_words import BagOfWords
-from pyts.transformation import BagOfPatterns, ShapeletTransform, BOSS, ROCKET, WEASEL 
-
+# from pyts.bag_of_words import BagOfWords
+from pyts.transformation import ShapeletTransform, BagOfPatterns, BOSS, ROCKET, WEASEL 
+from scipy.ndimage import gaussian_filter
 
 def degree_based_features(X,
                           degree,
@@ -382,6 +382,20 @@ class spectral_features:
         
         if return_features: 
             return self.fft_feat 
+    
+    def gaussian_filter_features(self, sigma, verbose=False, return_features = False, **kwargs): 
+        
+        if hasattr(self, 'xinterp') == False: 
+            if verbose: 
+                print('generating features on self.energies, self.intensities...are these already interpolated? ')  
+            intensities = self.intensities
+        else: 
+            intensities = self.yinterp
+        
+        self.gaussian_filter = gaussian_filter(intensities, sigma, **kwargs)
+        
+        if return_features: 
+            return self.gaussian_filter
         
     def b_splines(self): 
         pass 
@@ -391,20 +405,25 @@ class spectral_features:
         Transforms a data set to identify shapelets. Takes a really long time to run? Need to dig a bit deeper 
         
         """
-        st = ShapeletTransform(**kwargs)  
+        st = ShapeletTransform(**kwargs)
+        pass  
     
     def bow_features(self, **kwargs): 
         bow = BagOfWords(**kwargs)
+        pass
         
     def bop_features(self, **kwargs): 
         bop = BagOfPatterns(**kwargs)
-        
+        pass
     
     def boss_features(self, **kwargs): 
         boss = BOSS(**kwargs)
+        pass
         
     def WEASEL_features(self, **kwargs): 
         wsl = WEASEL(**kwargs)
+        pass
         
     def ROCKET_featrues(self, **kwargs): 
         rkt = ROCKET(**kwargs)
+        pass
