@@ -5,9 +5,9 @@ sys.path.append(str(pathlib.Path(__file__).parent.parent))
 
 from spectrascope.features import *
 
-x1, y1 = np.load('test_data/test_xas.npy')
-fnX = '/Users/amalyajohnson/Desktop/Spectrascope/spectrascope/tests/test_data/X_testfile.npy'
-fny = '/Users/amalyajohnson/Desktop/Spectrascope/spectrascope/tests/test_data/y_testfile.npy'
+x1, y1 = np.load('test_files/test_xas.npy')
+fnX = 'test_files/X_testfile.npy'
+fny = 'test_files/test_data/y_testfile.npy'
 X = np.load(fnX)
 X = X[0]
 # y = np.load(fny)
