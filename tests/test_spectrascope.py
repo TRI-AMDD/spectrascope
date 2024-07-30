@@ -5,12 +5,12 @@ sys.path.append(str(pathlib.Path(__file__).parent.parent))
 
 from spectrascope.SpectraScope import *
 
-test_json = 'test_data/processed_billinge_Ti_test.json'
+test_json = ''
 test_npy = ''
 test_df = ''
 
-fnX = '/Users/amalyajohnson/Desktop/Spectrascope/spectrascope/tests/test_data/X_testfile.npy'
-fny = '/Users/amalyajohnson/Desktop/Spectrascope/spectrascope/tests/test_data/y_testfile.npy'
+fnX = 'test_files/X_testfile.npy'
+fny = 'test_files/y_testfile.npy'
 X = np.load(fnX)
 y = np.load(fny)
 
