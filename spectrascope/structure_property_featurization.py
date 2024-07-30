@@ -212,3 +212,7 @@ def is_in_space_group(
         return value, label
     else:
         return value
+
+
+def has_symmetry(structure: Structure, symmetry_operation, return_label=False):
+    raise NotImplementedError
