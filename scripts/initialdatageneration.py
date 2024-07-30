@@ -130,3 +130,22 @@ def get_data(mykey, fn, elements=['Ti', 'Ni'], subset=-1, cnalgo=CrystalNN(), ch
     if add_oxidation_state:
         print('oxidation state added by Structure.add_oxidation_state_by_guess()')  
     return data
+
+def queried_json_to_df(data): 
+    """
+    Convert queried json to pandas dataframe. 
+    Turns pymatgen structure dict back into structure 
+    Just takes the first value for CN and oxidation 
+
+    Args:
+        data (json): queried materials project data 
+
+    Returns:
+        df (pandas.DataFrame): DataFrame of queried data 
+    """
+    df = pd.DataFrame(data).T
+    df['CN'] = df['CN'].apply(lambda x: x[0])
+    df['structure'] = df['structure'].apply(lambda x: Structure.from_dict(x))
+    if 'oxidation' in df.columns: 
+        df['oxidation'] = df['oxidation'].apply(lambda x: x[0])
+    return df 

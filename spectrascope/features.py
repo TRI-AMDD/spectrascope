@@ -11,9 +11,13 @@ import pywt
 from scipy.optimize import curve_fit
 
 from scipy.fft import fft, fftfreq
-# from pyts.bag_of_words import BagOfWords
+
 from pyts.transformation import ShapeletTransform, BagOfPatterns, BOSS, ROCKET, WEASEL 
 from scipy.ndimage import gaussian_filter
+import plotly.express as px 
+
+from sklearn.cluster import FeatureAgglomeration
+from sklearn.decomposition import PCA 
 
 def degree_based_features(X,
                           degree,
@@ -78,6 +82,8 @@ class spectral_features:
         """
         self.energies = np.array(energies)
         self.intensities = np.array(intensities)
+        if len(self.intensities.shape) < 2: 
+            self.intensities = self.intensities.reshape(1,-1)
         
     def pointwise_features(self, xrange, return_features: bool = False, fill_value = 'extrapolate'):
         """
@@ -109,18 +115,11 @@ class spectral_features:
         if x is None: 
             # use default energies and intensities
             # always perform functions on interpolated data 
-            if hasattr(self, 'xinterp') == False: 
-                if verbose: 
-                    print('performing binning on self.energies, self.intensities...are these already interpolated? ')  
-                x = self.energies
-                y = self.intensities
-            else: 
-                x = self.xinterp
-                y = self.yinterp
+            x, y = self.check_xinterp(verbose)
                 
             use_default_energies = True
         else: 
-            assert len(x) == len(y), 'x and y must be the same length'
+            assert len(x) == y.shape[-1], 'x and y must be the same length'
             use_default_energies = False
             
         bin_width = (max(x) - min(x)) / N
@@ -157,7 +156,7 @@ class spectral_features:
             N (int): The number of energy equivalent sections to perform polynomial fitting on.
             return_features (bool): Flag indicating whether to return the features.
         """
-        featuresN = np.zeros([N,degree+1])
+        featuresN = np.zeros([self.intensities.shape[0],1])
 
         use_default_energies = not 'x' in kwargs 
         
@@ -176,21 +175,30 @@ class spectral_features:
         
         for i in range(0,N):
             
-            self.generate_bins(N, **kwargs)
-            
             if use_default_energies: 
-                bin_indices = getattr(self, f'bin_indices_{N}')
+                try: 
+                    bin_indices = getattr(self, f'bin_indices_{N}')
+                except AttributeError: 
+                    self.generate_bins(N, **kwargs)
+                    bin_indices = getattr(self, f'bin_indices_{N}')
             else: 
-                bin_indices = getattr(self, f'bin_indices_{round(x.min())}_{round(x.max())}_{N}')
+                try:   
+                    bin_indices = getattr(self, f'bin_indices_{round(x.min())}_{round(x.max())}_{N}')
+                except AttributeError: 
+                    self.generate_bins(N, **kwargs)
+                    bin_indices = getattr(self, f'bin_indices_{round(x.min())}_{round(x.max())}_{N}')
+                    
             xbin = x[bin_indices==i]
-            ybin = y[bin_indices==i] 
+            ybin = y[:, bin_indices==i] 
             binrange = (xbin.max() - xbin.min())
             
             #centering the x values
             xbin = xbin - xbin.mean()
             
-            coefs = np.polyfit(xbin, ybin, degree)
-            featuresN[i] = coefs
+            coefs = np.polyfit(xbin, ybin.T, degree)
+            featuresN = np.concatenate((featuresN, coefs.T), axis=1)
+        
+        featuresN = featuresN[:,1:]
         
         if use_default_energies:
             setattr(self, f'polyfeatures_{N}_{degree}deg', featuresN)
@@ -214,18 +222,16 @@ class spectral_features:
             return_features (bool): Flag indicating whether to return the features.
             degree (int): The degree of the polynomial to fit.
         """
-        self.polyfeatures_all = np.array([])
+        self.polyfeatures_all = np.zeros([self.intensities.shape[0],1])
         
         for N in Narr: 
             
             self.polynomial_featuresN(N, degree=degree, **kwargs)
             featuresN = getattr(self, f'polyfeatures_{N}_{degree}deg')
-            self.polyfeatures_all = np.append(self.polyfeatures_all, featuresN.ravel())
-            
-            delattr(self, f'polyfeatures_{N}_{degree}deg')
-            delattr(self, f'bin_indices_{N}')
-        self.polyfeatures_all = np.append(self.polyfeatures_all, self.energies[np.argmax(self.intensities)])
-        
+            self.polyfeatures_all = np.append(self.polyfeatures_all, featuresN, axis=1)
+
+        self.polyfeatures_all = np.append(self.polyfeatures_all, self.energies[np.argmax(self.intensities, axis=1)].reshape(-1,1), axis=1)
+        self.polyfeatures_all = self.polyfeatures_all[:,1:]
         if return_features: 
             return self.polyfeatures_all
         
@@ -247,13 +253,7 @@ class spectral_features:
             assert len(N_dict) == len(eV_splits) + 1, 'There are not enough N values for the number of splits'
             assert len(degree_dict) == len(N_dict), 'There are not enough degree values for the number of N values'
                     
-            if hasattr(self, 'xinterp') == False: 
-                x_full = self.energies
-                y_full = self.intensities
-                    
-            else: 
-                x_full = self.xinterp
-                y_full = self.yinterp
+            x_full, y_full = self.check_xinterp(verbose)
                 
 
                     
@@ -294,26 +294,23 @@ class spectral_features:
         Attributes:
             cdf (np.array): cumulative distribution function for spectrum 
         """
-        if hasattr(self, 'xinterp') == False: 
-            if verbose: 
-                print('generating features on self.energies, self.intensities...are these already interpolated? ')  
-            intensity = self.intensities
-        else: 
-            intensity = self.yinterp
-                
-        self.cdf = np.array([i/np.max(np.cumsum(intensity)) for i in np.cumsum(intensity)])
+        x, y = self.check_xinterp(verbose)
+
+        self.cdf_features = np.zeros_like(y)
+        for idx, cumsum in enumerate(np.cumsum(y, axis=1)): 
+            self.cdf_features[idx] = np.array([i/np.max(cumsum) for i in cumsum])
         
         if return_features: 
-            return self.cdf 
+            return self.cdf_features
     
-    def cwt(self, widths=np.arange(1,11), psi = 'mexh', verbose=False, return_features:bool = False): 
+    def cwt(self, scales=np.arange(1,11), wavelet = 'mexh', verbose=False, return_features:bool = False): 
         """
         Compute continuous wavelet transform on spectrum: uses inner products to measure the similarity between a signal and an analyzing function (wavelet). 
         Compare signal to shifted and compressed or stretched versions of a wavelet. Can choose different wavelets 
 
         Args:
             intensity (arr): spectrum intensity
-            widths (arr of ints, optional, default: np.arange(1,11)): _description_. Defaults to np.arange(1,11).
+            scales (arr of ints, optional, default: np.arange(1,11)): _description_. Defaults to np.arange(1,11).
             wavelet (pywt.ContinuousWavelet, optional, default: 'mexh') : mother wavelet to compare spectrum to
             verbose (bool, default False) : print progress
         Attributes: 
@@ -321,17 +318,18 @@ class spectral_features:
             remaining axes match the shape of intensity 
             frequencies: if the unit of sampling period are seconds and given, then frequencies are in herts, otherwise a sampling period of 1 assumed 
         """
-        if hasattr(self, 'xinterp') == False: 
-            if verbose: 
-                print('generating features on self.energies, self.intensities...are these already interpolated? ')  
-            intensity = self.intensities
-        else: 
-            intensity = self.yinterp
+        x, y = self.check_xinterp(verbose)
             
-        self.cwt_coefs, self.cwt_frequencies  = pywt.cwt(intensity, widths, psi)
-        
+        temp_coefs, self.cwt_frequencies  = pywt.cwt(y, scales, wavelet, axis=1)
+        cwt_shape = temp_coefs.shape
+
+        #TODO : better way to reshape without for loop 
+        self.cwt_coefs = np.zeros([cwt_shape[1],cwt_shape[0], cwt_shape[-1]])
+        for i in np.arange(cwt_shape[1]): 
+            self.cwt_coefs[i] = temp_coefs[:,i]
+    
         if return_features: 
-            return self.cwt_coefs.ravel()
+            return self.cwt_coefs.reshape(cwt_shape[1],cwt_shape[0] * cwt_shape[2])
     
     def gaussian_peaks(self,num_peaks=20, verbose=False, return_features=True):
         """
@@ -341,24 +339,19 @@ class spectral_features:
             num_peaks (int, default 20): Number of gaussians to fit 
             verbose (bool, default False): print progress
         """
+        self.peak_features = np.array([])
+        x, y = self.check_xinterp(verbose)
+        #TODO: vectorize 
         
-        if hasattr(self, 'xinterp') == False: 
-            if verbose: 
-                print('generating features on self.energies, self.intensities...are these already interpolated? ')  
-            eng = self.energies
-            mu = self.intensities
-        else: 
-            eng = self.xinterp
-            mu = self.yinterp
+        for yi in y: 
+            idxes = [int(i) for i in np.linspace(0, len(x)-1, num_peaks+1)]
+            idxes_2 = [int((idxes[i] + idxes[i+1]) / 2) for i in range(len(idxes)-1)]
+            guess = np.ravel([[x[i], yi[i], 2] for i in idxes_2])
+            lower = np.ravel([[x[i], min(yi), 0] for i in idxes[:-1]])
+            upper = np.ravel([[x[i], max(yi), 6] for i in idxes[1:]])
+            popt, pcov = curve_fit(func_unfix_width_reg, x, yi, p0=guess, bounds=(lower,upper))
             
-        idxes = [int(i) for i in np.linspace(0, len(eng)-1, num_peaks+1)]
-        idxes_2 = [int((idxes[i] + idxes[i+1]) / 2) for i in range(len(idxes)-1)]
-        guess = np.ravel([[eng[i], mu[i], 2] for i in idxes_2])
-        lower = np.ravel([[eng[i], min(mu), 0] for i in idxes[:-1]])
-        upper = np.ravel([[eng[i], max(mu), 6] for i in idxes[1:]])
-        popt, pcov = curve_fit(func_unfix_width_reg, eng, mu, p0=guess, bounds=(lower,upper))
-        
-        self.peak_features = popt 
+            self.peak_features = np.append(self.peak_features, popt)
         
         if return_features: 
             return popt
@@ -377,7 +370,7 @@ class spectral_features:
 
             
         N = len(self.xinterp)
-        self.fft_feat = fft(self.yinterp)[:N//2]
+        self.fft_feat = fft(self.yinterp)[:,:N//2]
         self.fft_freq = np.abs(fftfreq(N, self.de))[:N//2]
         
         if return_features: 
@@ -385,28 +378,47 @@ class spectral_features:
     
     def gaussian_filter_features(self, sigma, verbose=False, return_features = False, **kwargs): 
         
-        if hasattr(self, 'xinterp') == False: 
-            if verbose: 
-                print('generating features on self.energies, self.intensities...are these already interpolated? ')  
-            intensities = self.intensities
-        else: 
-            intensities = self.yinterp
+        x, y = self.check_xinterp(verbose)
         
-        self.gaussian_filter = gaussian_filter(intensities, sigma, **kwargs)
+        self.gaussian_filter = gaussian_filter(y, sigma, **kwargs)
         
         if return_features: 
             return self.gaussian_filter
+    
+    def gaussian_mixture_features(self, n_components, return_features:bool = False, **kwargs): 
+        pass
+    
+    def pca(self, n_components, verbose=False, return_features:bool = False, **kwargs): 
+        x, y = self.check_xinterp(verbose) 
+        pca = PCA(n_components=n_components, **kwargs)
+        self.pca_features = pca.fit_transform(y)
         
+        if return_features: 
+            return self.pca_features
+    
+    def featureagg(self, n_clusters, verbose=False, return_features:bool = False, **kwargs): 
+        x, y = self.check_xinterp(verbose)
+        
+        fa = FeatureAgglomeration(n_clusters=n_clusters, **kwargs)
+        self.fa_features = fa.fit_transform(y)
+        
+        if return_features: 
+            return self.fa_features
+    
     def b_splines(self): 
         pass 
     
-    def shapelet_features(self, **kwargs): 
+    def shapelet(self, labels=None, verbose=False, return_features=False, **kwargs): 
         """
-        Transforms a data set to identify shapelets. Takes a really long time to run? Need to dig a bit deeper 
+        Transforms a data set to identify shapelets. Only works for classification? 
         
         """
-        st = ShapeletTransform(**kwargs)
-        pass  
+        x, y = self.check_xinterp(verbose)
+        st = ShapeletTransform()
+        self.shapelet_features = st.fit_transform(X=y, y=labels, **kwargs)
+        if return_features: 
+            return self.shapelet_features
+          
     
     def bow_features(self, **kwargs): 
         bow = BagOfWords(**kwargs)
@@ -427,3 +439,68 @@ class spectral_features:
     def ROCKET_featrues(self, **kwargs): 
         rkt = ROCKET(**kwargs)
         pass
+    
+    
+    ### Plotting functions for app 
+    ### May fail with current new updates
+    def plot_gaussian_peaks(self, ax=None, verbose = False, **kwargs): 
+        
+        x, y = self.check_xinterp(verbose)
+        
+        assert hasattr(self, 'peak_features'), 'need to create gaussian peak features first'
+        
+        ax.plot(x, func_unfix_width_reg(x,*self.peak_features), label = "Reconstructed spectrum")
+        for i in range(0, len(self.peak_features), 3):
+            ctr = self.peak_features[i]
+            amp = self.peak_features[i+1]
+            wid = self.peak_features[i+2]
+            yfit = amp * np.exp( -((x - ctr)**2/(2*(wid/2.355)**2)))
+            ax.plot(x, yfit, linestyle='-.', color='grey', **kwargs)
+            
+        fitted = np.array(fitted).ravel()
+        return np.arange(len(fitted)), fitted 
+            
+    def plot_cwt(self, ax=None, verbose=False, **kwargs): 
+        x, _ = self.check_xinterp(verbose)
+        
+        assert hasattr(self, 'cwt_frequencies'), 'need to create cwt features first'
+        if ax is not None: 
+            ax.pcolormesh(x, self.cwt_frequencies, self.cwt_coefs, **kwargs)
+        else: 
+            return self.cwt_frequencies, self.cwt_coefs
+            
+    def plot_cdf(self,ax=None,verbose=False, **kwargs):
+        x, _ = self.check_xinterp(verbose)
+        
+        assert hasattr(self, 'cdf_feat'), 'need to create cdf features first'
+
+        if ax is not None: 
+            ax.plot(x, self.cdf_feat)
+        else: 
+            return x, self.cdf_feat
+        
+    def plot_polynomial_featuresall(self,ax=None,verbose=False, **kwargs):
+        _, _ = self.check_xinterp(verbose)
+        
+        assert hasattr(self, 'polyfeatures_all'), 'need to create poly features first'
+
+        x  = np.arange(len(self.polyfeatures_all))
+        if ax is not None: 
+            ax.plot(x[:-1], self.polyfeatures_all[:-1])
+            ax.set_xlabel('Feature Index')
+        
+        else: 
+            return x[:-1], self.polyfeatures_all[:-1]
+                
+    
+    def check_xinterp(self, verbose=False): 
+        if hasattr(self, 'xinterp') == False: 
+            if verbose: 
+                print('generating features on self.energies, self.intensities...are these already interpolated? ')  
+            x = self.energies
+            y = self.intensities
+        else: 
+            x = self.xinterp
+            y = self.yinterp
+        return x, y 
+                

@@ -8,7 +8,7 @@ from pymatgen.core import Structure
 
 
 test_files = (
-    "tests/test_files/"  # Replace with the actual path to the test files directory
+    "test_files/"  # Replace with the actual path to the test files directory
 )
 
 structure_list = []

@@ -3,73 +3,125 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 import json 
 from spectrascope.features import * 
-from spectrascope.models import * 
+
 import SPA 
-
-x_domains_xanes_torrisi = {'Ti': np.linspace(4970,5021.0, 100), 
-              'V': np.linspace(5468.0, 5520.6, 100),
-              'Cr': np.linspace(5993.1, 6045.7, 100), 
-              'Mn': np.linspace(6541.7, 6594.4, 100), 
-              'Fe': np.linspace(7115.0, 7167.8, 100),
-              'Co': np.linspace(7713.5, 7765.8, 100),
-              'Ni': np.linspace(8336.5, 8388.7, 100), 
-              'Cu': np.linspace(8987.5, 9039.7, 100)}
-
-x_domains_xanes_billinge = {
-            'Ti': np.linspace(4969.0, 5021.0, 200),
-            'V': np.linspace(5468.671, 5520.63, 200),
-            'Cr': np.linspace(5993.195, 6045.686, 200),
-            'Mn': np.linspace(6542.896, 6594.431, 200),
-            'Fe': np.linspace(7115.617, 7167.759, 200),
-            'Co': np.linspace(7714.284, 7765.838, 200),
-            'Ni': np.linspace(8337.207, 8388.723, 200),
-            'Cu': np.linspace(8988.142, 9039.728, 200)
-        }
-
-x_domain_pdf_billinge = np.linspace(0,10,200)
+import datetime
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error
+from sklearn.pipeline import make_pipeline, Pipeline
+from sklearn.model_selection import GridSearchCV
+import os 
+import pickle
 
 
-class data_file:
+class SpectraScope:
     
-    def __init__(self, fn, el, random_seed=None, data='Billinge') -> None:
-        if fn.endswith('json'): 
-            self.df = pd.read_json(fn)
-            with open(fn)as f:
-                self.js = json.load(f) 
-            
-            self.add_y_json('BL_mean')
+    def __init__(self, X=None, y=None, fnX = None, fny = None, specnames=[], yname='', random_seed=None, save_path=None) -> None:
+        
+        date = datetime.date
+        self.today = date.today().strftime('%m_%d_%Y')
+        
+        # add X 
+        if X is not None:  
+            self.X = X 
+        elif fnX is not None: 
+            self.X = self.load_file(fnX)
 
-        elif fn.endswith('csv'): 
-            self.df = pd.read_csv(fn)
-        elif fn.endswith('npy'): 
-            # TODO: Numpy functionality 
-            self.df = np.load(fn )
-            
+        
+        if len(X) >= 2: 
+            multi_modal = True
+            self.n_modalities = len(X)
+        else: 
+            self.n_modalities = 0 
+        
+        assert len(specnames) == self.n_modalities, 'please input a name for each modality'
+        
+        for i, specname in enumerate(specnames): 
+            Xi = self.X[i]
+            setattr(self, specname, Xi)    
+        
+        # add Y 
+        if y is not None: 
+            setattr(self, yname, y) 
+        elif fny is not None:
+            y = self.load_file(fny)
+            setattr(self, yname, y)  
+        
+
         self.random_seed = random_seed
         if type(self.random_seed) is not int: 
             print('no random seed selected, when splitting data, will always give different split')
-        self.best_fits = {}
-        self.el = el
-        self.x_xanes = x_domains_xanes_billinge[self.el]
-        self.x_pdf = np.linspace(0,10,200)
-        
-       
-    def add_feature_df(self, xarr, feat, convcol, additional_naming='', **kwargs): 
-        self.df[f'{convcol}_' + feat + f'{additional_naming}'] = self.df[convcol].apply(lambda x: (spectral_features(xarr, x).__getattribute__(feat).__call__(return_features=True, **kwargs)))
-        
-    def add_feature_json(self, xarr, feat, convcol, additional_naming='', add_to_json = False, **kwargs): 
-        np_convcol = np.array([np.array(self.js[convcol][key]) for key in self.js[convcol]])  
-        new_feat = np.array([spectral_features(xarr, x).__getattribute__(feat).__call__(return_features=True, **kwargs) for x in np_convcol])
-        name = convcol + '_' + feat + additional_naming
-        setattr(self, name, new_feat) 
-        
-        if add_to_json: 
-            self.js[name] = new_feat
             
-    def add_y_json(self, feat, additional_naming=''): 
-        setattr(self, feat + additional_naming, np.array([self.js[feat][key] for key in self.js[feat]]).astype(float))
+        self.best_fits = {}
         
-    def combine_feature_json(self, feat1, feat2): 
+        if save_path is None: 
+            print('saving to /examples/models, change save_path kwarg if youd like to change')
+            self.save_path = '/examples/models/'
+        
+        #### Need to incorporate this in some way    
+        
+    def load_file(self, fn):
+        """
+        Used by SS to load data files.
+        """
+        _, ext = os.path.splitext(fn)
+        if ext == '.txt':
+            for separator in (' ', ',', '\t', ';'): # Testing random separators
+                data = pd.read_csv(fn, header = None, sep = separator).values
+                if data.shape[-1] > 1: # We likely found the separator
+                    break
+        elif ext == '.csv':
+            data = pd.read_csv(fn, header = None, sep = ',').values
+        elif ext == '.tsv':
+            data = pd.read_csv(fn, header = None, sep = '\t').values
+        elif ext in {'.xls', '.xlsx'}:
+            data = pd.read_excel(fn, header = None).values
+        elif ext == '.npy':
+            data = np.load(fn)
+        elif ext == '.json': 
+            data = pd.read_json(fn)
+        else:
+            raise ValueError(f'Please provide a filename with extension in {{.txt, .csv, .tsv, .xls, .xlsx, .npy, .json}}. You passed {filename}')
+        return data
+    
+    def add_x_axis(self, specname, value):
+        setattr(self, specname + '_xaxis', value) 
+        
+    def add_x_label(self, specname, value):
+        setattr(self, specname + '_labelx', value) 
+    
+    def add_y_label(self, specname, value):
+        setattr(self, specname + '_labely', value) 
+                
+    def add_feature(self, specname, feat, xaxis=None, additional_naming='', **kwargs):
+        if xaxis is None: 
+            xaxis = getattr(self, specname + '_xaxis')
+        
+        X = getattr(self, specname)
+        new_feat = np.array([spectral_features(xaxis, X).__getattribute__(feat).__call__(return_features=True, **kwargs)])
+        
+        setattr(self, specname + '_' + feat + additional_naming, new_feat[0])
+        
+    # def add_feature_df(self, xarr, feat, convcol, additional_naming='', **kwargs): 
+    #     self.df[f'{convcol}_' + feat + f'{additional_naming}'] = self.df[convcol].apply(lambda x: (spectral_features(xarr, x).__getattribute__(feat).__call__(return_features=True, **kwargs)))
+        
+    # def add_feature_json(self, xarr, feat, convcol, additional_naming='', add_to_json = False, **kwargs): 
+    #     np_convcol = np.array([np.array(self.js[convcol][key]) for key in self.js[convcol]])  
+        
+        
+    #     new_feat = np.array([spectral_features(xarr, x).__getattribute__(feat).__call__(return_features=True, **kwargs) for x in np_convcol])
+        
+        
+    #     name = convcol + '_' + feat + additional_naming
+    #     setattr(self, name, new_feat) 
+        
+    #     if add_to_json: 
+    #         self.js[name] = new_feat
+            
+    # def add_y_json(self, feat, additional_naming=''): 
+    #     setattr(self, feat + additional_naming, np.array([self.js[feat][key] for key in self.js[feat]]).astype(float))
+        
+    def combine_feature(self, feat1, feat2): 
         assert hasattr(self, feat1), 'please add feature first'
         assert hasattr(self, feat2), 'please add feature first'
         
@@ -106,9 +158,9 @@ class data_file:
         ypred = P.predict(X_test)
         score = metric(y_test, ypred)
         
-        if savef is not None: 
-            with open(savef, 'wb') as f: 
-                pickle.dump(P,f)
+        # if savef is not None: 
+        #     with open(savef, 'wb') as f: 
+        #         pickle.dump(P,f)
         
         return P, score, ypred
     
@@ -131,16 +183,19 @@ class data_file:
         fit_dict = {'P':P, 'score':score, 'ypred':ypred}
         setattr(self, Xattr + '_' + yattr + '_' + model_name, fit_dict)
         
+        perc_err = np.mean(np.abs((y_test - ypred) / y_test)) * 100
+        
         if model_name not in self.best_fits: 
-            self.best_fits[model_name] = {Xattr + '_' + yattr : score}
+            self.best_fits[model_name] = {Xattr + '_' + yattr : perc_err} #score
         else: 
-            self.best_fits[model_name][Xattr + '_' + yattr] = score 
+            self.best_fits[model_name][Xattr + '_' + yattr] = perc_err  #score
         
         if savef is not None: 
-            with open(savef, 'wb') as f: 
+            self.check_dir_exists(f'{self.save_path}/{self.today}')
+            with open(f'{self.save_path}/{self.today}/sk_{model_name}_{self.timenow}_{Xattr}_{yattr}_{savef}.p', 'wb') as f: 
                 pickle.dump(P,f)
         
-    def do_LCEN(self, Xattr, yattr, test_size, **kwargs):
+    def do_LCEN(self, Xattr, yattr, test_size, savef=None, **kwargs):
         
         # if not hasattr(self, Xattr + '_train'):
         self.split_X(Xattr, test_size)
@@ -163,13 +218,20 @@ class data_file:
         
         setattr(self, Xattr + '_' + yattr + '_LCEN', out[0]['LCEN'])
         score = out[0]['LCEN']['MSE_test_nontrans']
+        ypred = out[0]['LCEN']['yhat_test_nontrans']
+        perc_err = np.mean(np.abs((y_test - ypred) / y_test)) * 100
         
         if 'LCEN' not in self.best_fits: 
-            self.best_fits['LCEN'] = {Xattr + '_' + yattr : score}
+            self.best_fits['LCEN'] = {Xattr + '_' + yattr : perc_err} #score
         else: 
-            self.best_fits['LCEN'][Xattr + '_' + yattr] = score 
+            self.best_fits['LCEN'][Xattr + '_' + yattr] = perc_err  #score
+            
+        if savef is not None: 
+            self.check_dir_exists(f'{self.save_path}/{self.today}')
+            with open(f'{self.save_path}/{self.today}/LCEN_{self.timenow}_{Xattr}_{yattr}_{savef}.p', 'wb') as f: 
+                pickle.dump(out[0]['LCEN'],f)
         
-    def do_all(self, feats:dict, yattr, test_size, sk_kwargs=[], lcen_kwargs=None, multi_modal=None):
+    def do_all(self, feats:dict, yattr, test_size, sk_kwargs=[], lcen_kwargs=None, multi_modal=None, savef=None):
         """
 
         Args:
@@ -178,36 +240,38 @@ class data_file:
             test_size (float/int): input for sklearn train_test_split test_size 
             multi_modal (list, optional): [(feat1,feat2),]. Defaults to None. 
         """
+        self.timenow = datetime.datetime.now().time().strftime('%H_%M_%S_%f')
         for feat in feats: 
             kwargs_list = feats[feat]
             for kwargs in kwargs_list: 
-                if hasattr(self, 'js'): 
-                    attr_name = kwargs['convcol'] + '_' + feat
-                    print(attr_name)
-                    print(kwargs.keys())
-                    if not hasattr(self, attr_name): 
-                        self.add_feature_json(feat=feat, **kwargs)
-                                
-                    for sk in sk_kwargs: 
-                        self.do_sk(attr_name, yattr, test_size, **sk)
-                    if lcen_kwargs is not None:
-                        self.do_LCEN(attr_name, yattr, test_size, **lcen_kwargs)
-                else: 
-                    print('not built for dataframes yet')
-                    return 
+                attr_name = kwargs['specname'] + '_' + feat
+                if not hasattr(self, attr_name): 
+                    self.add_feature(feat=feat, **kwargs)
+                            
+                for sk in sk_kwargs: 
+                    self.do_sk(attr_name, yattr, test_size, savef, **sk)
+                if lcen_kwargs is not None:
+                    self.do_LCEN(attr_name, yattr, test_size, savef, **lcen_kwargs)
             
         if multi_modal is not None: 
             for combo in multi_modal: 
                 feat1, feat2 = combo
                 attr_name = feat1.split('_')[0] + '_' + feat2
                 if not hasattr(self, attr_name): 
-                    self.combine_feature_json(feat1, feat2)
+                    self.combine_feature(feat1, feat2)
                 
                 for sk in sk_kwargs: 
-                    self.do_sk(attr_name, yattr, test_size, **sk)
+                    self.do_sk(attr_name, yattr, test_size, savef, **sk)
                 if lcen_kwargs is not None: 
-                    self.do_LCEN(attr_name, yattr, test_size, **lcen_kwargs)
+                    self.do_LCEN(attr_name, yattr, test_size, savef, **lcen_kwargs)
             
+    def check_dir_exists(self, directory): 
+        try: 
+            os.makedirs(directory)
+        except OSError: 
+            pass 
+    
+    
     # these might be unnecessary actually 
     # def add_df_poly_all(self, degree, convcol = 'spectrum', Narr=np.array([4,5,10,20]), additional_naming=''): 
     #     self.df['spectrum_poly_' + '_'.join([str(num) for num in Narr]) + f'{additional_naming}'] = self.df[convcol].apply(lambda x: spectral_features(x['x'], x['y']).polynomial_featuresall(Narr=Narr, degree=degree, return_features=True, verbose=False))
