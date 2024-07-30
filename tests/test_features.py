@@ -7,7 +7,7 @@ from spectrascope.features import *
 
 x1, y1 = np.load('test_files/test_xas.npy')
 fnX = 'test_files/X_testfile.npy'
-fny = 'test_files/test_data/y_testfile.npy'
+fny = 'test_files/y_testfile.npy'
 X = np.load(fnX)
 X = X[0]
 # y = np.load(fny)

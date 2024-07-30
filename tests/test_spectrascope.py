@@ -79,6 +79,5 @@ def test_split_X():
         Ntest = N - Ntrain
         assert temp.xanes_pointwise_features_train.shape == (Ntrain, 200)
         assert temp.xanes_pointwise_features_test.shape == (Ntest, 200)
-        
-    
+
     
