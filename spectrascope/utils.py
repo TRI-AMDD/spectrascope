@@ -2,44 +2,47 @@
 
 
 from multiprocessing import Queue
-import numpy as np 
+import numpy as np
 
-x_domains_xanes_torrisi = {'Ti': np.linspace(4970,5021.0, 100), 
-              'V': np.linspace(5468.0, 5520.6, 100),
-              'Cr': np.linspace(5993.1, 6045.7, 100), 
-              'Mn': np.linspace(6541.7, 6594.4, 100), 
-              'Fe': np.linspace(7115.0, 7167.8, 100),
-              'Co': np.linspace(7713.5, 7765.8, 100),
-              'Ni': np.linspace(8336.5, 8388.7, 100), 
-              'Cu': np.linspace(8987.5, 9039.7, 100)}
+x_domains_xanes_torrisi = {
+    "Ti": np.linspace(4970, 5021.0, 100),
+    "V": np.linspace(5468.0, 5520.6, 100),
+    "Cr": np.linspace(5993.1, 6045.7, 100),
+    "Mn": np.linspace(6541.7, 6594.4, 100),
+    "Fe": np.linspace(7115.0, 7167.8, 100),
+    "Co": np.linspace(7713.5, 7765.8, 100),
+    "Ni": np.linspace(8336.5, 8388.7, 100),
+    "Cu": np.linspace(8987.5, 9039.7, 100),
+}
 
 x_domains_xanes_billinge = {
-            'Ti': np.linspace(4969.0, 5021.0, 200),
-            'V': np.linspace(5468.671, 5520.63, 200),
-            'Cr': np.linspace(5993.195, 6045.686, 200),
-            'Mn': np.linspace(6542.896, 6594.431, 200),
-            'Fe': np.linspace(7115.617, 7167.759, 200),
-            'Co': np.linspace(7714.284, 7765.838, 200),
-            'Ni': np.linspace(8337.207, 8388.723, 200),
-            'Cu': np.linspace(8988.142, 9039.728, 200)
-        }
+    "Ti": np.linspace(4969.0, 5021.0, 200),
+    "V": np.linspace(5468.671, 5520.63, 200),
+    "Cr": np.linspace(5993.195, 6045.686, 200),
+    "Mn": np.linspace(6542.896, 6594.431, 200),
+    "Fe": np.linspace(7115.617, 7167.759, 200),
+    "Co": np.linspace(7714.284, 7765.838, 200),
+    "Ni": np.linspace(8337.207, 8388.723, 200),
+    "Cu": np.linspace(8988.142, 9039.728, 200),
+}
 
-x_domain_pdf_billinge = np.linspace(0,10,200)
+x_domain_pdf_billinge = np.linspace(0, 10, 200)
 
 
-#TODO : Write good data loading algorithm 
+# TODO : Write good data loading algorithm
 def load_data(fn):
-    if fn.endswith('json'): 
+    if fn.endswith("json"):
         df = pd.read_json(fn)
-        with open(fn)as f:
+        with open(fn) as f:
             data = json.load(f)
-    elif fn.endswith('csv'): 
+    elif fn.endswith("csv"):
         data = pd.read_csv(fn)
-    elif fn.endswith('npy'): 
+    elif fn.endswith("npy"):
         data = np.load(fn)
-    return data 
-        
-def oxidation_state_worker(queue, struct): 
+    return data
+
+
+def oxidation_state_worker(queue, struct):
     """
     Helper function for multiprocessing to calculate oxidation state of a structure and return the output
     Args:
@@ -48,7 +51,8 @@ def oxidation_state_worker(queue, struct):
     """
     ret = struct.add_oxidation_state_by_guess()
     queue.put(ret)
-    
+
+
 def linear(x, m, b):
     """
     Calculates the linear function y = m*x + b.
@@ -59,7 +63,7 @@ def linear(x, m, b):
     Returns:
         float: The calculated value of y.
     """
-    return m*x + b
+    return m * x + b
 
 
 def find_nearest(x, value):
@@ -73,34 +77,37 @@ def find_nearest(x, value):
     """
     return np.argmin(np.abs(x - value))
 
+
 def get_mean_nn(struct, nnalgo, el):
-    """"
+    """ "
     Calculate the mean nearest neighbor distance for a specific element in a structure
-    Args: 
+    Args:
         struct (pymatgen.core.structure.Structure): pymatgen structure object
         nnalgo (pymatgen.analysis.local_env): algorithm to calculate nearest neighbor distances
         el (str): element to calculate nearest neighbor distances for
-    Returns: 
-        float: mean nearest neighbor distance for the specified element in the structure 
+    Returns:
+        float: mean nearest neighbor distance for the specified element in the structure
     """
     nn_distances = []
-    for i, label in enumerate(struct.labels): 
-        if label == el: 
+    for i, label in enumerate(struct.labels):
+        if label == el:
             nn_info = nnalgo.get_nn_info(struct, i)
-            for j, neighbor in enumerate(nn_info): 
-                nn_distances.append(struct.get_distance(i, neighbor['site_index']))
+            for j, neighbor in enumerate(nn_info):
+                nn_distances.append(struct.get_distance(i, neighbor["site_index"]))
     return np.nanmean(nn_distances)
 
+
 def func_unfix_width_reg(eng, *params):
-    #TODO: interpolation
+    # TODO: interpolation
     # print(params)
     y = np.zeros_like(eng)
     for i in range(0, len(params), 3):
         ctr = params[i]
-        amp = params[i+1]
-        wid = params[i+2]
-        y = y + amp * np.exp(-((eng - ctr)**2/(2*(wid/2.355)**2)))
-    return y 
+        amp = params[i + 1]
+        wid = params[i + 2]
+        y = y + amp * np.exp(-((eng - ctr) ** 2 / (2 * (wid / 2.355) ** 2)))
+    return y
 
-def NormalizeData(arr): 
+
+def NormalizeData(arr):
     return (arr - arr.min()) / (arr.max() - arr.min())
