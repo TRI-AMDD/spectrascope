@@ -78,8 +78,8 @@ class spectral_features:
         Initializes a new instance of the Spectral Features class.
 
         Args:
-            energies (np.array): Energy values from XAS spectrum.
-            intensities (np.array): Intensity values from XAS spectrum.
+            energies (np.array): x axis (energy, time)
+            intensities (np.array): y axis (intensity, current, etc)
         """
         self.energies = np.array(energies)
         self.intensities = np.array(intensities)

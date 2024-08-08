@@ -12,7 +12,11 @@ from sklearn.pipeline import make_pipeline, Pipeline
 from sklearn.model_selection import GridSearchCV
 import os
 import pickle
-
+import regression_models 
+import spectrascope.structure_property_featurization as structure_property_featurization
+import plotly.express as px 
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
 class SpectraScope:
 
@@ -37,15 +41,16 @@ class SpectraScope:
         elif fnX is not None:
             self.X = self.load_file(fnX)
 
-        if len(X) >= 2:
-            multi_modal = True
-            self.n_modalities = len(X)
-        else:
-            self.n_modalities = 0
+        # if len(X.shape) > 2:
+        #     multi_modal = True
+        #     self.n_modalities = len(X)
+        # else:
+        #     self.n_modalities = 1
+        #     multi_modal = False 
 
-        assert (
-            len(specnames) == self.n_modalities
-        ), "please input a name for each modality"
+        # assert (
+        #     len(specnames) == self.n_modalities
+        # ), "please input a name for each modality"
 
         for i, specname in enumerate(specnames):
             Xi = self.X[i]
@@ -53,10 +58,10 @@ class SpectraScope:
 
         # add Y
         if y is not None:
-            setattr(self, yname, y)
+            self.add_y(yname, y)
         elif fny is not None:
             y = self.load_file(fny)
-            setattr(self, yname, y)
+            self.add_y(yname, y)
 
         self.random_seed = random_seed
         if type(self.random_seed) is not int:
@@ -65,6 +70,7 @@ class SpectraScope:
             )
 
         self.best_fits = {}
+        self.specnames = specnames
 
         if save_path is None:
             print(
@@ -109,7 +115,7 @@ class SpectraScope:
     def add_y_label(self, specname, value):
         setattr(self, specname + "_labely", value)
 
-    def add_feature(self, specname, feat, xaxis=None, additional_naming="", **kwargs):
+    def add_spectral_feature(self, specname, feat, xaxis=None, additional_naming="", **kwargs):
         if xaxis is None:
             xaxis = getattr(self, specname + "_xaxis")
 
@@ -123,30 +129,65 @@ class SpectraScope:
         )
 
         setattr(self, specname + "_" + feat + additional_naming, new_feat[0])
-
-    # def add_feature_df(self, xarr, feat, convcol, additional_naming='', **kwargs):
-    #     self.df[f'{convcol}_' + feat + f'{additional_naming}'] = self.df[convcol].apply(lambda x: (spectral_features(xarr, x).__getattribute__(feat).__call__(return_features=True, **kwargs)))
-
-    # def add_feature_json(self, xarr, feat, convcol, additional_naming='', add_to_json = False, **kwargs):
-    #     np_convcol = np.array([np.array(self.js[convcol][key]) for key in self.js[convcol]])
-
-    #     new_feat = np.array([spectral_features(xarr, x).__getattribute__(feat).__call__(return_features=True, **kwargs) for x in np_convcol])
-
-    #     name = convcol + '_' + feat + additional_naming
-    #     setattr(self, name, new_feat)
-
-    #     if add_to_json:
-    #         self.js[name] = new_feat
-
-    # def add_y_json(self, feat, additional_naming=''):
-    #     setattr(self, feat + additional_naming, np.array([self.js[feat][key] for key in self.js[feat]]).astype(float))
-
-    def combine_feature(self, feat1, feat2):
+        
+    def add_y(self, yname, y): 
+        setattr(self, yname, y)
+        
+    def add_structural_label(self, structname, yname, additional_naming = "", **kwargs): 
+        """
+        Working on it 
+        
+        """
+        structure_arr = getattr(self, structname)
+        struct_label = getattr(structure_property_featurization, yname)
+        
+        y = []
+        for struct in structure_arr: 
+            y.append(int(struct_label.__call__(structure=struct, **kwargs)))
+        setattr(self, structname + '_' + yname + '_' + '_'.join([str(val) for val in kwargs.values()]) + additional_naming, y)
+        # self.structural_features()
+        
+    def structural_labels(self): 
+        y_structural = np.array([getattr(self, struct_attr) for struct_attr in dir(self) if 'structures_' in struct_attr])
+        setattr(self, 'y_structural', y_structural)
+        names =[struct_attr for struct_attr in dir(self) if 'structures_' in struct_attr] 
+        setattr(self, 'y_structural_names', np.array(names) )
+        
+    def combine_feature(self, feat1, feat2, additional_naming=''):
         assert hasattr(self, feat1), "please add feature first"
         assert hasattr(self, feat2), "please add feature first"
 
         combined_feat = np.append(getattr(self, feat1), getattr(self, feat2), axis=1)
-        setattr(self, feat1.split("_")[0] + "_" + feat2, combined_feat)
+        setattr(self, feat1.split("_")[0] + "_" + feat2 + additional_naming, combined_feat)
+        
+    def transform_feature(self, feat, degree=2, interaction=True, trans_type='all', 
+                           all_pos_y=True, additional_naming=''): 
+        """
+        Polynomial etc. transformations of already generated features 
+        uses _feature_trans function from regression_models in SPA 
+        Args:
+            feat: feature name
+            feat_test (optional): Test set of feature name. Defaults to None.
+        """
+        X = getattr(self, feat)
+        try: 
+            X_test = getattr(self, feat + '_test')
+        except AttributeError: 
+            X_test = None 
+        all_pos_X = np.all(X >= 0, axis = 0)
+        X_out, X_test_out, names = regression_models._feature_trans(X=X, 
+                                                                    X_test=X_test,
+                                                                    degree=degree, 
+                                                                    interaction=interaction, 
+                                                                    trans_type=trans_type, 
+                                                                    all_pos_X = all_pos_X, 
+                                                                    all_pos_y = all_pos_y)
+        
+        setattr(self, feat + '_trans' + additional_naming, X_out)
+        if X_test_out is not None: 
+            setattr(self, feat + '_test_trans' + additional_naming, X_test_out)
+        setattr(self, feat + '_trans_names' + additional_naming, names)
+        
 
     def split_X(self, attr, test_size):
         X = getattr(self, attr)
@@ -172,7 +213,7 @@ class SpectraScope:
         X_test,
         y_train,
         y_test,
-        model=RandomForestRegressor(),
+        estimator=RandomForestRegressor(),
         scoring="neg_mean_squared_error",
         cv=5,
         param_grid: dict = {"n_estimators": [50, 100], "criterion": ["squared_error"]},
@@ -183,11 +224,11 @@ class SpectraScope:
 
         P = make_pipeline(
             GridSearchCV(
-                model,
+                estimator=estimator,
                 param_grid=param_grid,
                 cv=cv,
                 refit=refit,
-                scoring=scoring,
+                # scoring=scoring,
                 n_jobs=-1,
             )
         )
@@ -200,12 +241,16 @@ class SpectraScope:
         #         pickle.dump(P,f)
 
         return P, score, ypred
+    def sk(self, X_train, X_test, y_train, y_test, estimator=RandomForestRegressor(), metric=mean_squared_error, savef=None, **kwargs):
+        est = estimator 
+        est.fit(X_train, y_train)
+        ypred = est.predict(X_test)
+        score = metric(y_test, ypred)
+        return est, score, ypred 
+        
+    def do_sk(self, Xattr, yattr, test_size, savef=None, use_pipeline=True, **kwargs):
 
-    def do_sk(self, Xattr, yattr, test_size, savef=None, **kwargs):
-
-        # if not hasattr(self, Xattr + '_train'):
         self.split_X(Xattr, test_size)
-        # if not hasattr(self, yattr + '_test'):
         self.split_y(yattr, test_size)
 
         X_train = getattr(self, Xattr + "_train")
@@ -214,17 +259,22 @@ class SpectraScope:
         y_train = getattr(self, yattr + "_train")
         y_test = getattr(self, yattr + "_test")
 
-        P, score, ypred = self.sk_pipeline(X_train, X_test, y_train, y_test, **kwargs)
-        model_name = P[0].best_estimator_.__str__().split("(")[0]
+        if use_pipeline: 
+            P, score, ypred = self.sk_pipeline(X_train, X_test, y_train, y_test, **kwargs)
+            model_name = P[0].best_estimator_.__str__().split("(")[0]
+        else: 
+            P, score, ypred = self.sk(X_train, X_test, y_train, y_test, **kwargs)
+            model_name = P.__str__().split("(")[0]
+            
         fit_dict = {"P": P, "score": score, "ypred": ypred}
         setattr(self, Xattr + "_" + yattr + "_" + model_name, fit_dict)
 
         perc_err = np.mean(np.abs((y_test - ypred) / y_test)) * 100
 
         if model_name not in self.best_fits:
-            self.best_fits[model_name] = {Xattr + "_" + yattr: perc_err}  # score
+            self.best_fits[model_name] = {Xattr + "_" + yattr: score}  # score
         else:
-            self.best_fits[model_name][Xattr + "_" + yattr] = perc_err  # score
+            self.best_fits[model_name][Xattr + "_" + yattr] = score  # score
 
         if savef is not None:
             self.check_dir_exists(f"{self.save_path}/{self.today}")
@@ -236,9 +286,7 @@ class SpectraScope:
 
     def do_LCEN(self, Xattr, yattr, test_size, savef=None, **kwargs):
 
-        # if not hasattr(self, Xattr + '_train'):
         self.split_X(Xattr, test_size)
-        # if not hasattr(self, Xattr + '_test'):
         self.split_y(yattr, test_size)
 
         X_train = getattr(self, Xattr + "_train")
@@ -263,14 +311,19 @@ class SpectraScope:
         )
 
         setattr(self, Xattr + "_" + yattr + "_LCEN", out[0]["LCEN"])
-        score = out[0]["LCEN"]["MSE_test_nontrans"]
         ypred = out[0]["LCEN"]["yhat_test_nontrans"]
         perc_err = np.mean(np.abs((y_test - ypred) / y_test)) * 100
+        
+        if 'metric' not in kwargs: 
+            score = out[0]["LCEN"]["MSE_test_nontrans"]
+        else: 
+            metric = kwargs["metric"]
+            score = metric(y_test, ypred)
 
         if "LCEN" not in self.best_fits:
-            self.best_fits["LCEN"] = {Xattr + "_" + yattr: perc_err}  # score
+            self.best_fits["LCEN"] = {Xattr + "_" + yattr: score}  # score
         else:
-            self.best_fits["LCEN"][Xattr + "_" + yattr] = perc_err  # score
+            self.best_fits["LCEN"][Xattr + "_" + yattr] = score  # score
 
         if savef is not None:
             self.check_dir_exists(f"{self.save_path}/{self.today}")
@@ -289,6 +342,7 @@ class SpectraScope:
         lcen_kwargs=None,
         multi_modal=None,
         savef=None,
+        do_all_existing = False,
     ):
         """
 
@@ -297,53 +351,59 @@ class SpectraScope:
             y (attr name): name of yattr to regress on
             test_size (float/int): input for sklearn train_test_split test_size
             multi_modal (list, optional): [(feat1,feat2),]. Defaults to None.
+            
+            Currently, add transformations separately because transformations aren't
+            part of add feature function 
         """
         self.timenow = datetime.datetime.now().time().strftime("%H_%M_%S_%f")
-        for feat in feats:
-            kwargs_list = feats[feat]
-            for kwargs in kwargs_list:
-                attr_name = kwargs["specname"] + "_" + feat
-                if not hasattr(self, attr_name):
-                    self.add_feature(feat=feat, **kwargs)
+        
+        if do_all_existing: 
+            for spec in self.specnames:
+                attr_names = [feat for feat in dir(self) if 'feature' in feat and f'{spec}_' in feat and type(getattr(self, feat)) == np.ndarray and 'names' not in feat and 'test' not in feat and 'train' not in feat]
+                for attr_name in attr_names:
+                    for sk in sk_kwargs:
+                        self.do_sk(attr_name, yattr, test_size, savef, **sk)
+                    if lcen_kwargs is not None:
+                        self.do_LCEN(attr_name, yattr, test_size, savef, **lcen_kwargs)
+                    
+        else: 
+                
+                
+            for feat in feats:
+                kwargs_list = feats[feat]
+                for kwargs in kwargs_list:
+                    attr_name = kwargs["specname"] + "_" + feat
+                    if not hasattr(self, attr_name):
+                        self.add_spectral_feature(feat=feat, **kwargs)
 
-                for sk in sk_kwargs:
-                    self.do_sk(attr_name, yattr, test_size, savef, **sk)
-                if lcen_kwargs is not None:
-                    self.do_LCEN(attr_name, yattr, test_size, savef, **lcen_kwargs)
+                    for sk in sk_kwargs:
+                        self.do_sk(attr_name, yattr, test_size, savef, **sk)
+                    if lcen_kwargs is not None:
+                        self.do_LCEN(attr_name, yattr, test_size, savef, **lcen_kwargs)
 
-        if multi_modal is not None:
-            for combo in multi_modal:
-                feat1, feat2 = combo
-                attr_name = feat1.split("_")[0] + "_" + feat2
-                if not hasattr(self, attr_name):
-                    self.combine_feature(feat1, feat2)
+            if multi_modal is not None:
+                for combo in multi_modal:
+                    feat1, feat2 = combo
+                    attr_name = feat1.split("_")[0] + "_" + feat2
+                    if not hasattr(self, attr_name):
+                        self.combine_feature(feat1, feat2)
 
-                for sk in sk_kwargs:
-                    self.do_sk(attr_name, yattr, test_size, savef, **sk)
-                if lcen_kwargs is not None:
-                    self.do_LCEN(attr_name, yattr, test_size, savef, **lcen_kwargs)
+                    for sk in sk_kwargs:
+                        self.do_sk(attr_name, yattr, test_size, savef, **sk)
+                    if lcen_kwargs is not None:
+                        self.do_LCEN(attr_name, yattr, test_size, savef, **lcen_kwargs)
 
     def check_dir_exists(self, directory):
         try:
             os.makedirs(directory)
         except OSError:
             pass
-
-    # these might be unnecessary actually
-    # def add_df_poly_all(self, degree, convcol = 'spectrum', Narr=np.array([4,5,10,20]), additional_naming=''):
-    #     self.df['spectrum_poly_' + '_'.join([str(num) for num in Narr]) + f'{additional_naming}'] = self.df[convcol].apply(lambda x: spectral_features(x['x'], x['y']).polynomial_featuresall(Narr=Narr, degree=degree, return_features=True, verbose=False))
-    #     # return df
-
-    # def add_df_poly_individual(self, N, degree, convcol = 'spectrum', additional_naming=''):
-    #     self.df[f'spectrum_poly_{N}' + f'{additional_naming}'] = self.df[convcol].apply(lambda x: spectral_features(x['x'], x['y']).polynomial_featuresN(N=N, degree=degree, return_features=True, verbose=False).ravel())
-    #     # return df
-
-    # def add_df_pointwise(self, convcol = 'spectrum', custom_range = None, additional_naming=''):
-    #     self.df['spectrum_point' + f'{additional_naming}'] = self.df[convcol].apply(lambda x: spectral_features(x['x'], x['y']).pointwise_features(custom_range=custom_range, return_features=True))
-    #     # return df
-
-    # def add_df_poly_all_billinge(self, degree, xarr, convcol = 'xanes', Narr=np.array([4,5,10,20]), additional_naming='', verbose=False):
-    #     self.df['spectrum_poly_' + '_'.join([str(num) for num in Narr]) + f'{additional_naming}'] = self.df[convcol].apply(lambda x: spectral_features(xarr, x).polynomial_featuresall(Narr=Narr, degree=degree, return_features=True, verbose=verbose))
-
-    # def add_df_poly_individual_billinge(self, N, xarr, degree, convcol = 'xanes', additional_naming='', verbose=False):
-    #     self.df[f'spectrum_poly_{N}' + f'{additional_naming}'] = self.df[convcol].apply(lambda x: spectral_features(xarr, x).polynomial_featuresN(N=N, degree=degree, return_features=True, verbose=verbose).ravel())
+        
+    def plot_df_heatmap(self, df, **plotly_kwargs): 
+        fig = go.Figure()
+        fig.add_trace(go.Heatmap(
+                         x=df.columns, 
+                         y=df.index,
+                         z=df, 
+                         **plotly_kwargs))
+        fig.show()
