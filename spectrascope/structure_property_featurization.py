@@ -35,6 +35,7 @@ def is_element_present(
 def is_cn_present(structure: Structure, cn, indices=None, return_label=False):
     cnalgo = CrystalNN()
     cn_arr = []
+    cn = int(cn)
     if indices is None:
         indices = range(len(structure))
     for n in indices:
@@ -132,6 +133,9 @@ def is_oxidation_state_present(
     structure: Structure, oxidation_state, indices=None, return_label=False
 ):
     oxidation_arr = []
+    oxidation_state = float(oxidation_state)
+    if not structure.composition.charge_balanced: 
+        structure.add_oxidation_state_by_guess()
     if indices is None:
         indices = range(len(structure))
     for n in indices:

@@ -32,16 +32,16 @@ def test_spectrascope_class():
     assert hasattr(temp, "nn")
 
 
-def test_add_feature():
+def test_add_spectral_feature():
     temp = SpectraScope(X=X, y=y, specnames=["pdf", "xanes"], yname="nn")
 
     temp.add_x_axis(specname="xanes", value=np.linspace(4969.0, 5021.0, 200))
     temp.add_x_axis(specname="pdf", value=np.linspace(0, 10, 200))
 
-    temp.add_feature(feat="cdf", specname="xanes")
-    temp.add_feature(feat="pointwise_features", specname="pdf", xrange=temp.xanes_xaxis)
+    temp.add_spectral_feature(feat="cdf", specname="xanes")
+    temp.add_spectral_feature(feat="pointwise_features", specname="pdf", xrange=temp.xanes_xaxis)
 
-    temp.add_feature(feat="pointwise_features", specname="xanes", xrange=temp.pdf_xaxis)
+    temp.add_spectral_feature(feat="pointwise_features", specname="xanes", xrange=temp.pdf_xaxis)
 
     assert hasattr(temp, "xanes_cdf")
     assert hasattr(temp, "xanes_pointwise_features")
@@ -55,10 +55,10 @@ def test_add_feature():
 def test_combine_feature():
     temp = SpectraScope(X=X, y=y, specnames=["pdf", "xanes"], yname="nn")
 
-    temp.add_feature(
+    temp.add_spectral_feature(
         xaxis=np.linspace(4969.0, 5021.0, 200), feat="cdf", specname="xanes"
     )
-    temp.add_feature(
+    temp.add_spectral_feature(
         xaxis=np.linspace(0, 10, 200),
         feat="pointwise_features",
         specname="pdf",
@@ -73,7 +73,7 @@ def test_combine_feature():
     temp.add_x_axis(specname="xanes", value=np.linspace(4969.0, 5021.0, 200))
     temp.add_x_axis(specname="pdf", value=np.linspace(0, 10, 200))
 
-    temp.add_feature(
+    temp.add_spectral_feature(
         feat="pointwise_features", specname="xanes", xrange=temp.xanes_xaxis
     )
 
@@ -88,7 +88,7 @@ def test_combine_feature():
 def test_split_X():
     temp = SpectraScope(X=X, y=y, specnames=["pdf", "xanes"], yname="nn")
     temp.add_x_axis(specname="xanes", value=np.linspace(4969.0, 5021.0, 200))
-    temp.add_feature(
+    temp.add_spectral_feature(
         feat="pointwise_features", specname="xanes", xrange=temp.xanes_xaxis
     )
 
