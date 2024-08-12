@@ -1,9 +1,3 @@
-import sys
-import os
-import pathlib
-
-sys.path.append(str(pathlib.Path(__file__).parent.parent))
-
 from spectrascope.features import *
 
 x1, y1 = np.load("test_files/test_xas.npy")
