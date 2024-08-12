@@ -553,12 +553,12 @@ class spectral_features:
     def plot_cdf(self, ax=None, verbose=False, **kwargs):
         x, _ = self.check_xinterp(verbose)
 
-        assert hasattr(self, "cdf_feat"), "need to create cdf features first"
+        assert hasattr(self, "cdf_features"), "need to create cdf features first"
 
         if ax is not None:
-            ax.plot(x, self.cdf_feat)
+            ax.plot(x, self.cdf_features)
         else:
-            return x, self.cdf_feat
+            return x, self.cdf_features
 
     def plot_polynomial_featuresall(self, ax=None, verbose=False, **kwargs):
         _, _ = self.check_xinterp(verbose)
@@ -567,11 +567,11 @@ class spectral_features:
 
         x = np.arange(len(self.polyfeatures_all))
         if ax is not None:
-            ax.plot(x[:-1], self.polyfeatures_all[:-1])
+            ax.plot(x[:-1], self.polyfeatures_all[0][:-1])
             ax.set_xlabel("Feature Index")
 
         else:
-            return x[:-1], self.polyfeatures_all[:-1]
+            return x[0][:-1], self.polyfeatures_all[0][:-1]
 
     def check_xinterp(self, verbose=False):
         if hasattr(self, "xinterp") == False:

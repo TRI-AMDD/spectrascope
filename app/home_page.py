@@ -3,8 +3,8 @@ import streamlit as st
 import numpy as np
 import sys
 
-sys.path.append("/Users/amalyajohnson/Desktop/SpectraScope/spectrascope_local/")
 from spectrascope.SpectraScope import *
+from spectrascope.ss_classification import *
 
 # from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor()
 # from sklearn.linear_model import Lasso, Ridge
@@ -19,47 +19,48 @@ import plotly.graph_objects as go
 # st.session_state['fitted'] = False
 st.title("SpectraScope")
 st.sidebar.markdown("Spectrascope Home")
-# st.image("ss_icon.png")
 
-# my_processed_data = sys.argv[0]
-my_processed_data = (
-    "/Users/amalyajohnson/Desktop/SpectraScope/Data/Ti/processed_billinge.json"
-)
-el = "Ti"
+# fnX = sys.argv[0]
+# fny = sys.argv[1]
+
 
 fnX = "/Users/amalyajohnson/Desktop/Spectrascope/spectrascope_local/tests/test_files/X_testfile.npy"
 fny = "/Users/amalyajohnson/Desktop/Spectrascope/spectrascope_local/tests/test_files/y_testfile.npy"
 X = np.load(fnX)
 y = np.load(fny)
 
+X = X[:, :10, :]
+y = y[:10]
 
-# @st.cache_data
+structures = np.load("/Users/amalyajohnson/Desktop/Spectrascope/spectrascope_local/tests/test_files/structures.npy", allow_pickle=True)
+mpids = np.load("/Users/amalyajohnson/Desktop/Spectrascope/spectrascope_local/tests/test_files/mpids.npy")
+mpids = list(mpids)
+
+
+
+@st.cache_data
 def load_data(X, y, specnames=["pdf", "xanes"], yname="nn"):
-    data = SpectraScope(X=X, y=y, specnames=specnames, yname=yname)
+    data = BinaryClassifications(structures=structures, mpids=mpids, X=X, y=y, specnames=specnames, yname=yname)
     return data
 
 
 st.markdown("## 1. Load  data")
-st.markdown("Regressing mean nearest neighbor distance of Titanium Oxide Structures")
 
 data_load_state = st.text("Loading X data...")
 data = load_data(X, y)
 data_load_state.text("Done! (using st.cache_data)")
 st.session_state["data"] = data
-st.write(f"data has shape {data.X.shape}")
+st.session_state["ndatasets"] = data.X.shape[0]
+st.write(f"Detected {data.X.shape[0]} loaded datasets")
 
 data.add_x_axis(specname="xanes", value=np.linspace(4969.0, 5021.0, 200))
 data.add_x_axis(specname="pdf", value=np.linspace(0, 10, 200))
 
-for Xi, name in zip(X, ["xanes", "pdf"]):
+for Xi, name in zip(data.X, data.specnames):
     df = pd.DataFrame(
         Xi, columns=[str(round(i, 2)) for i in getattr(data, f"{name}_xaxis")]
     )
-    if st.checkbox(f"Show Full {name} Datafrrame"):
-        st.subheader("Raw data")
-        st.write(df)
-    else:
-        st.write(name + " Dataset")
+    if st.checkbox(f"Show {name} Data"):
         st.write(df.head())
 
 # yattr = st.text_input("Input Column to predict", " ")
@@ -105,7 +106,7 @@ for col in cols_to_featurize:
     )
     x = getattr(data, f"{col}_xaxis")
     if not hasattr(data, f"{col}_pointwise_features"):
-        data.add_feature_json(x, "pointwise_features", convcol=col, xrange=x)
+        data.add_spectral_feature(col, "pointwise_features", xrange=x)
     spec = getattr(data, f"{col}_pointwise_features")[0]
     temp = spectral_features(x, spec)
 
@@ -135,6 +136,7 @@ for col in cols_to_featurize:
                 )
         else:
             x, y = temp.__getattribute__("plot_" + feat).__call__()
+            print(x.shape)
             if "cwt" in feat:
                 fig.add_trace(go.Heatmap(z=y), row=1, col=ic + 1)
             else:
@@ -158,7 +160,7 @@ with st.spinner(text="featurizing....(say that 10 times fast)"):
         for feat in features_selected:
             x = getattr(data, f"{col}_xaxis")
             if not hasattr(data, feat):
-                data.add_feature_json(x, feat.replace(f"{col}_", ""), convcol=col)
+                data.add_spectral_feature(x, feat.replace(f"{col}_", ""), convcol=col)
 
 multi_modal_selected = st.text_input(
     "Would you like to combine any of these features? (format: feat1,feat2; feat1,feat3)",

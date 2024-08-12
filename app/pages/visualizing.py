@@ -13,8 +13,8 @@ fitted_models = st.session_state["fitted_models"]
 def plot_raw_spec(fig, col, ir, ic):
     x = getattr(data, f"{col}_xaxis")
 
-    if not hasattr(data, f"{col}_pointwise_features"):
-        data.add_feature_json(x, "pointwise_features", convcol=col, xrange=x)
+    if not hasattr(data, f"{col}_pointwirse_features"):
+        data.add_spectral_feature(col, "pointwise_features", xrange=x)
     y = getattr(data, f"{col}_pointwise_features")
     for yi in y:
         fig.add_trace(
@@ -30,8 +30,8 @@ def plot_raw_spec(fig, col, ir, ic):
             col=ic,
         )
 
-    xlabel = getattr(data, f"{col}_labelx")
-    ylabel = getattr(data, f"{col}_labely")
+    xlabel = '' #getattr(data, f"{col}_labelx")
+    ylabel = '' #getattr(data, f"{col}_labely")
     fig.add_trace(
         go.Scatter(x=x, y=y.mean(axis=0), mode="lines", name="average"), row=ir, col=ic
     )

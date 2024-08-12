@@ -52,15 +52,21 @@ class SpectraScope:
         # assert (
         #     len(specnames) == self.n_modalities
         # ), "please input a name for each modality"
-
+        if specnames == []: 
+            specnames = [f'spec{i}' for i in range(self.X.shape[0])]
+        
         for i, specname in enumerate(specnames):
             Xi = self.X[i]
             setattr(self, specname, Xi)
 
         # add Y
         if y is not None:
+            if yname == '': 
+                yname = 'y0'
             self.add_y(yname, y)
         elif fny is not None:
+            if yname == '': 
+                yname = 'y0'
             y = self.load_file(fny)
             self.add_y(yname, y)
 
