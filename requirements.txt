@@ -4,3 +4,7 @@ pymatgen==2024.4.13
 pytest
 pre-commit
 scikit-learn==1.5.0
+PyWavelets==1.5.0
+scipy==1.13.1
+pyts==0.13.0
+Code-SPA @ git+https://github.com/PedroSeber/SmartProcessAnalytics.git

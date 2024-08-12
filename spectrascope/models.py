@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class LassoRegression:
     def __init__(self, learning_rate=0.01, iterations=1000, l1_penalty=0.1):
         self.learning_rate = learning_rate
@@ -20,8 +21,10 @@ class LassoRegression:
             y_predicted = np.dot(X, self.weights) + self.bias
 
             # Compute gradients
-            dw = (2/num_samples) * np.dot(X.T, (y_predicted - y)) + self.l1_penalty * np.sign(self.weights)
-            db = (2/num_samples) * np.sum(y_predicted - y)
+            dw = (2 / num_samples) * np.dot(
+                X.T, (y_predicted - y)
+            ) + self.l1_penalty * np.sign(self.weights)
+            db = (2 / num_samples) * np.sum(y_predicted - y)
 
             # Update weights and bias
             self.weights -= self.learning_rate * dw
@@ -34,4 +37,4 @@ class LassoRegression:
         return np.mean(np.abs(y_true - y_pred))
 
     def mse(self, y_true, y_pred):
-        return np.mean((y_true - y_pred)**2)
+        return np.mean((y_true - y_pred) ** 2)
