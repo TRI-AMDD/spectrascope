@@ -11,7 +11,7 @@ fitted_models = st.session_state["fitted_models"]
 
 
 def plot_raw_spec(fig, col, ir, ic):
-    x = getattr(data, f"x_{col}")
+    x = getattr(data, f"{col}_xaxis")
 
     if not hasattr(data, f"{col}_pointwise_features"):
         data.add_feature_json(x, "pointwise_features", convcol=col, xrange=x)

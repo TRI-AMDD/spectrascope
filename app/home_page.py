@@ -2,7 +2,8 @@ import pandas as pd
 import streamlit as st
 import numpy as np
 import sys
-from data_processing import *
+sys.path.append('/Users/amalyajohnson/Desktop/SpectraScope/spectrascope_local/')
+from spectrascope.SpectraScope import *
 
 # from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor()
 # from sklearn.linear_model import Lasso, Ridge
@@ -17,7 +18,7 @@ import plotly.graph_objects as go
 # st.session_state['fitted'] = False
 st.title("SpectraScope")
 st.sidebar.markdown("Spectrascope Home")
-st.image("ss_icon.png")
+# st.image("ss_icon.png")
 
 # my_processed_data = sys.argv[0]
 my_processed_data = (
@@ -25,28 +26,40 @@ my_processed_data = (
 )
 el = "Ti"
 
+fnX = '/Users/amalyajohnson/Desktop/Spectrascope/spectrascope_local/tests/test_files/X_testfile.npy'
+fny = '/Users/amalyajohnson/Desktop/Spectrascope/spectrascope_local/tests/test_files/y_testfile.npy'
+X = np.load(fnX)
+y = np.load(fny)
 
 # @st.cache_data
-def load_data(fn, el):
-    data = data_file(fn, el, random_seed=None)
+def load_data(X, y, specnames=['pdf', 'xanes'], yname='nn'):
+    data = SpectraScope(X = X, y = y, specnames=specnames, yname=yname)
     return data
 
 
 st.markdown("## 1. Load  data")
 st.markdown("Regressing mean nearest neighbor distance of Titanium Oxide Structures")
 
-data_load_state = st.text("Loading data...")
-data = load_data(my_processed_data, el)
+data_load_state = st.text("Loading X data...")
+data = load_data(X, y)
 data_load_state.text("Done! (using st.cache_data)")
 st.session_state["data"] = data
+st.write(f'data has shape {data.X.shape}')
 
-if st.checkbox("Show Full Dataframe"):
-    st.subheader("Raw data")
-    st.write(data.df)
-else:
-    st.write(data.df.head())
+data.add_x_axis(specname='xanes', value=np.linspace(4969.0, 5021.0, 200))
+data.add_x_axis(specname='pdf', value=np.linspace(0,10,200))
 
-yattr = st.text_input("Input Column to predict", "BL_mean")
+for Xi, name in zip(X, ['xanes', 'pdf']): 
+    df = pd.DataFrame(Xi, columns=[str(round(i,2)) for i in getattr(data, f'{name}_xaxis')])
+    if st.checkbox(f"Show Full {name} Datafrrame"):
+        st.subheader("Raw data")
+        st.write(df)
+    else:
+        st.write(name + ' Dataset')
+        st.write(df.head())
+
+# yattr = st.text_input("Input Column to predict", " ")
+yattr = data.nn
 
 
 def textinput_to_list(string, delim):
@@ -86,7 +99,7 @@ for col in cols_to_featurize:
     fig = make_subplots(
         rows=1, cols=nfeats, subplot_titles=features, horizontal_spacing=0.15
     )
-    x = getattr(data, f"x_{col}")
+    x = getattr(data, f"{col}_xaxis")
     if not hasattr(data, f"{col}_pointwise_features"):
         data.add_feature_json(x, "pointwise_features", convcol=col, xrange=x)
     spec = getattr(data, f"{col}_pointwise_features")[0]
@@ -139,7 +152,7 @@ features_selected = st.multiselect("Select from Features Computed", all_features
 with st.spinner(text="featurizing....(say that 10 times fast)"):
     for col in cols_to_featurize:
         for feat in features_selected:
-            x = getattr(data, f"x_{col}")
+            x = getattr(data, f"{col}_xaxis")
             if not hasattr(data, feat):
                 data.add_feature_json(x, feat.replace(f"{col}_", ""), convcol=col)
 
