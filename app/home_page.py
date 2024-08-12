@@ -63,8 +63,9 @@ for Xi, name in zip(data.X, data.specnames):
     if st.checkbox(f"Show {name} Data"):
         st.write(df.head())
 
-# yattr = st.text_input("Input Column to predict", " ")
-yattr = data.nn
+yattr = st.text_input("Input Column to predict", " ")
+st.session_state['yattr'] = yattr
+
 
 
 def textinput_to_list(string, delim):
@@ -136,7 +137,6 @@ for col in cols_to_featurize:
                 )
         else:
             x, y = temp.__getattribute__("plot_" + feat).__call__()
-            print(x.shape)
             if "cwt" in feat:
                 fig.add_trace(go.Heatmap(z=y), row=1, col=ic + 1)
             else:
@@ -196,7 +196,7 @@ max_depth = textinput_to_list(max_depth, ",")
 max_depth = [None if d == "None" else int(d) for d in max_depth]
 
 rf_kwargs = {
-    "model": model,
+    "estimator": model,
     "param_grid": {
         "n_estimators": n_estimators,
         "criterion": criterion,
@@ -270,7 +270,7 @@ fit_lcen = st.checkbox("Fit LCEN")
 # @st.cache_data
 
 
-def fit(sk_kwargs, lcen_kwargs):
+def fit(sk_kwargs, lcen_kwargs, yattr='nn'):
     Nm = 0
     if fit_sk:
         Nm = len(sk_kwargs)
@@ -285,13 +285,12 @@ def fit(sk_kwargs, lcen_kwargs):
     completed = 0
     fitted_models = []
     for attr_name in features_selected:
-
         if fit_sk:
             for sk in sk_kwargs:
                 data.do_sk(attr_name, yattr, test_size, None, **sk)
                 completed += 1
                 my_bar.progress(completed / N, text=progress_text)
-                model_name = sk["model"].__str__().split("()")[0]
+                model_name = sk["estimator"].__str__().split("()")[0]
                 fitted_models.append(attr_name + "_" + yattr + "_" + model_name)
 
         if fit_lcen:

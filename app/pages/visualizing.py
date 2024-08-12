@@ -8,7 +8,7 @@ import numpy as np
 data = st.session_state["data"]
 cols_to_featurize = st.session_state["cols_to_featurize"]
 fitted_models = st.session_state["fitted_models"]
-
+yattr = st.session_state['yattr']
 
 def plot_raw_spec(fig, col, ir, ic):
     x = getattr(data, f"{col}_xaxis")
@@ -61,7 +61,7 @@ def plot_model(full_name, fig, ir, ic, color="#d62728", plot_raw=True):
     if plot_raw:
         plot_raw_spec(fig, spec, ir, ic)
     if not multi_modal:
-        x = getattr(data, f"x_{spec}")
+        x = getattr(data, f"{spec}_xaxis")
     else:
         x = np.arange(400)
 
@@ -70,8 +70,9 @@ def plot_model(full_name, fig, ir, ic, color="#d62728", plot_raw=True):
         P = model_dict["P"]
         score = model_dict["score"]
         ypred = model_dict["ypred"]
-
-        ytest = data.BL_mean_test
+        
+        # ytest = getattr(data, f'{yattr}_test')
+        ytest = data.nn_test
         perc_err = np.mean(np.abs((ytest - ypred) / ytest)) * 100
         importances = P[0].best_estimator_.feature_importances_
 
@@ -107,7 +108,7 @@ def plot_model(full_name, fig, ir, ic, color="#d62728", plot_raw=True):
         score = model_dict["MSE_test_nontrans"]
         ypred = model_dict["yhat_test_nontrans"]
 
-        ytest = data.BL_mean_test
+        ytest = getattr(data, f'{yattr}_test')
         perc_err = np.mean(np.abs((ytest - ypred) / ytest)) * 100
 
         for loc, val in zip(par_locs[importance][:10], par_vals[importance][:10]):

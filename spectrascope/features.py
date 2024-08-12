@@ -18,6 +18,7 @@ import plotly.express as px
 
 from sklearn.cluster import FeatureAgglomeration
 from sklearn.decomposition import PCA
+from spectrascope.plot_spectral_features import plot_spectral_features
 
 
 def degree_based_features(
@@ -552,13 +553,12 @@ class spectral_features:
 
     def plot_cdf(self, ax=None, verbose=False, **kwargs):
         x, _ = self.check_xinterp(verbose)
-
         assert hasattr(self, "cdf_features"), "need to create cdf features first"
 
-        if ax is not None:
-            ax.plot(x, self.cdf_features)
-        else:
-            return x, self.cdf_features
+        plotter = plot_spectral_features(self.cdf_features, xaxis=x, ax=ax, **kwargs)
+        if not ax: 
+            plot_x, plot_y = plotter.get_xy()
+            return plot_x, plot_y
 
     def plot_polynomial_featuresall(self, ax=None, verbose=False, **kwargs):
         _, _ = self.check_xinterp(verbose)
@@ -566,12 +566,11 @@ class spectral_features:
         assert hasattr(self, "polyfeatures_all"), "need to create poly features first"
 
         x = np.arange(len(self.polyfeatures_all))
-        if ax is not None:
-            ax.plot(x[:-1], self.polyfeatures_all[0][:-1])
-            ax.set_xlabel("Feature Index")
-
-        else:
-            return x[0][:-1], self.polyfeatures_all[0][:-1]
+        plotter = plot_spectral_features(self.polyfeatures_all, ax=ax, **kwargs)
+        if not ax: 
+            plot_x, plot_y = plotter.get_xy()
+            return plot_x[:-1], plot_y[:-1]
+        
 
     def check_xinterp(self, verbose=False):
         if hasattr(self, "xinterp") == False:
