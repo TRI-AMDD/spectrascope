@@ -210,8 +210,8 @@ class SpectraScope:
             degree=degree,
             interaction=interaction,
             trans_type=trans_type,
-            all_pos_X=all_pos_X,
-            all_pos_y=all_pos_y,
+            # all_pos_X=all_pos_X,
+            # all_pos_y=all_pos_y,
         )
 
         setattr(self, feat + "_trans" + additional_naming, X_out)
