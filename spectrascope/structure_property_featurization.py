@@ -134,7 +134,7 @@ def is_oxidation_state_present(
 ):
     oxidation_arr = []
     oxidation_state = float(oxidation_state)
-    if not structure.composition.charge_balanced: 
+    if not structure.composition.charge_balanced:
         structure.add_oxidation_state_by_guess()
     if indices is None:
         indices = range(len(structure))

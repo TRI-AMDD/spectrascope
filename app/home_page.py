@@ -2,7 +2,8 @@ import pandas as pd
 import streamlit as st
 import numpy as np
 import sys
-sys.path.append('/Users/amalyajohnson/Desktop/SpectraScope/spectrascope_local/')
+
+sys.path.append("/Users/amalyajohnson/Desktop/SpectraScope/spectrascope_local/")
 from spectrascope.SpectraScope import *
 
 # from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor()
@@ -26,14 +27,15 @@ my_processed_data = (
 )
 el = "Ti"
 
-fnX = '/Users/amalyajohnson/Desktop/Spectrascope/spectrascope_local/tests/test_files/X_testfile.npy'
-fny = '/Users/amalyajohnson/Desktop/Spectrascope/spectrascope_local/tests/test_files/y_testfile.npy'
+fnX = "/Users/amalyajohnson/Desktop/Spectrascope/spectrascope_local/tests/test_files/X_testfile.npy"
+fny = "/Users/amalyajohnson/Desktop/Spectrascope/spectrascope_local/tests/test_files/y_testfile.npy"
 X = np.load(fnX)
 y = np.load(fny)
 
+
 # @st.cache_data
-def load_data(X, y, specnames=['pdf', 'xanes'], yname='nn'):
-    data = SpectraScope(X = X, y = y, specnames=specnames, yname=yname)
+def load_data(X, y, specnames=["pdf", "xanes"], yname="nn"):
+    data = SpectraScope(X=X, y=y, specnames=specnames, yname=yname)
     return data
 
 
@@ -44,18 +46,20 @@ data_load_state = st.text("Loading X data...")
 data = load_data(X, y)
 data_load_state.text("Done! (using st.cache_data)")
 st.session_state["data"] = data
-st.write(f'data has shape {data.X.shape}')
+st.write(f"data has shape {data.X.shape}")
 
-data.add_x_axis(specname='xanes', value=np.linspace(4969.0, 5021.0, 200))
-data.add_x_axis(specname='pdf', value=np.linspace(0,10,200))
+data.add_x_axis(specname="xanes", value=np.linspace(4969.0, 5021.0, 200))
+data.add_x_axis(specname="pdf", value=np.linspace(0, 10, 200))
 
-for Xi, name in zip(X, ['xanes', 'pdf']): 
-    df = pd.DataFrame(Xi, columns=[str(round(i,2)) for i in getattr(data, f'{name}_xaxis')])
+for Xi, name in zip(X, ["xanes", "pdf"]):
+    df = pd.DataFrame(
+        Xi, columns=[str(round(i, 2)) for i in getattr(data, f"{name}_xaxis")]
+    )
     if st.checkbox(f"Show Full {name} Datafrrame"):
         st.subheader("Raw data")
         st.write(df)
     else:
-        st.write(name + ' Dataset')
+        st.write(name + " Dataset")
         st.write(df.head())
 
 # yattr = st.text_input("Input Column to predict", " ")

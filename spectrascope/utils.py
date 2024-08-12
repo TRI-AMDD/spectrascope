@@ -112,27 +112,30 @@ def NormalizeData(arr):
     return (arr - arr.min()) / (arr.max() - arr.min())
 
 
-def sort_get_value(my_dict, id2=20, id1=0): 
+def sort_get_value(my_dict, id2=20, id1=0):
     labels = np.array([str(l) for l in list(my_dict.keys())])
     values = np.array(list(my_dict.values()))
     sorted_values = np.argsort(values)[::-1]
-    
+
     return labels[sorted_values][id1:id2], values[sorted_values][id1:id2]
 
-def tamimoto(s1,s2):
-    m11 = ((s1 == 1) & (s2==1)).sum(axis=1)
-    m00 = ((s1 == 0) & (s2==0)).sum(axis=1)
-    m01 = ((s1 == 0) & (s2==1)).sum(axis=1)
-    m10 = ((s1 == 1) & (s2==0)).sum(axis=1)
-    J = m11 / (m01 + m10 + m11)
-    dist = 1-J 
-    return J 
 
-def entropy(p0,p1): 
-    return -p0 * np.log2(p0) - p1*np.log2(p1)
+def tamimoto(s1, s2):
+    m11 = ((s1 == 1) & (s2 == 1)).sum(axis=1)
+    m00 = ((s1 == 0) & (s2 == 0)).sum(axis=1)
+    m01 = ((s1 == 0) & (s2 == 1)).sum(axis=1)
+    m10 = ((s1 == 1) & (s2 == 0)).sum(axis=1)
+    J = m11 / (m01 + m10 + m11)
+    dist = 1 - J
+    return J
+
+
+def entropy(p0, p1):
+    return -p0 * np.log2(p0) - p1 * np.log2(p1)
+
 
 def arr_entropy(arr):
     Ny = arr.shape[0]
     p0 = arr.sum(axis=0) / Ny
     p1 = (Ny - arr.sum(axis=0)) / Ny
-    return entropy(p0,p1)
+    return entropy(p0, p1)

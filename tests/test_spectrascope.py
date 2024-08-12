@@ -1,4 +1,3 @@
-
 from spectrascope.SpectraScope import *
 
 test_json = ""
@@ -34,9 +33,13 @@ def test_add_spectral_feature():
     temp.add_x_axis(specname="pdf", value=np.linspace(0, 10, 200))
 
     temp.add_spectral_feature(feat="cdf", specname="xanes")
-    temp.add_spectral_feature(feat="pointwise_features", specname="pdf", xrange=temp.xanes_xaxis)
+    temp.add_spectral_feature(
+        feat="pointwise_features", specname="pdf", xrange=temp.xanes_xaxis
+    )
 
-    temp.add_spectral_feature(feat="pointwise_features", specname="xanes", xrange=temp.pdf_xaxis)
+    temp.add_spectral_feature(
+        feat="pointwise_features", specname="xanes", xrange=temp.pdf_xaxis
+    )
 
     assert hasattr(temp, "xanes_cdf")
     assert hasattr(temp, "xanes_pointwise_features")
