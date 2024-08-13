@@ -101,7 +101,31 @@ class plot_spectral_features:
         else: 
             self.fig.add_trace(go.Scatter(x=self.xaxis[:-1],y=self.feature[:-1], **kwargs), row=self.row, col=self.col)
 
-    
+    def plot_pca(self, c = (0,1), **kwargs):
+        c1, c2 = c  
+        if self.fig is None: 
+            pass
+        else: 
+            self.fig.add_trace(go.Scatter(x=self.feature[:,c1], y=self.feature[:,c2], **kwargs), row=self.row, col=self.col)
+            
+    def plot_featureagg(self, c=(0,1), **kwargs): 
+        c1, c2 = c  
+        if self.fig is None: 
+            pass 
+        else: 
+            self.fig.add_trace(go.Scatter(x=self.feature[:,c1], y=self.feature[:,c2], **kwargs), row=self.row, col=self.col)
+
+    def plot_fft_features(self, **kwargs): 
+        " needs original xaxis" 
+        from scipy.fft import fftfreq
+        N = len(self.xaxis)
+        de = np.diff(self.xaxis)[0]
+        fft_freq = np.abs(fftfreq(N, de))[: N // 2]
         
+        self.feature = np.abs(self.feature)
+        if self.fig is None: 
+            pass 
+        else: 
+            self.fig.add_trace(go.Scatter(x=fft_freq, y = self.feature, **kwargs), row=self.row, col=self.col)
     
     
