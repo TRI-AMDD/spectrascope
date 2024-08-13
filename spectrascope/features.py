@@ -464,7 +464,7 @@ class spectral_features:
     ):
         pass
 
-    def pca(self, n_components, verbose=False, return_features: bool = False, **kwargs):
+    def pca(self, n_components=10, verbose=False, return_features: bool = False, **kwargs):
         x, y = self.check_xinterp(verbose)
         pca = PCA(n_components=n_components, **kwargs)
         self.pca_features = pca.fit_transform(y)
@@ -473,7 +473,7 @@ class spectral_features:
             return self.pca_features
 
     def featureagg(
-        self, n_clusters, verbose=False, return_features: bool = False, **kwargs
+        self, n_clusters=10, verbose=False, return_features: bool = False, **kwargs
     ):
         x, y = self.check_xinterp(verbose)
 
@@ -518,58 +518,60 @@ class spectral_features:
         pass
 
     ### Plotting functions for app
-    ### May fail with current new updates
-    def plot_gaussian_peaks(self, ax=None, verbose=False, **kwargs):
+    ### May fail with current new update
+        
+    
+    # def plot_gaussian_peaks(self, ax=None, verbose=False, **kwargs):
 
-        x, y = self.check_xinterp(verbose)
+    #     x, y = self.check_xinterp(verbose)
 
-        assert hasattr(
-            self, "peak_features"
-        ), "need to create gaussian peak features first"
+    #     assert hasattr(
+    #         self, "peak_features"
+    #     ), "need to create gaussian peak features first"
 
-        ax.plot(
-            x,
-            func_unfix_width_reg(x, *self.peak_features),
-            label="Reconstructed spectrum",
-        )
-        for i in range(0, len(self.peak_features), 3):
-            ctr = self.peak_features[i]
-            amp = self.peak_features[i + 1]
-            wid = self.peak_features[i + 2]
-            yfit = amp * np.exp(-((x - ctr) ** 2 / (2 * (wid / 2.355) ** 2)))
-            ax.plot(x, yfit, linestyle="-.", color="grey", **kwargs)
+    #     ax.plot(
+    #         x,
+    #         func_unfix_width_reg(x, *self.peak_features),
+    #         label="Reconstructed spectrum",
+    #     )
+    #     for i in range(0, len(self.peak_features), 3):
+    #         ctr = self.peak_features[i]
+    #         amp = self.peak_features[i + 1]
+    #         wid = self.peak_features[i + 2]
+    #         yfit = amp * np.exp(-((x - ctr) ** 2 / (2 * (wid / 2.355) ** 2)))
+    #         ax.plot(x, yfit, linestyle="-.", color="grey", **kwargs)
 
-        fitted = np.array(fitted).ravel()
-        return np.arange(len(fitted)), fitted
+    #     fitted = np.array(fitted).ravel()
+    #     return np.arange(len(fitted)), fitted
 
-    def plot_cwt(self, ax=None, verbose=False, **kwargs):
-        x, _ = self.check_xinterp(verbose)
+    # def plot_cwt(self, ax=None, verbose=False, **kwargs):
+    #     x, _ = self.check_xinterp(verbose)
 
-        assert hasattr(self, "cwt_frequencies"), "need to create cwt features first"
-        if ax is not None:
-            ax.pcolormesh(x, self.cwt_frequencies, self.cwt_coefs, **kwargs)
-        else:
-            return self.cwt_frequencies, self.cwt_coefs
+    #     assert hasattr(self, "cwt_frequencies"), "need to create cwt features first"
+    #     if ax is not None:
+    #         ax.pcolormesh(x, self.cwt_frequencies, self.cwt_coefs, **kwargs)
+    #     else:
+    #         return self.cwt_frequencies, self.cwt_coefs
 
-    def plot_cdf(self, ax=None, verbose=False, **kwargs):
-        x, _ = self.check_xinterp(verbose)
-        assert hasattr(self, "cdf_features"), "need to create cdf features first"
+    # def plot_cdf(self, ax=None, verbose=False, **kwargs):
+    #     x, _ = self.check_xinterp(verbose)
+    #     assert hasattr(self, "cdf_features"), "need to create cdf features first"
 
-        plotter = plot_spectral_features(self.cdf_features, xaxis=x, ax=ax, **kwargs)
-        if not ax: 
-            plot_x, plot_y = plotter.get_xy()
-            return plot_x, plot_y
+    #     plotter = plot_spectral_features(self.cdf_features.ravel(), xaxis=x, ax=ax, **kwargs)
+    #     if not ax: 
+    #         plot_x, plot_y = plotter.get_xy()
+    #         return plot_x, plot_y
 
-    def plot_polynomial_featuresall(self, ax=None, verbose=False, **kwargs):
-        _, _ = self.check_xinterp(verbose)
+    # def plot_polynomial_featuresall(self, ax=None, verbose=False, **kwargs):
+    #     _, _ = self.check_xinterp(verbose)
 
-        assert hasattr(self, "polyfeatures_all"), "need to create poly features first"
+    #     assert hasattr(self, "polyfeatures_all"), "need to create poly features first"
 
-        x = np.arange(len(self.polyfeatures_all))
-        plotter = plot_spectral_features(self.polyfeatures_all, ax=ax, **kwargs)
-        if not ax: 
-            plot_x, plot_y = plotter.get_xy()
-            return plot_x[:-1], plot_y[:-1]
+    #     x = np.arange(len(self.polyfeatures_all))
+    #     plotter = plot_spectral_features(self.polyfeatures_all.ravel(), ax=ax, **kwargs)
+    #     if not ax: 
+    #         plot_x, plot_y = plotter.get_xy()
+    #         return plot_x[:-1], plot_y[:-1]
         
 
     def check_xinterp(self, verbose=False):
