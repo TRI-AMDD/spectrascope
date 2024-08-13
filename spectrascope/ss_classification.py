@@ -14,7 +14,7 @@ from matminer.featurizers.structure import SiteStatsFingerprint
 
 class BinaryClassifications(SpectraScope):
 
-    def __init__(self, structures, mpids, nn_algo=CrystalNN(), **kwargs):
+    def __init__(self, structures, mpids, nn_algo=CrystalNN(), generate_dict=True, **kwargs):
 
         super().__init__(**kwargs)
 
@@ -24,7 +24,8 @@ class BinaryClassifications(SpectraScope):
         self.mpids = mpids
         self.entropy_dict = {}
 
-        self.generate_dict()
+        if generate_dict: 
+            self.generate_dict()
 
     def generate_dict(self):
         nn_library = {}

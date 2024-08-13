@@ -46,7 +46,7 @@ class plot_spectral_features:
             )
 
         self.fig.add_trace(
-            go.Scatter(x=self.xaxis, y=self.feature.mean(axis=0), mode="lines", name="average"), row=ir, col=ic
+            go.Scatter(x=self.xaxis, y=self.feature.mean(axis=0), mode="lines", name="average"), row=self.row, col=self.col
         )
 
         self.fig.update_xaxes(title_text=self.xaxis_label, row=self.row, col=self.col)
