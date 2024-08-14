@@ -17,7 +17,7 @@ class ss_plotting:
         self.row = row
         self.col = col
         self.name = name 
-        self.xaxis = xaxis 
+        self.xaxis = xaxis
         if twoD: 
             pass
 
@@ -64,7 +64,7 @@ class plot_spectral_features(ss_plotting):
             pass 
         else: 
             pass 
-        ax.plot(
+        self.fig.add_trace(
             self.xaxis,
             func_unfix_width_reg(x, *self.feature),
             label="Reconstructed spectrum",
@@ -74,7 +74,7 @@ class plot_spectral_features(ss_plotting):
             amp = self.feature[i + 1]
             wid = self.feature[i + 2]
             yfit = amp * np.exp(-((x - ctr) ** 2 / (2 * (wid / 2.355) ** 2)))
-            ax.plot(self.xaxis, yfit, linestyle="-.", color="grey", **kwargs)
+            self.fig.add_trace(self.xaxis, yfit, linestyle="-.", color="grey", **kwargs)
 
         fitted = np.array(fitted).ravel()
         return np.arange(len(fitted)), fitted
@@ -88,6 +88,8 @@ class plot_spectral_features(ss_plotting):
             return temp
         else:
             self.fig.add_trace(go.Heatmap(z=temp, **kwargs), row=self.row, col=self.col)
+            self.fig.update_xaxes(title_text=self.xaxis_label, row=self.row, col=self.col)
+            self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
 
     def plot_cdf(self, **kwargs):
 
@@ -96,6 +98,8 @@ class plot_spectral_features(ss_plotting):
             return plot_x, plot_y 
         else:  
             self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.feature, **kwargs), row=self.row, col=self.col)
+            self.fig.update_xaxes(title_text=self.xaxis_label, row=self.row, col=self.col)
+            self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
 
     def plot_polynomial_featuresall(self, **kwargs):
         self.xaxis = np.arange(len(self.feature))
@@ -104,6 +108,8 @@ class plot_spectral_features(ss_plotting):
             return plot_x[:-1], plot_y[:-1]
         else: 
             self.fig.add_trace(go.Scatter(x=self.xaxis[:-1],y=self.feature[:-1], **kwargs), row=self.row, col=self.col)
+            self.fig.update_xaxes(title_text=self.xaxis_label, row=self.row, col=self.col)
+            self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
 
     def plot_pca(self, c = (0,1), **kwargs):
         c1, c2 = c  
@@ -111,13 +117,17 @@ class plot_spectral_features(ss_plotting):
             pass
         else: 
             self.fig.add_trace(go.Scatter(x=self.feature[:,c1], y=self.feature[:,c2], **kwargs), row=self.row, col=self.col)
-            
+            self.fig.update_xaxes(title_text=self.xaxis_label, row=self.row, col=self.col)
+            self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
+
     def plot_featureagg(self, c=(0,1), **kwargs): 
         c1, c2 = c  
         if self.fig is None: 
             pass 
         else: 
             self.fig.add_trace(go.Scatter(x=self.feature[:,c1], y=self.feature[:,c2], **kwargs), row=self.row, col=self.col)
+            self.fig.update_xaxes(title_text=self.xaxis_label, row=self.row, col=self.col)
+            self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
 
     def plot_fft_features(self, **kwargs): 
         " needs original xaxis" 
@@ -131,13 +141,17 @@ class plot_spectral_features(ss_plotting):
             pass 
         else: 
             self.fig.add_trace(go.Scatter(x=fft_freq, y = self.feature, **kwargs), row=self.row, col=self.col)
-    
+            self.fig.update_xaxes(title_text=self.xaxis_label, row=self.row, col=self.col)
+            self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
+
 class plot_model(ss_plotting):
-    def __init__(self, model=None, raw=None, selected_features=None, **kwargs) -> None:
+    def __init__(self, model=None, selected_features=None, raw=None, **kwargs) -> None:
         super().__init__(**kwargs)
         self.model = model 
+        
         self.selected_features = selected_features
         self.raw = raw
+        
     def plot_polynomial_featuresall(self): 
         
         self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.raw))
@@ -173,5 +187,42 @@ class plot_model(ss_plotting):
                     opacity=1,
                     layer="below")
             )
+        self.fig.update_xaxes(title_text=self.xaxis_label)
+        self.fig.update_yaxes(title_text=self.yaxis_label)
+        
+            
+    def plot_pointwise_features(self): 
+        
+        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.raw))
+        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.selected_features))
+        self.fig.update_xaxes(title_text=self.xaxis_label)
+        self.fig.update_yaxes(title_text=self.yaxis_label)
+    
+    def plot_cwt(self, wavelet='mexh'):
+        pass
+    
+    def plot_cdf(self, cdf_feat): 
+        self.fig.add_trace(go.Scatter(x=self.xaxis, y=cdf_feat))
+        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.raw))
+        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.selected_features))
+        self.fig.update_xaxes(title_text=self.xaxis_label)
+        self.fig.update_yaxes(title_text=self.yaxis_label) 
+    
+    def plot_featureagg(self, featureagg_feat, **kwargs):
+        c = self.selected_features[:2]
+        featureagg_plotter = plot_spectral_features(featureagg_feat, fig=self.fig, xaxis=self.xaxis, xaxis_label=self.xaxis_label, yaxis_label=self.yaxis_label)
+        featureagg_plotter.plot_featureagg(c, **kwargs)
+    
+    def plot_pca(self, pca_feat, **kwargs):
+        c = self.selected_features[:2]
+        pca_plotter = plot_spectral_features(pca_feat, fig=self.fig, xaxis=self.xaxis, xaxis_label=self.xaxis_label, yaxis_label=self.yaxis_label)
+        pca_plotter.plot_pca(c, **kwargs)
+         
+    
+    def plot_fft_features(self):
+        pass 
+    
+    def plot_gaussian_peaks(self):
+        pass 
          
         
