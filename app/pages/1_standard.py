@@ -85,7 +85,6 @@ multi_modal_selected = st.text_input(
     "Would you like to combine any of these features? (format: feat1,feat2; feat1,feat3)",
     None,
 )
-
 if multi_modal_selected is not None:
     multi_modal_selected = textinput_to_list(multi_modal_selected, ";")
     for combo in multi_modal_selected:
@@ -95,8 +94,8 @@ if multi_modal_selected is not None:
             attr_name = feat1.split("_")[0] + "_" + feat2
             if not hasattr(data, attr_name):
                 data.combine_feature(feat1, feat2)
-
-                features_selected.append(attr_name)
+                
+            features_selected.append(attr_name)
 
 st.write("#### Would you like to transform any of these features?")
 do_transform = st.toggle("yes", False)

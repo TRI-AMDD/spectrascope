@@ -18,7 +18,7 @@ st.markdown("LCEN : vertical lines on selected features")
 st.markdown("RF : Normalized feature importance for every feature")
 
 model_name = st.selectbox("Select Model to Visualize", fitted_models)
-fig = make_subplots(1,1)
+fig = make_subplots(1,1, specs=[[{"secondary_y": True}]])
 
 split_name = model_name.split('_')
 spec = split_name[0]
@@ -27,7 +27,18 @@ feat = raw_name.replace(f'{spec}_', '')
 
 xaxis = getattr(data, f'{spec}_xaxis')
 raw = getattr(data, raw_name)
-point_raw = getattr(data, f'{spec}_pointwise_features')
+if len(raw) > len(xaxis): 
+    # multi modal 
+    spec = '_'.join(split_name[:2])
+    spec1, spec2 = spec.split('_')
+    point1 = getattr(data, f"{spec1}_pointwise_features")
+    point2 = getattr(data, f"{spec2}_pointwise_features")
+    point_raw = np.concatenate([point1, point2], axis=1)
+    xaxis = np.arange(point_raw.shape[1])
+    feat = 'pointwise_features'
+else: 
+    point_raw = getattr(data, f'{spec}_pointwise_features')
+
 model = getattr(data, model_name)
 
 if 'RandomForest' in model_name: 
