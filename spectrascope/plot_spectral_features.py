@@ -5,6 +5,8 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import numpy as np 
 from spectrascope.utils import * 
+from PIL import Image
+
 
 
 class ss_plotting: 
@@ -176,7 +178,7 @@ class plot_model(ss_plotting):
             
             center = self.xaxis[selected_id]
             height = self.raw[selected_id]
-            im  = f'../app/{poly_label}.png'
+            im  = Image.open(f'../app/static/{poly_label}.png')
 
             self.fig.add_layout_image(
                 dict(
@@ -199,33 +201,39 @@ class plot_model(ss_plotting):
     def plot_pointwise_features(self): 
         
         self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.raw))
-        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.selected_features))
+        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.selected_features), secondary_y=True)
         self.fig.update_xaxes(title_text=self.xaxis_label)
         self.fig.update_yaxes(title_text=self.yaxis_label)
     
     def plot_cwt(self, wavelet='mexh'):
         pass
     
-    def plot_cdf(self, cdf_feat): 
-        self.fig.add_trace(go.Scatter(x=self.xaxis, y=cdf_feat))
-        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.raw))
-        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.selected_features))
+    def plot_cdf(self, **kwargs): 
+        arr = kwargs["feat"]
+        self.fig.add_trace(go.Scatter(x=self.xaxis, y=arr))
+        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.selected_features), secondary_y=Trueß)
         self.fig.update_xaxes(title_text=self.xaxis_label)
         self.fig.update_yaxes(title_text=self.yaxis_label) 
     
-    def plot_featureagg(self, featureagg_feat, **kwargs):
+    def plot_featureagg(self, **kwargs):
         c = self.selected_features[:2]
-        featureagg_plotter = plot_spectral_features(featureagg_feat, fig=self.fig, xaxis=self.xaxis, xaxis_label=self.xaxis_label, yaxis_label=self.yaxis_label)
+        arr = kwargs["feat"]
+        kwargs.pop("feat")
+        featureagg_plotter = plot_spectral_features(arr, fig=self.fig, xaxis=self.xaxis, xaxis_label=self.xaxis_label, yaxis_label=self.yaxis_label)
         featureagg_plotter.plot_featureagg(c, **kwargs)
     
-    def plot_pca(self, pca_feat, **kwargs):
+    def plot_pca(self, **kwargs):
+        arr = kwargs["feat"]
+        kwargs.pop("feat")
         c = self.selected_features[:2]
-        pca_plotter = plot_spectral_features(pca_feat, fig=self.fig, xaxis=self.xaxis, xaxis_label=self.xaxis_label, yaxis_label=self.yaxis_label)
+        pca_plotter = plot_spectral_features(arr, fig=self.fig, xaxis=self.xaxis, xaxis_label=self.xaxis_label, yaxis_label=self.yaxis_label)
         pca_plotter.plot_pca(c, **kwargs)
         
-    def plot_tsne(self, tsne_feat, **kwargs):
+    def plot_tsne(self, **kwargs):
+        arr = kwargs["feat"]
+        kwargs.pop("feat")
         c = self.selected_features[:2]
-        tsne_plotter = plot_spectral_features(tsne_feat, fig=self.fig, xaxis=self.xaxis, xaxis_label=self.xaxis_label, yaxis_label=self.yaxis_label)
+        tsne_plotter = plot_spectral_features(arr, fig=self.fig, xaxis=self.xaxis, xaxis_label=self.xaxis_label, yaxis_label=self.yaxis_label)
         tsne_plotter.plot_tsne(c, **kwargs)
          
     

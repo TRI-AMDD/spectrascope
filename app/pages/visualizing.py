@@ -3,11 +3,14 @@ from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import plotly.express as px
 from spectrascope.plot_spectral_features import plot_model as pm 
+import numpy as np 
+from PIL import Image
 
 data = st.session_state["data"]
 cols_to_featurize = st.session_state["spec_to_featurize"]
 fitted_models = st.session_state["fitted_models"]
 yattr = st.session_state['yattr']
+y = getattr(data, yattr)
 
 
 st.markdown("### Visualizing Feature Selection and Importance")
@@ -16,15 +19,61 @@ st.markdown("RF : Normalized feature importance for every feature")
 
 model_name = st.selectbox("Select Model to Visualize", fitted_models)
 fig = make_subplots(1,1)
-raw_name = '_'.join(model_name.split('_')[:-2])
 
+split_name = model_name.split('_')
+spec = split_name[0]
+raw_name = '_'.join(split_name[:-2])
+feat = raw_name.replace(f'{spec}_', '')
+
+xaxis = getattr(data, f'{spec}_xaxis')
 raw = getattr(data, raw_name)
+point_raw = getattr(data, f'{spec}_pointwise_features')
 model = getattr(data, model_name)
 
-print(model.keys())
-['selected_features']
+if 'RandomForest' in model_name: 
+    try:
+        feature_importances = model['P'].feature_importances_ 
+    except AttributeError: 
+        feature_importances = model['P'][0].feature_importances_
+    feature_importances = feature_importances / feature_importances.max()
+else: 
+    feature_importances = np.zeros_like(xaxis)
+    
+selected_features = np.array(model["top_features"]).astype(int)
+xaxis_label = ''
+yaxis_label = ''
+selected_features_arr = np.zeros_like(xaxis)
+selected_features_arr[selected_features] = 1 
+
+kwargs_pca = {"feat":raw, 'mode':'markers', 'marker':dict(color=y, colorscale='Viridis', showscale=True)} #, colorbar=dict(len=0.3, x=0.3, y=0.5))}
+model_kwargs = {
+    'pca':kwargs_pca, 
+    'featureagg':kwargs_pca,
+    'tsne': kwargs_pca,
+    'pointwise_features':{},
+    'polynomial_featuresall':{},
+    'cdf':{},
+    'fft':{}
+}
+if 'pca' in model_name or 'featureagg' in model_name or 'tsne' in model_name or "polynomial" in model_name:
+    if "polynomial" in model_name: 
+        raw = point_raw[0].ravel() 
+    plotter = pm(selected_features=selected_features, fig=fig, xaxis=xaxis, raw=raw, xaxis_label=xaxis_label, yaxis_label=yaxis_label)
+    plotter.__getattribute__(f'plot_{feat}').__call__(**model_kwargs[feat])
+
+else: 
+    raw = point_raw[0].ravel()
+    if "LCEN" in model_name: 
+        plotter = pm(selected_features=selected_features_arr, fig=fig, xaxis=xaxis, raw=raw, xaxis_label=xaxis_label, yaxis_label=yaxis_label)
+        plotter.__getattribute__(f'plot_{feat}').__call__(**model_kwargs[feat])
+    else: 
+        plotter = pm(selected_features=feature_importances, fig=fig, xaxis=xaxis, raw=raw, xaxis_label=xaxis_label, yaxis_label=yaxis_label)
+        plotter.__getattribute__(f'plot_{feat}').__call__(**model_kwargs[feat])
 
 
+st.plotly_chart(fig)
+
+st.stop()
 
 
 def plot_model(full_name, fig, ir, ic, color="#d62728", plot_raw=True):

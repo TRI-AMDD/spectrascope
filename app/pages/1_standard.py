@@ -33,7 +33,6 @@ kwargs_dict = { 'pca' : {'mode':'markers', 'marker':dict(color=y, colorscale='Vi
     'tsne':{'mode':'markers', 'marker':dict(color=y, colorscale='Viridis')}
     }
 
-
 features_available = list(kwargs_dict.keys())
 
 features = st.multiselect("Visualize Features", features_available)
@@ -80,7 +79,7 @@ with st.spinner(text="featurizing....(say that 10 times fast)"):
         for feat in features_selected:
             x = getattr(data, f"{spec}_xaxis")
             if not hasattr(data, feat):
-                data.add_spsectral_feature(spec, feat.replace(f"{spec}_", ""))
+                data.add_spectral_feature(spec, feat.replace(f"{spec}_", ""))
 
 multi_modal_selected = st.text_input(
     "Would you like to combine any of these features? (format: feat1,feat2; feat1,feat3)",
