@@ -4,7 +4,6 @@ from sklearn.model_selection import train_test_split
 import json
 from spectrascope.features import *
 
-import SPA
 import datetime
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
@@ -12,7 +11,6 @@ from sklearn.pipeline import make_pipeline, Pipeline
 from sklearn.model_selection import GridSearchCV
 import os
 import pickle
-import regression_models
 import spectrascope.structure_property_featurization as structure_property_featurization
 import plotly.express as px
 import plotly.graph_objects as go
@@ -199,11 +197,13 @@ class SpectraScope:
     ):
         """
         Polynomial etc. transformations of already generated features
-        uses _feature_trans function from regression_models in SPA
+        uses _feature_trans function from regression_models in SPA 
+        Needs SPA 
         Args:
             feat: feature name
             feat_test (optional): Test set of feature name. Defaults to None.
         """
+        import regression_models
         X = getattr(self, feat)
         try:
             X_test = getattr(self, feat + "_test")
@@ -295,7 +295,7 @@ class SpectraScope:
         score = metric(y_test, ypred)
         return est, score, ypred
 
-    def do_sk(self, Xattr, yattr, test_size, savef=None, use_pipeline=True, **kwargs):
+    def do_sk(self, Xattr, yattr, test_size, savef=None, use_pipeline=True, top_features=20, **kwargs):
 
         self.split_X(Xattr, test_size)
         self.split_y(yattr, test_size)
@@ -315,7 +315,14 @@ class SpectraScope:
             P, score, ypred = self.sk(X_train, X_test, y_train, y_test, **kwargs)
             model_name = P.__str__().split("(")[0]
 
-        fit_dict = {"P": P, "score": score, "ypred": ypred}
+        if model_name == 'RandomForestRegressor': 
+            feature_importances = P.feature_importances_
+            #choose top features
+            best_feature_ids = np.argsort(feature_importances[::-1])[:top_features]
+
+            # changes dataset: (X[:,sorted(sorted_best_features)])
+            
+        fit_dict = {"P": P, "score": score, "ypred": ypred, 'top_features':best_feature_ids}
         setattr(self, Xattr + "_" + yattr + "_" + model_name, fit_dict)
 
         perc_err = np.mean(np.abs((y_test - ypred) / y_test)) * 100
@@ -334,6 +341,7 @@ class SpectraScope:
                 pickle.dump(P, f)
 
     def do_LCEN(self, Xattr, yattr, test_size, savef=None, **kwargs):
+        import SPA
 
         self.split_X(Xattr, test_size)
         self.split_y(yattr, test_size)
