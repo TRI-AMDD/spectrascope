@@ -129,14 +129,11 @@ class plot_spectral_features(ss_plotting):
             self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
 
     def plot_featureagg(self, c=(0,1), **kwargs): 
-        c1, c2 = c  
-        if self.fig is None: 
-            pass 
-        else: 
-            self.fig.add_trace(go.Scatter(x=self.feature[:,c1], y=self.feature[:,c2], **kwargs), row=self.row, col=self.col)
-            self.fig.update_xaxes(title_text=self.xaxis_label, row=self.row, col=self.col)
-            self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
-
+        self.plot_pca(c, **kwargs)
+        
+    def plot_tsne(self, c=(0,1), **kwargs):
+        self.plot_pca(c, **kwargs)
+        
     def plot_fft_features(self, **kwargs): 
         " needs original xaxis" 
         from scipy.fft import fftfreq
@@ -225,6 +222,11 @@ class plot_model(ss_plotting):
         c = self.selected_features[:2]
         pca_plotter = plot_spectral_features(pca_feat, fig=self.fig, xaxis=self.xaxis, xaxis_label=self.xaxis_label, yaxis_label=self.yaxis_label)
         pca_plotter.plot_pca(c, **kwargs)
+        
+    def plot_tsne(self, tsne_feat, **kwargs):
+        c = self.selected_features[:2]
+        tsne_plotter = plot_spectral_features(tsne_feat, fig=self.fig, xaxis=self.xaxis, xaxis_label=self.xaxis_label, yaxis_label=self.yaxis_label)
+        tsne_plotter.plot_tsne(c, **kwargs)
          
     
     def plot_fft_features(self):

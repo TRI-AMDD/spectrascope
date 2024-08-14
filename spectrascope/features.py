@@ -19,7 +19,7 @@ import plotly.express as px
 from sklearn.cluster import FeatureAgglomeration
 from sklearn.decomposition import PCA
 from spectrascope.plot_spectral_features import plot_spectral_features
-
+from sklearn.manifold import TSNE
 
 def degree_based_features(
     X, degree, exclude_features: list[str], input_labels: list[str]
@@ -363,7 +363,15 @@ class spectral_features:
 
         if return_features:
             return self.cdf_features
+        
+    def tsne(self, n_components=2, verbose=False, return_features:bool=False, **kwargs):
+        x, y = self.check_xinterp(verbose)
+        tsne = TSNE(n_components=n_components, **kwargs)
+        self.tsne_features = tsne.fit_transform(y)
 
+        if return_features:
+            return self.tsne_features
+    
     def cwt(
         self,
         scales=np.arange(1, 11),
