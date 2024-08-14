@@ -1,11 +1,9 @@
-import pandas as pd
 import streamlit as st
-import numpy as np
-import sys
 
-from spectrascope.SpectraScope import *
 from spectrascope.ss_classification import *
-from spectrascope.plot_spectral_features import * 
+from spectrascope.plot_spectral_features import plot_model as pm 
+from spectrascope.plot_spectral_features import plot_spectral_features as psf 
+
 
 # from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor()
 # from sklearn.linear_model import Lasso, Ridge
@@ -14,133 +12,56 @@ from spectrascope.plot_spectral_features import *
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import plotly.express as px
-from plotly.subplots import make_subplots
-import plotly.graph_objects as go
-
-# st.session_state['fitted'] = False
-st.title("SpectraScope")
-st.sidebar.markdown("Spectrascope Home")
-
-fnX = "/Users/amalyajohnson/Desktop/Spectrascope/spectrascope_local/tests/test_files/X_testfile.npy"
-fny = "/Users/amalyajohnson/Desktop/Spectrascope/spectrascope_local/tests/test_files/y_testfile.npy"
-X = np.load(fnX)
-y = np.load(fny)
-
-fn = '/Users/amalyajohnson/Desktop/Spectrascope/Datasets/XAS_PDF/Ti/processed_billinge.json'
-data = pd.read_json(fn)
-structures = data['structure'].apply(lambda x : Structure.from_dict(x))
-structures = structures.to_numpy()
-mpids = data['mp_id'].to_list()
-
-info = BinaryClassifications(
-    structures, mpids, X=X, y=y, specnames=["pdf", "xanes"], yname="nn", random_seed=10, generate_dict=False
-)
-
-
-
-@st.cache_data
-def load_data(X, y, specnames=["pdf", "xanes"], yname="nn"):
-    data = BinaryClassifications(structures=structures, mpids=mpids, X=X, y=y, specnames=specnames, yname=yname)
-    return data
-
-
-st.markdown("## 1. Load  data")
-
-data_load_state = st.text("Loading X data...")
-data = load_data(X, y)
-data_load_state.text("Done! (using st.cache_data)")
-st.session_state["data"] = data
-st.session_state["ndatasets"] = data.X.shape[0]
-st.write(f"Detected {data.X.shape[0]} loaded datasets")
-
-data.add_x_axis(specname="xanes", value=np.linspace(4969.0, 5021.0, 200))
-data.add_x_axis(specname="pdf", value=np.linspace(0, 10, 200))
-
-for Xi, name in zip(data.X, data.specnames):
-    df = pd.DataFrame(
-        Xi, columns=[str(round(i, 2)) for i in getattr(data, f"{name}_xaxis")]
-    )
-    if st.checkbox(f"Show {name} Data"):
-        st.write(df.head())
-
-yattr = st.text_input("Input Column to predict", " ")
-st.session_state['yattr'] = yattr
-
-
+from itertools import product
 
 def textinput_to_list(string, delim):
     return string.replace(" ", "").split(delim)
 
+data  = st.session_state["data"]
+yattr = st.session_state["yattr"]
+y = getattr(data, yattr)
 
 st.markdown("## 2. Choose Spectra to Featurize")
-cols_to_featurize = st.text_input("Input column(s) to featurize", "xanes,pdf")
-cols_to_featurize = textinput_to_list(cols_to_featurize, ",")
-
-st.session_state["cols_to_featurize"] = cols_to_featurize
-
-ncols = len(cols_to_featurize)
-
-fig = make_subplots(
-    rows=1, cols=ncols, subplot_titles=cols_to_featurize, horizontal_spacing=0.15
-)
+spec_to_featurize = st.text_input("Input column(s) to featurize", "xanes,pdf")
+spec_to_featurize = textinput_to_list(spec_to_featurize, ",")
 
 st.session_state["fitted_models"] = []
-from pages.visualizing import plot_raw_spec
-
-for ic, col in enumerate(cols_to_featurize):
-    plot_raw_spec(fig, col, 1, ic + 1)
-
-st.plotly_chart(fig)
-
 
 features = st.text_input(
     "Input feature(s) to generate", "polynomial_featuresall,cwt"
-)  # , gaussian_peaks')
+)  
 features = textinput_to_list(features, ",")
 
 nfeats = len(features)
 
 
-for col in cols_to_featurize:
-    fig = make_subplots(
-        rows=1, cols=nfeats, subplot_titles=features, horizontal_spacing=0.15
-    )
-    x = getattr(data, f"{col}_xaxis")
-    if not hasattr(data, f"{col}_pointwise_features"):
-        data.add_spectral_feature(col, "pointwise_features", xrange=x)
-    spec = getattr(data, f"{col}_pointwise_features")[0]
-    temp = spectral_features(x, spec)
+kwargs_dict = { 'pca' : {'mode':'markers', 'marker':dict(color=y, colorscale='Viridis')}, #, showscale=True, colorbar=dict(len=0.3, x=0.3, y=0.5))}
+    'cwt' : {'colorscale':'Viridis','showscale':False}, #,'colorbar':dict(len=0.3, x=1, y=0.85)}
+    'cdf' : {},
+    'polynomial_featuresall' : {},
+    'featureagg' : {'mode':'markers', 'marker':dict(color=y, colorscale='Viridis')}, #, showscale=True, colorbar=dict(len=0.3, x=0.6, y=0.5))}
+    'fft_features' : {},
+    'pointwise_features':{}
+    }
 
-    for ic, feat in enumerate(features):
-        temp.__getattribute__(feat).__call__()
-        if "gaussian_peaks" in feat:
-            fig.add_trace(
-                go.Scatter(x=temp.energies, y=temp.intensities, showlegend=False),
-                row=1,
-                col=ic + 1,
-            )
-            for i in range(0, len(temp.peak_features), 3):
-                ctr = temp.peak_features[i]
-                amp = temp.peak_features[i + 1]
-                wid = temp.peak_features[i + 2]
-                yfit = amp * np.exp(-((x - ctr) ** 2 / (2 * (wid / 2.355) ** 2)))
-                fig.add_trace(
-                    go.Scatter(
-                        x=x,
-                        y=yfit,
-                        mode="lines",
-                        showlegend=False,
-                        line=dict(color="#7f7f7f"),
-                    ),
-                    row=1,
-                    col=ic + 1,
-                )
-        else:
-            x, y = temp.__getattribute__("plot_" + feat).__call__()
-            if "cwt" in feat:
-                fig.add_trace(go.Heatmap(z=y), row=1, col=ic + 1)
-            else:
-                fig.add_trace(go.Scatter(x=x, y=y, showlegend=False), row=1, col=ic + 1)
+for spec in spec_to_featurize: 
+    fig = make_subplots(
+            rows=1, cols=nfeats, subplot_titles=features, horizontal_spacing=0.15
+        )
+    for i, feat in enumerate(features): 
+        kwargs = kwargs_dict[feat]
+        if 'fft' in feat or 'pointwise' in feat: 
+            data.add_spectral_feature(spec, feat, xrange=getattr(data, f'{spec}_xaxis'))
+        else: 
+            data.add_spectral_feature(spec, feat)
+        arr = data.__getattribute__(spec + '_'+ feat)
+        if feat == 'pca' or feat == 'featureagg': 
+            pass
+        else: 
+            arr = arr[0].ravel()
+            xaxis = getattr(data, f'{spec}_xaxis')
+        temp = psf(arr, xaxis=xaxis, fig=fig, row=1, col=i + 1)    
+        getattr(temp, f"plot_{feat}").__call__(showlegend=False, **kwargs)
 
     st.plotly_chart(fig)
 

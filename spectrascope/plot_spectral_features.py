@@ -58,7 +58,15 @@ class plot_spectral_features(ss_plotting):
     
     def plot(self):
         pass
-        
+    
+    def plot_pointwise_features(self, **kwargs): 
+        if self.fig is None: 
+            pass 
+        else: 
+            self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.feature, **kwargs), row=self.row, col=self.col)
+            self.fig.update_xaxes(title_text=self.xaxis_label, row=self.row, col=self.col)
+            self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
+    
     def plot_gaussian_peaks(self, **kwargs):
         if self.fig is None: 
             pass 
