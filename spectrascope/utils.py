@@ -139,3 +139,26 @@ def arr_entropy(arr):
     p0 = arr.sum(axis=0) / Ny
     p1 = (Ny - arr.sum(axis=0)) / Ny
     return entropy(p0, p1)
+
+def LCEN_selected_features(model, top_features): 
+    params = model["model_params"]
+    num_selected = len(params)
+    par_names = np.array(params)[:, 0]
+    par_locs = np.array(
+        [
+            p.split("^")[0].replace("x", "") if p != "intercept" else "intercept"
+            for p in par_names
+        ]
+    )
+    par_vals = np.array(params)[:, 1].astype("float64")
+    par_vals_abs = np.abs(par_vals)
+    importance = np.argsort(par_vals_abs)[::-1]
+    
+    selected_features = []
+    for loc, val in zip(par_locs[importance][:top_features], par_vals[importance][:top_features]):
+        if loc == "intercept":
+            pass
+        else:
+            selected_features.append(int(loc))
+            
+    return selected_features

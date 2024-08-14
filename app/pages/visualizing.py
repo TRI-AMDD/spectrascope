@@ -2,13 +2,29 @@ import streamlit as st
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import plotly.express as px
-import numpy as np
-
+from spectrascope.plot_spectral_features import plot_model as pm 
 
 data = st.session_state["data"]
-cols_to_featurize = st.session_state["cols_to_featurize"]
+cols_to_featurize = st.session_state["spec_to_featurize"]
 fitted_models = st.session_state["fitted_models"]
 yattr = st.session_state['yattr']
+
+
+st.markdown("### Visualizing Feature Selection and Importance")
+st.markdown("LCEN : vertical lines on selected features")
+st.markdown("RF : Normalized feature importance for every feature")
+
+model_name = st.selectbox("Select Model to Visualize", fitted_models)
+fig = make_subplots(1,1)
+raw_name = '_'.join(model_name.split('_')[:-2])
+
+raw = getattr(data, raw_name)
+model = getattr(data, model_name)
+
+print(model.keys())
+['selected_features']
+
+
 
 
 def plot_model(full_name, fig, ir, ic, color="#d62728", plot_raw=True):
@@ -119,11 +135,6 @@ def plot_model(full_name, fig, ir, ic, color="#d62728", plot_raw=True):
                     )
 
             fig.update_yaxes(title="", secondary_y=True)
-
-
-st.markdown("### Visualizing Feature Selection and Importance")
-st.markdown("LCEN : vertical lines on selected features")
-st.markdown("RF : Normalized feature importance for every feature")
 
 if len(cols_to_featurize) > 1:
     col1, col2 = cols_to_featurize

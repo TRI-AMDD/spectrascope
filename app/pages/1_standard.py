@@ -4,11 +4,6 @@ from spectrascope.ss_classification import *
 from spectrascope.plot_spectral_features import plot_model as pm 
 from spectrascope.plot_spectral_features import plot_spectral_features as psf 
 
-
-# from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor()
-# from sklearn.linear_model import Lasso, Ridge
-# import SPA
-
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import plotly.express as px
@@ -21,9 +16,10 @@ data  = st.session_state["data"]
 yattr = st.session_state["yattr"]
 y = getattr(data, yattr)
 
+col1, col2 = st.columns(2)
+
 st.markdown("## 2. Choose Spectra to Featurize")
 spec_to_featurize = st.multiselect("Input column(s) to featurize", data.specnames)
-# spec_to_featurize = textinput_to_list(spec_to_featurize, ",")
 
 st.session_state["fitted_models"] = []
 
@@ -40,7 +36,7 @@ kwargs_dict = { 'pca' : {'mode':'markers', 'marker':dict(color=y, colorscale='Vi
 
 features_available = list(kwargs_dict.keys())
 
-features = st.multiselect("Select from Features Computed", features_available)
+features = st.multiselect("Visualize Features", features_available)
 
 nfeats = len(features)
 
@@ -114,7 +110,7 @@ if do_transform:
         interaction = True
 
     transform_selected = st.multiselect(
-        "Would you like to transform any of these features?",
+        "Choose features to transform",
         features_selected,
     )
     for transform in transform_selected: 
@@ -128,73 +124,85 @@ for feat in features_selected:
 
 st.markdown("## 4. Train Models")
 
-st.markdown("#### Build Random Forest")
-model = RandomForestRegressor()
-n_estimators = st.text_input("n_estimators", "100")  # 50, 200, 300
-criterion = st.text_input("criterion", "squared_error")  # absolute_error
-max_depth = st.text_input("max_depth", "35")  # 10, None
-rf_other_kwargs = st.text_input("Other RF kwargs")
+cross_validate = st.radio("Choose Training Method", ["Default Models", "Tune Hyperparameters"])
+cross_validate = {"Default Models":False, "Tune Hyperparameters":True}[cross_validate]
 
-n_estimators = textinput_to_list(n_estimators, ",")
-n_estimators = [int(n) for n in n_estimators]
-criterion = textinput_to_list(criterion, ",")
-max_depth = textinput_to_list(max_depth, ",")
-max_depth = [None if d == "None" else int(d) for d in max_depth]
+if not cross_validate:
+    rf_kwargs = {"estimator":RandomForestRegressor()}
+    lcen_kwargs = lcen_kwargs = {'l1_ratio':[0.1, 0.5, 0.9],
+               'K_fold':3, 
+               'cv_method':'Kfold', 
+               'alpha':5, 
+               'degree':[1],
+               'trans_type':'poly', 
+               'LCEN_cutoff':4e-3, 
+               'LCEN_interaction':False, 
+               'scale_X':True, 
+               'scale_y':True}
+    
+elif cross_validate: 
 
-rf_kwargs = {
-    "estimator": model,
-    "param_grid": {
-        "n_estimators": n_estimators,
-        "criterion": criterion,
-        "max_depth": max_depth,
-    },
-    "refit": True,
-    "metric": mean_squared_error,
-}
+    model = RandomForestRegressor()
+    n_estimators = st.text_input("n_estimators", "100")  # 50, 200, 300
+    criterion = st.text_input("criterion", "squared_error")  # absolute_error
+    max_depth = st.text_input("max_depth", "35")  # 10, None
+    rf_other_kwargs = st.text_input("Other RF kwargs")
+
+    n_estimators = textinput_to_list(n_estimators, ",")
+    n_estimators = [int(n) for n in n_estimators]
+    criterion = textinput_to_list(criterion, ",")
+    max_depth = textinput_to_list(max_depth, ",")
+    max_depth = [None if d == "None" else int(d) for d in max_depth]
+
+    rf_kwargs = {
+        "estimator": model,
+        "param_grid": {
+            "n_estimators": n_estimators,
+            "criterion": criterion,
+            "max_depth": max_depth,
+        },
+        "refit": True,
+        "metric": mean_squared_error,
+    }
+
+    st.markdown("#### Build Lasso-Clip-Elastic Net")
+
+    cutoff = st.number_input("LCEN cutoff", value=5e-2)
+    l1_ratio = st.text_input("l1_ratio", "0.01,0.1,0.5, 0.99")
+    l1_ratio = textinput_to_list(l1_ratio, ",")
+    l1_ratio = [float(l1) for l1 in l1_ratio]
+    Kfold = st.number_input("K_fold", value=3)
+    cv_method = st.text_input("cv_method", "Kfold")
+    alpha = st.number_input("alpha", value=5)
+    # alphas = np.concatenate(([0], np.logspace(-4.3, 0, alpha)))
+    # st.write('The values for alpha are: ', ','.join(['{a:.5f}'.format(a=a) for a in alphas]))
+
+    lcen_other_kwargs = st.text_input("Other LCEN kwargs")
+
+
+    degree = [1, 2]
+    trans_type = "poly"
+    lcen_interaction = False
+    n_jobs = -1
+    scale_X = True
+    scale_y = True
+
+    lcen_kwargs = {
+        "l1_ratio": l1_ratio,
+        "K_fold": Kfold,
+        "cv_method": cv_method,
+        "n_jobs": n_jobs,
+        "alpha": int(alpha),
+        "degree": degree,
+        "trans_type": trans_type,
+        "LCEN_cutoff": float(cutoff),
+        "LCEN_interaction": lcen_interaction,
+        "scale_X": scale_X,
+        "scale_y": scale_y,
+    }
 
 sk_kwargs = [rf_kwargs]
-
-st.markdown("#### Build Lasso-Clip-Elastic Net")
-
-cutoff = st.number_input("LCEN cutoff", value=5e-2)
-l1_ratio = st.text_input("l1_ratio", "0.01,0.1,0.5, 0.99")
-l1_ratio = textinput_to_list(l1_ratio, ",")
-l1_ratio = [float(l1) for l1 in l1_ratio]
-Kfold = st.number_input("K_fold", value=3)
-cv_method = st.text_input("cv_method", "Kfold")
-alpha = st.number_input("alpha", value=5)
-# alphas = np.concatenate(([0], np.logspace(-4.3, 0, alpha)))
-# st.write('The values for alpha are: ', ','.join(['{a:.5f}'.format(a=a) for a in alphas]))
-
-lcen_other_kwargs = st.text_input("Other LCEN kwargs")
-
-
-degree = [1, 2]
-trans_type = "poly"
-lcen_interaction = False
-n_jobs = -1
-scale_X = True
-scale_y = True
-
-lcen_kwargs = {
-    "l1_ratio": l1_ratio,
-    "K_fold": Kfold,
-    "cv_method": cv_method,
-    "n_jobs": n_jobs,
-    "alpha": int(alpha),
-    "degree": degree,
-    "trans_type": trans_type,
-    "LCEN_cutoff": float(cutoff),
-    "LCEN_interaction": lcen_interaction,
-    "scale_X": scale_X,
-    "scale_y": scale_y,
-}
-
-
-# st.markdown('#### Build Custom Sklearn Model')
-# sk_kwargs.append([])
-
-st.markdown("## 5. Run Cross Validation ! :D")
+st.markdown("## 5. Run!")
 
 seed = st.number_input("Random Seed", 1, 100, 20, 1)
 test_size = st.number_input("Test Set Size", 0.0, 1.0, 0.25)
@@ -204,16 +212,7 @@ data.random_seed = int(seed)
 fit_sk = st.checkbox("Fit Random Forest")
 fit_lcen = st.checkbox("Fit LCEN")
 
-# model_names = []
-# if fit_sk:
-#     for sk in sk_kwargs:
-#         model = sk['model']
-#         model_names.append(model.__str__().split('()')[0])
-
-# if fit_lcen:
-#     model_names.append('LCEN')
-
-# @st.cache_data
+model_names = []
 
 
 def fit(sk_kwargs, lcen_kwargs, yattr='nn'):
@@ -233,7 +232,7 @@ def fit(sk_kwargs, lcen_kwargs, yattr='nn'):
     for attr_name in features_selected:
         if fit_sk:
             for sk in sk_kwargs:
-                data.do_sk(attr_name, yattr, test_size, None, **sk)
+                data.do_sk(attr_name, yattr, test_size, use_pipeline=cross_validate, **sk)
                 completed += 1
                 my_bar.progress(completed / N, text=progress_text)
                 model_name = sk["estimator"].__str__().split("()")[0]
@@ -245,12 +244,13 @@ def fit(sk_kwargs, lcen_kwargs, yattr='nn'):
             my_bar.progress(completed / N, text=progress_text)
             model_name = "LCEN"
             fitted_models.append(attr_name + "_" + yattr + "_" + model_name)
+            
     my_bar.empty()
 
     return pd.DataFrame(data.best_fits), fitted_models
 
 
-@st.cache_resource
+@st.cache_data
 def get_models():
     fitted_models = {}
     for attr_name in features_selected:
@@ -265,7 +265,6 @@ def get_models():
 def fitted_callback():
     st.session_state["fitted"] = True
 
-
 run_it = st.button("Run it!", False, on_click=fitted_callback())
 
 if run_it:
@@ -276,7 +275,7 @@ if run_it:
         best_fit_df,
         text_auto=True,
         aspect="auto",
-        title="Fitting Summary, Percent Error",
+        title="Fitting Summary, MSE",
     )
     fig.update_traces(texttemplate="%{z:.5f}")
     st.plotly_chart(fig)
@@ -289,8 +288,4 @@ st.session_state["data"] = data
 st.session_state["spec_to_featurize"] = spec_to_featurize
 
 
-# Feature Importances
 
-# Features Selected
-
-# Plot it by attribute

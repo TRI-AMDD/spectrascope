@@ -15,7 +15,7 @@ import spectrascope.structure_property_featurization as structure_property_featu
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-
+from spectrascope.utils import LCEN_selected_features
 
 class SpectraScope:
 
@@ -340,7 +340,7 @@ class SpectraScope:
             ) as f:
                 pickle.dump(P, f)
 
-    def do_LCEN(self, Xattr, yattr, test_size, savef=None, **kwargs):
+    def do_LCEN(self, Xattr, yattr, test_size, savef=None, top_features=20, **kwargs):
         import SPA
 
         self.split_X(Xattr, test_size)
@@ -366,7 +366,9 @@ class SpectraScope:
             model_name=["LCEN"],
             **kwargs,
         )
-
+        #TODO LCEN Selected features 
+        out[0]["LCEN"]["top_features"] = LCEN_selected_features(out[0]["LCEN"], top_features)
+        
         setattr(self, Xattr + "_" + yattr + "_LCEN", out[0]["LCEN"])
         ypred = out[0]["LCEN"]["yhat_test_nontrans"]
         perc_err = np.mean(np.abs((y_test - ypred) / y_test)) * 100
