@@ -87,6 +87,19 @@ st.plotly_chart(fig)
 st.stop()
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 def plot_model(full_name, fig, ir, ic, color="#d62728", plot_raw=True):
     raw_to_plot = []
     for col in cols_to_featurize:

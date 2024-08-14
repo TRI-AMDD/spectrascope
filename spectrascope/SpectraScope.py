@@ -315,14 +315,15 @@ class SpectraScope:
             P, score, ypred = self.sk(X_train, X_test, y_train, y_test, **kwargs)
             model_name = P.__str__().split("(")[0]
 
-        if model_name == 'RandomForestRegressor': 
+        if 'RandomForest' in model_name: 
             feature_importances = P.feature_importances_
             #choose top features
             best_feature_ids = np.argsort(feature_importances[::-1])[:top_features]
-
+        else: 
+            best_feature_ids = []
             # changes dataset: (X[:,sorted(sorted_best_features)])
             
-        fit_dict = {"P": P, "score": score, "ypred": ypred, 'top_features':best_feature_ids}
+        fit_dict = {"P": P, "score": score, "ypred": ypred, 'selected_features':best_feature_ids}
         setattr(self, Xattr + "_" + yattr + "_" + model_name, fit_dict)
 
         perc_err = np.mean(np.abs((y_test - ypred) / y_test)) * 100
@@ -367,7 +368,7 @@ class SpectraScope:
             **kwargs,
         )
         #TODO LCEN Selected features 
-        out[0]["LCEN"]["top_features"] = LCEN_selected_features(out[0]["LCEN"], top_features)
+        out[0]["LCEN"]["selected_features"] = LCEN_selected_features(out[0]["LCEN"], top_features)
         
         setattr(self, Xattr + "_" + yattr + "_LCEN", out[0]["LCEN"])
         ypred = out[0]["LCEN"]["yhat_test_nontrans"]
@@ -402,6 +403,7 @@ class SpectraScope:
         multi_modal=None,
         savef=None,
         do_all_existing=False,
+        use_pipeline=False
     ):
         """
 
@@ -444,7 +446,7 @@ class SpectraScope:
                         self.add_spectral_feature(feat=feat, **kwargs)
 
                     for sk in sk_kwargs:
-                        self.do_sk(attr_name, yattr, test_size, savef, **sk)
+                        self.do_sk(attr_name, yattr, test_size, savef, use_pipeline=use_pipeline, **sk)
                     if lcen_kwargs is not None:
                         self.do_LCEN(attr_name, yattr, test_size, savef, **lcen_kwargs)
 
@@ -456,7 +458,7 @@ class SpectraScope:
                         self.combine_feature(feat1, feat2)
 
                     for sk in sk_kwargs:
-                        self.do_sk(attr_name, yattr, test_size, savef, **sk)
+                        self.do_sk(attr_name, yattr, test_size, savef, use_pipeline=use_pipeline, **sk)
                     if lcen_kwargs is not None:
                         self.do_LCEN(attr_name, yattr, test_size, savef, **lcen_kwargs)
 
@@ -466,7 +468,9 @@ class SpectraScope:
         except OSError:
             pass
 
-    def plot_df_heatmap(self, df, **plotly_kwargs):
-        fig = go.Figure()
+    def plot_df_heatmap(self, df, fig=None, **plotly_kwargs):
+        if fig == None: 
+            fig = go.Figure()
+            
         fig.add_trace(go.Heatmap(x=df.columns, y=df.index, z=df, **plotly_kwargs))
         fig.show()

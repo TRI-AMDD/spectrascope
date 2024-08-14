@@ -161,7 +161,7 @@ class plot_model(ss_plotting):
         
     def plot_polynomial_featuresall(self): 
         
-        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.raw))
+        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.raw), row=self.row, col=self.col)
         for selected_id in self.selected_features: 
     
             if selected_id < 16:
@@ -178,7 +178,7 @@ class plot_model(ss_plotting):
             
             center = self.xaxis[selected_id]
             height = self.raw[selected_id]
-            im  = Image.open(f'..spectrascope/app/static/{poly_label}.png')
+            im  = Image.open(f'../app/static/{poly_label}.png')
 
             self.fig.add_layout_image(
                 dict(
@@ -198,10 +198,11 @@ class plot_model(ss_plotting):
         self.fig.update_yaxes(title_text=self.yaxis_label)
         
             
-    def plot_pointwise_features(self): 
-        
-        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.raw))
-        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.selected_features), secondary_y=True)
+    def plot_pointwise_features(self, **kwargs): 
+        # selected_features_arr = np.zeros_like(self.xaxis)
+        # selected_features_arr[self.selected_features] = 1 
+        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.raw), row=self.row, col=self.col)
+        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.selected_features, **kwargs), secondary_y=True, row=self.row, col=self.col)
         self.fig.update_xaxes(title_text=self.xaxis_label)
         self.fig.update_yaxes(title_text=self.yaxis_label)
     
@@ -209,9 +210,12 @@ class plot_model(ss_plotting):
         pass
     
     def plot_cdf(self, **kwargs): 
-        arr = kwargs["feat"]
-        self.fig.add_trace(go.Scatter(x=self.xaxis, y=arr))
-        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.selected_features), secondary_y=Trueß)
+        
+        # selected_features_arr = np.zeros_like(self.xaxis)
+        # selected_features_arr[self.selected_features] = 1 
+        
+        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.raw), row=self.row, col=self.col)
+        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.selected_features, **kwargs), secondary_y=True, row=self.row, col=self.col)
         self.fig.update_xaxes(title_text=self.xaxis_label)
         self.fig.update_yaxes(title_text=self.yaxis_label) 
     
@@ -219,21 +223,21 @@ class plot_model(ss_plotting):
         c = self.selected_features[:2]
         arr = kwargs["feat"]
         kwargs.pop("feat")
-        featureagg_plotter = plot_spectral_features(arr, fig=self.fig, xaxis=self.xaxis, xaxis_label=self.xaxis_label, yaxis_label=self.yaxis_label)
+        featureagg_plotter = plot_spectral_features(arr, fig=self.fig, xaxis=self.xaxis, xaxis_label=self.xaxis_label, yaxis_label=self.yaxis_label, row=self.row, col=self.col)
         featureagg_plotter.plot_featureagg(c, **kwargs)
     
     def plot_pca(self, **kwargs):
         arr = kwargs["feat"]
         kwargs.pop("feat")
         c = self.selected_features[:2]
-        pca_plotter = plot_spectral_features(arr, fig=self.fig, xaxis=self.xaxis, xaxis_label=self.xaxis_label, yaxis_label=self.yaxis_label)
+        pca_plotter = plot_spectral_features(arr, fig=self.fig, xaxis=self.xaxis, xaxis_label=self.xaxis_label, yaxis_label=self.yaxis_label, row=self.row, col=self.col)
         pca_plotter.plot_pca(c, **kwargs)
         
     def plot_tsne(self, **kwargs):
         arr = kwargs["feat"]
         kwargs.pop("feat")
         c = self.selected_features[:2]
-        tsne_plotter = plot_spectral_features(arr, fig=self.fig, xaxis=self.xaxis, xaxis_label=self.xaxis_label, yaxis_label=self.yaxis_label)
+        tsne_plotter = plot_spectral_features(arr, fig=self.fig, xaxis=self.xaxis, xaxis_label=self.xaxis_label, yaxis_label=self.yaxis_label, row=self.row, col=self.col)
         tsne_plotter.plot_tsne(c, **kwargs)
          
     
