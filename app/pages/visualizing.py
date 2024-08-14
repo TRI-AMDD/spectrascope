@@ -10,35 +10,6 @@ cols_to_featurize = st.session_state["cols_to_featurize"]
 fitted_models = st.session_state["fitted_models"]
 yattr = st.session_state['yattr']
 
-def plot_raw_spec(fig, col, ir, ic):
-    x = getattr(data, f"{col}_xaxis")
-
-    if not hasattr(data, f"{col}_pointwirse_features"):
-        data.add_spectral_feature(col, "pointwise_features", xrange=x)
-    y = getattr(data, f"{col}_pointwise_features")
-    for yi in y:
-        fig.add_trace(
-            go.Scatter(
-                x=x,
-                y=yi,
-                mode="lines",
-                opacity=0.1,
-                showlegend=False,
-                line=dict(color="#7f7f7f"),
-            ),
-            row=ir,
-            col=ic,
-        )
-
-    xlabel = '' #getattr(data, f"{col}_labelx")
-    ylabel = '' #getattr(data, f"{col}_labely")
-    fig.add_trace(
-        go.Scatter(x=x, y=y.mean(axis=0), mode="lines", name="average"), row=ir, col=ic
-    )
-
-    fig.update_xaxes(title_text=xlabel, row=ir, col=ic)
-    fig.update_yaxes(title_text=ylabel, row=ir, col=ic)
-
 
 def plot_model(full_name, fig, ir, ic, color="#d62728", plot_raw=True):
     raw_to_plot = []
