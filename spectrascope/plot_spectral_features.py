@@ -6,24 +6,28 @@ from plotly.subplots import make_subplots
 import numpy as np 
 from spectrascope.utils import * 
 
-class plot_spectral_features:
-    def __init__(self, arr, feature_name='', xaxis=None, xaxis_label='', yaxis_label='', 
-                 twoD = False, fig=None, row=1, col=1, **kwargs) -> None:
-        self.feature_name = feature_name
-        
-        if twoD: 
-            pass 
-        self.feature = arr
-        
-        if xaxis is None: 
-            self.xaxis = np.arange(len(self.feature))
-        else: 
-            self.xaxis = xaxis 
+
+class ss_plotting: 
+    def __init__(self, xaxis=None, xaxis_label='', yaxis_label='', 
+                 twoD = False, name='', fig=None, row=1, col=1) -> None:
+
         self.xaxis_label = xaxis_label
         self.yaxis_label = yaxis_label
         self.fig = fig 
         self.row = row
         self.col = col
+        self.name = name 
+        self.xaxis = xaxis 
+        if twoD: 
+            pass
+
+class plot_spectral_features(ss_plotting):
+    def __init__(self, arr, **kwargs) -> None:
+        super().__init__(**kwargs)
+        
+        self.feature = arr
+        if self.xaxis is None: 
+            self.xaxis = np.arange(len(self.feature))
 
     
     def get_xy(self): 
@@ -128,4 +132,46 @@ class plot_spectral_features:
         else: 
             self.fig.add_trace(go.Scatter(x=fft_freq, y = self.feature, **kwargs), row=self.row, col=self.col)
     
+class plot_model(ss_plotting):
+    def __init__(self, model=None, raw=None, selected_features=None, **kwargs) -> None:
+        super().__init__(**kwargs)
+        self.model = model 
+        self.selected_features = selected_features
+        self.raw = raw
+    def plot_polynomial_featuresall(self): 
+        
+        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.raw))
+        for selected_id in self.selected_features: 
     
+            if selected_id < 16:
+                poly_label = 'const' 
+            elif selected_id >= 16 and selected_id < 36:
+                selected_id -= 16
+                poly_label = 'line'
+            elif selected_id >= 36 and selected_id < 76: 
+                selected_id -= 36
+                poly_label = 'par'
+            elif selected_id >= 76: 
+                selected_id -=76
+                poly_label = 'cubic'
+            
+            center = self.xaxis[selected_id]
+            height = self.raw[selected_id]
+            im  = f'../app/{poly_label}.png'
+
+            self.fig.add_layout_image(
+                dict(
+                    source=im,
+                    xref="x",
+                    yref="y",
+                    xanchor='right',
+                    x=center,
+                    y=height,
+                    sizex=2 ,
+                    sizey=2,
+                    sizing="contain", 
+                    opacity=1,
+                    layer="below")
+            )
+         
+        
