@@ -22,18 +22,10 @@ yattr = st.session_state["yattr"]
 y = getattr(data, yattr)
 
 st.markdown("## 2. Choose Spectra to Featurize")
-spec_to_featurize = st.text_input("Input column(s) to featurize", "xanes,pdf")
-spec_to_featurize = textinput_to_list(spec_to_featurize, ",")
+spec_to_featurize = st.multiselect("Input column(s) to featurize", data.specnames)
+# spec_to_featurize = textinput_to_list(spec_to_featurize, ",")
 
 st.session_state["fitted_models"] = []
-
-features = st.text_input(
-    "Input feature(s) to generate", "polynomial_featuresall,cwt"
-)  
-features = textinput_to_list(features, ",")
-
-nfeats = len(features)
-
 
 kwargs_dict = { 'pca' : {'mode':'markers', 'marker':dict(color=y, colorscale='Viridis')}, #, showscale=True, colorbar=dict(len=0.3, x=0.3, y=0.5))}
     'cwt' : {'colorscale':'Viridis','showscale':False}, #,'colorbar':dict(len=0.3, x=1, y=0.85)}
@@ -41,47 +33,58 @@ kwargs_dict = { 'pca' : {'mode':'markers', 'marker':dict(color=y, colorscale='Vi
     'polynomial_featuresall' : {},
     'featureagg' : {'mode':'markers', 'marker':dict(color=y, colorscale='Viridis')}, #, showscale=True, colorbar=dict(len=0.3, x=0.6, y=0.5))}
     'fft_features' : {},
-    'pointwise_features':{}
+    'pointwise_features':{},
+    'tsne':{'mode':'markers', 'marker':dict(color=y, colorscale='Viridis')}
     }
 
-for spec in spec_to_featurize: 
-    fig = make_subplots(
-            rows=1, cols=nfeats, subplot_titles=features, horizontal_spacing=0.15
-        )
-    for i, feat in enumerate(features): 
-        kwargs = kwargs_dict[feat]
-        if 'fft' in feat or 'pointwise' in feat: 
-            data.add_spectral_feature(spec, feat, xrange=getattr(data, f'{spec}_xaxis'))
-        else: 
-            data.add_spectral_feature(spec, feat)
-        arr = data.__getattribute__(spec + '_'+ feat)
-        if feat == 'pca' or feat == 'featureagg': 
-            pass
-        else: 
-            arr = arr[0].ravel()
-            xaxis = getattr(data, f'{spec}_xaxis')
-        temp = psf(arr, xaxis=xaxis, fig=fig, row=1, col=i + 1)    
-        getattr(temp, f"plot_{feat}").__call__(showlegend=False, **kwargs)
 
-    st.plotly_chart(fig)
+features_available = list(kwargs_dict.keys())
+
+features = st.multiselect("Select from Features Computed", features_available)
+
+nfeats = len(features)
+
+if nfeats > 0 : 
+    for spec in spec_to_featurize: 
+        fig = make_subplots(
+                rows=1, cols=nfeats, subplot_titles=features, horizontal_spacing=0.15
+            )
+        for i, feat in enumerate(features): 
+            kwargs = kwargs_dict[feat]
+            if 'fft' in feat or 'pointwise' in feat: 
+                data.add_spectral_feature(spec, feat, xrange=getattr(data, f'{spec}_xaxis'))
+            else: 
+                data.add_spectral_feature(spec, feat)
+                
+            arr = data.__getattribute__(spec + '_'+ feat)
+            if feat == 'pca' or feat == 'featureagg' or feat =='tsne': 
+                pass
+            else: 
+                arr = arr[0].ravel()
+                
+            xaxis = getattr(data, f'{spec}_xaxis')
+            temp = psf(arr, xaxis=xaxis, fig=fig, row=1, col=i + 1)    
+            getattr(temp, f"plot_{feat}").__call__(showlegend=False, **kwargs)
+
+        st.plotly_chart(fig)
 
 features.append("pointwise_features")
 
 st.markdown("## 3. Choose Features to Build Model On")
 
 all_features = []
-for col in cols_to_featurize:
+for spec in spec_to_featurize:
     for feat in features:
-        all_features.append(col + "_" + feat)
+        all_features.append(spec + "_" + feat)
 
 features_selected = st.multiselect("Select from Features Computed", all_features)
 
 with st.spinner(text="featurizing....(say that 10 times fast)"):
-    for col in cols_to_featurize:
+    for spec in spec_to_featurize:
         for feat in features_selected:
-            x = getattr(data, f"{col}_xaxis")
+            x = getattr(data, f"{spec}_xaxis")
             if not hasattr(data, feat):
-                data.add_spectral_feature(x, feat.replace(f"{col}_", ""), convcol=col)
+                data.add_spsectral_feature(spec, feat.replace(f"{spec}_", ""))
 
 multi_modal_selected = st.text_input(
     "Would you like to combine any of these features? (format: feat1,feat2; feat1,feat3)",
@@ -96,12 +99,34 @@ if multi_modal_selected is not None:
             feat1, feat2 = combo
             attr_name = feat1.split("_")[0] + "_" + feat2
             if not hasattr(data, attr_name):
-                data.combine_feature_json(feat1, feat2)
+                data.combine_feature(feat1, feat2)
 
                 features_selected.append(attr_name)
 
+st.write("#### Would you like to transform any of these features?")
+do_transform = st.toggle("yes", False)
 
-st.markdown("## 4. Build Models for Cross Validation")
+if do_transform: 
+    degree = st.radio("Degree of polynomial transformation", [1,2,3])
+    interaction = st.toggle('Feature Interaction', False)
+    trans_type = st.radio("Transformation Type", ["all", "poly", "simple_interaction"])
+    if trans_type == "simple_interaction": 
+        interaction = True
+
+    transform_selected = st.multiselect(
+        "Would you like to transform any of these features?",
+        features_selected,
+    )
+    for transform in transform_selected: 
+        additional_naming = f"_{degree}_{interaction}_{trans_type}"
+        data.transform_feature(transform, degree=degree, interaction=interaction, trans_type=trans_type, additional_naming=additional_naming)
+        features_selected.append(transform + "_trans" + additional_naming)
+    
+st.write(f"#### Final Features selected for model building:") 
+for feat in features_selected: 
+    st.write(feat)
+
+st.markdown("## 4. Train Models")
 
 st.markdown("#### Build Random Forest")
 model = RandomForestRegressor()
@@ -261,7 +286,7 @@ else:
 
 st.session_state["fitted_models"] = fitted_models
 st.session_state["data"] = data
-st.session_state["cols_to_featurize"] = cols_to_featurize
+st.session_state["spec_to_featurize"] = spec_to_featurize
 
 
 # Feature Importances
