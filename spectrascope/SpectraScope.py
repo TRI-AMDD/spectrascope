@@ -330,6 +330,8 @@ class SpectraScope:
             feature_importances = P.feature_importances_
             #choose top features
             best_feature_ids = np.argsort(feature_importances[::-1])[:top_features]
+        elif "LogisticRegression" in model_name:
+            best_feature_ids = np.argsort(P.coef_)[::-1][:top_features] 
         else: 
             best_feature_ids = []
             # changes dataset: (X[:,sorted(sorted_best_features)])

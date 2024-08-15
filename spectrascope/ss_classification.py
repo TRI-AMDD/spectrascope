@@ -332,8 +332,17 @@ class BinaryClassifications(SpectraScope):
 
         self.add_y(yattr, self.structures_df[yattr].astype(int))
         self.split_y(yattr, test_size)
+        from sklearn.utils.validation import check_is_fitted
+        from sklearn.exceptions import NotFittedError
 
         estimator = kwargs["estimator"]
+        # estimator.__init__()
+        # try:
+        #     check_is_fitted(estimator)
+        #     print('already fitted')
+        # except NotFittedError as exc: 
+        #     print('not fitted') 
+        
         self.do_sk(Xattr, yattr, test_size, use_pipeline=use_pipeline, scale_X=scale_X, **kwargs)
         # self.do_LCEN(Xattr, yattr, test_size, savef, scale_X = scale_X, **kwargs)
 
@@ -365,13 +374,17 @@ class BinaryClassifications(SpectraScope):
         test_size=0.25,
         savef=None,
         use_pipeline=False,
+        scale_X = True,
         **kwargs
     ):
         masks = np.zeros([len(getattr(self, Xattr)), len(yattrs)])
-
+        from sklearn.base import clone
+        
         for i, yattr in enumerate(yattrs):
+            kwargs['estimator'] = clone(kwargs['estimator'])
             full_prediction = self.do_one_classification(
-                Xattr, yattr, test_size, savef, use_pipeline, **kwargs
+                Xattr, yattr, test_size, savef, use_pipeline, scale_X=scale_X,
+                **kwargs 
             )
             masks[:, i] = full_prediction
 
