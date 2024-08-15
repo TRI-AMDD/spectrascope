@@ -336,7 +336,6 @@ class BinaryClassifications(SpectraScope):
         from sklearn.exceptions import NotFittedError
 
         estimator = kwargs["estimator"]
-        # estimator.__init__()
         # try:
         #     check_is_fitted(estimator)
         #     print('already fitted')

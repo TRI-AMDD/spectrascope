@@ -178,7 +178,7 @@ class plot_model(ss_plotting):
             
             center = self.xaxis[selected_id]
             height = self.raw[selected_id]
-            im  = Image.open(f'/app/static/{poly_label}.png')
+            im  = Image.open(f'../app/static/{poly_label}.png')
 
             self.fig.add_layout_image(
                 dict(

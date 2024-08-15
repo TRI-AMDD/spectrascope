@@ -122,8 +122,7 @@ class SpectraScope:
     def add_y_label(self, specname, value):
         setattr(self, specname + "_labely", value)
 
-    def scale_X(self, Xattr): 
-        X = getattr(self, Xattr)
+    def scale_X(self, X): 
         scaled_x = StandardScaler().fit_transform(X)
         return scaled_x
         
@@ -232,7 +231,7 @@ class SpectraScope:
             setattr(self, feat + "_test_trans" + additional_naming, X_test_out)
         setattr(self, feat + "_trans_names" + additional_naming, names)
 
-    def split_X(self, attr, scale_X = Falsetest_size):
+    def split_X(self, attr, test_size, scale_X = False):
         X = getattr(self, attr)
         if scale_X: 
             X = self.scale_X(X)
@@ -244,7 +243,7 @@ class SpectraScope:
         setattr(self, attr + "_train", X_train)
         setattr(self, attr + "_test", X_test)
 
-    def split_y(self, attr,etest_size):
+    def split_y(self, attr,test_size):
         y = getattr(self, attr)
         y_train, y_test = train_test_split(
             y, test_size=test_size, random_state=self.random_seed
@@ -357,7 +356,7 @@ class SpectraScope:
     def do_LCEN(self, Xattr, yattr, test_size, savef=None, top_features=20, **kwargs):
         import SPA
 
-        self.split_X(Xattr, test_size, scale_X=scale_X)
+        self.split_X(Xattr, test_size)
         self.split_y(yattr, test_size)
 
         X_train = getattr(self, Xattr + "_train")
@@ -382,7 +381,7 @@ class SpectraScope:
         )
         #TODO LCEN Selected features 
         out[0]["LCEN"]["selected_features"] = LCEN_selected_features(out[0]["LCEN"], top_features)
-        out[0]["LCEN"]["scaled"]= scale_X
+        out[0]["LCEN"]["scaled"]= True
         
         setattr(self, Xattr + "_" + yattr + "_LCEN", out[0]["LCEN"])
         ypred = out[0]["LCEN"]["yhat_test_nontrans"]
@@ -417,7 +416,7 @@ class SpectraScope:
         multi_modal=None,
         savef=None,
         do_all_existing=False,
-        use_pipeline=False
+        use_pipeline=False,
         scale_X = True 
     ):
         """
@@ -449,7 +448,7 @@ class SpectraScope:
                     for sk in sk_kwargs:
                         self.do_sk(attr_name, yattr, test_size, savef, scale_X = scale_X, **sk)
                     if lcen_kwargs is not None:
-                        self.do_LCEN(attr_name, yattr, test_size, savef, scale_X = scale_X, **lcen_kwargs)
+                        self.do_LCEN(attr_name, yattr, test_size, savef, **lcen_kwargs)
 
         else:
 
@@ -463,7 +462,7 @@ class SpectraScope:
                     for sk in sk_kwargs:
                         self.do_sk(attr_name, yattr, test_size, savef, use_pipeline=use_pipeline, scale_X = scale_X, **sk)
                     if lcen_kwargs is not None:
-                        self.do_LCEN(attr_name, yattr, test_size, savef, scale_X = scale_X, **lcen_kwargs)
+                        self.do_LCEN(attr_name, yattr, test_size, savef, **lcen_kwargs)
 
             if multi_modal is not None:
                 for combo in multi_modal:
@@ -475,7 +474,7 @@ class SpectraScope:
                     for sk in sk_kwargs:
                         self.do_sk(attr_name, yattr, test_size, savef, use_pipeline=use_pipeline, scale_X = scale_X, **sk)
                     if lcen_kwargs is not None:
-                        self.do_LCEN(attr_name, yattr, test_size, savef, scale_X = scale_X, **lcen_kwargs)
+                        self.do_LCEN(attr_name, yattr, test_size, savef, **lcen_kwargs)
 
     def check_dir_exists(self, directory):
         try:

@@ -207,13 +207,14 @@ test_size = st.number_input("Test Set Size", 0.0, 1.0, 0.25)
 
 data.random_seed = int(seed)
 
+scale_X = st.checkbox("Scale X")
 fit_sk = st.checkbox("Fit Random Forest")
 fit_lcen = st.checkbox("Fit LCEN")
 
 model_names = []
 
 
-def fit(sk_kwargs, lcen_kwargs, yattr='nn'):
+def fit(sk_kwargs, lcen_kwargs, test_size, scale_X, yattr):
     Nm = 0
     if fit_sk:
         Nm = len(sk_kwargs)
@@ -230,7 +231,7 @@ def fit(sk_kwargs, lcen_kwargs, yattr='nn'):
     for attr_name in features_selected:
         if fit_sk:
             for sk in sk_kwargs:
-                data.do_sk(attr_name, yattr, test_size, use_pipeline=cross_validate, **sk)
+                data.do_sk(attr_name, yattr, test_size, use_pipeline=cross_validate, scale_X=scale_X, **sk)
                 completed += 1
                 my_bar.progress(completed / N, text=progress_text)
                 model_name = sk["estimator"].__str__().split("()")[0]
@@ -266,7 +267,8 @@ def fitted_callback():
 run_it = st.button("Run it!", False, on_click=fitted_callback())
 
 if run_it:
-    best_fit_df, fitted_models = fit(sk_kwargs, lcen_kwargs)
+    print(test_size)
+    best_fit_df, fitted_models = fit(sk_kwargs, lcen_kwargs, test_size=test_size, scale_X=scale_X, yattr=yattr)
     st.success("Done!", icon="✅")
 
     fig = px.imshow(
