@@ -16,6 +16,8 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from spectrascope.utils import LCEN_selected_features
+from sklearn.preprocessing import StandardScaler
+
 
 class SpectraScope:
 
@@ -120,6 +122,11 @@ class SpectraScope:
     def add_y_label(self, specname, value):
         setattr(self, specname + "_labely", value)
 
+    def scale_X(self, Xattr): 
+        X = getattr(self, Xattr)
+        scaled_x = StandardScaler().fit_transform(X)
+        return scaled_x
+        
     def add_spectral_feature(
         self, specname, feat, xaxis=None, additional_naming="", **kwargs
     ):
@@ -225,8 +232,11 @@ class SpectraScope:
             setattr(self, feat + "_test_trans" + additional_naming, X_test_out)
         setattr(self, feat + "_trans_names" + additional_naming, names)
 
-    def split_X(self, attr, test_size):
+    def split_X(self, attr, scale_X = Falsetest_size):
         X = getattr(self, attr)
+        if scale_X: 
+            X = self.scale_X(X)
+            
         X_train, X_test = train_test_split(
             X, test_size=test_size, random_state=self.random_seed
         )
@@ -234,7 +244,7 @@ class SpectraScope:
         setattr(self, attr + "_train", X_train)
         setattr(self, attr + "_test", X_test)
 
-    def split_y(self, attr, test_size):
+    def split_y(self, attr,etest_size):
         y = getattr(self, attr)
         y_train, y_test = train_test_split(
             y, test_size=test_size, random_state=self.random_seed
@@ -295,9 +305,9 @@ class SpectraScope:
         score = metric(y_test, ypred)
         return est, score, ypred
 
-    def do_sk(self, Xattr, yattr, test_size, savef=None, use_pipeline=True, top_features=20, **kwargs):
-
-        self.split_X(Xattr, test_size)
+    def do_sk(self, Xattr, yattr, test_size, savef=None, use_pipeline=True, top_features=20, scale_X=True, **kwargs):
+        
+        self.split_X(Xattr, test_size, scale_X=scale_X)
         self.split_y(yattr, test_size)
 
         X_train = getattr(self, Xattr + "_train")
@@ -305,6 +315,7 @@ class SpectraScope:
 
         y_train = getattr(self, yattr + "_train")
         y_test = getattr(self, yattr + "_test")
+            
 
         if use_pipeline:
             P, score, ypred = self.sk_pipeline(
@@ -323,7 +334,7 @@ class SpectraScope:
             best_feature_ids = []
             # changes dataset: (X[:,sorted(sorted_best_features)])
             
-        fit_dict = {"P": P, "score": score, "ypred": ypred, 'selected_features':best_feature_ids}
+        fit_dict = {"P": P, "score": score, "ypred": ypred, 'selected_features':best_feature_ids, "scaled":scale_X}
         setattr(self, Xattr + "_" + yattr + "_" + model_name, fit_dict)
 
         perc_err = np.mean(np.abs((y_test - ypred) / y_test)) * 100
@@ -344,7 +355,7 @@ class SpectraScope:
     def do_LCEN(self, Xattr, yattr, test_size, savef=None, top_features=20, **kwargs):
         import SPA
 
-        self.split_X(Xattr, test_size)
+        self.split_X(Xattr, test_size, scale_X=scale_X)
         self.split_y(yattr, test_size)
 
         X_train = getattr(self, Xattr + "_train")
@@ -369,6 +380,7 @@ class SpectraScope:
         )
         #TODO LCEN Selected features 
         out[0]["LCEN"]["selected_features"] = LCEN_selected_features(out[0]["LCEN"], top_features)
+        out[0]["LCEN"]["scaled"]= scale_X
         
         setattr(self, Xattr + "_" + yattr + "_LCEN", out[0]["LCEN"])
         ypred = out[0]["LCEN"]["yhat_test_nontrans"]
@@ -404,6 +416,7 @@ class SpectraScope:
         savef=None,
         do_all_existing=False,
         use_pipeline=False
+        scale_X = True 
     ):
         """
 
@@ -432,9 +445,9 @@ class SpectraScope:
                 ]
                 for attr_name in attr_names:
                     for sk in sk_kwargs:
-                        self.do_sk(attr_name, yattr, test_size, savef, **sk)
+                        self.do_sk(attr_name, yattr, test_size, savef, scale_X = scale_X, **sk)
                     if lcen_kwargs is not None:
-                        self.do_LCEN(attr_name, yattr, test_size, savef, **lcen_kwargs)
+                        self.do_LCEN(attr_name, yattr, test_size, savef, scale_X = scale_X, **lcen_kwargs)
 
         else:
 
@@ -446,9 +459,9 @@ class SpectraScope:
                         self.add_spectral_feature(feat=feat, **kwargs)
 
                     for sk in sk_kwargs:
-                        self.do_sk(attr_name, yattr, test_size, savef, use_pipeline=use_pipeline, **sk)
+                        self.do_sk(attr_name, yattr, test_size, savef, use_pipeline=use_pipeline, scale_X = scale_X, **sk)
                     if lcen_kwargs is not None:
-                        self.do_LCEN(attr_name, yattr, test_size, savef, **lcen_kwargs)
+                        self.do_LCEN(attr_name, yattr, test_size, savef, scale_X = scale_X, **lcen_kwargs)
 
             if multi_modal is not None:
                 for combo in multi_modal:
@@ -458,9 +471,9 @@ class SpectraScope:
                         self.combine_feature(feat1, feat2)
 
                     for sk in sk_kwargs:
-                        self.do_sk(attr_name, yattr, test_size, savef, use_pipeline=use_pipeline, **sk)
+                        self.do_sk(attr_name, yattr, test_size, savef, use_pipeline=use_pipeline, scale_X = scale_X, **sk)
                     if lcen_kwargs is not None:
-                        self.do_LCEN(attr_name, yattr, test_size, savef, **lcen_kwargs)
+                        self.do_LCEN(attr_name, yattr, test_size, savef, scale_X = scale_X, **lcen_kwargs)
 
     def check_dir_exists(self, directory):
         try:

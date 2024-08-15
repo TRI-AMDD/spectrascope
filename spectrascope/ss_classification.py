@@ -325,7 +325,7 @@ class BinaryClassifications(SpectraScope):
         return av_dist
 
     def do_one_classification(
-        self, Xattr, yattr, test_size=0.25, savef=None, use_pipeline=False, **kwargs
+        self, Xattr, yattr, test_size=0.25, savef=None, use_pipeline=False, scale_X=True, **kwargs
     ):
         if not hasattr(self, "structures_df"):
             self.structure_library_to_df()
@@ -334,8 +334,8 @@ class BinaryClassifications(SpectraScope):
         self.split_y(yattr, test_size)
 
         estimator = kwargs["estimator"]
-        self.do_sk(Xattr, yattr, test_size, use_pipeline=use_pipeline, **kwargs)
-        # self.do_LCEN(Xattr, yattr, test_size, savef, **kwargs)
+        self.do_sk(Xattr, yattr, test_size, use_pipeline=use_pipeline, scale_X=scale_X, **kwargs)
+        # self.do_LCEN(Xattr, yattr, test_size, savef, scale_X = scale_X, **kwargs)
 
         model_name = estimator.__str__().split("(")[0]
         fit_dict = getattr(self, Xattr + "_" + yattr + "_" + model_name)
