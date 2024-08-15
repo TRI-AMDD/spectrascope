@@ -27,7 +27,7 @@ feat = raw_name.replace(f'{spec}_', '')
 
 xaxis = getattr(data, f'{spec}_xaxis')
 raw = getattr(data, raw_name)
-if len(raw) > len(xaxis): 
+if len(raw[0].ravel()) > len(xaxis): 
     # multi modal 
     spec = '_'.join(split_name[:2])
     spec1, spec2 = spec.split('_')
@@ -50,7 +50,7 @@ if 'RandomForest' in model_name:
 else: 
     feature_importances = np.zeros_like(xaxis)
     
-selected_features = np.array(model["top_features"]).astype(int)
+selected_features = np.array(model["selected_features"]).astype(int)
 xaxis_label = ''
 yaxis_label = ''
 selected_features_arr = np.zeros_like(xaxis)
