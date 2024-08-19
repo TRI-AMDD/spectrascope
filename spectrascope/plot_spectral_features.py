@@ -274,6 +274,6 @@ class plot_model(ss_plotting):
                                     **kwargs), row=1, col=1, secondary_y=True)
         # self.fig.update_layout(coloraxis_colorbar=dict(title="Coefficient or Importance"))
         self.fig.update_layout(hovermode="x")
-        # fig.layout.yaxis2.update(showticklabels=False)
+        self.fig.layout.yaxis2.update(showticklabels=False)
 
         #customdata=self.xaxis[self.selected_features], hovertemplate="x:%{customdata[0]}"

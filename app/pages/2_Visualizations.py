@@ -151,7 +151,7 @@ else:
         plotter.show_scale = st.session_state['scale_X']
         plotter.__getattribute__(f'plot_{feat}').__call__(**model_kwargs[feat])
 
-
+    fig.layout.yaxis2.update(showticklabels=False)
 st.plotly_chart(fig)
 
 st.stop()
