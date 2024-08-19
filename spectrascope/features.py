@@ -454,7 +454,7 @@ class spectral_features:
         self.fft_freq = np.abs(fftfreq(N, self.de))[: N // 2]
 
         if return_features:
-            return self.fft_feat
+            return np.abs(self.fft_feat)
 
     def gaussian_filter_features(
         self, sigma, verbose=False, return_features=False, **kwargs

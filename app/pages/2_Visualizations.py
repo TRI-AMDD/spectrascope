@@ -112,15 +112,19 @@ model_kwargs = {
     'pointwise_features':{},
     'polynomial_featuresall':{},
     'cdf':{},
-    'fft':{}
+    'fft_features':{}
 }
-if 'pca' in model_name or 'featureagg' in model_name or 'tsne' in model_name or "polynomial" in model_name:
-    if "polynomial" in model_name: 
+if 'pca' in model_name or 'featureagg' in model_name or 'tsne' in model_name or "polynomial" in model_name or 'fft' in model_name:
+    if "polynomial" in model_name or 'fft' in model_name: 
         st.markdown('Visualization not implemented yet')
         import pandas as pd 
         try: 
-            temp = pd.DataFrame({'Selected Feature IDs':selected_features, 'Values': selected_vals})
-            st.write(temp)
+            if 'LCEN' in model_name: 
+                temp = pd.DataFrame({'Selected Feature IDs':selected_features, 'Values': selected_vals})
+                st.write(temp)
+            elif 'RandomForest' in model_name: 
+                temp = pd.DataFrame({'Feature IDs':np.argsort(feature_importances)[::-1], 'Feature Importances': feature_importances[np.argsort(feature_importances)[::-1]]})
+                st.write(temp)
         except: 
             pass 
         st.stop()
