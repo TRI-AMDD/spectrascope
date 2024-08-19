@@ -17,6 +17,10 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from spectrascope.utils import LCEN_selected_features
 from sklearn.preprocessing import StandardScaler
+from sklearn.utils.validation import check_is_fitted
+from sklearn.exceptions import NotFittedError
+from sklearn.base import clone
+
 
 
 class SpectraScope:
@@ -266,6 +270,13 @@ class SpectraScope:
         metric=mean_squared_error,
         savef=None,
     ):
+        
+        try:
+            check_is_fitted(estimator)
+            print('already fitted')
+            estimator = clone(estimator)
+        except NotFittedError as exc:
+            print(f"Model is not fitted yet.")
 
         P = make_pipeline(
             GridSearchCV(
@@ -298,6 +309,13 @@ class SpectraScope:
         savef=None,
         **kwargs,
     ):
+        try:
+            check_is_fitted(estimator)
+            print('already fitted')
+            estimator = clone(estimator)
+        except NotFittedError as exc:
+            print(f"Model is not fitted yet.")
+    
         est = estimator
         est.fit(X_train, y_train)
         ypred = est.predict(X_test)

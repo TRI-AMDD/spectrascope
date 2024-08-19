@@ -78,6 +78,7 @@ if 'RandomForest' in model_name:
         feature_importances = model['P'].feature_importances_ 
     except AttributeError: 
         feature_importances = model['P'][0].best_estimator_.feature_importances_
+
     selected_vals = feature_importances / feature_importances.max()
 else: 
     if st.session_state['scale_X']:
@@ -88,7 +89,6 @@ else:
 selected_features = model['selected_features']
 
 if 'xanes_pdf' in model_name: 
-    print('hi')
     xaxis_label = 'Feature Index'
     yaxis_label = ''
 elif 'pdf' in model_name: 
@@ -104,7 +104,7 @@ else:
 # selected_features_arr = np.zeros_like(xaxis)
 # selected_features_arr[selected_features] = 1 
 
-kwargs_pca = {"feat":raw, 'mode':'markers', 'marker':dict(color=y, colorscale='Viridis', showscale=True)} #, colorbar=dict(len=0.3, x=0.3, y=0.5))}
+kwargs_pca = {"feat":raw, 'mode':'markers', 'marker':dict(color=y, colorscale='Viridis', showscale=True, colorbar={"title": yattr})} #, colorbar=dict(len=0.3, x=0.3, y=0.5))}
 model_kwargs = {
     'pca':kwargs_pca, 
     'featureagg':kwargs_pca,
@@ -138,6 +138,7 @@ if 'pca' in model_name or 'featureagg' in model_name or 'tsne' in model_name or 
         plotter.__getattribute__(f'plot_{feat}').__call__(**model_kwargs[feat])
         fig.layout.annotations[0].update(text="Top 2 Components/Clusters")
 
+
 else: 
     raw = point_raw.mean(axis=0)
     if "LCEN" in model_name: 
@@ -145,6 +146,7 @@ else:
         plotter.show_scale = st.session_state['scale_X']
         plotter.__getattribute__(f'plot_{feat}').__call__(**model_kwargs[feat])
     else: 
+        print(len(feature_importances))
         plotter = pm(selected_features=feature_importances, selected_vals=selected_vals, fig=fig, xaxis=xaxis, raw=raw, xaxis_label=xaxis_label, yaxis_label=yaxis_label, plot_importances=True)
         plotter.show_scale = st.session_state['scale_X']
         plotter.__getattribute__(f'plot_{feat}').__call__(**model_kwargs[feat])

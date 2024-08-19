@@ -268,11 +268,11 @@ class plot_model(ss_plotting):
          
     def plot_lines(self, **kwargs): 
         kwargs = {'marker_size':15,'marker_symbol':'line-ns', 'marker_line_width':2,'mode':'markers', 'hoverinfo':'none','marker':dict(color=self.selected_vals, colorscale='Viridis', showscale=self.show_scale, line=dict(width=2,
-                                        color=self.selected_vals, colorscale='Viridis'))}
+                                        color=self.selected_vals, colorscale='Viridis', colorbar={"title":"Coefficient Value"}))}
         for i in np.arange(0, np.max(self.raw), 0.1):
             self.fig.add_trace(go.Scatter(x=self.xaxis[self.selected_features], y = i*np.ones_like(self.selected_features), showlegend=False, name='Selected Features',
                                     **kwargs), row=1, col=1, secondary_y=True)
-        self.fig.update_layout(coloraxis_colorbar=dict(title="Coefficient or Importance"))
+        # self.fig.update_layout(coloraxis_colorbar=dict(title="Coefficient or Importance"))
         self.fig.update_layout(hovermode="x")
         # fig.layout.yaxis2.update(showticklabels=False)
 
