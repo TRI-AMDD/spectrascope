@@ -155,10 +155,12 @@ def LCEN_selected_features(model, top_features):
     importance = np.argsort(par_vals_abs)[::-1]
     
     selected_features = []
+    vals = []
     for loc, val in zip(par_locs[importance][:top_features], par_vals[importance][:top_features]):
         if loc == "intercept":
             pass
         else:
             selected_features.append(int(loc))
+            vals.append(val)
             
-    return selected_features
+    return vals, selected_features

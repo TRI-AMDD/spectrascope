@@ -419,7 +419,7 @@ class BinaryClassifications(SpectraScope):
 
         self.plot_df_heatmap(temp, **plotly_kwargs)
 
-    def find_similar_structures(self, spec_id, Xattr, selected_yattrs, model_name):
+    def find_similar_structures(self, spec_id, Xattr, selected_yattrs, model_name, top=10):
         specs = getattr(self, Xattr)
         spec = specs[spec_id]
 
@@ -431,7 +431,7 @@ class BinaryClassifications(SpectraScope):
         s1 = np.array(spec_classifications)
         mat2 = self.ground_truth_df[selected_yattrs].to_numpy()
         J = tamimoto(s1, mat2)
-        top10 = np.argsort(J)[::-1][:10]
+        top10 = np.argsort(J)[::-1][:top]
         return spec_classifications, np.array(self.mpids)[top10]
 
     def fit_and_find_similar_structures(self, nselect=-1):

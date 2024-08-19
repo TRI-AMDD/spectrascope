@@ -328,14 +328,17 @@ class SpectraScope:
         if 'RandomForest' in model_name: 
             feature_importances = P.feature_importances_
             #choose top features
-            best_feature_ids = np.argsort(feature_importances[::-1])[:top_features]
+            selected_features = np.argsort(feature_importances[::-1])[:top_features]
+            selected_vals = P.feature_importances_[np.argsort(feature_importances[::-1])][:top_features]
         elif "LogisticRegression" in model_name:
-            best_feature_ids = np.argsort(P.coef_)[::-1][:top_features] 
+            selected_features = np.argsort(P.coef_)[::-1][:top_features] 
+            selected_vals = P.coef_[np.argsort(P.coef_)[::-1]][:top_features]
         else: 
-            best_feature_ids = []
+            selected_features = []
+            selected_vals = []
             # changes dataset: (X[:,sorted(sorted_best_features)])
             
-        fit_dict = {"P": P, "score": score, "ypred": ypred, 'selected_features':best_feature_ids, "scaled":scale_X}
+        fit_dict = {"P": P, "score": score, "ypred": ypred, 'selected_features':selected_features, "scaled":scale_X, "selected_vals":selected_vals}
         setattr(self, Xattr + "_" + yattr + "_" + model_name, fit_dict)
 
         perc_err = np.mean(np.abs((y_test - ypred) / y_test)) * 100
@@ -380,8 +383,11 @@ class SpectraScope:
             **kwargs,
         )
         #TODO LCEN Selected features 
-        out[0]["LCEN"]["selected_features"] = LCEN_selected_features(out[0]["LCEN"], top_features)
+        vals, selected_features = LCEN_selected_features(out[0]["LCEN"], top_features)
         out[0]["LCEN"]["scaled"]= True
+        out[0]["LCEN"]["selected_features"] = selected_features
+        out[0]["LCEN"]["selected_vals"] = vals 
+        
         
         setattr(self, Xattr + "_" + yattr + "_LCEN", out[0]["LCEN"])
         ypred = out[0]["LCEN"]["yhat_test_nontrans"]

@@ -6,6 +6,23 @@ from spectrascope.plot_spectral_features import plot_model as pm
 import numpy as np 
 from PIL import Image
 
+st.set_page_config(
+    page_title="Model Visualization",
+    # page_icon="👋",
+    layout="wide"
+)
+
+
+pretty_names = {'pointwise_features':'Raw Data', 
+                'pca':'Principle Component Analysis', 
+                'fft_features': 'Fourier Transform', 
+                'cdf':'Cumulative Distribution Function', 
+                'featureagg':'Agglomerative Clustering', 
+                'cwt':'Continuous Wavelet Transform', 
+                'polynomial_featuresall':'Polynomial Fitting', 
+                'tsne':'T-distributed Stochastic Neighbor Embedding'}
+
+
 data = st.session_state["data"]
 cols_to_featurize = st.session_state["spec_to_featurize"]
 fitted_models = st.session_state["fitted_models"]
@@ -15,10 +32,14 @@ y = getattr(data, yattr)
 
 st.markdown("### Visualizing Feature Selection and Importance")
 st.markdown("LCEN : vertical lines on selected features")
-st.markdown("RF : Normalized feature importance for every feature")
+st.markdown("Random Forests : Normalized feature importance for every feature")
 
 model_name = st.selectbox("Select Model to Visualize", fitted_models)
-fig = make_subplots(1,1, specs=[[{"secondary_y": True}]])
+
+if model_name == None: 
+    st.stop()
+     
+fig = make_subplots(1,1, specs=[[{"secondary_y": True}]], subplot_titles=[model_name])
 
 split_name = model_name.split('_')
 spec = split_name[0]
@@ -46,15 +67,28 @@ if 'RandomForest' in model_name:
         feature_importances = model['P'].feature_importances_ 
     except AttributeError: 
         feature_importances = model['P'][0].feature_importances_
-    feature_importances = feature_importances / feature_importances.max()
+    selected_vals = feature_importances / feature_importances.max()
 else: 
-    feature_importances = np.zeros_like(xaxis)
+    selected_vals = model['selected_vals']
     
-selected_features = np.array(model["selected_features"]).astype(int)
-xaxis_label = ''
-yaxis_label = ''
-selected_features_arr = np.zeros_like(xaxis)
-selected_features_arr[selected_features] = 1 
+selected_features = model['selected_features']
+
+if 'pdf' in model_name: 
+    xaxis_label = 'r'
+    yaxis_label = 'G(r)'
+elif 'xanes' in model_name: 
+    xaxis_label = 'Energy (eV)'
+    yaxis_label = 'Intensity'
+if 'xanes_pdf' in model_name: 
+    print('hi')
+    xaxis_label = 'Feature Index'
+    yaxis_label = ''
+else: 
+    xaxis_label = ''
+    yaxis_label = ''
+    
+# selected_features_arr = np.zeros_like(xaxis)
+# selected_features_arr[selected_features] = 1 
 
 kwargs_pca = {"feat":raw, 'mode':'markers', 'marker':dict(color=y, colorscale='Viridis', showscale=True)} #, colorbar=dict(len=0.3, x=0.3, y=0.5))}
 model_kwargs = {
@@ -68,17 +102,32 @@ model_kwargs = {
 }
 if 'pca' in model_name or 'featureagg' in model_name or 'tsne' in model_name or "polynomial" in model_name:
     if "polynomial" in model_name: 
-        raw = point_raw[0].ravel() 
-    plotter = pm(selected_features=selected_features, fig=fig, xaxis=xaxis, raw=raw, xaxis_label=xaxis_label, yaxis_label=yaxis_label)
-    plotter.__getattribute__(f'plot_{feat}').__call__(**model_kwargs[feat])
+        st.markdown('Visualization not implemented yet')
+        import pandas as pd 
+        temp = pd.Dataframe(selected_features, selected_vals, columns=['Feature IDs', 'Values'])
+        st.write(temp)
+    else: 
+        i = selected_features[0]
+        j = selected_features[1]
+        xaxis_label = f'Component {i}'
+        yaxis_label = f'Component {j}'
+        plotter = pm(selected_features=selected_features, selected_vals=selected_vals, fig=fig, xaxis=xaxis, raw=raw, xaxis_label=xaxis_label, yaxis_label=yaxis_label)
+        plotter.__getattribute__(f'plot_{feat}').__call__(**model_kwargs[feat])
+        fig.layout.annotations[0].update(text="Top 2 Components/Clusters")
 
+    
+elif 'trans' in model_name: 
+    st.markdown('Visualization not implemented yet')
+    import pandas as pd 
+    temp = pd.Dataframe(selected_features, selected_vals, columns=['Feature IDs', 'Values'])
+    st.write(temp)
 else: 
-    raw = point_raw[0].ravel()
+    raw = point_raw.mean(axis=0)
     if "LCEN" in model_name: 
-        plotter = pm(selected_features=selected_features_arr, fig=fig, xaxis=xaxis, raw=raw, xaxis_label=xaxis_label, yaxis_label=yaxis_label)
+        plotter = pm(selected_features=selected_features, selected_vals=selected_vals, fig=fig, xaxis=xaxis, raw=raw, xaxis_label=xaxis_label, yaxis_label=yaxis_label)
         plotter.__getattribute__(f'plot_{feat}').__call__(**model_kwargs[feat])
     else: 
-        plotter = pm(selected_features=feature_importances, fig=fig, xaxis=xaxis, raw=raw, xaxis_label=xaxis_label, yaxis_label=yaxis_label)
+        plotter = pm(selected_features=feature_importances, selected_vals=selected_vals, fig=fig, xaxis=xaxis, raw=raw, xaxis_label=xaxis_label, yaxis_label=yaxis_label, plot_importances=True)
         plotter.__getattribute__(f'plot_{feat}').__call__(**model_kwargs[feat])
 
 

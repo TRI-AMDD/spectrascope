@@ -6,11 +6,12 @@ from spectrascope.plot_spectral_features import plot_model as pm
 st.set_page_config(
     page_title="SpectraScope",
     page_icon="👋",
+    layout="wide"
 )
 
 st.write("# Welcome to SpectraScope! 👋")
 
-st.sidebar.success("Select a prediction schema")
+# st.sidebar.success("Select a prediction schema")
 
 st.markdown(
     """
@@ -18,6 +19,8 @@ st.markdown(
     
 """
 )
+
+
 
 fnX = "/Users/amalyajohnson/Desktop/Spectrascope/spectrascope_local/tests/test_files/X_testfile.npy"
 fny = "/Users/amalyajohnson/Desktop/Spectrascope/spectrascope_local/tests/test_files/y_testfile.npy"
@@ -57,6 +60,13 @@ data.add_x_axis(specname="pdf", value=np.linspace(0, 10, 200))
 
 
 
+xaxis_pdf = 'r'
+xaxis_xanes = 'Energy (eV)'
+yaxis_pdf = 'G(r)'
+yaxis_xanes = 'Intensity (arb)'
+
+axis_dict = {'xanes':(xaxis_xanes, yaxis_xanes), 'pdf':(xaxis_pdf, yaxis_pdf)}
+
 
 for Xi, name in zip(data.X, data.specnames):
     df = pd.DataFrame(
@@ -77,8 +87,7 @@ fig1 = make_subplots(
 )
 
 for i,spec in enumerate(data.specnames): 
-    xaxis_label='x' # input 
-    yaxis_label = 'y' # input 
+    xaxis_label, yaxis_label = axis_dict[spec]
     x = getattr(data, f'{spec}_xaxis')
     y = getattr(data, f'{spec}')
     plotter = psf(xaxis=x, arr=y, xaxis_label=xaxis_label, yaxis_label=yaxis_label, name='', fig=fig1, row=1, col=i + 1)

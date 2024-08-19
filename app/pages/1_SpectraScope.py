@@ -9,6 +9,24 @@ import plotly.graph_objects as go
 import plotly.express as px
 from itertools import product
 
+
+st.set_page_config(
+    page_title="Feature Generation and Model Training",
+    # page_icon="👋",
+    layout="wide"
+)
+
+
+pretty_names = {'Raw Data':'pointwise_features', 
+                'Principle Component Analysis':'pca', 
+                'Fourier Transform':'fft_features', 
+                'Cumulative Distribution Function':'cdf', 
+                'Agglomerative Clustering':'featureagg', 
+                'Continuous Wavelet Transform':'cwt', 
+                'Polynomial Fitting':'polynomial_featuresall', 
+                'T-distributed Stochastic Neighbor Embedding':'tsne'}
+
+
 def textinput_to_list(string, delim):
     return string.replace(" ", "").split(delim)
 
@@ -33,32 +51,57 @@ kwargs_dict = { 'pca' : {'mode':'markers', 'marker':dict(color=y, colorscale='Vi
     'tsne':{'mode':'markers', 'marker':dict(color=y, colorscale='Viridis')}
     }
 
+xaxis_pdf = 'r'
+xaxis_xanes = 'Energy (eV)'
+yaxis_pdf = 'G(r)'
+yaxis_xanes = 'Intensity (arb)'
+
+axis_dict = {'xanes':(xaxis_xanes, yaxis_xanes), 'pdf':(xaxis_pdf, yaxis_pdf)}
+
 features_available = list(kwargs_dict.keys())
 
-features = st.multiselect("Visualize Features", features_available)
+pretty_features = st.multiselect("Visualize Features", list(pretty_names.keys()))
+features = [pretty_names[f] for f in pretty_features]
+
 
 nfeats = len(features)
 
 if nfeats > 0 : 
     for spec in spec_to_featurize: 
         fig = make_subplots(
-                rows=1, cols=nfeats, subplot_titles=features, horizontal_spacing=0.15
+                rows=1, cols=nfeats, subplot_titles=pretty_features, horizontal_spacing=0.15
             )
         for i, feat in enumerate(features): 
             kwargs = kwargs_dict[feat]
             if 'fft' in feat or 'pointwise' in feat: 
                 data.add_spectral_feature(spec, feat, xrange=getattr(data, f'{spec}_xaxis'))
+                if 'pointwise' in feat: 
+                    xaxis_label, yaxis_label = axis_dict[spec] 
+                else: 
+                    xaxis_label = 'Frequency'
+                    yaxis_label = 'FFT'
             else: 
                 data.add_spectral_feature(spec, feat)
+                if 'cdf' in feat: 
+                    xaxis_label, yaxis_label = axis_dict[spec] 
+                    yaxis_label = 'Cumulative Intensity'
+                elif 'polynomial' in feat: 
+                    xaxis_label = 'Feature Index'
+                    yaxis_label = 'Polynomial Coefficientr'
+                
+                else: 
+                    xaxis_label = ''
+                    yaxis_label = ''
                 
             arr = data.__getattribute__(spec + '_'+ feat)
             if feat == 'pca' or feat == 'featureagg' or feat =='tsne': 
-                pass
+                xaxis_label = 'Component 1'
+                yaxis_label = 'Component 2'
             else: 
                 arr = arr[0].ravel()
                 
             xaxis = getattr(data, f'{spec}_xaxis')
-            temp = psf(arr, xaxis=xaxis, fig=fig, row=1, col=i + 1)    
+            temp = psf(arr, xaxis=xaxis, fig=fig, row=1, col=i + 1, xaxis_label=xaxis_label, yaxis_label=yaxis_label)    
             getattr(temp, f"plot_{feat}").__call__(showlegend=False, **kwargs)
 
         st.plotly_chart(fig)
@@ -97,13 +140,14 @@ if multi_modal_selected is not None:
                 
             features_selected.append(attr_name)
 
-st.write("#### Would you like to transform any of these features?")
+st.write("#### Would you like to apply further transformations to any of these features?")
 do_transform = st.toggle("yes", False)
 
 if do_transform: 
-    degree = st.radio("Degree of polynomial transformation", [1,2,3])
-    interaction = st.toggle('Feature Interaction', False)
     trans_type = st.radio("Transformation Type", ["all", "poly", "simple_interaction"])
+    degree = st.radio(r"Degree of polynomial transformation ($x^2, x^3$)", [1,2,3])
+    interaction = st.toggle(r'Feature Interaction ($x_1 * x_2 ..$)', False)
+    
     if trans_type == "simple_interaction": 
         interaction = True
 

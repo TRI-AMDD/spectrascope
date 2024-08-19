@@ -6,7 +6,8 @@ from plotly.subplots import make_subplots
 import numpy as np 
 from spectrascope.utils import * 
 from PIL import Image
-
+from matplotlib.colors import rgb2hex
+import matplotlib.cm as cm  
 
 
 class ss_plotting: 
@@ -152,12 +153,24 @@ class plot_spectral_features(ss_plotting):
             self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
 
 class plot_model(ss_plotting):
-    def __init__(self, model=None, selected_features=None, raw=None, **kwargs) -> None:
+    def __init__(self, model=None, selected_features=None, raw=None, cmap_name='viridis', selected_vals=None, plot_importances=False, **kwargs) -> None:
         super().__init__(**kwargs)
         self.model = model 
         
         self.selected_features = selected_features
+        self.plot_importances = plot_importances 
+        
         self.raw = raw
+        if selected_vals is None: 
+            self.selected_vals = np.zeros_like(self.selected_features)
+        else: 
+            self.selected_vals = selected_vals
+        cmap = cm.get_cmap(cmap_name, len(self.selected_features))    # PiYG
+
+        self.colors = []
+        for i in range(cmap.N):
+            rgba = cmap(i)
+            self.colors.append(rgb2hex(rgba))
         
     def plot_polynomial_featuresall(self): 
         
@@ -199,23 +212,28 @@ class plot_model(ss_plotting):
         
             
     def plot_pointwise_features(self, **kwargs): 
-        # selected_features_arr = np.zeros_like(self.xaxis)
-        # selected_features_arr[self.selected_features] = 1 
-        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.raw), row=self.row, col=self.col)
-        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.selected_features, **kwargs), secondary_y=True, row=self.row, col=self.col)
+
+        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.raw, showlegend=False, name='Raw Data'), row=self.row, col=self.col)
+        if self.plot_importances: 
+            self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.selected_features, name='Feature Importances'),  secondary_y=True, row=self.row, col=self.col)
+        else: 
+            self.plot_lines()
         self.fig.update_xaxes(title_text=self.xaxis_label)
         self.fig.update_yaxes(title_text=self.yaxis_label)
+        
+        self.fig.layout.yaxis2.update(showticklabels=False)
+
     
     def plot_cwt(self, wavelet='mexh'):
         pass
     
     def plot_cdf(self, **kwargs): 
         
-        # selected_features_arr = np.zeros_like(self.xaxis)
-        # selected_features_arr[self.selected_features] = 1 
-        
         self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.raw), row=self.row, col=self.col)
-        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.selected_features, **kwargs), secondary_y=True, row=self.row, col=self.col)
+        if self.plot_importances: 
+            self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.selected_features, name='Feature Importances'),  secondary_y=True, row=self.row, col=self.col)
+        else: 
+            self.plot_lines()
         self.fig.update_xaxes(title_text=self.xaxis_label)
         self.fig.update_yaxes(title_text=self.yaxis_label) 
     
@@ -239,7 +257,6 @@ class plot_model(ss_plotting):
         c = self.selected_features[:2]
         tsne_plotter = plot_spectral_features(arr, fig=self.fig, xaxis=self.xaxis, xaxis_label=self.xaxis_label, yaxis_label=self.yaxis_label, row=self.row, col=self.col)
         tsne_plotter.plot_tsne(c, **kwargs)
-         
     
     def plot_fft_features(self):
         pass 
@@ -247,4 +264,14 @@ class plot_model(ss_plotting):
     def plot_gaussian_peaks(self):
         pass 
          
-        
+    def plot_lines(self, **kwargs): 
+        kwargs = {'marker_size':15,'marker_symbol':'line-ns', 'marker_line_width':2,'mode':'markers', 'hoverinfo':'none','marker':dict(color=self.selected_vals, colorscale='Viridis', showscale=True, line=dict(width=2,
+                                        color=self.selected_vals, colorscale='Viridis'))}
+        for i in np.arange(0, np.max(self.raw), 0.1):
+            self.fig.add_trace(go.Scatter(x=self.xaxis[self.selected_features], y = i*np.ones_like(self.selected_features), showlegend=False, name='Selected Features',
+                                    **kwargs), row=1, col=1, secondary_y=True)
+        self.fig.update_layout(coloraxis_colorbar=dict(title="Coefficient or Importance"))
+        self.fig.update_layout(hovermode="x")
+        # fig.layout.yaxis2.update(showticklabels=False)
+
+        #customdata=self.xaxis[self.selected_features], hovertemplate="x:%{customdata[0]}"
