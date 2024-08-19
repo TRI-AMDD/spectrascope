@@ -233,7 +233,7 @@ elif cross_validate:
         "l1_ratio": l1_ratio,
         "K_fold": Kfold,
         "cv_method": cv_method,
-        "n_jobs": n_jobs,
+        # "n_jobs": n_jobs,
         "alpha": int(alpha),
         "degree": degree,
         "trans_type": trans_type,

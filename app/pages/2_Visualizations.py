@@ -77,7 +77,7 @@ if 'RandomForest' in model_name:
     try:
         feature_importances = model['P'].feature_importances_ 
     except AttributeError: 
-        feature_importances = model['P'][0].feature_importances_
+        feature_importances = model['P'][0].best_estimator_.feature_importances_
     selected_vals = feature_importances / feature_importances.max()
 else: 
     if st.session_state['scale_X']:
