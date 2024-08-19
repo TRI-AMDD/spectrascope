@@ -326,10 +326,13 @@ class SpectraScope:
             model_name = P.__str__().split("(")[0]
 
         if 'RandomForest' in model_name: 
-            feature_importances = P.feature_importances_
+            try: 
+                feature_importances = P.feature_importances_
+            except AttributeError: 
+                feature_importances = P[0].best_estimator_.feature_importances_
             #choose top features
             selected_features = np.argsort(feature_importances[::-1])[:top_features]
-            selected_vals = P.feature_importances_[np.argsort(feature_importances[::-1])][:top_features]
+            selected_vals = feature_importances[np.argsort(feature_importances[::-1])][:top_features]
         elif "LogisticRegression" in model_name:
             selected_features = np.argsort(P.coef_)[::-1][:top_features] 
             selected_vals = P.coef_[np.argsort(P.coef_)[::-1]][:top_features]

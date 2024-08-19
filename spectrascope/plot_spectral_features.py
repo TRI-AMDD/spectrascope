@@ -163,8 +163,10 @@ class plot_model(ss_plotting):
         self.raw = raw
         if selected_vals is None: 
             self.selected_vals = np.zeros_like(self.selected_features)
+            self.show_scale = False 
         else: 
             self.selected_vals = selected_vals
+            self.show_scale = True 
         cmap = cm.get_cmap(cmap_name, len(self.selected_features))    # PiYG
 
         self.colors = []
@@ -229,7 +231,7 @@ class plot_model(ss_plotting):
     
     def plot_cdf(self, **kwargs): 
         
-        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.raw), row=self.row, col=self.col)
+        self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.raw, showlegend=False), row=self.row, col=self.col)
         if self.plot_importances: 
             self.fig.add_trace(go.Scatter(x=self.xaxis, y=self.selected_features, name='Feature Importances'),  secondary_y=True, row=self.row, col=self.col)
         else: 
@@ -265,7 +267,7 @@ class plot_model(ss_plotting):
         pass 
          
     def plot_lines(self, **kwargs): 
-        kwargs = {'marker_size':15,'marker_symbol':'line-ns', 'marker_line_width':2,'mode':'markers', 'hoverinfo':'none','marker':dict(color=self.selected_vals, colorscale='Viridis', showscale=True, line=dict(width=2,
+        kwargs = {'marker_size':15,'marker_symbol':'line-ns', 'marker_line_width':2,'mode':'markers', 'hoverinfo':'none','marker':dict(color=self.selected_vals, colorscale='Viridis', showscale=self.show_scale, line=dict(width=2,
                                         color=self.selected_vals, colorscale='Viridis'))}
         for i in np.arange(0, np.max(self.raw), 0.1):
             self.fig.add_trace(go.Scatter(x=self.xaxis[self.selected_features], y = i*np.ones_like(self.selected_features), showlegend=False, name='Selected Features',
