@@ -330,6 +330,7 @@ else:
 st.session_state["fitted_models"] = fitted_models
 st.session_state["data"] = data
 st.session_state["spec_to_featurize"] = spec_to_featurize
+st.session_state['scale_X'] = scale_X
 
 
 

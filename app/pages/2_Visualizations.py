@@ -38,6 +38,17 @@ model_name = st.selectbox("Select Model to Visualize", fitted_models)
 
 if model_name == None: 
     st.stop()
+    
+elif 'trans' in model_name: 
+    model = getattr(data, model_name)
+
+    st.markdown('Visualization not implemented yet')
+    import pandas as pd 
+    selected_features = model['selected_features']
+    selected_vals = model['selected_vals']
+    temp = pd.DataFrame({'Selected Feature IDs':selected_features, 'Values': selected_vals})
+    st.write(temp)
+    st.stop()
      
 fig = make_subplots(1,1, specs=[[{"secondary_y": True}]], subplot_titles=[model_name])
 
@@ -69,20 +80,23 @@ if 'RandomForest' in model_name:
         feature_importances = model['P'][0].feature_importances_
     selected_vals = feature_importances / feature_importances.max()
 else: 
-    selected_vals = model['selected_vals']
+    if st.session_state['scale_X']:
+        selected_vals = model['selected_vals']
+    else: 
+        selected_vals = None 
     
 selected_features = model['selected_features']
 
-if 'pdf' in model_name: 
+if 'xanes_pdf' in model_name: 
+    print('hi')
+    xaxis_label = 'Feature Index'
+    yaxis_label = ''
+elif 'pdf' in model_name: 
     xaxis_label = 'r'
     yaxis_label = 'G(r)'
 elif 'xanes' in model_name: 
     xaxis_label = 'Energy (eV)'
     yaxis_label = 'Intensity'
-if 'xanes_pdf' in model_name: 
-    print('hi')
-    xaxis_label = 'Feature Index'
-    yaxis_label = ''
 else: 
     xaxis_label = ''
     yaxis_label = ''
@@ -104,30 +118,31 @@ if 'pca' in model_name or 'featureagg' in model_name or 'tsne' in model_name or 
     if "polynomial" in model_name: 
         st.markdown('Visualization not implemented yet')
         import pandas as pd 
-        temp = pd.Dataframe(selected_features, selected_vals, columns=['Feature IDs', 'Values'])
-        st.write(temp)
+        try: 
+            temp = pd.DataFrame({'Selected Feature IDs':selected_features, 'Values': selected_vals})
+            st.write(temp)
+        except: 
+            pass 
+        st.stop()
     else: 
         i = selected_features[0]
         j = selected_features[1]
         xaxis_label = f'Component {i}'
         yaxis_label = f'Component {j}'
         plotter = pm(selected_features=selected_features, selected_vals=selected_vals, fig=fig, xaxis=xaxis, raw=raw, xaxis_label=xaxis_label, yaxis_label=yaxis_label)
+        plotter.show_scale = st.session_state['scale_X']
         plotter.__getattribute__(f'plot_{feat}').__call__(**model_kwargs[feat])
         fig.layout.annotations[0].update(text="Top 2 Components/Clusters")
 
-    
-elif 'trans' in model_name: 
-    st.markdown('Visualization not implemented yet')
-    import pandas as pd 
-    temp = pd.Dataframe(selected_features, selected_vals, columns=['Feature IDs', 'Values'])
-    st.write(temp)
 else: 
     raw = point_raw.mean(axis=0)
     if "LCEN" in model_name: 
         plotter = pm(selected_features=selected_features, selected_vals=selected_vals, fig=fig, xaxis=xaxis, raw=raw, xaxis_label=xaxis_label, yaxis_label=yaxis_label)
+        plotter.show_scale = st.session_state['scale_X']
         plotter.__getattribute__(f'plot_{feat}').__call__(**model_kwargs[feat])
     else: 
         plotter = pm(selected_features=feature_importances, selected_vals=selected_vals, fig=fig, xaxis=xaxis, raw=raw, xaxis_label=xaxis_label, yaxis_label=yaxis_label, plot_importances=True)
+        plotter.show_scale = st.session_state['scale_X']
         plotter.__getattribute__(f'plot_{feat}').__call__(**model_kwargs[feat])
 
 
