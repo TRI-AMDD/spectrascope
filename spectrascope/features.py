@@ -466,7 +466,7 @@ class spectral_features:
         """
         FFT Spectra and return positive real FFT values 
         Args:
-        
+            return_features (bool): return features. Default false 
         Attributes: 
             fft_feat (np.array): fft features. shape (n_samples, n_features/2)
             fft_freq (np.array): fft frequencies. shape (n_features/2,)
@@ -491,7 +491,16 @@ class spectral_features:
     def gaussian_filter_features(
         self, sigma, verbose=False, return_features=False, **kwargs
     ):
-
+        """
+        Convolve intensity with a gaussian filter
+        Args:
+            sigma (float): standard deviation of the gaussian filter
+            verbose (bool): print progress
+            return_features (bool): return features
+            **kwargs: additional parameters to pass to gaussian
+        Attributes:
+            gaussian_filter (np.array): gaussian filter features
+        """
         x, y = self.check_xinterp(verbose)
 
         self.gaussian_filter = gaussian_filter(y, sigma, **kwargs)
@@ -500,13 +509,34 @@ class spectral_features:
             return self.gaussian_filter
 
     def gaussian_mixture_features(
-        self, n_components, return_features: bool = False, **kwargs
+        self, n_components:int, return_features: bool = False, **kwargs
     ):
+        """
+        Representation of a Gaussian mixture model probability distribution.
+        Not impplemented yet.
+
+        Args:
+            n_components (int): number of mixture components
+            return_features (bool, optional): Return features. Defaults to False.
+        Attributes: 
+    
+        """
         pass
 
     def pca(
-        self, n_components=10, verbose=False, return_features: bool = False, **kwargs
+        self, n_components:int=10, verbose=False, return_features: bool = False, **kwargs
     ):
+        """
+        Principle component analysis
+
+        Args:
+            n_components (int, optional): Number of PCA components. Defaults to 10.
+            verbose (bool, optional): Print progress. Defaults to False.
+            return_features (bool, optional): Return Features. Defaults to False.
+            **kwargs: Additional parameters to pass to PCA
+        Attributes:
+            pca_features (np.array): pca components
+        """
         x, y = self.check_xinterp(verbose)
         pca = PCA(n_components=n_components, **kwargs)
         self.pca_features = pca.fit_transform(y)
@@ -515,8 +545,18 @@ class spectral_features:
             return self.pca_features
 
     def featureagg(
-        self, n_clusters=10, verbose=False, return_features: bool = False, **kwargs
+        self, n_clusters:int=10, verbose:bool=False, return_features: bool = False, **kwargs
     ):
+        """Recursively merges pairs of clusters of features that minimally increases a given linkage distance.
+
+        Args:
+            n_clusters (int, optional): Number of clusters. Defaults to 10.
+            verbose (bool, optional): _description_. Defaults to False.
+            return_features (bool, optional): _description_. Defaults to False.
+            **kwargs: Additional parameters to pass to FeatureAgglomeration
+        Returns:
+            _type_: _description_
+        """
         x, y = self.check_xinterp(verbose)
 
         fa = FeatureAgglomeration(n_clusters=n_clusters, **kwargs)
@@ -528,7 +568,13 @@ class spectral_features:
     def shapelet(self, labels=None, verbose=False, return_features=False, **kwargs):
         """
         Transforms a data set to identify shapelets. Only works for classification?
-
+        Args:
+            labels (np.array): target labels for shapelet transform
+            verbose (bool): print progress
+            return_features (bool): return features
+            **kwargs: additional parameters to pass to shapelet
+        Attributes:
+            shapelet_features (np.array): shapelet features
         """
         x, y = self.check_xinterp(verbose)
         st = ShapeletTransform()
@@ -560,6 +606,14 @@ class spectral_features:
         pass
 
     def check_xinterp(self, verbose=False):
+        """
+        Check if interpolated data exists and return either interpolated data or raw data.
+        Args:
+            verbose (bool, optional): Print progress. Defaults to False.
+
+        Returns:
+            self.energies, self.intensities if interpolated data does not exist, else self.xinterp, self.yinterp
+        """
         if hasattr(self, "xinterp") == False:
             if verbose:
                 print(
