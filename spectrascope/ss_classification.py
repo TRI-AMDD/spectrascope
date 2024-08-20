@@ -403,6 +403,7 @@ class BinaryClassifications(SpectraScope):
             masks[:, i] = full_prediction
 
         mask_df = pd.DataFrame(masks, columns=yattrs)
+        #calculating the entropy of the different yattr columns
         entropies = arr_entropy(mask_df)
         best_order = np.argsort(entropies)
         yattr_ordered = np.array(yattrs)[best_order]
