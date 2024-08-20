@@ -1,35 +1,23 @@
-# Description: Utility functions for spectrascope
-
+"""
+Miscellaneous utility functions for SpectraScope
+"""
 
 from multiprocessing import Queue
 import numpy as np
-
-x_domains_xanes_torrisi = {
-    "Ti": np.linspace(4970, 5021.0, 100),
-    "V": np.linspace(5468.0, 5520.6, 100),
-    "Cr": np.linspace(5993.1, 6045.7, 100),
-    "Mn": np.linspace(6541.7, 6594.4, 100),
-    "Fe": np.linspace(7115.0, 7167.8, 100),
-    "Co": np.linspace(7713.5, 7765.8, 100),
-    "Ni": np.linspace(8336.5, 8388.7, 100),
-    "Cu": np.linspace(8987.5, 9039.7, 100),
-}
-
-x_domains_xanes_billinge = {
-    "Ti": np.linspace(4969.0, 5021.0, 200),
-    "V": np.linspace(5468.671, 5520.63, 200),
-    "Cr": np.linspace(5993.195, 6045.686, 200),
-    "Mn": np.linspace(6542.896, 6594.431, 200),
-    "Fe": np.linspace(7115.617, 7167.759, 200),
-    "Co": np.linspace(7714.284, 7765.838, 200),
-    "Ni": np.linspace(8337.207, 8388.723, 200),
-    "Cu": np.linspace(8988.142, 9039.728, 200),
-}
-
-x_domain_pdf_billinge = np.linspace(0, 10, 200)
+import pandas as pd
 
 
 def load_data(fn):
+    """
+    Load data from a file.
+
+    Args:
+        fn (str): The file path.
+
+    Returns:
+        data: The loaded data.
+
+    """
     if fn.endswith("json"):
         df = pd.read_json(fn)
         with open(fn) as f:
@@ -43,7 +31,10 @@ def load_data(fn):
 
 def oxidation_state_worker(queue, struct):
     """
-    Helper function for multiprocessing to calculate oxidation state of a structure and return the output
+    Helper function for multiprocessing to calculate
+    oxidation state of a structure and return the output;
+    to deal with possible long calculations
+
     Args:
         queue (multiprocessing.Queue): queue to put the return value in
         struct (pymatgen.core.structure.Structure): pymatgen Structure object
@@ -78,7 +69,7 @@ def find_nearest(x, value):
 
 
 def get_mean_nn(struct, nnalgo, el):
-    """ "
+    """
     Calculate the mean nearest neighbor distance for a specific element in a structure
     Args:
         struct (pymatgen.core.structure.Structure): pymatgen structure object
@@ -97,8 +88,14 @@ def get_mean_nn(struct, nnalgo, el):
 
 
 def func_unfix_width_reg(eng, *params):
-    # TODO: interpolation
-    # print(params)
+    """
+    Helper function for gaussian peak fitting and plotting
+    Args:
+        eng (np.array): energy values
+        *params: parameters from the gaussian peak fitting
+    Returns:
+        y (np.array): fit values across the energy range
+    """
     y = np.zeros_like(eng)
     for i in range(0, len(params), 3):
         ctr = params[i]
@@ -109,10 +106,29 @@ def func_unfix_width_reg(eng, *params):
 
 
 def NormalizeData(arr):
+    """Normalize array between 0, 1
+
+    Args:
+        arr (array like): input array
+
+    Returns:
+        np.array : input array normalized between 0, 1
+    """
+    arr = np.array(arr)
     return (arr - arr.min()) / (arr.max() - arr.min())
 
 
-def sort_get_value(my_dict, id2=20, id1=0):
+def sort_get_value(my_dict: dict, id2: int = 20, id1: int = 0):
+    """Sort a dictionary by values and return the values between id1 and id2
+
+    Args:
+        my_dict (dict): dictionary to sort
+        id2 (int, optional): First index. Defaults to 20.
+        id1 (int, optional): Last index. Defaults to 0.
+
+    Returns:
+        labels, values (list) : sorted labels and values in the range id1 to id2
+    """
     labels = np.array([str(l) for l in list(my_dict.keys())])
     values = np.array(list(my_dict.values()))
     sorted_values = np.argsort(values)[::-1]
@@ -120,7 +136,22 @@ def sort_get_value(my_dict, id2=20, id1=0):
     return labels[sorted_values][id1:id2], values[sorted_values][id1:id2]
 
 
-def tamimoto(s1, s2):
+def tamimoto(s1: np.array, s2: np.array):
+    """Tamimoto similarity index between two binary (T/F or 0/1) arrays s1 and s2
+        The tamimoto coefficient is a ratio that measures the similarity between two sets of data.
+
+
+    Args:
+        s1 (np.array): binary array
+        s2 (np.array): binary array
+
+    Returns:
+        J (np.array): Tamimoto similarity index
+    """
+    # If s2 is a single array, make it a 2D array
+    if len(s2.shape) == 1:
+        s2 = np.expand_dims(s2, axis=0)
+
     m11 = ((s1 == 1) & (s2 == 1)).sum(axis=1)
     m00 = ((s1 == 0) & (s2 == 0)).sum(axis=1)
     m01 = ((s1 == 0) & (s2 == 1)).sum(axis=1)
@@ -131,16 +162,48 @@ def tamimoto(s1, s2):
 
 
 def entropy(p0, p1):
+    """
+    Entropy of a random variable is the avarage level of "information", "surprise", or
+    "uncertainty" inherent in the variable's possible outcomes.
+
+    Args:
+        p0 (float): The probability of choosing class 1
+        p1 (float): The probability of choosing class 2
+
+    Returns:
+        float: entropy of random variable
+    """
     return -p0 * np.log2(p0) - p1 * np.log2(p1)
 
 
 def arr_entropy(arr):
+    """
+    Calculate the entropy of a binary array
+
+    Args:
+        arr (array like): binary array or pd.DataFrame
+
+    Returns:
+        entropy (float): entropy of the array
+    """
     Ny = arr.shape[0]
     p0 = arr.sum(axis=0) / Ny
     p1 = (Ny - arr.sum(axis=0)) / Ny
     return entropy(p0, p1)
 
-def LCEN_selected_features(model, top_features): 
+
+def LCEN_selected_features(model, top_features: int):
+    """
+    Return the selected features for a fitted LCEN model
+
+    Args:
+        model (dict): Fitted LCEN model from main.SPA
+        top_features (int): The number of top X features to return
+
+    Returns:
+        vals, selected_features (list, list): the value of the top "top_features" features
+        and their indices
+    """
     params = model["model_params"]
     num_selected = len(params)
     par_names = np.array(params)[:, 0]
@@ -153,14 +216,16 @@ def LCEN_selected_features(model, top_features):
     par_vals = np.array(params)[:, 1].astype("float64")
     par_vals_abs = np.abs(par_vals)
     importance = np.argsort(par_vals_abs)[::-1]
-    
+
     selected_features = []
     vals = []
-    for loc, val in zip(par_locs[importance][:top_features], par_vals[importance][:top_features]):
+    for loc, val in zip(
+        par_locs[importance][:top_features], par_vals[importance][:top_features]
+    ):
         if loc == "intercept":
             pass
         else:
             selected_features.append(int(loc))
             vals.append(val)
-            
+
     return vals, selected_features
