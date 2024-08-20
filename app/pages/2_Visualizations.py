@@ -2,31 +2,33 @@ import streamlit as st
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import plotly.express as px
-from spectrascope.plot_spectral_features import plot_model as pm 
-import numpy as np 
+from spectrascope.plot_spectral_features import plot_model as pm
+import numpy as np
 from PIL import Image
 
 st.set_page_config(
     page_title="Model Visualization",
     # page_icon="👋",
-    layout="wide"
+    layout="wide",
 )
 
 
-pretty_names = {'pointwise_features':'Raw Data', 
-                'pca':'Principle Component Analysis', 
-                'fft_features': 'Fourier Transform', 
-                'cdf':'Cumulative Distribution Function', 
-                'featureagg':'Agglomerative Clustering', 
-                'cwt':'Continuous Wavelet Transform', 
-                'polynomial_featuresall':'Polynomial Fitting', 
-                'tsne':'T-distributed Stochastic Neighbor Embedding'}
+pretty_names = {
+    "pointwise_features": "Raw Data",
+    "pca": "Principle Component Analysis",
+    "fft_features": "Fourier Transform",
+    "cdf": "Cumulative Distribution Function",
+    "featureagg": "Agglomerative Clustering",
+    "cwt": "Continuous Wavelet Transform",
+    "polynomial_featuresall": "Polynomial Fitting",
+    "tsne": "T-distributed Stochastic Neighbor Embedding",
+}
 
 
 data = st.session_state["data"]
 cols_to_featurize = st.session_state["spec_to_featurize"]
 fitted_models = st.session_state["fitted_models"]
-yattr = st.session_state['yattr']
+yattr = st.session_state["yattr"]
 y = getattr(data, yattr)
 
 
@@ -36,138 +38,175 @@ st.markdown("Random Forests : Normalized feature importance for every feature")
 
 model_name = st.selectbox("Select Model to Visualize", fitted_models)
 
-if model_name == None: 
+if model_name == None:
     st.stop()
-    
-elif 'trans' in model_name: 
+
+elif "trans" in model_name:
     model = getattr(data, model_name)
 
-    st.markdown('Visualization not implemented yet')
-    import pandas as pd 
-    selected_features = model['selected_features']
-    selected_vals = model['selected_vals']
-    temp = pd.DataFrame({'Selected Feature IDs':selected_features, 'Values': selected_vals})
+    st.markdown("Visualization not implemented yet")
+    import pandas as pd
+
+    selected_features = model["selected_features"]
+    selected_vals = model["selected_vals"]
+    temp = pd.DataFrame(
+        {"Selected Feature IDs": selected_features, "Values": selected_vals}
+    )
     st.write(temp)
     st.stop()
-     
-fig = make_subplots(1,1, specs=[[{"secondary_y": True}]], subplot_titles=[model_name])
 
-split_name = model_name.split('_')
+fig = make_subplots(1, 1, specs=[[{"secondary_y": True}]], subplot_titles=[model_name])
+
+split_name = model_name.split("_")
 spec = split_name[0]
-raw_name = '_'.join(split_name[:-2])
-feat = raw_name.replace(f'{spec}_', '')
+raw_name = "_".join(split_name[:-2])
+feat = raw_name.replace(f"{spec}_", "")
 
-xaxis = getattr(data, f'{spec}_xaxis')
+xaxis = getattr(data, f"{spec}_xaxis")
 raw = getattr(data, raw_name)
-if len(raw[0].ravel()) > len(xaxis): 
-    # multi modal 
-    spec = '_'.join(split_name[:2])
-    spec1, spec2 = spec.split('_')
+if len(raw[0].ravel()) > len(xaxis):
+    # multi modal
+    spec = "_".join(split_name[:2])
+    spec1, spec2 = spec.split("_")
     point1 = getattr(data, f"{spec1}_pointwise_features")
     point2 = getattr(data, f"{spec2}_pointwise_features")
     point_raw = np.concatenate([point1, point2], axis=1)
     xaxis = np.arange(point_raw.shape[1])
-    feat = 'pointwise_features'
-else: 
-    point_raw = getattr(data, f'{spec}_pointwise_features')
+    feat = "pointwise_features"
+else:
+    point_raw = getattr(data, f"{spec}_pointwise_features")
 
 model = getattr(data, model_name)
 
-if 'RandomForest' in model_name: 
+if "RandomForest" in model_name:
     try:
-        feature_importances = model['P'].feature_importances_ 
-    except AttributeError: 
-        feature_importances = model['P'][0].best_estimator_.feature_importances_
+        feature_importances = model["P"].feature_importances_
+    except AttributeError:
+        feature_importances = model["P"][0].best_estimator_.feature_importances_
 
     selected_vals = feature_importances / feature_importances.max()
-else: 
-    if st.session_state['scale_X']:
-        selected_vals = model['selected_vals']
-    else: 
-        selected_vals = None 
-    
-selected_features = model['selected_features']
+else:
+    if st.session_state["scale_X"]:
+        selected_vals = model["selected_vals"]
+    else:
+        selected_vals = None
 
-if 'xanes_pdf' in model_name: 
-    xaxis_label = 'Feature Index'
-    yaxis_label = ''
-elif 'pdf' in model_name: 
-    xaxis_label = 'r'
-    yaxis_label = 'G(r)'
-elif 'xanes' in model_name: 
-    xaxis_label = 'Energy (eV)'
-    yaxis_label = 'Intensity'
-else: 
-    xaxis_label = ''
-    yaxis_label = ''
-    
+selected_features = model["selected_features"]
+
+if "xanes_pdf" in model_name:
+    xaxis_label = "Feature Index"
+    yaxis_label = ""
+elif "pdf" in model_name:
+    xaxis_label = "r"
+    yaxis_label = "G(r)"
+elif "xanes" in model_name:
+    xaxis_label = "Energy (eV)"
+    yaxis_label = "Intensity"
+else:
+    xaxis_label = ""
+    yaxis_label = ""
+
 # selected_features_arr = np.zeros_like(xaxis)
-# selected_features_arr[selected_features] = 1 
+# selected_features_arr[selected_features] = 1
 
-kwargs_pca = {"feat":raw, 'mode':'markers', 'marker':dict(color=y, colorscale='Viridis', showscale=True, colorbar={"title": yattr})} #, colorbar=dict(len=0.3, x=0.3, y=0.5))}
+kwargs_pca = {
+    "feat": raw,
+    "mode": "markers",
+    "marker": dict(
+        color=y, colorscale="Viridis", showscale=True, colorbar={"title": yattr}
+    ),
+}  # , colorbar=dict(len=0.3, x=0.3, y=0.5))}
 model_kwargs = {
-    'pca':kwargs_pca, 
-    'featureagg':kwargs_pca,
-    'tsne': kwargs_pca,
-    'pointwise_features':{},
-    'polynomial_featuresall':{},
-    'cdf':{},
-    'fft_features':{}
+    "pca": kwargs_pca,
+    "featureagg": kwargs_pca,
+    "tsne": kwargs_pca,
+    "pointwise_features": {},
+    "polynomial_featuresall": {},
+    "cdf": {},
+    "fft_features": {},
 }
-if 'pca' in model_name or 'featureagg' in model_name or 'tsne' in model_name or "polynomial" in model_name or 'fft' in model_name:
-    if "polynomial" in model_name or 'fft' in model_name: 
-        st.markdown('Visualization not implemented yet')
-        import pandas as pd 
-        try: 
-            if 'LCEN' in model_name: 
-                temp = pd.DataFrame({'Selected Feature IDs':selected_features, 'Values': selected_vals})
+if (
+    "pca" in model_name
+    or "featureagg" in model_name
+    or "tsne" in model_name
+    or "polynomial" in model_name
+    or "fft" in model_name
+):
+    if "polynomial" in model_name or "fft" in model_name:
+        st.markdown("Visualization not implemented yet")
+        import pandas as pd
+
+        try:
+            if "LCEN" in model_name:
+                temp = pd.DataFrame(
+                    {"Selected Feature IDs": selected_features, "Values": selected_vals}
+                )
                 st.write(temp)
-            elif 'RandomForest' in model_name: 
-                temp = pd.DataFrame({'Feature IDs':np.argsort(feature_importances)[::-1], 'Feature Importances': feature_importances[np.argsort(feature_importances)[::-1]]})
+            elif "RandomForest" in model_name:
+                temp = pd.DataFrame(
+                    {
+                        "Feature IDs": np.argsort(feature_importances)[::-1],
+                        "Feature Importances": feature_importances[
+                            np.argsort(feature_importances)[::-1]
+                        ],
+                    }
+                )
                 st.write(temp)
-        except: 
-            pass 
+        except:
+            pass
         st.stop()
-    else: 
+    else:
         i = selected_features[0]
         j = selected_features[1]
-        xaxis_label = f'Component {i}'
-        yaxis_label = f'Component {j}'
-        plotter = pm(selected_features=selected_features, selected_vals=selected_vals, fig=fig, xaxis=xaxis, raw=raw, xaxis_label=xaxis_label, yaxis_label=yaxis_label)
-        plotter.show_scale = st.session_state['scale_X']
-        plotter.__getattribute__(f'plot_{feat}').__call__(**model_kwargs[feat])
+        xaxis_label = f"Component {i}"
+        yaxis_label = f"Component {j}"
+        plotter = pm(
+            selected_features=selected_features,
+            selected_vals=selected_vals,
+            fig=fig,
+            xaxis=xaxis,
+            raw=raw,
+            xaxis_label=xaxis_label,
+            yaxis_label=yaxis_label,
+        )
+        plotter.show_scale = st.session_state["scale_X"]
+        plotter.__getattribute__(f"plot_{feat}").__call__(**model_kwargs[feat])
         fig.layout.annotations[0].update(text="Top 2 Components/Clusters")
 
 
-else: 
+else:
     raw = point_raw.mean(axis=0)
-    if "LCEN" in model_name: 
-        plotter = pm(selected_features=selected_features, selected_vals=selected_vals, fig=fig, xaxis=xaxis, raw=raw, xaxis_label=xaxis_label, yaxis_label=yaxis_label)
-        plotter.show_scale = st.session_state['scale_X']
-        plotter.__getattribute__(f'plot_{feat}').__call__(**model_kwargs[feat])
-    else: 
+    if "LCEN" in model_name:
+        plotter = pm(
+            selected_features=selected_features,
+            selected_vals=selected_vals,
+            fig=fig,
+            xaxis=xaxis,
+            raw=raw,
+            xaxis_label=xaxis_label,
+            yaxis_label=yaxis_label,
+        )
+        plotter.show_scale = st.session_state["scale_X"]
+        plotter.__getattribute__(f"plot_{feat}").__call__(**model_kwargs[feat])
+    else:
         print(len(feature_importances))
-        plotter = pm(selected_features=feature_importances, selected_vals=selected_vals, fig=fig, xaxis=xaxis, raw=raw, xaxis_label=xaxis_label, yaxis_label=yaxis_label, plot_importances=True)
-        plotter.show_scale = st.session_state['scale_X']
-        plotter.__getattribute__(f'plot_{feat}').__call__(**model_kwargs[feat])
+        plotter = pm(
+            selected_features=feature_importances,
+            selected_vals=selected_vals,
+            fig=fig,
+            xaxis=xaxis,
+            raw=raw,
+            xaxis_label=xaxis_label,
+            yaxis_label=yaxis_label,
+            plot_importances=True,
+        )
+        plotter.show_scale = st.session_state["scale_X"]
+        plotter.__getattribute__(f"plot_{feat}").__call__(**model_kwargs[feat])
 
     fig.layout.yaxis2.update(showticklabels=False)
 st.plotly_chart(fig)
 
 st.stop()
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 def plot_model(full_name, fig, ir, ic, color="#d62728", plot_raw=True):
@@ -200,7 +239,7 @@ def plot_model(full_name, fig, ir, ic, color="#d62728", plot_raw=True):
         P = model_dict["P"]
         score = model_dict["score"]
         ypred = model_dict["ypred"]
-        
+
         # ytest = getattr(data, f'{yattr}_test')
         ytest = data.nn_test
         perc_err = np.mean(np.abs((ytest - ypred) / ytest)) * 100
@@ -238,7 +277,7 @@ def plot_model(full_name, fig, ir, ic, color="#d62728", plot_raw=True):
         score = model_dict["MSE_test_nontrans"]
         ypred = model_dict["yhat_test_nontrans"]
 
-        ytest = getattr(data, f'{yattr}_test')
+        ytest = getattr(data, f"{yattr}_test")
         perc_err = np.mean(np.abs((ytest - ypred) / ytest)) * 100
 
         for loc, val in zip(par_locs[importance][:10], par_vals[importance][:10]):
@@ -278,6 +317,7 @@ def plot_model(full_name, fig, ir, ic, color="#d62728", plot_raw=True):
                     )
 
             fig.update_yaxes(title="", secondary_y=True)
+
 
 if len(cols_to_featurize) > 1:
     col1, col2 = cols_to_featurize

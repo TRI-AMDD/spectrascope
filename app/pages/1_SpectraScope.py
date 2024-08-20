@@ -1,8 +1,8 @@
 import streamlit as st
 
 from spectrascope.ss_classification import *
-from spectrascope.plot_spectral_features import plot_model as pm 
-from spectrascope.plot_spectral_features import plot_spectral_features as psf 
+from spectrascope.plot_spectral_features import plot_model as pm
+from spectrascope.plot_spectral_features import plot_spectral_features as psf
 
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
@@ -13,24 +13,27 @@ from itertools import product
 st.set_page_config(
     page_title="Feature Generation and Model Training",
     # page_icon="👋",
-    layout="wide"
+    layout="wide",
 )
 
 
-pretty_names = {'Raw Data':'pointwise_features', 
-                'Principle Component Analysis':'pca', 
-                'Fourier Transform':'fft_features', 
-                'Cumulative Distribution Function':'cdf', 
-                'Agglomerative Clustering':'featureagg', 
-                'Continuous Wavelet Transform':'cwt', 
-                'Polynomial Fitting':'polynomial_featuresall', 
-                'T-distributed Stochastic Neighbor Embedding':'tsne'}
+pretty_names = {
+    "Raw Data": "pointwise_features",
+    "Principle Component Analysis": "pca",
+    "Fourier Transform": "fft_features",
+    "Cumulative Distribution Function": "cdf",
+    "Agglomerative Clustering": "featureagg",
+    "Continuous Wavelet Transform": "cwt",
+    "Polynomial Fitting": "polynomial_featuresall",
+    "T-distributed Stochastic Neighbor Embedding": "tsne",
+}
 
 
 def textinput_to_list(string, delim):
     return string.replace(" ", "").split(delim)
 
-data  = st.session_state["data"]
+
+data = st.session_state["data"]
 yattr = st.session_state["yattr"]
 y = getattr(data, yattr)
 
@@ -41,22 +44,32 @@ spec_to_featurize = st.multiselect("Input column(s) to featurize", data.specname
 
 st.session_state["fitted_models"] = []
 
-kwargs_dict = { 'pca' : {'mode':'markers', 'marker':dict(color=y, colorscale='Viridis')}, #, showscale=True, colorbar=dict(len=0.3, x=0.3, y=0.5))}
-    'cwt' : {'colorscale':'Viridis','showscale':False}, #,'colorbar':dict(len=0.3, x=1, y=0.85)}
-    'cdf' : {},
-    'polynomial_featuresall' : {},
-    'featureagg' : {'mode':'markers', 'marker':dict(color=y, colorscale='Viridis')}, #, showscale=True, colorbar=dict(len=0.3, x=0.6, y=0.5))}
-    'fft_features' : {},
-    'pointwise_features':{},
-    'tsne':{'mode':'markers', 'marker':dict(color=y, colorscale='Viridis')}
-    }
+kwargs_dict = {
+    "pca": {
+        "mode": "markers",
+        "marker": dict(color=y, colorscale="Viridis"),
+    },  # , showscale=True, colorbar=dict(len=0.3, x=0.3, y=0.5))}
+    "cwt": {
+        "colorscale": "Viridis",
+        "showscale": False,
+    },  # ,'colorbar':dict(len=0.3, x=1, y=0.85)}
+    "cdf": {},
+    "polynomial_featuresall": {},
+    "featureagg": {
+        "mode": "markers",
+        "marker": dict(color=y, colorscale="Viridis"),
+    },  # , showscale=True, colorbar=dict(len=0.3, x=0.6, y=0.5))}
+    "fft_features": {},
+    "pointwise_features": {},
+    "tsne": {"mode": "markers", "marker": dict(color=y, colorscale="Viridis")},
+}
 
-xaxis_pdf = 'r'
-xaxis_xanes = 'Energy (eV)'
-yaxis_pdf = 'G(r)'
-yaxis_xanes = 'Intensity (arb)'
+xaxis_pdf = "r"
+xaxis_xanes = "Energy (eV)"
+yaxis_pdf = "G(r)"
+yaxis_xanes = "Intensity (arb)"
 
-axis_dict = {'xanes':(xaxis_xanes, yaxis_xanes), 'pdf':(xaxis_pdf, yaxis_pdf)}
+axis_dict = {"xanes": (xaxis_xanes, yaxis_xanes), "pdf": (xaxis_pdf, yaxis_pdf)}
 
 features_available = list(kwargs_dict.keys())
 
@@ -66,42 +79,52 @@ features = [pretty_names[f] for f in pretty_features]
 
 nfeats = len(features)
 
-if nfeats > 0 : 
-    for spec in spec_to_featurize: 
+if nfeats > 0:
+    for spec in spec_to_featurize:
         fig = make_subplots(
-                rows=1, cols=nfeats, subplot_titles=pretty_features, horizontal_spacing=0.15
-            )
-        for i, feat in enumerate(features): 
+            rows=1, cols=nfeats, subplot_titles=pretty_features, horizontal_spacing=0.15
+        )
+        for i, feat in enumerate(features):
             kwargs = kwargs_dict[feat]
-            if 'fft' in feat or 'pointwise' in feat: 
-                data.add_spectral_feature(spec, feat, xrange=getattr(data, f'{spec}_xaxis'))
-                if 'pointwise' in feat: 
-                    xaxis_label, yaxis_label = axis_dict[spec] 
-                else: 
-                    xaxis_label = 'Frequency'
-                    yaxis_label = 'FFT'
-            else: 
+            if "fft" in feat or "pointwise" in feat:
+                data.add_spectral_feature(
+                    spec, feat, xrange=getattr(data, f"{spec}_xaxis")
+                )
+                if "pointwise" in feat:
+                    xaxis_label, yaxis_label = axis_dict[spec]
+                else:
+                    xaxis_label = "Frequency"
+                    yaxis_label = "FFT"
+            else:
                 data.add_spectral_feature(spec, feat)
-                if 'cdf' in feat: 
-                    xaxis_label, yaxis_label = axis_dict[spec] 
-                    yaxis_label = 'Cumulative Intensity'
-                elif 'polynomial' in feat: 
-                    xaxis_label = 'Feature Index'
-                    yaxis_label = 'Polynomial Coefficientr'
-                
-                else: 
-                    xaxis_label = ''
-                    yaxis_label = ''
-                
-            arr = data.__getattribute__(spec + '_'+ feat)
-            if feat == 'pca' or feat == 'featureagg' or feat =='tsne': 
-                xaxis_label = 'Component 1'
-                yaxis_label = 'Component 2'
-            else: 
+                if "cdf" in feat:
+                    xaxis_label, yaxis_label = axis_dict[spec]
+                    yaxis_label = "Cumulative Intensity"
+                elif "polynomial" in feat:
+                    xaxis_label = "Feature Index"
+                    yaxis_label = "Polynomial Coefficientr"
+
+                else:
+                    xaxis_label = ""
+                    yaxis_label = ""
+
+            arr = data.__getattribute__(spec + "_" + feat)
+            if feat == "pca" or feat == "featureagg" or feat == "tsne":
+                xaxis_label = "Component 1"
+                yaxis_label = "Component 2"
+            else:
                 arr = arr[0].ravel()
-                
-            xaxis = getattr(data, f'{spec}_xaxis')
-            temp = psf(arr, xaxis=xaxis, fig=fig, row=1, col=i + 1, xaxis_label=xaxis_label, yaxis_label=yaxis_label)    
+
+            xaxis = getattr(data, f"{spec}_xaxis")
+            temp = psf(
+                arr,
+                xaxis=xaxis,
+                fig=fig,
+                row=1,
+                col=i + 1,
+                xaxis_label=xaxis_label,
+                yaxis_label=yaxis_label,
+            )
             getattr(temp, f"plot_{feat}").__call__(showlegend=False, **kwargs)
 
         st.plotly_chart(fig)
@@ -137,52 +160,64 @@ if multi_modal_selected is not None:
             attr_name = feat1.split("_")[0] + "_" + feat2
             if not hasattr(data, attr_name):
                 data.combine_feature(feat1, feat2)
-                
+
             features_selected.append(attr_name)
 
-st.write("#### Would you like to apply further transformations to any of these features?")
+st.write(
+    "#### Would you like to apply further transformations to any of these features?"
+)
 do_transform = st.toggle("yes", False)
 
-if do_transform: 
+if do_transform:
     trans_type = st.radio("Transformation Type", ["all", "poly", "simple_interaction"])
-    degree = st.radio(r"Degree of polynomial transformation ($x^2, x^3$)", [1,2,3])
-    interaction = st.toggle(r'Feature Interaction ($x_1 * x_2 ..$)', False)
-    
-    if trans_type == "simple_interaction": 
+    degree = st.radio(r"Degree of polynomial transformation ($x^2, x^3$)", [1, 2, 3])
+    interaction = st.toggle(r"Feature Interaction ($x_1 * x_2 ..$)", False)
+
+    if trans_type == "simple_interaction":
         interaction = True
 
     transform_selected = st.multiselect(
         "Choose features to transform",
         features_selected,
     )
-    for transform in transform_selected: 
+    for transform in transform_selected:
         additional_naming = f"_{degree}_{interaction}_{trans_type}"
-        data.transform_feature(transform, degree=degree, interaction=interaction, trans_type=trans_type, additional_naming=additional_naming)
+        data.transform_feature(
+            transform,
+            degree=degree,
+            interaction=interaction,
+            trans_type=trans_type,
+            additional_naming=additional_naming,
+        )
         features_selected.append(transform + "_trans" + additional_naming)
-    
-st.write(f"#### Final Features selected for model building:") 
-for feat in features_selected: 
+
+st.write(f"#### Final Features selected for model building:")
+for feat in features_selected:
     st.write(feat)
 
 st.markdown("## 4. Train Models")
 
-cross_validate = st.radio("Choose Training Method", ["Default Models", "Tune Hyperparameters"])
-cross_validate = {"Default Models":False, "Tune Hyperparameters":True}[cross_validate]
+cross_validate = st.radio(
+    "Choose Training Method", ["Default Models", "Tune Hyperparameters"]
+)
+cross_validate = {"Default Models": False, "Tune Hyperparameters": True}[cross_validate]
 
 if not cross_validate:
-    rf_kwargs = {"estimator":RandomForestRegressor()}
-    lcen_kwargs = lcen_kwargs = {'l1_ratio':[0.1, 0.5, 0.9],
-               'K_fold':3, 
-               'cv_method':'Kfold', 
-               'alpha':5, 
-               'degree':[1],
-               'trans_type':'poly', 
-               'LCEN_cutoff':4e-3, 
-               'LCEN_interaction':False, 
-               'scale_X':True, 
-               'scale_y':True}
-    
-elif cross_validate: 
+    rf_kwargs = {"estimator": RandomForestRegressor()}
+    lcen_kwargs = lcen_kwargs = {
+        "l1_ratio": [0.1, 0.5, 0.9],
+        "K_fold": 3,
+        "cv_method": "Kfold",
+        "alpha": 5,
+        "degree": [1],
+        "trans_type": "poly",
+        "LCEN_cutoff": 4e-3,
+        "LCEN_interaction": False,
+        "scale_X": True,
+        "scale_y": True,
+    }
+
+elif cross_validate:
 
     model = RandomForestRegressor()
     n_estimators = st.text_input("n_estimators", "100")  # 50, 200, 300
@@ -220,7 +255,6 @@ elif cross_validate:
     # st.write('The values for alpha are: ', ','.join(['{a:.5f}'.format(a=a) for a in alphas]))
 
     lcen_other_kwargs = st.text_input("Other LCEN kwargs")
-
 
     degree = [1, 2]
     trans_type = "poly"
@@ -275,7 +309,14 @@ def fit(sk_kwargs, lcen_kwargs, test_size, scale_X, yattr):
     for attr_name in features_selected:
         if fit_sk:
             for sk in sk_kwargs:
-                data.do_sk(attr_name, yattr, test_size, use_pipeline=cross_validate, scale_X=scale_X, **sk)
+                data.do_sk(
+                    attr_name,
+                    yattr,
+                    test_size,
+                    use_pipeline=cross_validate,
+                    scale_X=scale_X,
+                    **sk,
+                )
                 completed += 1
                 my_bar.progress(completed / N, text=progress_text)
                 model_name = sk["estimator"].__str__().split("()")[0]
@@ -287,7 +328,7 @@ def fit(sk_kwargs, lcen_kwargs, test_size, scale_X, yattr):
             my_bar.progress(completed / N, text=progress_text)
             model_name = "LCEN"
             fitted_models.append(attr_name + "_" + yattr + "_" + model_name)
-            
+
     my_bar.empty()
 
     return pd.DataFrame(data.best_fits), fitted_models
@@ -308,11 +349,14 @@ def get_models():
 def fitted_callback():
     st.session_state["fitted"] = True
 
+
 run_it = st.button("Run it!", False, on_click=fitted_callback())
 
 if run_it:
     print(test_size)
-    best_fit_df, fitted_models = fit(sk_kwargs, lcen_kwargs, test_size=test_size, scale_X=scale_X, yattr=yattr)
+    best_fit_df, fitted_models = fit(
+        sk_kwargs, lcen_kwargs, test_size=test_size, scale_X=scale_X, yattr=yattr
+    )
     st.success("Done!", icon="✅")
 
     fig = px.imshow(
@@ -330,7 +374,4 @@ else:
 st.session_state["fitted_models"] = fitted_models
 st.session_state["data"] = data
 st.session_state["spec_to_featurize"] = spec_to_featurize
-st.session_state['scale_X'] = scale_X
-
-
-
+st.session_state["scale_X"] = scale_X
