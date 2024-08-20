@@ -14,7 +14,9 @@ from matminer.featurizers.structure import SiteStatsFingerprint
 
 class BinaryClassifications(SpectraScope):
 
-    def __init__(self, structures, mpids, nn_algo=CrystalNN(), generate_dict=True, **kwargs):
+    def __init__(
+        self, structures, mpids, nn_algo=CrystalNN(), generate_dict=True, **kwargs
+    ):
 
         super().__init__(**kwargs)
 
@@ -24,7 +26,7 @@ class BinaryClassifications(SpectraScope):
         self.mpids = mpids
         self.entropy_dict = {}
 
-        if generate_dict: 
+        if generate_dict:
             self.generate_dict()
 
     def generate_dict(self):
@@ -325,7 +327,14 @@ class BinaryClassifications(SpectraScope):
         return av_dist
 
     def do_one_classification(
-        self, Xattr, yattr, test_size=0.25, savef=None, use_pipeline=False, scale_X=True, **kwargs
+        self,
+        Xattr,
+        yattr,
+        test_size=0.25,
+        savef=None,
+        use_pipeline=False,
+        scale_X=True,
+        **kwargs
     ):
         if not hasattr(self, "structures_df"):
             self.structure_library_to_df()
@@ -339,10 +348,17 @@ class BinaryClassifications(SpectraScope):
         # try:
         #     check_is_fitted(estimator)
         #     print('already fitted')
-        # except NotFittedError as exc: 
-        #     print('not fitted') 
-        
-        self.do_sk(Xattr, yattr, test_size, use_pipeline=use_pipeline, scale_X=scale_X, **kwargs)
+        # except NotFittedError as exc:
+        #     print('not fitted')
+
+        self.do_sk(
+            Xattr,
+            yattr,
+            test_size,
+            use_pipeline=use_pipeline,
+            scale_X=scale_X,
+            **kwargs
+        )
         # self.do_LCEN(Xattr, yattr, test_size, savef, scale_X = scale_X, **kwargs)
 
         model_name = estimator.__str__().split("(")[0]
@@ -373,17 +389,16 @@ class BinaryClassifications(SpectraScope):
         test_size=0.25,
         savef=None,
         use_pipeline=False,
-        scale_X = True,
+        scale_X=True,
         **kwargs
     ):
         masks = np.zeros([len(getattr(self, Xattr)), len(yattrs)])
         from sklearn.base import clone
-        
+
         for i, yattr in enumerate(yattrs):
-            kwargs['estimator'] = clone(kwargs['estimator'])
+            kwargs["estimator"] = clone(kwargs["estimator"])
             full_prediction = self.do_one_classification(
-                Xattr, yattr, test_size, savef, use_pipeline, scale_X=scale_X,
-                **kwargs 
+                Xattr, yattr, test_size, savef, use_pipeline, scale_X=scale_X, **kwargs
             )
             masks[:, i] = full_prediction
 
@@ -419,7 +434,9 @@ class BinaryClassifications(SpectraScope):
 
         self.plot_df_heatmap(temp, **plotly_kwargs)
 
-    def find_similar_structures(self, spec_id, Xattr, selected_yattrs, model_name, top=10):
+    def find_similar_structures(
+        self, spec_id, Xattr, selected_yattrs, model_name, top=10
+    ):
         specs = getattr(self, Xattr)
         spec = specs[spec_id]
 

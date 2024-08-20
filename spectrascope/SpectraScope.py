@@ -22,7 +22,6 @@ from sklearn.exceptions import NotFittedError
 from sklearn.base import clone
 
 
-
 class SpectraScope:
 
     def __init__(
@@ -56,21 +55,21 @@ class SpectraScope:
         # assert (
         #     len(specnames) == self.n_modalities
         # ), "please input a name for each modality"
-        if specnames == []: 
-            specnames = [f'spec{i}' for i in range(self.X.shape[0])]
-        
+        if specnames == []:
+            specnames = [f"spec{i}" for i in range(self.X.shape[0])]
+
         for i, specname in enumerate(specnames):
             Xi = self.X[i]
             setattr(self, specname, Xi)
 
         # add Y
         if y is not None:
-            if yname == '': 
-                yname = 'y0'
+            if yname == "":
+                yname = "y0"
             self.add_y(yname, y)
         elif fny is not None:
-            if yname == '': 
-                yname = 'y0'
+            if yname == "":
+                yname = "y0"
             y = self.load_file(fny)
             self.add_y(yname, y)
 
@@ -126,10 +125,10 @@ class SpectraScope:
     def add_y_label(self, specname, value):
         setattr(self, specname + "_labely", value)
 
-    def scale_X(self, X): 
+    def scale_X(self, X):
         scaled_x = StandardScaler().fit_transform(X)
         return scaled_x
-        
+
     def add_spectral_feature(
         self, specname, feat, xaxis=None, additional_naming="", **kwargs
     ):
@@ -207,13 +206,14 @@ class SpectraScope:
     ):
         """
         Polynomial etc. transformations of already generated features
-        uses _feature_trans function from regression_models in SPA 
-        Needs SPA 
+        uses _feature_trans function from regression_models in SPA
+        Needs SPA
         Args:
             feat: feature name
             feat_test (optional): Test set of feature name. Defaults to None.
         """
         import regression_models
+
         X = getattr(self, feat)
         try:
             X_test = getattr(self, feat + "_test")
@@ -235,11 +235,11 @@ class SpectraScope:
             setattr(self, feat + "_test_trans" + additional_naming, X_test_out)
         setattr(self, feat + "_trans_names" + additional_naming, names)
 
-    def split_X(self, attr, test_size, scale_X = False):
+    def split_X(self, attr, test_size, scale_X=False):
         X = getattr(self, attr)
-        if scale_X: 
+        if scale_X:
             X = self.scale_X(X)
-            
+
         X_train, X_test = train_test_split(
             X, test_size=test_size, random_state=self.random_seed
         )
@@ -247,7 +247,7 @@ class SpectraScope:
         setattr(self, attr + "_train", X_train)
         setattr(self, attr + "_test", X_test)
 
-    def split_y(self, attr,test_size):
+    def split_y(self, attr, test_size):
         y = getattr(self, attr)
         y_train, y_test = train_test_split(
             y, test_size=test_size, random_state=self.random_seed
@@ -270,10 +270,10 @@ class SpectraScope:
         metric=mean_squared_error,
         savef=None,
     ):
-        
+
         try:
             check_is_fitted(estimator)
-            print('already fitted')
+            print("already fitted")
             estimator = clone(estimator)
         except NotFittedError as exc:
             print(f"Model is not fitted yet.")
@@ -311,19 +311,29 @@ class SpectraScope:
     ):
         try:
             check_is_fitted(estimator)
-            print('already fitted')
+            print("already fitted")
             estimator = clone(estimator)
         except NotFittedError as exc:
             print(f"Model is not fitted yet.")
-    
+
         est = estimator
         est.fit(X_train, y_train)
         ypred = est.predict(X_test)
         score = metric(y_test, ypred)
         return est, score, ypred
 
-    def do_sk(self, Xattr, yattr, test_size, savef=None, use_pipeline=True, top_features=20, scale_X=True, **kwargs):
-        
+    def do_sk(
+        self,
+        Xattr,
+        yattr,
+        test_size,
+        savef=None,
+        use_pipeline=True,
+        top_features=20,
+        scale_X=True,
+        **kwargs,
+    ):
+
         self.split_X(Xattr, test_size, scale_X=scale_X)
         self.split_y(yattr, test_size)
 
@@ -332,7 +342,6 @@ class SpectraScope:
 
         y_train = getattr(self, yattr + "_train")
         y_test = getattr(self, yattr + "_test")
-            
 
         if use_pipeline:
             P, score, ypred = self.sk_pipeline(
@@ -343,23 +352,32 @@ class SpectraScope:
             P, score, ypred = self.sk(X_train, X_test, y_train, y_test, **kwargs)
             model_name = P.__str__().split("(")[0]
 
-        if 'RandomForest' in model_name: 
-            try: 
+        if "RandomForest" in model_name:
+            try:
                 feature_importances = P.feature_importances_
-            except AttributeError: 
+            except AttributeError:
                 feature_importances = P[0].best_estimator_.feature_importances_
-            #choose top features
+            # choose top features
             selected_features = np.argsort(feature_importances[::-1])[:top_features]
-            selected_vals = feature_importances[np.argsort(feature_importances[::-1])][:top_features]
+            selected_vals = feature_importances[np.argsort(feature_importances[::-1])][
+                :top_features
+            ]
         elif "LogisticRegression" in model_name:
-            selected_features = np.argsort(P.coef_)[::-1][:top_features] 
+            selected_features = np.argsort(P.coef_)[::-1][:top_features]
             selected_vals = P.coef_[np.argsort(P.coef_)[::-1]][:top_features]
-        else: 
+        else:
             selected_features = []
             selected_vals = []
             # changes dataset: (X[:,sorted(sorted_best_features)])
-            
-        fit_dict = {"P": P, "score": score, "ypred": ypred, 'selected_features':selected_features, "scaled":scale_X, "selected_vals":selected_vals}
+
+        fit_dict = {
+            "P": P,
+            "score": score,
+            "ypred": ypred,
+            "selected_features": selected_features,
+            "scaled": scale_X,
+            "selected_vals": selected_vals,
+        }
         setattr(self, Xattr + "_" + yattr + "_" + model_name, fit_dict)
 
         perc_err = np.mean(np.abs((y_test - ypred) / y_test)) * 100
@@ -403,13 +421,12 @@ class SpectraScope:
             model_name=["LCEN"],
             **kwargs,
         )
-        #TODO LCEN Selected features 
+        # TODO LCEN Selected features
         vals, selected_features = LCEN_selected_features(out[0]["LCEN"], top_features)
-        out[0]["LCEN"]["scaled"]= True
+        out[0]["LCEN"]["scaled"] = True
         out[0]["LCEN"]["selected_features"] = selected_features
-        out[0]["LCEN"]["selected_vals"] = vals 
-        
-        
+        out[0]["LCEN"]["selected_vals"] = vals
+
         setattr(self, Xattr + "_" + yattr + "_LCEN", out[0]["LCEN"])
         ypred = out[0]["LCEN"]["yhat_test_nontrans"]
         perc_err = np.mean(np.abs((y_test - ypred) / y_test)) * 100
@@ -444,7 +461,7 @@ class SpectraScope:
         savef=None,
         do_all_existing=False,
         use_pipeline=False,
-        scale_X = True 
+        scale_X=True,
     ):
         """
 
@@ -473,7 +490,9 @@ class SpectraScope:
                 ]
                 for attr_name in attr_names:
                     for sk in sk_kwargs:
-                        self.do_sk(attr_name, yattr, test_size, savef, scale_X = scale_X, **sk)
+                        self.do_sk(
+                            attr_name, yattr, test_size, savef, scale_X=scale_X, **sk
+                        )
                     if lcen_kwargs is not None:
                         self.do_LCEN(attr_name, yattr, test_size, savef, **lcen_kwargs)
 
@@ -487,7 +506,15 @@ class SpectraScope:
                         self.add_spectral_feature(feat=feat, **kwargs)
 
                     for sk in sk_kwargs:
-                        self.do_sk(attr_name, yattr, test_size, savef, use_pipeline=use_pipeline, scale_X = scale_X, **sk)
+                        self.do_sk(
+                            attr_name,
+                            yattr,
+                            test_size,
+                            savef,
+                            use_pipeline=use_pipeline,
+                            scale_X=scale_X,
+                            **sk,
+                        )
                     if lcen_kwargs is not None:
                         self.do_LCEN(attr_name, yattr, test_size, savef, **lcen_kwargs)
 
@@ -499,7 +526,15 @@ class SpectraScope:
                         self.combine_feature(feat1, feat2)
 
                     for sk in sk_kwargs:
-                        self.do_sk(attr_name, yattr, test_size, savef, use_pipeline=use_pipeline, scale_X = scale_X, **sk)
+                        self.do_sk(
+                            attr_name,
+                            yattr,
+                            test_size,
+                            savef,
+                            use_pipeline=use_pipeline,
+                            scale_X=scale_X,
+                            **sk,
+                        )
                     if lcen_kwargs is not None:
                         self.do_LCEN(attr_name, yattr, test_size, savef, **lcen_kwargs)
 
@@ -510,8 +545,8 @@ class SpectraScope:
             pass
 
     def plot_df_heatmap(self, df, fig=None, **plotly_kwargs):
-        if fig == None: 
+        if fig == None:
             fig = go.Figure()
-            
+
         fig.add_trace(go.Heatmap(x=df.columns, y=df.index, z=df, **plotly_kwargs))
         fig.show()

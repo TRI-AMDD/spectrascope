@@ -21,6 +21,7 @@ from sklearn.decomposition import PCA
 from spectrascope.plot_spectral_features import plot_spectral_features
 from sklearn.manifold import TSNE
 
+
 def degree_based_features(
     X, degree, exclude_features: list[str], input_labels: list[str]
 ):
@@ -363,15 +364,17 @@ class spectral_features:
 
         if return_features:
             return self.cdf_features
-        
-    def tsne(self, n_components=2, verbose=False, return_features:bool=False, **kwargs):
+
+    def tsne(
+        self, n_components=2, verbose=False, return_features: bool = False, **kwargs
+    ):
         x, y = self.check_xinterp(verbose)
         tsne = TSNE(n_components=n_components, **kwargs)
         self.tsne_features = tsne.fit_transform(y)
 
         if return_features:
             return self.tsne_features
-    
+
     def cwt(
         self,
         scales=np.arange(1, 11),
@@ -472,7 +475,9 @@ class spectral_features:
     ):
         pass
 
-    def pca(self, n_components=10, verbose=False, return_features: bool = False, **kwargs):
+    def pca(
+        self, n_components=10, verbose=False, return_features: bool = False, **kwargs
+    ):
         x, y = self.check_xinterp(verbose)
         pca = PCA(n_components=n_components, **kwargs)
         self.pca_features = pca.fit_transform(y)
@@ -527,8 +532,7 @@ class spectral_features:
 
     ### Plotting functions for app
     ### May fail with current new update
-        
-    
+
     # def plot_gaussian_peaks(self, ax=None, verbose=False, **kwargs):
 
     #     x, y = self.check_xinterp(verbose)
@@ -566,7 +570,7 @@ class spectral_features:
     #     assert hasattr(self, "cdf_features"), "need to create cdf features first"
 
     #     plotter = plot_spectral_features(self.cdf_features.ravel(), xaxis=x, ax=ax, **kwargs)
-    #     if not ax: 
+    #     if not ax:
     #         plot_x, plot_y = plotter.get_xy()
     #         return plot_x, plot_y
 
@@ -577,10 +581,9 @@ class spectral_features:
 
     #     x = np.arange(len(self.polyfeatures_all))
     #     plotter = plot_spectral_features(self.polyfeatures_all.ravel(), ax=ax, **kwargs)
-    #     if not ax: 
+    #     if not ax:
     #         plot_x, plot_y = plotter.get_xy()
     #         return plot_x[:-1], plot_y[:-1]
-        
 
     def check_xinterp(self, verbose=False):
         if hasattr(self, "xinterp") == False:
