@@ -1,7 +1,9 @@
-# Code to extract features from the data
+"""
+Spectral Features class for Spectrascope
+
+"""
 
 import numpy as np
-import pandas as pd
 from scipy.interpolate import interp1d
 from numpy.polynomial import Polynomial
 from itertools import combinations
@@ -9,70 +11,31 @@ from spectrascope.utils import find_nearest, func_unfix_width_reg
 import matplotlib.pyplot as plt
 import pywt
 from scipy.optimize import curve_fit
-
 from scipy.fft import fft, fftfreq
-
 from pyts.transformation import ShapeletTransform, BagOfPatterns, BOSS, ROCKET, WEASEL
 from scipy.ndimage import gaussian_filter
-import plotly.express as px
-
 from sklearn.cluster import FeatureAgglomeration
 from sklearn.decomposition import PCA
-from spectrascope.plot_spectral_features import plot_spectral_features
 from sklearn.manifold import TSNE
-
-
-def degree_based_features(
-    X, degree, exclude_features: list[str], input_labels: list[str]
-):
-    """
-    Function to extract features from the data
-    :param input:
-    :param feature_types:
-    :return:
-    """
-
-    # TODO implement degree >=3
-    # TODO make dataframe implementation w/ labels
-    new_features = []
-    if degree >= 1:
-        for x in X:
-
-            new_features.append(x)
-            new_features.append(np.log(x))
-            new_features.append(np.sqrt(x))
-            new_features.append(1 / x)
-
-    if degree >= 2:
-
-        for x in X:
-            new_features.append(x * x)
-            new_features.append(np.log(x) ** 2)
-            new_features.append(np.sqrt(x) ** 3)
-            new_features.append(1 / x**2)
-            new_features.append(np.log(x) / x)
-
-        # Loop through pairs of values in X
-        for xi, xj in combinations(X, 2):
-            new_features.append(xi * xj)
-
-    return new_features
-
 
 class spectral_features:
     """
-    A class that creates feature vectors extracted from XAS (X-ray Absorption Spectroscopy) data.
-
+    A class that creates feature vectors extracted from 1D array data. 
+    Current features developed for spectral data, but could be applied to any 1D data. 
+    Every feature generation method assumes you want to perform on the interpolated spectra, so 
+    looks for interpolated data before performing operations on the original data.
+    
     Attributes:
-        energies (np.array): Energy values from XAS spectrum.
-        intensities (np.array): Intensity values from XAS spectrum.
+        energies (np.array): Energy values / x-axis. 
+        intensities (np.array): Intensity values / y-axis. 
 
     Methods:
-        Every feature generation method assumes you want to perform on the interpolated spectrum
         pointwise_features(xrange): Interpolates energies and intensities onto evenly spaced points.
         generate_bins(N: int): Generates N bins even in energy for polynomial featurization
         polynomial_featuresN(N: int): Performs polynomial fitting on N energy equivalent sections.
         polynomial_featuresall(Narr: np.array = np.array([4,5,10,20])): Performs polynomial fitting on a range of N energy equivalent sections.
+        Used by SpectraScope main class to generate features on datasets. 
+        
     """
 
     def __init__(self, energies: np.array, intensities: np.array):
@@ -96,7 +59,7 @@ class spectral_features:
 
         Args:
             xrange (np.linspace(xmin,xmax)): range of x values to perform interpolation on
-            return_features (bool): Flag indicating whether to return the features.
+            return_features (bool): Flag indicating whether to return the features. Default False.
             fill_value (array, (tup), 'extrapolate') : fill value for scipy.interp1d for values outside of xrange (see scipy.interpolate.interp1d)
         """
         f = interp1d(
@@ -122,6 +85,11 @@ class spectral_features:
         Args:
             N (int): The number of bins to generate.
             x,y (np.array, optional): Energy and intensity values to generate bins for. Default None uses full spectrum
+            verbose(bool): print progress. Default False.
+            
+        Attributes:
+            bin_indices_{N} (np.array): An array of bin indices for the N bins. Shape is (len(x),)
+            bin_indices_{round(x.min())}_{round(x.max())}_{N} (np.array): An array of bin indices for N bins over a subset of full energy range. Shape is (len(x),)
         """
         if x is None:
             # use default energies and intensities
@@ -180,8 +148,12 @@ class spectral_features:
         Performs polynomial fitting on N energy equivalent sections.
 
         Args:
-            N (int): The number of energy equivalent sections to perform polynomial fitting on.
-            return_features (bool): Flag indicating whether to return the features.
+            N (int): The number of energy equivalent sections to perform polynomial fitting on. 
+            degree (int): The degree of the polynomial to fit. Default is 3 (cubic).
+            return_features (bool): Flag indicating whether to return the features. Default False.
+            verbose(bool): print progress
+        Attributes: 
+            polyfeatures_{N}_{degree}deg (np.array): An array of polynomial coefficients for the N bins. Shape is (N, degree + 1)
         """
         featuresN = np.zeros([self.intensities.shape[0], 1])
 
@@ -265,10 +237,13 @@ class spectral_features:
         Performs polynomial fitting on multiple energy equivalent sections.
 
         Args:
-            Narr (np.array): An array of integers representing the number of energy equivalent sections to perform polynomial fitting on.
+            degree (int): The degree of the polynomial to fit. Default is 3 (cubic).
+            Narr (np.array): An array of integers representing the number of energy equivalent sections to perform polynomial fitting on. Default is [4, 5, 10, 20].
             interpolate (bool): Flag indicating whether to interpolate the data before performing polynomial fitting.
             return_features (bool): Flag indicating whether to return the features.
-            degree (int): The degree of the polynomial to fit.
+        
+        Attributes:
+            polyfeatures_all (np.array): An array of polynomial coefficients for the bins. Shape is sum((degree + 1) * n for n in Narr) + 1 (max energy position)
         """
         self.polyfeatures_all = np.zeros([self.intensities.shape[0], 1])
 
@@ -306,6 +281,9 @@ class spectral_features:
                 degree_dict: dict, the degree values for each split {0:degree, 1:degree, 2:degree}, must have len(N_dict)
                 verbose: bool, whether to print names of attributes
                 plot: plot subsections
+                return_features (bool): Flag indicating whether to return the features. Currently not implemented. Default False 
+        attributes: 
+            generates polynomial_featuresN(N, degree=degree, x=x, y=y, verbose=verbose) for every N, degree on each eV range (np.array)
         """
         idx_arr = [
             find_nearest(self.energies, self.energies.min() + eV) for eV in eV_splits
@@ -368,6 +346,23 @@ class spectral_features:
     def tsne(
         self, n_components=2, verbose=False, return_features: bool = False, **kwargs
     ):
+        """
+        T-distributed Stochastic neighbor embedding 
+        Converts similarities between data points to joint probabilities and tries to minimize 
+        the Kullback-Leibler divergence between the joint probabilties of the low-dimensional embedding 
+        and the high-dimensional data. t-SNE has a cost function that is not convex, 
+        i.e. with different initializations we can get different results.
+        
+        Recommended to apply PCA first to reduce dimensions (to ~50) then peform TSNE on the PCA features.
+
+        Args:
+            n_components (int, optional): Number of componnents. Defaults to 2. Must be < 4. 
+            verbose (bool, optional): Print progress. Defaults to False.
+            return_features (bool, optional): Returns features. Defaults to False.
+
+        Attributes:
+            tsne_features (np.array) : tsne features shape (n_samples, n_components)
+        """
         x, y = self.check_xinterp(verbose)
         tsne = TSNE(n_components=n_components, **kwargs)
         self.tsne_features = tsne.fit_transform(y)
@@ -391,6 +386,8 @@ class spectral_features:
             scales (arr of ints, optional, default: np.arange(1,11)): _description_. Defaults to np.arange(1,11).
             wavelet (pywt.ContinuousWavelet, optional, default: 'mexh') : mother wavelet to compare spectrum to
             verbose (bool, default False) : print progress
+            return_features (bool, default False) : return features. Returns coefs raveled to len(widths) * len(intensity) to give 1D array for each sample 
+                                                    returns shape (n_samples, len(widths)*len(intensity)) for SpectraScope class
         Attributes:
             coefs (2D np.array) : continuous wavlet transform of the imput signal for the given scales and wavelet. First axis corresponds to the scales,
             remaining axes match the shape of intensity
@@ -496,9 +493,6 @@ class spectral_features:
         if return_features:
             return self.fa_features
 
-    def b_splines(self):
-        pass
-
     def shapelet(self, labels=None, verbose=False, return_features=False, **kwargs):
         """
         Transforms a data set to identify shapelets. Only works for classification?
@@ -509,6 +503,9 @@ class spectral_features:
         self.shapelet_features = st.fit_transform(X=y, y=labels, **kwargs)
         if return_features:
             return self.shapelet_features
+        
+    def b_splines(self):
+        pass
 
     def bow_features(self, **kwargs):
         bow = BagOfWords(**kwargs)
@@ -526,64 +523,9 @@ class spectral_features:
         wsl = WEASEL(**kwargs)
         pass
 
-    def ROCKET_featrues(self, **kwargs):
+    def ROCKET_features(self, **kwargs):
         rkt = ROCKET(**kwargs)
         pass
-
-    ### Plotting functions for app
-    ### May fail with current new update
-
-    # def plot_gaussian_peaks(self, ax=None, verbose=False, **kwargs):
-
-    #     x, y = self.check_xinterp(verbose)
-
-    #     assert hasattr(
-    #         self, "peak_features"
-    #     ), "need to create gaussian peak features first"
-
-    #     ax.plot(
-    #         x,
-    #         func_unfix_width_reg(x, *self.peak_features),
-    #         label="Reconstructed spectrum",
-    #     )
-    #     for i in range(0, len(self.peak_features), 3):
-    #         ctr = self.peak_features[i]
-    #         amp = self.peak_features[i + 1]
-    #         wid = self.peak_features[i + 2]
-    #         yfit = amp * np.exp(-((x - ctr) ** 2 / (2 * (wid / 2.355) ** 2)))
-    #         ax.plot(x, yfit, linestyle="-.", color="grey", **kwargs)
-
-    #     fitted = np.array(fitted).ravel()
-    #     return np.arange(len(fitted)), fitted
-
-    # def plot_cwt(self, ax=None, verbose=False, **kwargs):
-    #     x, _ = self.check_xinterp(verbose)
-
-    #     assert hasattr(self, "cwt_frequencies"), "need to create cwt features first"
-    #     if ax is not None:
-    #         ax.pcolormesh(x, self.cwt_frequencies, self.cwt_coefs, **kwargs)
-    #     else:
-    #         return self.cwt_frequencies, self.cwt_coefs
-
-    # def plot_cdf(self, ax=None, verbose=False, **kwargs):
-    #     x, _ = self.check_xinterp(verbose)
-    #     assert hasattr(self, "cdf_features"), "need to create cdf features first"
-
-    #     plotter = plot_spectral_features(self.cdf_features.ravel(), xaxis=x, ax=ax, **kwargs)
-    #     if not ax:
-    #         plot_x, plot_y = plotter.get_xy()
-    #         return plot_x, plot_y
-
-    # def plot_polynomial_featuresall(self, ax=None, verbose=False, **kwargs):
-    #     _, _ = self.check_xinterp(verbose)
-
-    #     assert hasattr(self, "polyfeatures_all"), "need to create poly features first"
-
-    #     x = np.arange(len(self.polyfeatures_all))
-    #     plotter = plot_spectral_features(self.polyfeatures_all.ravel(), ax=ax, **kwargs)
-    #     if not ax:
-    #         plot_x, plot_y = plotter.get_xy()
-    #         return plot_x[:-1], plot_y[:-1]
 
     def check_xinterp(self, verbose=False):
         if hasattr(self, "xinterp") == False:
@@ -597,3 +539,41 @@ class spectral_features:
             x = self.xinterp
             y = self.yinterp
         return x, y
+    
+    
+
+def degree_based_features(
+    X, degree, exclude_features: list[str], input_labels: list[str]
+):
+    """
+    Function to extract features from the data
+    :param input:
+    :param feature_types:
+    :return:
+    """
+
+    # TODO implement degree >=3
+    # TODO make dataframe implementation w/ labels
+    new_features = []
+    if degree >= 1:
+        for x in X:
+
+            new_features.append(x)
+            new_features.append(np.log(x))
+            new_features.append(np.sqrt(x))
+            new_features.append(1 / x)
+
+    if degree >= 2:
+
+        for x in X:
+            new_features.append(x * x)
+            new_features.append(np.log(x) ** 2)
+            new_features.append(np.sqrt(x) ** 3)
+            new_features.append(1 / x**2)
+            new_features.append(np.log(x) / x)
+
+        # Loop through pairs of values in X
+        for xi, xj in combinations(X, 2):
+            new_features.append(xi * xj)
+
+    return new_features
