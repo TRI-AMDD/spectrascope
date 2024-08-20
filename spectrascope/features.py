@@ -24,18 +24,41 @@ class spectral_features:
     Current features developed for spectral data, but could be applied to any 1D data. 
     Every feature generation method assumes you want to perform on the interpolated spectra, so 
     looks for interpolated data before performing operations on the original data.
+    Most featurizer functions are vectorized and can accept multiple samples at once.  
     
-    Attributes:
-        energies (np.array): Energy values / x-axis. 
-        intensities (np.array): Intensity values / y-axis. 
-
     Methods:
-        pointwise_features(xrange): Interpolates energies and intensities onto evenly spaced points.
-        generate_bins(N: int): Generates N bins even in energy for polynomial featurization
-        polynomial_featuresN(N: int): Performs polynomial fitting on N energy equivalent sections.
-        polynomial_featuresall(Narr: np.array = np.array([4,5,10,20])): Performs polynomial fitting on a range of N energy equivalent sections.
+
+        general features: 
+            pointwise_features(xrange): Interpolates energies and intensities onto evenly spaced points.
+            polynomial_featuresN(N: int): Performs polynomial fitting on N energy equivalent sections.
+            polynomial_featuresall(Narr: np.array = np.array([4,5,10,20])): Performs polynomial fitting on a range of N energy equivalent sections.
+            uneven_features : Polynomial fitting on arbitrary ranges with different polynomials 
+            cdf: Cumulative distribution function
+            gaussian_peaks: Fit n gaussians to intensity
+            gaussian_filter_features: Gaussian filter convolution 
+            fft_features: Fast fourier transform
+            cwt: Continuous wavelet transform
+            
+        clustering features: 
+            pca: principle component analysis
+            tsne: t-stochastic neighbor embedding
+            featureagg: feature agglomeration clustering 
+            gaussian_mixture_features: not implemented yet 
+
+        time-series features:
+            shapelet: not implemented yet
+            b_splines: not implemented yet
+            bop_features: not implemented yet
+            boss_features: not implemented yet
+            bow_features: not implemented yet
+            ROCKET_features: not implemented yet
+            WEASEL_features: not implemented yet
+            
+        helper functions:
+            generate_bins(N: int): Generates N bins even in energy for polynomial featurization
+            check_xinterp(verbose: bool = False): Checks if interpolated data exists, returns interpolated data if it does, otherwise interpolates data if yes, else returns raw data. 
+
         Used by SpectraScope main class to generate features on datasets. 
-        
     """
 
     def __init__(self, energies: np.array, intensities: np.array):
@@ -43,8 +66,8 @@ class spectral_features:
         Initializes a new instance of the Spectral Features class.
 
         Args:
-            energies (np.array): x axis (energy, time)
-            intensities (np.array): y axis (intensity, current, etc)
+            energies (np.array, (n_features,)): x axis (energy, time)
+            intensities (np.array, (n_samples, n_features)): y axis (intensity, current, etc)
         """
         self.energies = np.array(energies)
         self.intensities = np.array(intensities)
@@ -408,11 +431,15 @@ class spectral_features:
 
     def gaussian_peaks(self, num_peaks=20, verbose=False, return_features=True):
         """
-        Fit {num_peaks} gaussians to intensity
-
+        Fit n=num_peaks gaussians to intensity
+        Not vectorized yet. 
+        
         Args:
             num_peaks (int, default 20): Number of gaussians to fit
             verbose (bool, default False): print progress
+            return_features (bool, default False): return features 
+        Attributes: 
+            peak_features (np.array): peak features. length = num_peaks * 3
         """
         self.peak_features = np.array([])
         x, y = self.check_xinterp(verbose)
@@ -433,12 +460,17 @@ class spectral_features:
             self.peak_features = np.append(self.peak_features, popt)
 
         if return_features:
-            return popt
+            return self.peak_features
 
     def fft_features(self, return_features: bool = False, **kwargs):
         """
-        FFT Spectra and return positive real FT values
+        FFT Spectra and return positive real FFT values 
         Args:
+        
+        Attributes: 
+            fft_feat (np.array): fft features. shape (n_samples, n_features/2)
+            fft_freq (np.array): fft frequencies. shape (n_features/2,)
+        
         """
         if hasattr(self, "xinterp") == False:
             if "xrange" not in kwargs:
