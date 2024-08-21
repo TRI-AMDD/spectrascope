@@ -30,4 +30,4 @@ streamlit run home.py
 ```
 
 ## Docs 
-The [docs](docs) contain further information on the details of spectrascope. 
+The [docs](/html/spectrascope) contain further information on the details of spectrascope. 
