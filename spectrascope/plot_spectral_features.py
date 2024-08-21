@@ -9,6 +9,7 @@ import matplotlib.cm as cm
 
 
 class ss_plotting:
+    """Base class for plotting spectral features."""
     def __init__(
         self,
         xaxis=None,
@@ -20,7 +21,28 @@ class ss_plotting:
         row=1,
         col=1,
     ) -> None:
+        """
+        _summary_
 
+        Parameters
+        ----------
+        xaxis : _type_, optional
+            _description_, by default None
+        xaxis_label : str, optional
+            _description_, by default ""
+        yaxis_label : str, optional
+            _description_, by default ""
+        twoD : bool, optional
+            _description_, by default False
+        name : str, optional
+            _description_, by default ""
+        fig : _type_, optional
+            _description_, by default None
+        row : int, optional
+            _description_, by default 1
+        col : int, optional
+            _description_, by default 1
+        """
         self.xaxis_label = xaxis_label
         self.yaxis_label = yaxis_label
         self.fig = fig
@@ -33,7 +55,18 @@ class ss_plotting:
 
 
 class plot_spectral_features(ss_plotting):
+    """Plotting class for spectral features.
+    
+    """
     def __init__(self, arr, **kwargs) -> None:
+        """
+        _summary_
+
+        Parameters
+        ----------
+        arr : _type_
+            _description_
+        """
         super().__init__(**kwargs)
 
         self.feature = arr
@@ -41,9 +74,21 @@ class plot_spectral_features(ss_plotting):
             self.xaxis = np.arange(len(self.feature))
 
     def get_xy(self):
+        """_summary_
+
+        Returns
+        -------
+        self.xaxis : (array-like)
+            xaxis values 
+        self.feature : (array-like)
+            feature values
+        """
+        
         return self.xaxis, self.feature
 
     def plot_raw_spec(self):
+        """_summary_
+        """
         assert self.fig is not None, "please provide a figure for plotting"
         for yi in self.feature:
             self.fig.add_trace(
@@ -71,9 +116,14 @@ class plot_spectral_features(ss_plotting):
         self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
 
     def plot(self):
+        """Not implemented yet.
+        """
+        
         pass
 
     def plot_pointwise_features(self, **kwargs):
+        """_summary_
+        """
         if self.fig is None:
             pass
         else:
@@ -90,6 +140,13 @@ class plot_spectral_features(ss_plotting):
             )
 
     def plot_gaussian_peaks(self, **kwargs):
+        """Summary of the method.
+
+        Returns
+        -------
+        _type_
+            Description of the return value.
+        """
         if self.fig is None:
             pass
         else:
@@ -110,6 +167,13 @@ class plot_spectral_features(ss_plotting):
         return np.arange(len(fitted)), fitted
 
     def plot_cwt(self, **kwargs):
+        """Summary of the method.
+
+        Returns
+        -------
+        _type_
+            Description of the return value.
+        """
         widths = len(self.feature) / len(self.xaxis)
         widths = int(widths)
         temp = self.feature.reshape(widths, len(self.xaxis))
@@ -126,7 +190,13 @@ class plot_spectral_features(ss_plotting):
             )
 
     def plot_cdf(self, **kwargs):
+        """Summary of the method.
 
+        Returns
+        -------
+        _type_
+            Description of the return value.
+        """
         if self.fig is None:
             plot_x, plot_y = self.get_xy()
             return plot_x, plot_y
@@ -144,6 +214,13 @@ class plot_spectral_features(ss_plotting):
             )
 
     def plot_polynomial_featuresall(self, **kwargs):
+        """Summary of the method.
+
+        Returns
+        -------
+        _type_
+            Description of the return value.
+        """
         self.xaxis = np.arange(len(self.feature))
         if self.fig is None:
             plot_x, plot_y = self.get_xy()
@@ -162,6 +239,9 @@ class plot_spectral_features(ss_plotting):
             )
 
     def plot_pca(self, c=(0, 1), **kwargs):
+        """Summary of the method.
+
+        """
         c1, c2 = c
         if self.fig is None:
             pass
@@ -179,13 +259,23 @@ class plot_spectral_features(ss_plotting):
             )
 
     def plot_featureagg(self, c=(0, 1), **kwargs):
+        """Summary of the method.
+
+        """
         self.plot_pca(c, **kwargs)
 
     def plot_tsne(self, c=(0, 1), **kwargs):
+        """Summary of the method.
+
+        """
         self.plot_pca(c, **kwargs)
 
     def plot_fft_features(self, **kwargs):
-        "needs original xaxis"
+        """Summary of the method.
+        
+        Needs original xaxis
+
+        """
         from scipy.fft import fftfreq
 
         N = len(self.xaxis)
@@ -210,6 +300,10 @@ class plot_spectral_features(ss_plotting):
 
 
 class plot_model(ss_plotting):
+    """Plotting class for model results.
+    
+    """
+    
     def __init__(
         self,
         model=None,
@@ -220,6 +314,24 @@ class plot_model(ss_plotting):
         plot_importances=False,
         **kwargs,
     ) -> None:
+        """
+        Summary of the method.
+
+        Parameters
+        ----------
+        model : _type_, optional
+            Description of the model parameter. Defaults to None.
+        selected_features : _type_, optional
+            Description of the selected_features parameter. Defaults to None.
+        raw : _type_, optional
+            Description of the raw parameter. Defaults to None.
+        cmap_name : str, optional
+            Description of the cmap_name parameter. Defaults to "viridis".
+        selected_vals : _type_, optional
+            Description of the selected_vals parameter. Defaults to None.
+        plot_importances : bool, optional
+            Description of the plot_importances parameter. Defaults to False.
+        """
         super().__init__(**kwargs)
         self.model = model
 
@@ -241,7 +353,8 @@ class plot_model(ss_plotting):
             self.colors.append(rgb2hex(rgba))
 
     def plot_polynomial_featuresall(self):
-
+        """_summary_
+        """
         self.fig.add_trace(
             go.Scatter(x=self.xaxis, y=self.raw), row=self.row, col=self.col
         )
@@ -282,7 +395,8 @@ class plot_model(ss_plotting):
         self.fig.update_yaxes(title_text=self.yaxis_label)
 
     def plot_pointwise_features(self, **kwargs):
-
+        """_summary_
+        """
         self.fig.add_trace(
             go.Scatter(x=self.xaxis, y=self.raw, showlegend=False, name="Raw Data"),
             row=self.row,
@@ -305,10 +419,17 @@ class plot_model(ss_plotting):
         self.fig.layout.yaxis2.update(showticklabels=False)
 
     def plot_cwt(self, wavelet="mexh"):
+        """Not implemented yet. 
+
+        Args:
+            wavelet (str, optional): _description_. Defaults to "mexh".
+        """
         pass
 
     def plot_cdf(self, **kwargs):
-
+        """Summary of the method.
+        
+        """
         self.fig.add_trace(
             go.Scatter(x=self.xaxis, y=self.raw, showlegend=False),
             row=self.row,
@@ -329,6 +450,9 @@ class plot_model(ss_plotting):
         self.fig.update_yaxes(title_text=self.yaxis_label)
 
     def plot_featureagg(self, **kwargs):
+        """_summary_
+        """
+        
         c = self.selected_features[:2]
         arr = kwargs["feat"]
         kwargs.pop("feat")
@@ -344,6 +468,9 @@ class plot_model(ss_plotting):
         featureagg_plotter.plot_featureagg(c, **kwargs)
 
     def plot_pca(self, **kwargs):
+        """_summary_
+        """
+        
         arr = kwargs["feat"]
         kwargs.pop("feat")
         c = self.selected_features[:2]
@@ -359,6 +486,9 @@ class plot_model(ss_plotting):
         pca_plotter.plot_pca(c, **kwargs)
 
     def plot_tsne(self, **kwargs):
+        """_summary_
+        """
+        
         arr = kwargs["feat"]
         kwargs.pop("feat")
         c = self.selected_features[:2]
@@ -374,12 +504,21 @@ class plot_model(ss_plotting):
         tsne_plotter.plot_tsne(c, **kwargs)
 
     def plot_fft_features(self):
+        """Not implemented yet.
+        
+        """
         pass
 
     def plot_gaussian_peaks(self):
+        """Not implemented yet.
+        
+        """
         pass
 
     def plot_lines(self, **kwargs):
+        """_summary_
+        """
+        
         kwargs = {
             "marker_size": 15,
             "marker_symbol": "line-ns",
@@ -408,6 +547,7 @@ class plot_model(ss_plotting):
             )
         # self.fig.update_layout(coloraxis_colorbar=dict(title="Coefficient or Importance"))
         self.fig.update_layout(hovermode="x")
+        
         # self.fig.layout.yaxis2.update(showticklabels=False)
 
         # customdata=self.xaxis[self.selected_features], hovertemplate="x:%{customdata[0]}"
