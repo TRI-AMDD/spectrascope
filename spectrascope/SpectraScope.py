@@ -42,6 +42,8 @@ class SpectraScope:
     ) -> None:
         """
         Can load X, y via an array or file path. If file path, will try to infer file type.
+
+        Data will be referred to as "spectrums" but can be any 1D array like data.
         
         Args:
             X (arr, optional): Input X. Defaults to None.
@@ -138,18 +140,46 @@ class SpectraScope:
             )
         return data.to_numpy()
 
-    def add_x_axis(self, specname, value):
+    def add_x_axis(self, specname:str, value:np.array):
+        """Add x-axis values for a specific spectrum.
+
+        Args:
+            specname (str): spectrum to associate x-axis with.
+            value (np.array): x-axis values.
+        """
         setattr(self, specname + "_xaxis", value)
 
-    def add_x_label(self, specname, value):
+    def add_x_label(self, specname:str, value:str):
+        """Add x-axis label for a specific spectrum.
+
+        Args:
+            specname (str): spectrum to associate x-axis label with.
+            value (str): x-axis label.
+        """
         setattr(self, specname + "_labelx", value)
 
-    def add_y_label(self, specname, value):
+    def add_y_label(self, specname:str, value:str):
+        """Add y-axis label for a specific spectrum.
+
+        Args:
+            specname (str): spectrum to associate y-axis label with.
+            value (str): y-axis label.
+        """
         setattr(self, specname + "_labely", value)
 
     def scale_X(self, X):
-        scaled_x = StandardScaler().fit_transform(X)
-        return scaled_x
+        """Apply sklearn StandardScaler to the input data.
+        
+        Standardize features by removing the mean and scaling to unit variance. 
+
+        Args:
+            X (np.array): X data to scale.
+
+        Returns:
+            scaled_X (np.array): scaled X.
+        """
+        scaled_X = StandardScaler().fit_transform(X)
+        return scaled_X
 
     def add_spectral_feature(
         self, specname, feat, xaxis=None, additional_naming="", **kwargs
