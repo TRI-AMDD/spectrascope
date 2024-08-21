@@ -1,0 +1,898 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.1">
+<title>spectrascope.plot_spectral_features API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>spectrascope.plot_spectral_features</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="spectrascope.plot_spectral_features.PlotModel"><code class="flex name class">
+<span>class <span class="ident">PlotModel</span></span>
+<span>(</span><span>model=None, selected_features=None, raw=None, cmap_name='viridis', selected_vals=None, plot_importances=False, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plotting class for model results.</p>
+<p>Summary of the method.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>model</code></strong> :&ensp;<code>_type_</code>, optional</dt>
+<dd>Description of the model parameter. Defaults to None.</dd>
+<dt><strong><code>selected_features</code></strong> :&ensp;<code>_type_</code>, optional</dt>
+<dd>Description of the selected_features parameter. Defaults to None.</dd>
+<dt><strong><code>raw</code></strong> :&ensp;<code>_type_</code>, optional</dt>
+<dd>Description of the raw parameter. Defaults to None.</dd>
+<dt><strong><code>cmap_name</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Description of the cmap_name parameter. Defaults to "viridis".</dd>
+<dt><strong><code>selected_vals</code></strong> :&ensp;<code>_type_</code>, optional</dt>
+<dd>Description of the selected_vals parameter. Defaults to None.</dd>
+<dt><strong><code>plot_importances</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>Description of the plot_importances parameter. Defaults to False.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PlotModel(SpectraScopePlotting):
+    &#34;&#34;&#34;Plotting class for model results.
+    
+    &#34;&#34;&#34;
+    
+    def __init__(
+        self,
+        model=None,
+        selected_features=None,
+        raw=None,
+        cmap_name=&#34;viridis&#34;,
+        selected_vals=None,
+        plot_importances=False,
+        **kwargs,
+    ) -&gt; None:
+        &#34;&#34;&#34;
+        Summary of the method.
+
+        Parameters
+        ----------
+        model : _type_, optional
+            Description of the model parameter. Defaults to None.
+        selected_features : _type_, optional
+            Description of the selected_features parameter. Defaults to None.
+        raw : _type_, optional
+            Description of the raw parameter. Defaults to None.
+        cmap_name : str, optional
+            Description of the cmap_name parameter. Defaults to &#34;viridis&#34;.
+        selected_vals : _type_, optional
+            Description of the selected_vals parameter. Defaults to None.
+        plot_importances : bool, optional
+            Description of the plot_importances parameter. Defaults to False.
+        &#34;&#34;&#34;
+        super().__init__(**kwargs)
+        self.model = model
+
+        self.selected_features = selected_features
+        self.plot_importances = plot_importances
+
+        self.raw = raw
+        if selected_vals is None:
+            self.selected_vals = np.zeros_like(self.selected_features)
+            self.show_scale = False
+        else:
+            self.selected_vals = selected_vals
+            self.show_scale = True
+        cmap = cm.get_cmap(cmap_name, len(self.selected_features))  # PiYG
+
+        self.colors = []
+        for i in range(cmap.N):
+            rgba = cmap(i)
+            self.colors.append(rgb2hex(rgba))
+
+    def plot_polynomial_featuresall(self):
+        &#34;&#34;&#34;_summary_
+        &#34;&#34;&#34;
+        self.fig.add_trace(
+            go.Scatter(x=self.xaxis, y=self.raw), row=self.row, col=self.col
+        )
+        for selected_id in self.selected_features:
+
+            if selected_id &lt; 16:
+                poly_label = &#34;const&#34;
+            elif selected_id &gt;= 16 and selected_id &lt; 36:
+                selected_id -= 16
+                poly_label = &#34;line&#34;
+            elif selected_id &gt;= 36 and selected_id &lt; 76:
+                selected_id -= 36
+                poly_label = &#34;par&#34;
+            elif selected_id &gt;= 76:
+                selected_id -= 76
+                poly_label = &#34;cubic&#34;
+
+            center = self.xaxis[selected_id]
+            height = self.raw[selected_id]
+            im = Image.open(f&#34;../app/static/{poly_label}.png&#34;)
+
+            self.fig.add_layout_image(
+                dict(
+                    source=im,
+                    xref=&#34;x&#34;,
+                    yref=&#34;y&#34;,
+                    xanchor=&#34;right&#34;,
+                    x=center,
+                    y=height,
+                    sizex=2,
+                    sizey=2,
+                    sizing=&#34;contain&#34;,
+                    opacity=1,
+                    layer=&#34;below&#34;,
+                )
+            )
+        self.fig.update_xaxes(title_text=self.xaxis_label)
+        self.fig.update_yaxes(title_text=self.yaxis_label)
+
+    def plot_pointwise_features(self, **kwargs):
+        &#34;&#34;&#34;_summary_
+        &#34;&#34;&#34;
+        self.fig.add_trace(
+            go.Scatter(x=self.xaxis, y=self.raw, showlegend=False, name=&#34;Raw Data&#34;),
+            row=self.row,
+            col=self.col,
+        )
+        if self.plot_importances:
+            self.fig.add_trace(
+                go.Scatter(
+                    x=self.xaxis, y=self.selected_features, name=&#34;Feature Importances&#34;
+                ),
+                secondary_y=True,
+                row=self.row,
+                col=self.col,
+            )
+        else:
+            self.plot_lines()
+        self.fig.update_xaxes(title_text=self.xaxis_label)
+        self.fig.update_yaxes(title_text=self.yaxis_label)
+
+        self.fig.layout.yaxis2.update(showticklabels=False)
+
+    def plot_cwt(self, wavelet=&#34;mexh&#34;):
+        &#34;&#34;&#34;Not implemented yet. 
+
+        Args:
+            wavelet (str, optional): _description_. Defaults to &#34;mexh&#34;.
+        &#34;&#34;&#34;
+        pass
+
+    def plot_cdf(self, **kwargs):
+        &#34;&#34;&#34;Summary of the method.
+        
+        &#34;&#34;&#34;
+        self.fig.add_trace(
+            go.Scatter(x=self.xaxis, y=self.raw, showlegend=False),
+            row=self.row,
+            col=self.col,
+        )
+        if self.plot_importances:
+            self.fig.add_trace(
+                go.Scatter(
+                    x=self.xaxis, y=self.selected_features, name=&#34;Feature Importances&#34;
+                ),
+                secondary_y=True,
+                row=self.row,
+                col=self.col,
+            )
+        else:
+            self.plot_lines()
+        self.fig.update_xaxes(title_text=self.xaxis_label)
+        self.fig.update_yaxes(title_text=self.yaxis_label)
+
+    def plot_featureagg(self, **kwargs):
+        &#34;&#34;&#34;_summary_
+        &#34;&#34;&#34;
+        
+        c = self.selected_features[:2]
+        arr = kwargs[&#34;feat&#34;]
+        kwargs.pop(&#34;feat&#34;)
+        featureagg_plotter = PlotSpectralFeatures(
+            arr,
+            fig=self.fig,
+            xaxis=self.xaxis,
+            xaxis_label=self.xaxis_label,
+            yaxis_label=self.yaxis_label,
+            row=self.row,
+            col=self.col,
+        )
+        featureagg_plotter.plot_featureagg(c, **kwargs)
+
+    def plot_pca(self, **kwargs):
+        &#34;&#34;&#34;_summary_
+        &#34;&#34;&#34;
+        
+        arr = kwargs[&#34;feat&#34;]
+        kwargs.pop(&#34;feat&#34;)
+        c = self.selected_features[:2]
+        pca_plotter = PlotSpectralFeatures(
+            arr,
+            fig=self.fig,
+            xaxis=self.xaxis,
+            xaxis_label=self.xaxis_label,
+            yaxis_label=self.yaxis_label,
+            row=self.row,
+            col=self.col,
+        )
+        pca_plotter.plot_pca(c, **kwargs)
+
+    def plot_tsne(self, **kwargs):
+        &#34;&#34;&#34;_summary_
+        &#34;&#34;&#34;
+        
+        arr = kwargs[&#34;feat&#34;]
+        kwargs.pop(&#34;feat&#34;)
+        c = self.selected_features[:2]
+        tsne_plotter = plot_spectral_features(
+            arr,
+            fig=self.fig,
+            xaxis=self.xaxis,
+            xaxis_label=self.xaxis_label,
+            yaxis_label=self.yaxis_label,
+            row=self.row,
+            col=self.col,
+        )
+        tsne_plotter.plot_tsne(c, **kwargs)
+
+    def plot_fft_features(self):
+        &#34;&#34;&#34;Not implemented yet.
+        
+        &#34;&#34;&#34;
+        pass
+
+    def plot_gaussian_peaks(self):
+        &#34;&#34;&#34;Not implemented yet.
+        
+        &#34;&#34;&#34;
+        pass
+
+    def plot_lines(self, **kwargs):
+        &#34;&#34;&#34;_summary_
+        &#34;&#34;&#34;
+        
+        kwargs = {
+            &#34;marker_size&#34;: 15,
+            &#34;marker_symbol&#34;: &#34;line-ns&#34;,
+            &#34;marker_line_width&#34;: 2,
+            &#34;mode&#34;: &#34;markers&#34;,
+            &#34;hoverinfo&#34;: &#34;none&#34;,
+            &#34;marker&#34;: dict(
+                color=self.selected_vals,
+                colorscale=&#34;Viridis&#34;,
+                showscale=self.show_scale,
+                line=dict(width=2, color=self.selected_vals, colorscale=&#34;Viridis&#34;),
+            ),
+        }
+        for i in np.arange(0, np.max(self.raw), 0.1):
+            self.fig.add_trace(
+                go.Scatter(
+                    x=self.xaxis[self.selected_features],
+                    y=i * np.ones_like(self.selected_features),
+                    showlegend=False,
+                    name=&#34;Selected Features&#34;,
+                    **kwargs,
+                ),
+                row=1,
+                col=1,
+                secondary_y=True,
+            )
+        # self.fig.update_layout(coloraxis_colorbar=dict(title=&#34;Coefficient or Importance&#34;))
+        self.fig.update_layout(hovermode=&#34;x&#34;)
+        
+        # self.fig.layout.yaxis2.update(showticklabels=False)
+
+        # customdata=self.xaxis[self.selected_features], hovertemplate=&#34;x:%{customdata[0]}&#34;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="spectrascope.plot_spectral_features.SpectraScopePlotting" href="#spectrascope.plot_spectral_features.SpectraScopePlotting">SpectraScopePlotting</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="spectrascope.plot_spectral_features.PlotModel.plot_cdf"><code class="name flex">
+<span>def <span class="ident">plot_cdf</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Summary of the method.</p></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotModel.plot_cwt"><code class="name flex">
+<span>def <span class="ident">plot_cwt</span></span>(<span>self, wavelet='mexh')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Not implemented yet. </p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>wavelet</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd><em>description</em>. Defaults to "mexh".</dd>
+</dl></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotModel.plot_featureagg"><code class="name flex">
+<span>def <span class="ident">plot_featureagg</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><em>summary</em></p></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotModel.plot_fft_features"><code class="name flex">
+<span>def <span class="ident">plot_fft_features</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Not implemented yet.</p></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotModel.plot_gaussian_peaks"><code class="name flex">
+<span>def <span class="ident">plot_gaussian_peaks</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Not implemented yet.</p></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotModel.plot_lines"><code class="name flex">
+<span>def <span class="ident">plot_lines</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><em>summary</em></p></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotModel.plot_pca"><code class="name flex">
+<span>def <span class="ident">plot_pca</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><em>summary</em></p></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotModel.plot_pointwise_features"><code class="name flex">
+<span>def <span class="ident">plot_pointwise_features</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><em>summary</em></p></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotModel.plot_polynomial_featuresall"><code class="name flex">
+<span>def <span class="ident">plot_polynomial_featuresall</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><em>summary</em></p></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotModel.plot_tsne"><code class="name flex">
+<span>def <span class="ident">plot_tsne</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><em>summary</em></p></div>
+</dd>
+</dl>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotSpectralFeatures"><code class="flex name class">
+<span>class <span class="ident">PlotSpectralFeatures</span></span>
+<span>(</span><span>arr, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Plotting class for spectral features.</p>
+<p><em>summary</em></p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>arr</code></strong> :&ensp;<code>_type_</code></dt>
+<dd><em>description</em></dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class PlotSpectralFeatures(SpectraScopePlotting):
+    &#34;&#34;&#34;Plotting class for spectral features.
+    
+    &#34;&#34;&#34;
+    def __init__(self, arr, **kwargs) -&gt; None:
+        &#34;&#34;&#34;
+        _summary_
+
+        Parameters
+        ----------
+        arr : _type_
+            _description_
+        &#34;&#34;&#34;
+        super().__init__(**kwargs)
+
+        self.feature = arr
+        if self.xaxis is None:
+            self.xaxis = np.arange(len(self.feature))
+
+    def get_xy(self):
+        &#34;&#34;&#34;_summary_
+
+        Returns
+        -------
+        self.xaxis : (array-like)
+            xaxis values 
+        self.feature : (array-like)
+            feature values
+        &#34;&#34;&#34;
+        
+        return self.xaxis, self.feature
+
+    def plot_raw_spec(self):
+        &#34;&#34;&#34;_summary_
+        &#34;&#34;&#34;
+        assert self.fig is not None, &#34;please provide a figure for plotting&#34;
+        for yi in self.feature:
+            self.fig.add_trace(
+                go.Scatter(
+                    x=self.xaxis,
+                    y=yi,
+                    mode=&#34;lines&#34;,
+                    opacity=0.1,
+                    showlegend=False,
+                    line=dict(color=&#34;#7f7f7f&#34;),
+                ),
+                row=self.row,
+                col=self.col,
+            )
+
+        self.fig.add_trace(
+            go.Scatter(
+                x=self.xaxis, y=self.feature.mean(axis=0), mode=&#34;lines&#34;, name=&#34;average&#34;
+            ),
+            row=self.row,
+            col=self.col,
+        )
+
+        self.fig.update_xaxes(title_text=self.xaxis_label, row=self.row, col=self.col)
+        self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
+
+    def plot(self):
+        &#34;&#34;&#34;Not implemented yet.
+        &#34;&#34;&#34;
+        
+        pass
+
+    def plot_pointwise_features(self, **kwargs):
+        &#34;&#34;&#34;_summary_
+        &#34;&#34;&#34;
+        if self.fig is None:
+            pass
+        else:
+            self.fig.add_trace(
+                go.Scatter(x=self.xaxis, y=self.feature, **kwargs),
+                row=self.row,
+                col=self.col,
+            )
+            self.fig.update_xaxes(
+                title_text=self.xaxis_label, row=self.row, col=self.col
+            )
+            self.fig.update_yaxes(
+                title_text=self.yaxis_label, row=self.row, col=self.col
+            )
+
+    def plot_gaussian_peaks(self, **kwargs):
+        &#34;&#34;&#34;Summary of the method.
+
+        Returns
+        -------
+        _type_
+            Description of the return value.
+        &#34;&#34;&#34;
+        if self.fig is None:
+            pass
+        else:
+            pass
+        self.fig.add_trace(
+            self.xaxis,
+            func_unfix_width_reg(x, *self.feature),
+            label=&#34;Reconstructed spectrum&#34;,
+        )
+        for i in range(0, len(self.feature), 3):
+            ctr = self.feature[i]
+            amp = self.feature[i + 1]
+            wid = self.feature[i + 2]
+            yfit = amp * np.exp(-((x - ctr) ** 2 / (2 * (wid / 2.355) ** 2)))
+            self.fig.add_trace(self.xaxis, yfit, linestyle=&#34;-.&#34;, color=&#34;grey&#34;, **kwargs)
+
+        fitted = np.array(fitted).ravel()
+        return np.arange(len(fitted)), fitted
+
+    def plot_cwt(self, **kwargs):
+        &#34;&#34;&#34;Summary of the method.
+
+        Returns
+        -------
+        _type_
+            Description of the return value.
+        &#34;&#34;&#34;
+        widths = len(self.feature) / len(self.xaxis)
+        widths = int(widths)
+        temp = self.feature.reshape(widths, len(self.xaxis))
+
+        if self.fig is None:
+            return temp
+        else:
+            self.fig.add_trace(go.Heatmap(z=temp, **kwargs), row=self.row, col=self.col)
+            self.fig.update_xaxes(
+                title_text=self.xaxis_label, row=self.row, col=self.col
+            )
+            self.fig.update_yaxes(
+                title_text=self.yaxis_label, row=self.row, col=self.col
+            )
+
+    def plot_cdf(self, **kwargs):
+        &#34;&#34;&#34;Summary of the method.
+
+        Returns
+        -------
+        _type_
+            Description of the return value.
+        &#34;&#34;&#34;
+        if self.fig is None:
+            plot_x, plot_y = self.get_xy()
+            return plot_x, plot_y
+        else:
+            self.fig.add_trace(
+                go.Scatter(x=self.xaxis, y=self.feature, **kwargs),
+                row=self.row,
+                col=self.col,
+            )
+            self.fig.update_xaxes(
+                title_text=self.xaxis_label, row=self.row, col=self.col
+            )
+            self.fig.update_yaxes(
+                title_text=self.yaxis_label, row=self.row, col=self.col
+            )
+
+    def plot_polynomial_featuresall(self, **kwargs):
+        &#34;&#34;&#34;Summary of the method.
+
+        Returns
+        -------
+        _type_
+            Description of the return value.
+        &#34;&#34;&#34;
+        self.xaxis = np.arange(len(self.feature))
+        if self.fig is None:
+            plot_x, plot_y = self.get_xy()
+            return plot_x[:-1], plot_y[:-1]
+        else:
+            self.fig.add_trace(
+                go.Scatter(x=self.xaxis[:-1], y=self.feature[:-1], **kwargs),
+                row=self.row,
+                col=self.col,
+            )
+            self.fig.update_xaxes(
+                title_text=self.xaxis_label, row=self.row, col=self.col
+            )
+            self.fig.update_yaxes(
+                title_text=self.yaxis_label, row=self.row, col=self.col
+            )
+
+    def plot_pca(self, c=(0, 1), **kwargs):
+        &#34;&#34;&#34;Summary of the method.
+
+        &#34;&#34;&#34;
+        c1, c2 = c
+        if self.fig is None:
+            pass
+        else:
+            self.fig.add_trace(
+                go.Scatter(x=self.feature[:, c1], y=self.feature[:, c2], **kwargs),
+                row=self.row,
+                col=self.col,
+            )
+            self.fig.update_xaxes(
+                title_text=self.xaxis_label, row=self.row, col=self.col
+            )
+            self.fig.update_yaxes(
+                title_text=self.yaxis_label, row=self.row, col=self.col
+            )
+
+    def plot_featureagg(self, c=(0, 1), **kwargs):
+        &#34;&#34;&#34;Summary of the method.
+
+        &#34;&#34;&#34;
+        self.plot_pca(c, **kwargs)
+
+    def plot_tsne(self, c=(0, 1), **kwargs):
+        &#34;&#34;&#34;Summary of the method.
+
+        &#34;&#34;&#34;
+        self.plot_pca(c, **kwargs)
+
+    def plot_fft_features(self, **kwargs):
+        &#34;&#34;&#34;Summary of the method.
+        
+        Needs original xaxis
+
+        &#34;&#34;&#34;
+        from scipy.fft import fftfreq
+
+        N = len(self.xaxis)
+        de = np.diff(self.xaxis)[0]
+        fft_freq = np.abs(fftfreq(N, de))[: N // 2]
+
+        self.feature = np.abs(self.feature)
+        if self.fig is None:
+            pass
+        else:
+            self.fig.add_trace(
+                go.Scatter(x=fft_freq, y=self.feature, **kwargs),
+                row=self.row,
+                col=self.col,
+            )
+            self.fig.update_xaxes(
+                title_text=self.xaxis_label, row=self.row, col=self.col
+            )
+            self.fig.update_yaxes(
+                title_text=self.yaxis_label, row=self.row, col=self.col
+            )</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="spectrascope.plot_spectral_features.SpectraScopePlotting" href="#spectrascope.plot_spectral_features.SpectraScopePlotting">SpectraScopePlotting</a></li>
+</ul>
+<h3>Methods</h3>
+<dl>
+<dt id="spectrascope.plot_spectral_features.PlotSpectralFeatures.get_xy"><code class="name flex">
+<span>def <span class="ident">get_xy</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><em>summary</em></p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>self.xaxis : (array-like)</code></dt>
+<dd>xaxis values</dd>
+<dt><code>self.feature : (array-like)</code></dt>
+<dd>feature values</dd>
+</dl></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot"><code class="name flex">
+<span>def <span class="ident">plot</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Not implemented yet.</p></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_cdf"><code class="name flex">
+<span>def <span class="ident">plot_cdf</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Summary of the method.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd>Description of the return value.</dd>
+</dl></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_cwt"><code class="name flex">
+<span>def <span class="ident">plot_cwt</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Summary of the method.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd>Description of the return value.</dd>
+</dl></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_featureagg"><code class="name flex">
+<span>def <span class="ident">plot_featureagg</span></span>(<span>self, c=(0, 1), **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Summary of the method.</p></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_fft_features"><code class="name flex">
+<span>def <span class="ident">plot_fft_features</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Summary of the method.</p>
+<p>Needs original xaxis</p></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_gaussian_peaks"><code class="name flex">
+<span>def <span class="ident">plot_gaussian_peaks</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Summary of the method.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd>Description of the return value.</dd>
+</dl></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_pca"><code class="name flex">
+<span>def <span class="ident">plot_pca</span></span>(<span>self, c=(0, 1), **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Summary of the method.</p></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_pointwise_features"><code class="name flex">
+<span>def <span class="ident">plot_pointwise_features</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><em>summary</em></p></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_polynomial_featuresall"><code class="name flex">
+<span>def <span class="ident">plot_polynomial_featuresall</span></span>(<span>self, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Summary of the method.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>_type_</code></dt>
+<dd>Description of the return value.</dd>
+</dl></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_raw_spec"><code class="name flex">
+<span>def <span class="ident">plot_raw_spec</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p><em>summary</em></p></div>
+</dd>
+<dt id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_tsne"><code class="name flex">
+<span>def <span class="ident">plot_tsne</span></span>(<span>self, c=(0, 1), **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Summary of the method.</p></div>
+</dd>
+</dl>
+</dd>
+<dt id="spectrascope.plot_spectral_features.SpectraScopePlotting"><code class="flex name class">
+<span>class <span class="ident">SpectraScopePlotting</span></span>
+<span>(</span><span>xaxis=None, xaxis_label='', yaxis_label='', twoD=False, name='', fig=None, row=1, col=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Base class for plotting spectral features.</p>
+<p><em>summary</em></p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>xaxis</code></strong> :&ensp;<code>_type_</code>, optional</dt>
+<dd><em>description</em>, by default None</dd>
+<dt><strong><code>xaxis_label</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd><em>description</em>, by default ""</dd>
+<dt><strong><code>yaxis_label</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd><em>description</em>, by default ""</dd>
+<dt><strong><code>twoD</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd><em>description</em>, by default False</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd><em>description</em>, by default ""</dd>
+<dt><strong><code>fig</code></strong> :&ensp;<code>_type_</code>, optional</dt>
+<dd><em>description</em>, by default None</dd>
+<dt><strong><code>row</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd><em>description</em>, by default 1</dd>
+<dt><strong><code>col</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd><em>description</em>, by default 1</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class SpectraScopePlotting:
+    &#34;&#34;&#34;Base class for plotting spectral features.&#34;&#34;&#34;
+    def __init__(
+        self,
+        xaxis=None,
+        xaxis_label=&#34;&#34;,
+        yaxis_label=&#34;&#34;,
+        twoD=False,
+        name=&#34;&#34;,
+        fig=None,
+        row=1,
+        col=1,
+    ) -&gt; None:
+        &#34;&#34;&#34;
+        _summary_
+
+        Parameters
+        ----------
+        xaxis : _type_, optional
+            _description_, by default None
+        xaxis_label : str, optional
+            _description_, by default &#34;&#34;
+        yaxis_label : str, optional
+            _description_, by default &#34;&#34;
+        twoD : bool, optional
+            _description_, by default False
+        name : str, optional
+            _description_, by default &#34;&#34;
+        fig : _type_, optional
+            _description_, by default None
+        row : int, optional
+            _description_, by default 1
+        col : int, optional
+            _description_, by default 1
+        &#34;&#34;&#34;
+        self.xaxis_label = xaxis_label
+        self.yaxis_label = yaxis_label
+        self.fig = fig
+        self.row = row
+        self.col = col
+        self.name = name
+        self.xaxis = xaxis
+        if twoD:
+            pass</code></pre>
+</details>
+<h3>Subclasses</h3>
+<ul class="hlist">
+<li><a title="spectrascope.plot_spectral_features.PlotModel" href="#spectrascope.plot_spectral_features.PlotModel">PlotModel</a></li>
+<li><a title="spectrascope.plot_spectral_features.PlotSpectralFeatures" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures">PlotSpectralFeatures</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="spectrascope" href="index.html">spectrascope</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="spectrascope.plot_spectral_features.PlotModel" href="#spectrascope.plot_spectral_features.PlotModel">PlotModel</a></code></h4>
+<ul class="">
+<li><code><a title="spectrascope.plot_spectral_features.PlotModel.plot_cdf" href="#spectrascope.plot_spectral_features.PlotModel.plot_cdf">plot_cdf</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotModel.plot_cwt" href="#spectrascope.plot_spectral_features.PlotModel.plot_cwt">plot_cwt</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotModel.plot_featureagg" href="#spectrascope.plot_spectral_features.PlotModel.plot_featureagg">plot_featureagg</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotModel.plot_fft_features" href="#spectrascope.plot_spectral_features.PlotModel.plot_fft_features">plot_fft_features</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotModel.plot_gaussian_peaks" href="#spectrascope.plot_spectral_features.PlotModel.plot_gaussian_peaks">plot_gaussian_peaks</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotModel.plot_lines" href="#spectrascope.plot_spectral_features.PlotModel.plot_lines">plot_lines</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotModel.plot_pca" href="#spectrascope.plot_spectral_features.PlotModel.plot_pca">plot_pca</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotModel.plot_pointwise_features" href="#spectrascope.plot_spectral_features.PlotModel.plot_pointwise_features">plot_pointwise_features</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotModel.plot_polynomial_featuresall" href="#spectrascope.plot_spectral_features.PlotModel.plot_polynomial_featuresall">plot_polynomial_featuresall</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotModel.plot_tsne" href="#spectrascope.plot_spectral_features.PlotModel.plot_tsne">plot_tsne</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="spectrascope.plot_spectral_features.PlotSpectralFeatures" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures">PlotSpectralFeatures</a></code></h4>
+<ul class="">
+<li><code><a title="spectrascope.plot_spectral_features.PlotSpectralFeatures.get_xy" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.get_xy">get_xy</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot">plot</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_cdf" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_cdf">plot_cdf</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_cwt" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_cwt">plot_cwt</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_featureagg" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_featureagg">plot_featureagg</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_fft_features" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_fft_features">plot_fft_features</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_gaussian_peaks" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_gaussian_peaks">plot_gaussian_peaks</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_pca" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_pca">plot_pca</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_pointwise_features" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_pointwise_features">plot_pointwise_features</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_polynomial_featuresall" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_polynomial_featuresall">plot_polynomial_featuresall</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_raw_spec" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_raw_spec">plot_raw_spec</a></code></li>
+<li><code><a title="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_tsne" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_tsne">plot_tsne</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="spectrascope.plot_spectral_features.SpectraScopePlotting" href="#spectrascope.plot_spectral_features.SpectraScopePlotting">SpectraScopePlotting</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.1</a>.</p>
+</footer>
+</body>
+</html>
