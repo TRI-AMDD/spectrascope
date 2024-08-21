@@ -9,9 +9,9 @@ X = X[0]
 x2 = np.linspace(4969.0, 5021.0, 200)
 
 
-def test_spectral_features_class():
+def test_SpectralFeatures_class():
     for x, y in zip([x1, x2], [y1, X]):
-        temp = spectral_features(x, y)
+        temp = SpectralFeatures(x, y)
 
         assert len(temp.energies) == temp.intensities.shape[-1]
         assert type(temp.energies) == type(temp.intensities) == np.ndarray
@@ -20,10 +20,10 @@ def test_spectral_features_class():
 def test_pointwise():
     x = np.linspace(4970, 5022, 100)
     y = np.random.randint(200, size=(100,))
-    temp = spectral_features(x, y)
+    temp = SpectralFeatures(x, y)
 
     for x, y in zip([x1, x2], [y1, X]):
-        temp = spectral_features(x, y)
+        temp = SpectralFeatures(x, y)
 
         xrange = np.linspace(4969.0, 5021.0, 200)
         assert len(temp.energies) == temp.intensities.shape[-1]
@@ -46,7 +46,7 @@ def test_pointwise():
 
 def test_polynomial():
     for x, y in zip([x1, x2], [y1, X]):
-        temp = spectral_features(x, y)
+        temp = SpectralFeatures(x, y)
 
         for N in [1, 7, 20]:
             for degree in [1, 3, 5]:
@@ -66,7 +66,7 @@ def test_polynomial():
 
 def test_bins():
     for x, y in zip([x1, x2], [y1, X]):
-        temp = spectral_features(x, y)
+        temp = SpectralFeatures(x, y)
 
         for N in [1, 5, 20]:
             temp.generate_bins(N)
@@ -85,7 +85,7 @@ def test_bins():
 
 def test_polynomial_features_all():
     for x, y in zip([x1, x2], [y1, X]):
-        temp = spectral_features(x, y)
+        temp = SpectralFeatures(x, y)
         temp.polynomial_featuresall()
         assert hasattr(temp, "polyfeatures_all")
         featuresall = getattr(temp, "polyfeatures_all")
@@ -112,7 +112,7 @@ def test_uneven():
     "print: uneven currently unsure"
     return
     x, y = np.load("test_data/test_xas.npy")
-    temp = spectral_features(x, y)
+    temp = SpectralFeatures(x, y)
 
     eV_splits = [20, 50]
     N_dict = {0: 10, 1: 2, 2: 2}
@@ -155,7 +155,7 @@ def test_uneven():
 
 def test_cdf():
     for x, y in zip([x1, x2], [y1, X]):
-        temp = spectral_features(x, y)
+        temp = SpectralFeatures(x, y)
         temp.cdf()
         assert hasattr(temp, "cdf")
         assert temp.cdf_features.shape == temp.intensities.shape
@@ -163,7 +163,7 @@ def test_cdf():
 
 def test_cwt():
     for x, y in zip([x1, x2], [y1, X]):
-        temp = spectral_features(x, y)
+        temp = SpectralFeatures(x, y)
         temp.cwt()
         assert hasattr(temp, "cwt_coefs")
         assert hasattr(temp, "cwt_frequencies")
@@ -183,7 +183,7 @@ def test_cwt():
 
 def test_peak_fitting():
     for x, y in zip([x1], [y1]):
-        temp = spectral_features(x, y)
+        temp = SpectralFeatures(x, y)
 
         temp.gaussian_peaks()
         assert hasattr(temp, "peak_features")
@@ -196,7 +196,7 @@ def test_peak_fitting():
 
 def test_fft():
     for x, y in zip([x1, x2], [y1, X]):
-        temp = spectral_features(x, y)
+        temp = SpectralFeatures(x, y)
         temp.pointwise_features(np.linspace(4969.0, 5021.0, 200))
         temp.fft_features()
         assert hasattr(temp, "fft_feat")
@@ -211,7 +211,7 @@ def test_fft():
         assert temp.fft_freq.shape[0] == temp.fft_feat.shape[-1] == 400 // 2
 
         # x, y = np.load('test_data/test_xas.npy')
-        # temp = spectral_features(x, y)
+        # temp = SpectralFeatures(x, y)
         # temp.fft_features(xrange = np.linspace(x.min(), x.max(), 300))
         # assert hasattr(temp, 'fft_feat')
         # assert hasattr(temp, 'fft_freq')
@@ -220,7 +220,7 @@ def test_fft():
 
 def test_gaussian_filter():
     for x, y in zip([x1, x2], [y1, X]):
-        temp = spectral_features(x, y)
+        temp = SpectralFeatures(x, y)
         temp.pointwise_features(np.linspace(x.min(), x.max()), 100)
 
         temp.gaussian_filter_features(sigma=1)
