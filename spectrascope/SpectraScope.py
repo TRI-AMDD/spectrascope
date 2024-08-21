@@ -22,20 +22,46 @@ from sklearn.exceptions import NotFittedError
 from sklearn.base import clone
 
 
+__docformat__ = "google"
+
 class SpectraScope:
+    """The main SpectraScope class encompasses all data loading, feature generation, model training, and model evaluation.
+
+    """
 
     def __init__(
         self,
         X=None,
         y=None,
-        fnX=None,
-        fny=None,
-        specnames=[],
-        yname="",
-        random_seed=None,
-        save_path=None,
+        fnX:str=None,
+        fny:str=None,
+        specnames:list=[],
+        yname:str="",
+        random_seed:int=None,
+        save_path:str=None,
     ) -> None:
-
+        """
+        Can load X, y via an array or file path. If file path, will try to infer file type.
+        
+        Args:
+            X (arr, optional): Input X. Defaults to None.
+            y (arr, optional): Input y. Defaults to None.
+            fnX (str, optional): Input X file path. Defaults to None.
+            fny (str, optional): Input y file path. Defaults to None.
+            specnames (list, optional): Names of different spectra that have loaded, if loading multiple modalities. Defaults to [].
+            yname (str, optional): Name of yprediction. Defaults to "".
+            random_seed (int, optional): Random seed for splitting data and training. Suggested to set a random seed to keep same splits when comparing across models. Defaults to None.
+            save_path (str, optional): Path for saving results. Defaults to None (saves to /examples/models).
+        
+        Attributes:
+            today (str): Today's date in format MM_DD_YYYY.
+            X (arr): Input X.
+            y (arr): Input y.
+            best_fits (dict): Dictionary of best fits.
+            specnames (list): Names of different spectra that have loaded.
+            random_seed (int): Random seed for splitting data and training.
+            save_path (str): Path for saving results.
+        """
         date = datetime.date
         self.today = date.today().strftime("%m_%d_%Y")
 
@@ -44,17 +70,7 @@ class SpectraScope:
             self.X = X
         elif fnX is not None:
             self.X = self.load_file(fnX)
-
-        # if len(X.shape) > 2:
-        #     multi_modal = True
-        #     self.n_modalities = len(X)
-        # else:
-        #     self.n_modalities = 1
-        #     multi_modal = False
-
-        # assert (
-        #     len(specnames) == self.n_modalities
-        # ), "please input a name for each modality"
+            
         if specnames == []:
             specnames = [f"spec{i}" for i in range(self.X.shape[0])]
 
@@ -73,11 +89,14 @@ class SpectraScope:
             y = self.load_file(fny)
             self.add_y(yname, y)
 
-        self.random_seed = random_seed
-        if type(self.random_seed) is not int:
+        if type(random_seed) is not int:
             print(
                 "no random seed selected, when splitting data, will always give different split"
             )
+            self.random_seed = random_seed
+        else: 
+            self.random_seed = random_seed
+
 
         self.best_fits = {}
         self.specnames = specnames
@@ -88,11 +107,14 @@ class SpectraScope:
             )
             self.save_path = "/examples/models/"
 
-        #### Need to incorporate this in some way
-
     def load_file(self, fn):
-        """
-        Used by SS to load data files.
+        """Load data from a file.
+
+        Args:
+            fn (str): File path.
+
+        Returns:
+            arr: Loaded data.
         """
         _, ext = os.path.splitext(fn)
         if ext == ".txt":
@@ -114,7 +136,7 @@ class SpectraScope:
             raise ValueError(
                 f"Please provide a filename with extension in {{.txt, .csv, .tsv, .xls, .xlsx, .npy, .json}}. You passed {filename}"
             )
-        return data
+        return data.to_numpy()
 
     def add_x_axis(self, specname, value):
         setattr(self, specname + "_xaxis", value)
