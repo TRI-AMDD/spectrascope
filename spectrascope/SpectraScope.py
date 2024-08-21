@@ -22,7 +22,6 @@ from sklearn.exceptions import NotFittedError
 from sklearn.base import clone
 
 
-__docformat__ = "google"
 
 class SpectraScope:
     """The main SpectraScope class encompasses all data loading, feature generation, model training, and model evaluation.
@@ -45,24 +44,41 @@ class SpectraScope:
 
         Data will be referred to as "spectrums" but can be any 1D array like data.
         
-        Args:
-            X (arr, optional): Input X. Defaults to None.
-            y (arr, optional): Input y. Defaults to None.
-            fnX (str, optional): Input X file path. Defaults to None.
-            fny (str, optional): Input y file path. Defaults to None.
-            specnames (list, optional): Names of different spectra that have loaded, if loading multiple modalities. Defaults to [].
-            yname (str, optional): Name of yprediction. Defaults to "".
-            random_seed (int, optional): Random seed for splitting data and training. Suggested to set a random seed to keep same splits when comparing across models. Defaults to None.
-            save_path (str, optional): Path for saving results. Defaults to None (saves to /examples/models).
+        Parameters
+        ----------
+        X : arr, optional
+            Input X. Defaults to None.
+        y : arr, optional
+            Input y. Defaults to None.
+        fnX : str, optional
+            Input X file path. Defaults to None.
+        fny : str, optional
+            Input y file path. Defaults to None.
+        specnames : list, optional
+            Names of different spectra that have loaded, if loading multiple modalities. Defaults to [].
+        yname : str, optional
+            Name of yprediction. Defaults to "".
+        random_seed : int, optional
+            Random seed for splitting data and training. Suggested to set a random seed to keep same splits when comparing across models. Defaults to None.
+        save_path : str, optional
+            Path for saving results. Defaults to None (saves to /examples/models).
         
-        Attributes:
-            today (str): Today's date in format MM_DD_YYYY.
-            X (arr): Input X.
-            y (arr): Input y.
-            best_fits (dict): Dictionary of best fits.
-            specnames (list): Names of different spectra that have loaded.
-            random_seed (int): Random seed for splitting data and training.
-            save_path (str): Path for saving results.
+        Attributes
+        ----------
+        today : str
+            Today's date in format MM_DD_YYYY.
+        X : arr
+            Input X.
+        y : arr
+            Input y.
+        best_fits : dict
+            Dictionary of best fits.
+        specnames : list
+            Names of different spectra that have loaded.
+        random_seed : int
+            Random seed for splitting data and training.
+        save_path : str
+            Path for saving results.
         """
         date = datetime.date
         self.today = date.today().strftime("%m_%d_%Y")
@@ -109,15 +125,20 @@ class SpectraScope:
             )
             self.save_path = "/examples/models/"
 
-    def load_file(self, fn):
+    def load_file(self, fn:str):
         """Load data from a file.
 
-        Args:
-            fn (str): File path.
-
-        Returns:
-            arr: Loaded data.
+        Parameters
+        ----------
+        fn : str
+            The file path.
+        
+        Returns
+        -------
+        data : np.array
+            The loaded data.
         """
+        
         _, ext = os.path.splitext(fn)
         if ext == ".txt":
             for separator in (" ", ",", "\t", ";"):  # Testing random separators
@@ -141,56 +162,88 @@ class SpectraScope:
         return data.to_numpy()
 
     def add_x_axis(self, specname:str, value:np.array):
-        """Add x-axis values for a specific spectrum.
+        """
+        Add x-axis attribute for a specific spectrum. Attribute name is {specname}_xaxis.
 
-        Args:
-            specname (str): spectrum to associate x-axis with.
-            value (np.array): x-axis values.
+        Parameters
+        ----------
+        specname : str
+            Spectrum to associate x-axis with.
+        value : np.array
+            x-axis values.
         """
         setattr(self, specname + "_xaxis", value)
 
     def add_x_label(self, specname:str, value:str):
-        """Add x-axis label for a specific spectrum.
+        """Add x-axis label attribute for a specific spectrum. Attribute name is {specname}_labelx.
 
-        Args:
-            specname (str): spectrum to associate x-axis label with.
-            value (str): x-axis label.
+        Parameters
+        ----------
+        specname : str
+            spectrum to associate x-axis label with.
+        value : str
+            x-axis label.
         """
         setattr(self, specname + "_labelx", value)
 
     def add_y_label(self, specname:str, value:str):
-        """Add y-axis label for a specific spectrum.
+        """Add y-axis label attribute for a specific spectrum. Attribute name is {specname}_labely.
 
-        Args:
-            specname (str): spectrum to associate y-axis label with.
-            value (str): y-axis label.
+        Parameters
+        ----------
+        specname : str
+            spectrum to associate y-axis label with.
+        value : str
+            y-axis label.
         """
         setattr(self, specname + "_labely", value)
 
-    def scale_X(self, X):
+    def scale_X(self, X:np.array) -> np.array:
         """Apply sklearn StandardScaler to the input data.
         
         Standardize features by removing the mean and scaling to unit variance. 
 
-        Args:
-            X (np.array): X data to scale.
+        Parameters
+        ----------
+        X : np.array
+            Input data to scale.
 
-        Returns:
-            scaled_X (np.array): scaled X.
+        Returns
+        -------
+        scaled_X : np.array 
+            Scaled X.
         """
         scaled_X = StandardScaler().fit_transform(X)
         return scaled_X
 
     def add_spectral_feature(
-        self, specname, feat, xaxis=None, additional_naming="", **kwargs
+        self, specname:str, feat:str, xaxis=None, additional_naming:str="", **kwargs
     ):
+        """Add a spectral feature attribute to the SpectraScope object for a specific spectrum.
+        
+        Attribute name is {specname}_{feat}{additional_naming}.
+
+        Parameters
+        ----------
+        specname : str
+            Name of the spectrum to featurize / transform. 
+        feat : str
+            Name of the feature to add. This must correspond to a method in the spectral_features module.
+        xaxis : np.array, optional
+            x-axis values for the spectrum. Defaults to None.
+        additional_naming : str, optional
+            Additional naming for the default attribute. Defaults to "".
+        **kwargs :
+            Additional keyword arguments to pass to the spectral_features method.
+            
+        """
         if xaxis is None:
             xaxis = getattr(self, specname + "_xaxis")
 
         X = getattr(self, specname)
         new_feat = np.array(
             [
-                spectral_features(xaxis, X)
+                SpectralFeatures(xaxis, X)
                 .__getattribute__(feat)
                 .__call__(return_features=True, **kwargs)
             ]
@@ -198,25 +251,45 @@ class SpectraScope:
 
         setattr(self, specname + "_" + feat + additional_naming, new_feat[0])
 
-    def add_y(self, yname, y):
+    def add_y(self, yname:str, y:np.array):
+        """Add a new prediction target y attribute to the SpectraScope object.
+        
+        Attribute name is {yname}.
+
+        Parameters
+        ----------
+        yname : str
+            Name of target variable. 
+        y : np.array
+            Value of target variable. Must be = len(X).
+        """
         setattr(self, yname, y)
 
-    def add_structural_label(self, structname, yname, additional_naming="", **kwargs):
-        """
-        Working on it
+    def add_structural_label(self, structarr:str, structfeat:str, additional_naming="", **kwargs):
+        """Not Implemented yet. 
 
+        Parameters
+        ----------
+        structarr : str
+            Name of structure array attribute 
+        structfeat : _type_
+            Name of the structure_property_featurization method to call
+        additional_naming : str, optional
+            _description_, by default ""
+        **kwargs : _type_
+            Additional kwargs for the structure_property_featurization method called 
         """
-        structure_arr = getattr(self, structname)
-        struct_label = getattr(structure_property_featurization, yname)
+        structure_arr = getattr(self, structarr)
+        struct_label = getattr(structure_property_featurization, structfeat)
 
         y = []
         for struct in structure_arr:
             y.append(int(struct_label.__call__(structure=struct, **kwargs)))
         setattr(
             self,
-            structname
+            structarr
             + "_"
-            + yname
+            + structfeat
             + "_"
             + "_".join([str(val) for val in kwargs.values()])
             + additional_naming,
@@ -225,6 +298,10 @@ class SpectraScope:
         # self.structural_features()
 
     def structural_labels(self):
+        """Not implemented yet.
+        
+        Collect all structural labels into a single array.
+        """
         y_structural = np.array(
             [
                 getattr(self, struct_attr)
@@ -238,7 +315,20 @@ class SpectraScope:
         ]
         setattr(self, "y_structural_names", np.array(names))
 
-    def combine_feature(self, feat1, feat2, additional_naming=""):
+    def combine_feature(self, feat1:str, feat2:str, additional_naming=""):
+        """Concatenate two features and save as a new attribute for multimodal training. 
+        
+        Features must exist before combining. Naming assumes that the two features are the same transformation on different types of experimental data. Attribute name is {spec1}_{feat2}{additional_naming}.
+
+        Parameters
+        ----------
+        feat1 : str
+            Name for first feature to combine. 
+        feat2 : str
+            Name for second feature to combine. 
+        additional_naming : str, optional
+            Additional naming for new attribute. Default "".
+        """
         assert hasattr(self, feat1), "please add feature first"
         assert hasattr(self, feat2), "please add feature first"
 
@@ -249,21 +339,39 @@ class SpectraScope:
 
     def transform_feature(
         self,
-        feat,
-        degree=2,
-        interaction=True,
-        trans_type="all",
-        all_pos_y=True,
-        additional_naming="",
+        feat:str,
+        degree:int=2,
+        interaction:bool=True,
+        trans_type:str="all",
+        all_pos_y:bool=True,
+        additional_naming:str="",
     ):
-        """
-        Polynomial etc. transformations of already generated features
-        uses _feature_trans function from regression_models in SPA
-        Needs SPA
-        Args:
-            feat: feature name
-            feat_test (optional): Test set of feature name. Defaults to None.
-        """
+        """Adds new attribute of polynomial etc. transformations of already generated features.
+        
+        Uses _feature_trans function from regression_models in SPA v1.4.1. This version is key to avoid errors. 
+        Attribute of array is {feat}_trans{additional_naming}.
+        Attribute of names of transformations is {feat}_trans_names{additional_naming}.
+
+        Parameters
+        ----------
+        feat : str
+            Feature attribute to transform. Will transform test if exists. e.g. "spec1_pointwise_features" 
+        degree : int, optional
+            Degree of polynomial transformations. Must be in [1,2,3]. Default 2
+        interaction : bool, optional
+            _description_, by default True
+        trans_type : str in {'all', 'poly', 'simple_interaction'}, optional, default "all"
+            Whether to include all transforms (polynomial, log, sqrt, inverse) only polynomial transform, or just interaction terms.
+        all_pos_y : bool, optional, default=True
+             Whether all entries in the data are positive or also contain some negative entries. This is done to avoid taking sqrt(k) for some k<0.
+        additional_naming : str, optional, default ""
+            Additional naming for final feature.
+            
+        See Also 
+        --------
+        regression_models._feature_trans in SPA module for more details.
+        """ 
+        
         import regression_models
 
         X = getattr(self, feat)
@@ -287,7 +395,18 @@ class SpectraScope:
             setattr(self, feat + "_test_trans" + additional_naming, X_test_out)
         setattr(self, feat + "_trans_names" + additional_naming, names)
 
-    def split_X(self, attr, test_size, scale_X=False):
+    def split_X(self, attr:str, test_size, scale_X=False):
+        """Split X attribute using sklearn train_test_split.
+
+        Parameters
+        ----------
+        attr : str
+            Name of the X attribute to split.
+        test_size : float or int 
+            If float, should be between 0.0 and 1.0 and represent the proportion of the dataset to include in the test split. If int, represents the absolute number of test samples.
+        scale_X : bool, optional, default=False
+            Whether or not to scale the X data first. 
+        """
         X = getattr(self, attr)
         if scale_X:
             X = self.scale_X(X)
@@ -515,16 +634,31 @@ class SpectraScope:
         use_pipeline=False,
         scale_X=True,
     ):
-        """
+        """Perform a list of transformations and fitting. 
+        
+        Currently, add transformations separately because transformations aren't part of add feature function. 
+        
+        Parameters
+        ----------
+        feats : dict
+            {feature: [feature_kwargs1, feature_kwargs2]}
+        yattr : str 
+            name of yattr to regress on
+        test_size : float or int 
+            input for sklearn train_test_split test_size
+        sk_kwargs : list, optional, default=[]
+            list of additional kwargs for sklearn models. 
+        lcen_kwargs: dict, optional, default=None
+            kwargs for LCEN model.
+        multi_modal : list, optional, default=None
+            [(feat1,feat2),]. Defaults to None.
+        savef : str, optional, default=None
+            filename to save model.
+        do_all_existing : bool, optional, default=False
+            If True, will run on all existing features. If False, will run only features in feats.
+        use_pipeline : bool, optional, default=False
+            If True, will use sklearn pipeline and GridSearchCV.
 
-        Args:
-            feats (dict): {feature: [feature_kwargs1, feature_kwargs2]}
-            y (attr name): name of yattr to regress on
-            test_size (float/int): input for sklearn train_test_split test_size
-            multi_modal (list, optional): [(feat1,feat2),]. Defaults to None.
-
-            Currently, add transformations separately because transformations aren't
-            part of add feature function
         """
         self.timenow = datetime.datetime.now().time().strftime("%H_%M_%S_%f")
 

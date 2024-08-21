@@ -19,7 +19,7 @@ from sklearn.cluster import FeatureAgglomeration
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 
-class spectral_features:
+class SpectralFeatures:
     """Spectral Features class used by SpectraScope main class to generate features on datasets. 
 
     

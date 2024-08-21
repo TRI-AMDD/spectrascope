@@ -8,7 +8,7 @@ from matplotlib.colors import rgb2hex
 import matplotlib.cm as cm
 
 
-class ss_plotting:
+class SpectraScopePlotting:
     """Base class for plotting spectral features."""
     def __init__(
         self,
@@ -54,7 +54,7 @@ class ss_plotting:
             pass
 
 
-class plot_spectral_features(ss_plotting):
+class PlotSpectralFeatures(SpectraScopePlotting):
     """Plotting class for spectral features.
     
     """
@@ -299,7 +299,7 @@ class plot_spectral_features(ss_plotting):
             )
 
 
-class plot_model(ss_plotting):
+class PlotModel(SpectraScopePlotting):
     """Plotting class for model results.
     
     """
@@ -456,7 +456,7 @@ class plot_model(ss_plotting):
         c = self.selected_features[:2]
         arr = kwargs["feat"]
         kwargs.pop("feat")
-        featureagg_plotter = plot_spectral_features(
+        featureagg_plotter = PlotSpectralFeatures(
             arr,
             fig=self.fig,
             xaxis=self.xaxis,
@@ -474,7 +474,7 @@ class plot_model(ss_plotting):
         arr = kwargs["feat"]
         kwargs.pop("feat")
         c = self.selected_features[:2]
-        pca_plotter = plot_spectral_features(
+        pca_plotter = PlotSpectralFeatures(
             arr,
             fig=self.fig,
             xaxis=self.xaxis,
