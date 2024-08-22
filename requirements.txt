@@ -10,3 +10,4 @@ pyts==0.13.0
 streamlit==1.36.0
 plotly==5.22.0
 # Code-SPA @ git+https://github.com/PedroSeber/SmartProcessAnalytics.git
+pdoc==0.11.1
