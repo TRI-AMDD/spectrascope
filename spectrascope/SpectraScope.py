@@ -90,7 +90,7 @@ class SpectraScope:
             self.X = self.load_file(fnX)
             
         if specnames == []:
-            specnames = [f"spec{i}" for i in range(self.X.shape[0])]
+            specnames = [f"spec{i}" for i in range(len(self.X))]
 
         for i, specname in enumerate(specnames):
             Xi = self.X[i]
@@ -584,6 +584,12 @@ class SpectraScope:
         np.save("y_train_temp", y_train)
         np.save("y_test_temp", y_test)
 
+        if 'metric' not in kwargs:
+            metric = 'MAE'
+        else: 
+            metric = kwargs["metric"]
+            kwargs.pop("metric")
+            
         out = SPA.main_SPA(
             "X_train_temp.npy",
             "y_train_temp.npy",
@@ -602,10 +608,9 @@ class SpectraScope:
         ypred = out[0]["LCEN"]["yhat_test_nontrans"]
         perc_err = np.mean(np.abs((y_test - ypred) / y_test)) * 100
 
-        if "metric" not in kwargs:
+        if metric == 'MAE':
             score = out[0]["LCEN"]["MSE_test_nontrans"]
         else:
-            metric = kwargs["metric"]
             score = metric(y_test, ypred)
 
         if "LCEN" not in self.best_fits:

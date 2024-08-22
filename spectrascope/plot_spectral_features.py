@@ -352,45 +352,63 @@ class PlotModel(SpectraScopePlotting):
             rgba = cmap(i)
             self.colors.append(rgb2hex(rgba))
 
-    def plot_polynomial_featuresall(self):
+    def plot_polynomial_featuresall(self, sizex=100, sizey=10):
         """_summary_
         """
+        
         self.fig.add_trace(
-            go.Scatter(x=self.xaxis, y=self.raw), row=self.row, col=self.col
+            go.Scatter(x=self.xaxis, y=self.raw, showlegend=False), row=self.row, col=self.col
         )
+        from spectrascope.features import SpectralFeatures
+        temp = SpectralFeatures(self.xaxis, self.raw)
+
+        temp.generate_bins(4)
+        temp.generate_bins(5)
+        temp.generate_bins(10)
+        temp.generate_bins(20)
+
+        # plot_key = {}
         for selected_id in self.selected_features:
 
             if selected_id < 16:
+                bin_label = 'bin_indices_4'
                 poly_label = "const"
+                search_party = np.linspace(0,16,4)
             elif selected_id >= 16 and selected_id < 36:
-                selected_id -= 16
+                bin_label = 'bin_indices_5'
                 poly_label = "line"
+                search_party = np.linspace(16,36,5)
             elif selected_id >= 36 and selected_id < 76:
-                selected_id -= 36
+                bin_label = 'bin_indices_10'
                 poly_label = "par"
+                search_party = np.linspace(36,76,10)
             elif selected_id >= 76:
-                selected_id -= 76
+                bin_label = 'bin_indices_20' 
                 poly_label = "cubic"
-
-            center = self.xaxis[selected_id]
-            height = self.raw[selected_id]
+                search_party = np.linspace(76,156,20)
+            located_bin = np.argwhere(selected_id < search_party)[0][0]
+            center = np.median(self.xaxis[getattr(temp, bin_label) == located_bin])
+            height_id = find_nearest(self.xaxis, center)
+            height = self.raw[height_id]
+            # plot_key[selected_id] = (center, poly_label, height)
             im = Image.open(f"../app/static/{poly_label}.png")
 
             self.fig.add_layout_image(
-                dict(
-                    source=im,
-                    xref="x",
-                    yref="y",
-                    xanchor="right",
-                    x=center,
-                    y=height,
-                    sizex=2,
-                    sizey=2,
-                    sizing="contain",
-                    opacity=1,
-                    layer="below",
-                )
-            )
+                        dict(
+                            source=im,
+                            xref="x",
+                            yref="y",
+                            xanchor="center",
+                            yanchor='middle',
+                            x=center,
+                            y=height,
+                            sizex=sizex,
+                            sizey=sizey,
+                            # sizing="contain",
+                            opacity=1,
+                            layer="above",
+                        ),
+                    row=self.row, col=self.col)
         self.fig.update_xaxes(title_text=self.xaxis_label)
         self.fig.update_yaxes(title_text=self.yaxis_label)
 

@@ -2,7 +2,7 @@
 Spectral Features class for Spectrascope
 
 """
-__docformat__ = "google"
+# __docformat__ = "numpy"
 
 import numpy as np
 from scipy.interpolate import interp1d
@@ -57,9 +57,12 @@ class SpectralFeatures:
     def __init__(self, energies: np.array, intensities: np.array):
         """
         
-        Args:
-            energies (np.array, (n_features,)): x axis (energy, time).
-            intensities (np.array, (n_samples, n_features)): y axis (intensity, current, etc).
+        Parameters:
+        ----------
+            energies : (np.array, (n_features,))
+                x axis (energy, time).
+            intensities : (np.array, (n_samples, n_features))
+                y axis (intensity, current, etc).
         """
         
         self.energies = np.array(energies)
