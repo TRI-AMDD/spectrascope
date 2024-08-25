@@ -23,47 +23,22 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 class SpectralFeatures:
     """Spectral Features class used by SpectraScope main class to generate features on datasets. 
 
-    
     A class that creates feature vectors extracted from 1D array data. 
     Current features developed for spectral data, but could be applied to any 1D data. 
     Every feature generation method assumes you want to perform on the interpolated spectra, so 
     looks for interpolated data before performing operations on the original data.
     Most featurizer functions are vectorized and can accept multiple samples at once.  
     
-    Methods:
-        generate_bins (N: int): Generates N bins even in energy for polynomial featurization.
-        check_xinterp (verbose: bool = False): Checks if interpolated data exists, returns interpolated data if it does, otherwise interpolates data if yes, else returns raw data. 
-        pointwise_features (xrange): Interpolates energies and intensities onto evenly spaced points.
-        polynomial_featuresN (N: int): Performs polynomial fitting on N energy equivalent sections.
-        polynomial_featuresall (Narr: np.array = np.array([4,5,10,20])): Performs polynomial fitting on a range of N energy equivalent sections.
-        uneven_features : Polynomial fitting on arbitrary ranges with different polynomials.
-        cdf: Cumulative distribution function.
-        gaussian_peaks: Fit n gaussians to intensity.
-        gaussian_filter_features: Gaussian filter convolution. 
-        fft_features: Fast fourier transform.
-        cwt: Continuous wavelet transform.
-        pca: principle component analysis.
-        tsne: t-stochastic neighbor embedding.
-        featureagg: feature agglomeration clustering. 
-        gaussian_mixture_features: not implemented yet.
-        shapelet: not implemented yet.
-        b_splines: not implemented yet.
-        bop_features: not implemented yet.
-        boss_features: not implemented yet.
-        bow_features: not implemented yet.
-        ROCKET_features: not implemented yet.
-        WEASEL_features: not implemented yet.
     """
 
     def __init__(self, energies: np.array, intensities: np.array):
         """
-        
-        Parameters:
+        Parameters
         ----------
-            energies : (np.array, (n_features,))
-                x axis (energy, time).
-            intensities : (np.array, (n_samples, n_features))
-                y axis (intensity, current, etc).
+            energies : np.array
+                x axis (energy, time). shape: (n_features,))
+            intensities : np.array
+                y axis (intensity, current, etc). shape: (n_samples, n_features))
         """
         
         self.energies = np.array(energies)
@@ -76,10 +51,14 @@ class SpectralFeatures:
     ):
         """Interpolates self.energies, self.intensities onto ne evenly spaced points.
 
-        Args:
-            xrange (np.linspace(xmin,xmax)): range of x values to perform interpolation on.
-            return_features (bool): Flag indicating whether to return the features. Default False.
-            fill_value (array, (tup), 'extrapolate') : fill value for scipy.interp1d for values outside of xrange (see scipy.interpolate.interp1d).
+        Parameters
+        ----------
+            xrange : np.array
+                range of x values to perform interpolation on. (np.linspace(xmin,xmax))
+            return_features : bool, default=False
+                Flag indicating whether to return the features
+            fill_value:  array-like or (array-like, array_like) or “extrapolate”, optional, default="extrapolate"
+                fill value for scipy.interp1d for values outside of xrange (see scipy.interpolate.interp1d).
         """
         
         f = interp1d(
@@ -103,14 +82,24 @@ class SpectralFeatures:
         
         Generate N bins even in energy for self.energies. If custom x and y not given, performs binning on
         interpolated data if it exists. Otherwise, performs on self.energies, self.intensities.
-        Args:
-            N (int): The number of bins to generate.
-            x,y (np.array, optional): Energy and intensity values to generate bins for. Default None uses full spectrum.
-            verbose(bool): print progress. Default False.
+        
+        Parameters
+        ----------
+        N : int 
+            The number of bins to generate.
+        x : np.array, optional
+            Energy values to generate bins for. Default None uses full spectrum.
+        y : np.array, optional
+            Intensity values to generate bins for. Default None uses full spectrum.
+        verbose : bool, optional
+            print progress. Default False.
             
-        Attributes:
-            bin_indices_{N} (np.array): An array of bin indices for the N bins. Shape is (len(x),).
-            bin_indices_{round(x.min())}_{round(x.max())}_{N} (np.array): An array of bin indices for N bins over a subset of full energy range. Shape is (len(x),).
+        Attributes
+        ----------
+            bin_indices_{N} : np.array
+                An array of bin indices for the N bins. Shape is (len(x),).
+            bin_indices_{round(x.min())}_{round(x.max())}_{N} : np.array
+                An array of bin indices for N bins over a subset of full energy range. Shape is (len(x),).
         """
         
         if x is None:
@@ -168,13 +157,21 @@ class SpectralFeatures:
     ):
         """Performs polynomial fitting on N energy equivalent sections.
 
-        Args:
-            N (int): The number of energy equivalent sections to perform polynomial fitting on. 
-            degree (int): The degree of the polynomial to fit. Default is 3 (cubic).
-            return_features (bool): Flag indicating whether to return the features. Default False.
-            verbose(bool): print progress
-        Attributes: 
-            polyfeatures_{N}_{degree}deg (np.array): An array of polynomial coefficients for the N bins. Shape is (N, degree + 1).
+        Parameters
+        ----------
+        N : int 
+            The number of energy equivalent sections to perform polynomial fitting on.
+        degree : int, optional, default=3
+            The degree of the polynomial to fit.
+        return_features : bool, optional, default=False
+            Flag indicating whether to return the features.
+        verbose : bool, optional, default=False
+            print progress.
+            
+        Attributes
+        ----------
+        polyfeatures_{N}_{degree}deg : np.array
+            An array of polynomial coefficients for the N bins. Shape is (N, degree + 1).
         """
         
         featuresN = np.zeros([self.intensities.shape[0], 1])
@@ -257,14 +254,23 @@ class SpectralFeatures:
     ):
         """Performs polynomial fitting on multiple energy equivalent sections.
 
-        Args:
-            degree (int): The degree of the polynomial to fit. Default is 3 (cubic).
-            Narr (np.array): An array of integers representing the number of energy equivalent sections to perform polynomial fitting on. Default is [4, 5, 10, 20].
-            interpolate (bool): Flag indicating whether to interpolate the data before performing polynomial fitting.
-            return_features (bool): Flag indicating whether to return the features.
+        Parameters
+        ----------
+        degree : int, optional, default=3
+            The degree of the polynomial to fit.
+        Narr : np.array, optional, default=[4, 5, 10, 20]
+            An array of integers representing the number of energy equivalent sections to perform polynomial fitting on.
+        interpolate : bool, optional, default=True
+            Flag indicating whether to interpolate the data before performing polynomial fitting.
+        return_features : bool, optional, default=False
+            Flag indicating whether to return the features.
+        **kwargs: dict
+            additional parameters to pass to polynomial_featuresN.
         
-        Attributes:
-            polyfeatures_all (np.array): An array of polynomial coefficients for the bins. Shape is sum((degree + 1) * n for n in Narr) + 1 (max energy position).
+        Attributes
+        ----------
+        polyfeatures_all : np.array
+            An array of polynomial coefficients for the bins. Shape is sum((degree + 1) * n for n in Narr) + 1 (max energy position).
         """
         
         self.polyfeatures_all = np.zeros([self.intensities.shape[0], 1])
@@ -297,13 +303,20 @@ class SpectralFeatures:
         
         Option to split each section into different N values and degrees. Generates polynomial_featuresN(N, degree=degree, x=x, y=y, verbose=verbose) for every N, degree on each eV range (np.array).
 
-        Args:
-                eV_splits (list,optional): list of ints, the energy values to split the data at.
-                N_dict (dict,optional): the N values for each split {0:N, 1:N, 2:N}, must have len(ev_splits) + 1.
-                degree_dict (dict,optional): the degree values for each split {0:degree, 1:degree, 2:degree}, must have len(N_dict).
-                verbose (bool,optional): whether to print names of attributes.
-                plot (bool,optional): plot subsections.
-                return_features (bool,optional): Flag indicating whether to return the features. Currently not implemented. Default False.
+        Parameters
+        ----------
+        eV_splits :  list, optional, default=[20, 40]
+            list of ints, the energy values to split the data at.
+        N_dict : dict, optional, default={0:10, 1:4, 2:5}
+            the N values for each split {0:N, 1:N, 2:N}, must have len(ev_splits) + 1.
+        degree_dict : dict, optional, default={0:3, 1:5, 2:3}
+            the degree values for each split {0:degree, 1:degree, 2:degree}, must have len(N_dict).
+        verbose : bool, optional, default=False
+            whether to print names of attributes.
+        plot : bool, optional, default=False
+            plot subsections.
+        return_features : bool, optional, default=False
+            Flag indicating whether to return the features. Currently not implemented.
         """
         
         idx_arr = [
@@ -347,12 +360,17 @@ class SpectralFeatures:
     def cdf(self, verbose=False, return_features: bool = False):
         """Compute cumulative distribution function: probability that f(x) will take on a value less than or equal to x at x.
 
-        Args:
-            verbose (bool, optional) : print progress.
-            return_features(bool, optional) : return features 
-
-        Attributes:
-            cdf (np.array): cumulative distribution function for spectrum.
+        Parameters
+        ----------
+        verbose : bool, optional, default=False
+            print progress.
+        return_features : bool, optional, default=False
+            return features.
+            
+        Attributes
+        ----------
+        cdf_features : np.array
+            cumulative distribution function for spectrum.
         """
         
         x, y = self.check_xinterp(verbose)
@@ -373,16 +391,23 @@ class SpectralFeatures:
         the Kullback-Leibler divergence between the joint probabilties of the low-dimensional embedding 
         and the high-dimensional data. t-SNE has a cost function that is not convex, 
         i.e. with different initializations we can get different results.
-        
         Recommended to apply PCA first to reduce dimensions (to ~50) then peform TSNE on the PCA features.
 
-        Args:
-            n_components (int, optional): Number of componnents. Defaults to 2. Must be < 4. 
-            verbose (bool, optional): Print progress. Defaults to False.
-            return_features (bool, optional): Returns features. Defaults to False.
+        Parameters
+        ----------
+        n_components : int, optional, default=2
+            Number of components. Must be < 4.
+        verbose : bool, optional, default=False
+            print progress.
+        return_features : bool, optional, default=False
+            return features.
+        **kwargs: dict
+            additional parameters to pass to TSNE.
 
-        Attributes:
-            tsne_features (np.array) : tsne features shape (n_samples, n_components).
+        Attributes
+        ----------
+        tsne_features : np.array
+            tsne features shape (n_samples, n_components).
         """
         
         x, y = self.check_xinterp(verbose)
@@ -403,15 +428,23 @@ class SpectralFeatures:
         Compute continuous wavelet transform on spectrum: uses inner products to measure the similarity between a signal and an analyzing function (wavelet).
         Compare signal to shifted and compressed or stretched versions of a wavelet. Can choose different wavelets
 
-        Args:
-            scales (np.array, optional): Array of ints. Defaults to np.arange(1,11).
-            wavelet (pywt.ContinuousWavelet, optional) : Mother wavelet to compare spectrum to. Default 'mexh'. 
-            verbose (bool, optional) : print progress. Default False. 
-            return_features (bool, optional) : return features. Returns coefs raveled to len(widths) * len(intensity) to give 1D array for each sample returns shape (n_samples, len(widths)*len(intensity)) for SpectraScope class. default False. 
-        Attributes:
-            coefs (np.array) : continuous wavlet transform of the imput signal for the given scales and wavelet. First axis corresponds to the scales,
-            remaining axes match the shape of intensity.
-            frequencies (np.array): if the unit of sampling period are seconds and given, then frequencies are in herts, otherwise a sampling period of 1 assumed.
+        Parameters
+        ----------
+        scales : np.array, optional, Default= np.arange(1,11).
+            Array of ints. 
+        wavelet : pywt.ContinuousWavelet, optional
+            Mother wavelet to compare spectrum to. Default 'mexh'.
+        verbose : bool, optional
+            print progress. Default False.
+        return_features : bool, optional, Default=False. 
+            return features. Returns coefs raveled to len(widths) * len(intensity) to give 1D array for each sample returns shape (n_samples, len(widths)*len(intensity)) for SpectraScope class.
+
+        Attributes
+        ----------
+        cwt_coefs : np.array
+            continuous wavelet transform of the imput signal for the given scales and wavelet. First axis corresponds to the scales, remaining axes match the shape of intensity.
+        cwt_frequencies : np.array
+            if the unit of sampling period are seconds and given, then frequencies are in herts, otherwise a sampling period of 1 assumed.
         """
         
         x, y = self.check_xinterp(verbose)
@@ -434,12 +467,19 @@ class SpectralFeatures:
         Fit n=num_peaks gaussians to intensity.
         Not vectorized yet. 
         
-        Args:
-            num_peaks (int, default 20): Number of gaussians to fit.
-            verbose (bool, default False): print progress.
-            return_features (bool, default False): return features. 
-        Attributes: 
-            peak_features (np.array): peak features. length = num_peaks * 3.
+        Parameters
+        ----------
+        num_peaks : int, optional, Default = 20 
+            Number of gaussians to fit.
+        verbose : bool, optional
+            print progress. Default False.
+        return_features : bool, optional
+            return features. Default True.
+
+        Attributes
+        ----------
+        peak_features : np.array
+            peak features. length = num_peaks * 3.
         """
         
         self.peak_features = np.array([])
@@ -466,12 +506,20 @@ class SpectralFeatures:
     def fft_features(self, return_features: bool = False, **kwargs):
         """
         FFT Spectra and return positive real FFT values. 
-        Args:
-            return_features (bool): return features. Default false. 
-        Attributes: 
-            fft_feat (np.array): fft features. shape (n_samples, n_features/2).
-            fft_freq (np.array): fft frequencies. shape (n_features/2,).
         
+        Parameters
+        ----------
+        reutrn_features : bool, optional
+            return features. Default False.
+        **kwargs: dict
+            additional parameters to pass to fft.
+        
+        Attributes
+        ----------
+        fft_feat : np.array 
+            fft features. shape (n_samples, n_features/2).
+        fft_freq : np.array
+            fft frequencies. shape (n_features/2,).
         """
         
         if hasattr(self, "xinterp") == False:
@@ -495,13 +543,21 @@ class SpectralFeatures:
     ):
         """Convolve intensity with a gaussian filter.
         
-        Args:
-            sigma (float): standard deviation of the gaussian filter.
-            verbose (bool): print progress.
-            return_features (bool): return features.
-            **kwargs: additional parameters to pass to gaussian.
-        Attributes:
-            gaussian_filter (np.array): gaussian filter features.
+        Parameters
+        ----------
+        sigma : float
+            standard deviation of the gaussian filter.
+        verbose : bool, optional
+            print progress. Default False.
+        return_features : bool, optional
+            return features. Default False.
+        **kwargs: dict
+            additional parameters to pass to gaussian
+        
+        Attributes
+        ----------
+        gausian_filter : np.array
+            gaussian filter features.
         """
         
         x, y = self.check_xinterp(verbose)
@@ -518,10 +574,17 @@ class SpectralFeatures:
         
         Not impplemented yet.
 
-        Args:
-            n_components (int): number of mixture components.
-            return_features (bool, optional): Return features. Defaults to False.
-        Attributes: 
+        Parameters
+        ----------
+        n_components : int
+            number of mixture components.
+        return_features : bool, optional
+            return features. Default False.
+        **kwargs: dict 
+            additional parameters to pass to Gaussian
+        
+        Attributes
+        ----------
     
         """
         
@@ -532,13 +595,21 @@ class SpectralFeatures:
     ):
         """Principle component analysis
 
-        Args:
-            n_components (int, optional): Number of PCA components. Defaults to 10.
-            verbose (bool, optional): Print progress. Defaults to False.
-            return_features (bool, optional): Return Features. Defaults to False.
-            **kwargs: Additional parameters to pass to PCA.
-        Attributes:
-            pca_features (np.array): pca components
+        Parameters
+        ----------
+        n_components : int, optional
+            Number of PCA components. Default 10.
+        verbose : bool, optional
+            print progress. Default False.
+        return_features : bool, optional
+            return features. Default False.
+        **kwargs: dict
+            additional parameters to pass to PCA.
+            
+        Attributes
+        ----------
+        pca_features : np.array
+            pca features.
         """
         
         x, y = self.check_xinterp(verbose)
@@ -573,13 +644,21 @@ class SpectralFeatures:
     def shapelet(self, labels=None, verbose=False, return_features=False, **kwargs):
         """Transforms a data set to identify shapelets. Only works for classification?
         
-        Args:
-            labels (np.array): target labels for shapelet transform.
-            verbose (bool): print progress.
-            return_features (bool): return features.
-            **kwargs: additional parameters to pass to shapelet.
-        Attributes:
-            shapelet_features (np.array): shapelet features.
+        Parameters
+        ----------
+        labels : np.array, optional, default=None
+            target labels for shapelet transform.
+        verbose : bool, optional, default=False
+            print progress.
+        return_features : bool, optional, default=False
+            return features.
+        **kwargs: dict
+            additional parameters to pass to shapelet.
+
+        Attributes
+        ----------
+        shapelet_features : np.array
+            shapelet features.
         """
         
         x, y = self.check_xinterp(verbose)
@@ -589,36 +668,54 @@ class SpectralFeatures:
             return self.shapelet_features
         
     def b_splines(self):
+        """Not implemented yet.
+        """
         pass
 
     def bow_features(self, **kwargs):
+        """Not implemented yet.
+        """
         bow = BagOfWords(**kwargs)
         pass
 
     def bop_features(self, **kwargs):
+        """Not implemented yet.
+        """
         bop = BagOfPatterns(**kwargs)
         pass
 
     def boss_features(self, **kwargs):
+        """Not implemented yet.
+        """
         boss = BOSS(**kwargs)
         pass
 
     def WEASEL_features(self, **kwargs):
+        """Not implemented yet.
+        """
         wsl = WEASEL(**kwargs)
         pass
 
     def ROCKET_features(self, **kwargs):
+        """Not implemented yet.
+        """
         rkt = ROCKET(**kwargs)
         pass
 
     def check_xinterp(self, verbose=False):
         """Check if interpolated data exists and return either interpolated data or raw data.
         
-        Args:
-            verbose (bool, optional): Print progress. Defaults to False.
-
-        Returns:
-            self.energies, self.intensities if interpolated data does not exist, else self.xinterp, self.yinterp.
+        Parameters
+        ----------
+        verbose : bool, optional, Default=False
+            print progress.
+        
+        Returns
+        -------
+        x : np.array
+            x values.
+        y : np.array
+            y values.
         """
         
         if hasattr(self, "xinterp") == False:
@@ -640,15 +737,23 @@ def degree_based_features(
 ):
     """Function to extract features from the data.
 
-    Deprecated. 
+    .. deprecated:: 
     
-    Args: 
-        X (np.array): input data.
-        degree (int): degree of polynomial to fit.
-        exclude_features (list): list of features to exclude.
-        input_labels (list): list of labels for each feature.
-    Returns: 
-        new_features (np.array): new features extracted from the data.
+    Parameters
+    ---------- 
+    X : np.array
+        input data.
+    degree : int
+        degree of polynomial to fit.
+    exclude_features : list
+        list of features to exclude.
+    input_labels : list
+        list of labels for each feature.
+
+    Returns
+    -------
+    new_features : np.array
+        new features extracted from the data.
     """
 
     # TODO implement degree >=3

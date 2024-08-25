@@ -10,11 +10,15 @@ import pandas as pd
 def load_data(fn):
     """Load data from a file.
 
-    Args:
-        fn (str): The file path.
-
-    Returns:
-        data: The loaded data.
+    Parameters
+    -----------
+    fn : str
+        The file path.
+        
+    Returns
+    -------
+    pd.DataFrame or np.array or dict
+        The loaded data.
     """
     
     if fn.endswith("json"):
@@ -34,9 +38,12 @@ def oxidation_state_worker(queue, struct):
     Calculate the oxidation state of a structure and return the output;
     to deal with possible long calculations.
 
-    Args:
-        queue (multiprocessing.Queue): queue to put the return value in.
-        struct (pymatgen.core.structure.Structure): pymatgen Structure object.
+    Parameters
+    -----------
+        queue : multiprocessing.Queue
+            queue to put the return value in.
+        struct: pymatgen.core.structure.Structure
+            pymatgen Structure object.
     """
     
     ret = struct.add_oxidation_state_by_guess()
@@ -44,14 +51,22 @@ def oxidation_state_worker(queue, struct):
 
 
 def linear(x, m, b):
-    """Calculates the linear function y = m*x + b.
-    
-    Args:
-        x (float): The input value.
-        m (float): The slope of the line.
-        b (float): The y-intercept of the line.
-    Returns:
-        float: The calculated value of y.
+    """
+    Calculates the linear function y = m*x + b.
+
+    Parameters
+    ----------
+    x : float
+        The input value.
+    m : float
+        The slope of the line.
+    b : float
+        The y-intercept of the line.
+
+    Returns
+    -------
+    float
+        The calculated value of y.
     """
     
     return m * x + b
@@ -60,11 +75,17 @@ def linear(x, m, b):
 def find_nearest(x, value):
     """Find the index of the nearest value in an array.
     
-    Args:
-        x (np.array): The array to search.
-        value (float): The value to search for.
-    Returns:
-        int: The index of the nearest value.
+    Parameters
+    ----------
+    x : np.array
+        The array to search.
+    value : float
+        The value to search for.
+    
+    Returns
+    -------
+    int
+        The index of the nearest value.
     """
     
     return np.argmin(np.abs(x - value))
@@ -73,12 +94,19 @@ def find_nearest(x, value):
 def get_mean_nn(struct, nnalgo, el):
     """Calculate the mean nearest neighbor distance for a specific element in a structure
     
-    Args:
-        struct (pymatgen.core.structure.Structure): pymatgen structure object.
-        nnalgo (pymatgen.analysis.local_env): algorithm to calculate nearest neighbor distances.
-        el (str): element to calculate nearest neighbor distances for.
-    Returns:
-        float: mean nearest neighbor distance for the specified element in the structure.
+    Parameters
+    ----------
+    struct : pymatgen.core.structure.Structure
+        pymatgen structure object.
+    nnalgo : pymatgen.analysis.local_env
+        algorithm to calculate nearest neighbor distances.
+    el : str
+        element to calculate nearest neighbor distances for.
+    
+    Returns
+    -------
+    float
+        mean nearest neighbor distance for the specified element in the structure.
     """
     
     nn_distances = []
@@ -93,11 +121,16 @@ def get_mean_nn(struct, nnalgo, el):
 def func_unfix_width_reg(eng, *params):
     """Helper function for gaussian peak fitting and plotting.
     
-    Args:
-        eng (np.array): energy values.
-        *params: parameters from the gaussian peak fitting.
-    Returns:
-        y (np.array): fit values across the energy range.
+    Parameters
+    ----------
+    eng : np.array
+        energy values.
+    *params : list
+        parameters from the gaussian peak fitting.
+
+    Returns
+    y : np.array 
+        fit values across the energy range.
     """
     
     y = np.zeros_like(eng)
@@ -112,11 +145,15 @@ def func_unfix_width_reg(eng, *params):
 def NormalizeData(arr):
     """Normalize array between 0, 1.
 
-    Args:
-        arr (array like): input array.
-
-    Returns:
-        np.array : input array normalized between 0, 1.
+    Parameters
+    ----------
+    arr : np.array or list 
+        input array.
+        
+    Returns
+    -------
+    np.array
+        input array normalized between 0, 1.
     """
     
     arr = np.array(arr)
@@ -126,13 +163,20 @@ def NormalizeData(arr):
 def sort_get_value(my_dict: dict, id2: int = 20, id1: int = 0):
     """Sort a dictionary by values and return the values between id1 and id2.
 
-    Args:
-        my_dict (dict): dictionary to sort.
-        id2 (int, optional): First index. Defaults to 20.
-        id1 (int, optional): Last index. Defaults to 0.
+    Parameters
+    ----------
+    my_dict : dict
+        dictionary to sort.
+    id2 : int, optional
+        Last index. Defaults to 20.
+    id1 : int, optional
 
-    Returns:
-        labels, values (list) : sorted labels and values in the range id1 to id2.
+    Returns
+    -------
+    labels : list
+        sorted labels in the range id1 to id2.
+    values : list
+        sorted values in the range id1 to id2.
     """
     
     labels = np.array([str(l) for l in list(my_dict.keys())])
@@ -147,12 +191,17 @@ def tamimoto(s1: np.array, s2: np.array):
     
     The tamimoto coefficient is a ratio that measures the similarity between two sets of data.
     
-    Args:
-        s1 (np.array): binary array.
-        s2 (np.array): binary array.
-
-    Returns:
-        J (np.array): Tamimoto similarity index.
+    Parameters
+    ----------
+    s1 : np.array
+        binary array.
+    s2 : np.array
+        binary array.
+        
+    Returns
+    -------
+    J : np.array
+        Tamimoto similarity index.
     """
     
     # If s2 is a single array, make it a 2D array
@@ -174,12 +223,17 @@ def entropy(p0, p1):
     Entropy of a random variable is the avarage level of "information", "surprise", or
     "uncertainty" inherent in the variable's possible outcomes.
 
-    Args:
-        p0 (float): The probability of choosing class 1.
-        p1 (float): The probability of choosing class 2.
-
-    Returns:
-        float: entropy of random variable.
+    Parameters
+    ----------
+    p0 : float
+        The probability of choosing class 1.
+    p1 : float
+        The probability of choosing class 2.
+        
+    Returns
+    -------
+    float
+        entropy of random variable.
     """
     
     return -p0 * np.log2(p0) - p1 * np.log2(p1)
@@ -188,11 +242,15 @@ def entropy(p0, p1):
 def arr_entropy(arr):
     """Calculate the entropy of a binary array.
 
-    Args:
-        arr (array like): binary array or pd.DataFrame.
+    Parameters
+    ----------
+    arr : np.array or pd.DataFrame
+        binary array or pd.DataFrame.
 
-    Returns:
-        entropy (float): entropy of the array.
+    Returns
+    -------
+    entropy : float
+        entropy of the array.
     """
     
     Ny = arr.shape[0]
@@ -204,13 +262,17 @@ def arr_entropy(arr):
 def LCEN_selected_features(model, top_features: int):
     """Return the selected features for a fitted LCEN model.
 
-    Args:
-        model (dict): Fitted LCEN model from main.SPA.
-        top_features (int): The number of top X features to return.
-
-    Returns:
-        vals (list): The value of the top "top_features" features.
-        features (list) : The index of the top "top_features" features.
+    Parameters
+    ----------
+    model : dict
+        Fitted LCEN model from main.SPA.
+    top_features : int
+        The number of top X features to return.
+        
+    Returns
+    -------
+    vals : list
+        The value of the top "top_features" features.
     """
     
     params = model["model_params"]

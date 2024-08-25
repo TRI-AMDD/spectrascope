@@ -441,6 +441,42 @@ class SpectraScope:
         metric=mean_squared_error,
         savef=None,
     ):
+        """Build pipeline for sklearn model training and hyperparameter tuning using GridSearchCV.
+
+        Parameters
+        ----------
+        X_train : np.array
+            train data.
+        X_test : np.array
+            test data.
+        y_train : np.array
+            train labels.
+        y_test : np.array
+            test labels.
+        estimator : _type_, optional, default RandomForestRegressor()
+            initialized sklearn estimator for training 
+        scoring : str, optional, default "neg_mean_squared_error"
+            scoring metric for GridSearchCV
+        cv : int, optional, default 5
+            folds for k-fold cross validation
+        param_grid : dict, optional
+            param grid for GridSearchCV, by default {"n_estimators": [50, 100], "criterion": ["squared_error"]}
+        refit : bool, optional, default True
+            whether to refit an estimator using the best found parameters on the whole dataset. best_estimator is this final estimator.
+        metric : function, optional
+            sklearn metric, or any metric function for score, by default mean_squared_error
+        savef : str or None, optional, default None 
+            path to save final model; not implemented currently.  
+
+        Returns
+        -------
+        P : sklearn.pipeline.Pipeline
+            fitted pipelen 
+        score : float
+            metric score of best estimator
+        ypred : np.array
+            predicted y values
+        """
 
         try:
             check_is_fitted(estimator)
@@ -480,6 +516,34 @@ class SpectraScope:
         savef=None,
         **kwargs,
     ):
+        """Fit sklearn estimator without hyperparameter tuning.
+
+        Parameters
+        ----------
+        X_train : np.array
+            train data.
+        X_test : np.array
+            test data.
+        y_train : np.array
+            train labels.
+        y_test : np.array
+            test labels.
+        estimator : _type_, optional, default RandomForestRegressor()
+            initialized sklearn estimator for training. 
+        metric : function, optional
+            sklearn metric, or any metric function for score, by default mean_squared_error
+        savef : str or None, optional, default None
+            path to save final model; not implemented currently. 
+
+        Returns
+        -------
+        est : _type_
+            fitted estimator. 
+        score : float
+            metric score of fitted estimator. 
+        ypred : np.array
+            predicted y values
+        """
         try:
             check_is_fitted(estimator)
             print("already fitted")
@@ -495,8 +559,8 @@ class SpectraScope:
 
     def do_sk(
         self,
-        Xattr,
-        yattr,
+        Xattr:str,
+        yattr:str,
         test_size,
         savef=None,
         use_pipeline=True,
@@ -504,7 +568,25 @@ class SpectraScope:
         scale_X=True,
         **kwargs,
     ):
+        """Fit sklearn model or pipeline and save results.
 
+        Parameters
+        ----------
+        Xattr : str
+            X attribute to fit model on.
+        yattr : str
+            y attribute to fit model on.
+        test_size : float or int
+            input for sklearn train_test_split test_size. 
+        savef : str or None, optional, default None
+            filename to save model.
+        use_pipeline : bool, optional, default=True
+            whether to use sklearn pipeline and GridSearchCV.
+        top_features : int, optional, default=20. 
+            number of top features to save for future analysis. 
+        scale_X : bool, optional, default=True. 
+            whether or not to scale X data before fitting using StandardScaler.
+        """
         self.split_X(Xattr, test_size, scale_X=scale_X)
         self.split_y(yattr, test_size)
 
@@ -566,7 +648,22 @@ class SpectraScope:
             ) as f:
                 pickle.dump(P, f)
 
-    def do_LCEN(self, Xattr, yattr, test_size, savef=None, top_features=20, **kwargs):
+    def do_LCEN(self, Xattr:str, yattr:str, test_size, savef=None, top_features=20, **kwargs):
+        """Fit LCEN model using SPA and save results.
+
+        Parameters
+        ----------
+        Xattr : str
+            X attribute to fit model on.
+        yattr : str
+            y attribute to fit model on.
+        test_size : float or int 
+            input for sklearn train_test_split test_size.
+        savef : str or None, optional, default=None
+            filename to save model, default None. Currently SPA automatically saves model.
+        top_features : int, optional, default=20
+            number of top features to save for future analysis. 
+        """
         import SPA
 
         self.split_X(Xattr, test_size)
@@ -663,7 +760,8 @@ class SpectraScope:
             If True, will run on all existing features. If False, will run only features in feats.
         use_pipeline : bool, optional, default=False
             If True, will use sklearn pipeline and GridSearchCV.
-
+        scale_X : bool, optional, default=True
+            If True, will scale X data before fitting.
         """
         self.timenow = datetime.datetime.now().time().strftime("%H_%M_%S_%f")
 
@@ -729,13 +827,29 @@ class SpectraScope:
                     if lcen_kwargs is not None:
                         self.do_LCEN(attr_name, yattr, test_size, savef, **lcen_kwargs)
 
-    def check_dir_exists(self, directory):
+    def check_dir_exists(self, directory:str):
+        """Check if a directory exists, and if not, create it.
+
+        Parameters
+        ----------
+        directory : str
+            path to directory
+        """
         try:
             os.makedirs(directory)
         except OSError:
             pass
 
     def plot_df_heatmap(self, df, fig=None, **plotly_kwargs):
+        """Plot the heatmap of a dataframe. Used most often to visualize best fit scores of various models. 
+
+        Parameters
+        ----------
+        df : pd.DataFrame
+            _description_
+        fig : _type_, optional, default None
+            plotly figure for plotting. If None, will create a new figure.
+        """
         if fig == None:
             fig = go.Figure()
 

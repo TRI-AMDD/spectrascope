@@ -22,7 +22,6 @@ class SpectraScopePlotting:
         col=1,
     ) -> None:
         """
-        _summary_
 
         Parameters
         ----------
@@ -60,12 +59,11 @@ class PlotSpectralFeatures(SpectraScopePlotting):
     """
     def __init__(self, arr, **kwargs) -> None:
         """
-        _summary_
 
         Parameters
         ----------
-        arr : _type_
-            _description_
+        arr : np.array or list
+            feature array. 
         """
         super().__init__(**kwargs)
 
@@ -74,7 +72,7 @@ class PlotSpectralFeatures(SpectraScopePlotting):
             self.xaxis = np.arange(len(self.feature))
 
     def get_xy(self):
-        """_summary_
+        """Get the x and y values for plotting.
 
         Returns
         -------
@@ -87,7 +85,8 @@ class PlotSpectralFeatures(SpectraScopePlotting):
         return self.xaxis, self.feature
 
     def plot_raw_spec(self):
-        """_summary_
+        """Plot the raw spectrum.
+        
         """
         assert self.fig is not None, "please provide a figure for plotting"
         for yi in self.feature:
@@ -122,7 +121,12 @@ class PlotSpectralFeatures(SpectraScopePlotting):
         pass
 
     def plot_pointwise_features(self, **kwargs):
-        """_summary_
+        """Plot pointwise features.
+        
+        Parameters
+        ----------
+        **kwargs : dict
+            additional keyword arguments for go.Scatter.
         """
         if self.fig is None:
             pass
@@ -141,11 +145,17 @@ class PlotSpectralFeatures(SpectraScopePlotting):
 
     def plot_gaussian_peaks(self, **kwargs):
         """Summary of the method.
-
+    
+        Parameters
+        ----------
+        **kwargs : dict
+            additional keyword arguments for go.Scatter.    
         Returns
         -------
-        _type_
-            Description of the return value.
+        np.array 
+            x values for plotting gaussian peaks.
+        fitted : np.array
+            y values for plotting gaussian peaks. 
         """
         if self.fig is None:
             pass
@@ -161,18 +171,22 @@ class PlotSpectralFeatures(SpectraScopePlotting):
             amp = self.feature[i + 1]
             wid = self.feature[i + 2]
             yfit = amp * np.exp(-((x - ctr) ** 2 / (2 * (wid / 2.355) ** 2)))
-            self.fig.add_trace(self.xaxis, yfit, linestyle="-.", color="grey", **kwargs)
+            self.fig.add_trace(go.Scatter(self.xaxis, yfit, linestyle="-.", color="grey", **kwargs))
 
         fitted = np.array(fitted).ravel()
         return np.arange(len(fitted)), fitted
 
     def plot_cwt(self, **kwargs):
-        """Summary of the method.
-
+        """Plot continuous wavelet transform.
+        Parameters
+        ----------
+        **kwargs : dict
+            additional keyword arguments for go.Heatmap.
+            
         Returns
         -------
-        _type_
-            Description of the return value.
+        np.array 
+            Reshaped feature array. 
         """
         widths = len(self.feature) / len(self.xaxis)
         widths = int(widths)
@@ -190,12 +204,18 @@ class PlotSpectralFeatures(SpectraScopePlotting):
             )
 
     def plot_cdf(self, **kwargs):
-        """Summary of the method.
+        """Plot cumulative distribution function.
+        Parameters
+        ----------
+        **kwargs : dict
+            additional keyword arguments for go.Scatter.
 
         Returns
         -------
-        _type_
-            Description of the return value.
+        plot_x : np.array 
+            x values for plotting.
+        plot_y : np.array
+            y values for plotting.
         """
         if self.fig is None:
             plot_x, plot_y = self.get_xy()
@@ -214,12 +234,18 @@ class PlotSpectralFeatures(SpectraScopePlotting):
             )
 
     def plot_polynomial_featuresall(self, **kwargs):
-        """Summary of the method.
-
+        """Plot polynomial features.
+        Parameters
+        ----------
+        **kwargs : dict
+            additional keyword arguments for go.Scatter.
+            
         Returns
         -------
-        _type_
-            Description of the return value.
+        plot_x : np.array 
+            x values for plotting.
+        plot_y : np.array
+            y values for plotting.
         """
         self.xaxis = np.arange(len(self.feature))
         if self.fig is None:
@@ -239,8 +265,13 @@ class PlotSpectralFeatures(SpectraScopePlotting):
             )
 
     def plot_pca(self, c=(0, 1), **kwargs):
-        """Summary of the method.
-
+        """Plot principal component features.
+        Parameters
+        ----------
+        c : tuple, optional, default=(0, 1)
+            selected components to plot. default first and second components.
+        **kwargs : dict
+            additional keyword arguments for go.Scatter.
         """
         c1, c2 = c
         if self.fig is None:
@@ -259,22 +290,39 @@ class PlotSpectralFeatures(SpectraScopePlotting):
             )
 
     def plot_featureagg(self, c=(0, 1), **kwargs):
-        """Summary of the method.
-
+        """Plot feature agglomeration features. 
+        Uses plot_pca.
+        
+        Parameters
+        ----------
+        c : tuple, optional, default=(0, 1)
+            selected components to plot. default first and second components.
+        **kwargs : dict
+            additional keyword arguments for go.Scatter.
         """
         self.plot_pca(c, **kwargs)
 
     def plot_tsne(self, c=(0, 1), **kwargs):
-        """Summary of the method.
+        """Plot t-distributed stochastic neighbor embedding features.
+        Uses plot_pca. 
 
+        Parameters
+        ----------
+        c : tuple, optional, default=(0, 1)
+            selected components to plot. default first and second components.
+        **kwargs : dict
+            additional keyword arguments for go.Scatter.
         """
         self.plot_pca(c, **kwargs)
 
     def plot_fft_features(self, **kwargs):
-        """Summary of the method.
+        """Plot fast fourier transform features.
+        Needs original xaxis. 
         
-        Needs original xaxis
-
+        Parameters
+        ----------
+        **kwargs : dict
+            additional keyword arguments for go.Scatter.
         """
         from scipy.fft import fftfreq
 
@@ -315,22 +363,23 @@ class PlotModel(SpectraScopePlotting):
         **kwargs,
     ) -> None:
         """
-        Summary of the method.
 
         Parameters
         ----------
-        model : _type_, optional
-            Description of the model parameter. Defaults to None.
-        selected_features : _type_, optional
-            Description of the selected_features parameter. Defaults to None.
-        raw : _type_, optional
-            Description of the raw parameter. Defaults to None.
+        model : _type_, optional, default=None
+            Fitted model object. Either a dict (LCEN) or sklearn model.
+        selected_features : list or np.array, optional, default=None
+            Indices of selected features to plot. 
+        raw : _type_, optional, default=None
+            Raw data to plot. Often pointwise features. 
         cmap_name : str, optional
-            Description of the cmap_name parameter. Defaults to "viridis".
-        selected_vals : _type_, optional
-            Description of the selected_vals parameter. Defaults to None.
-        plot_importances : bool, optional
-            Description of the plot_importances parameter. Defaults to False.
+            colormap for plotting. Defaults to "viridis".
+        selected_vals : list or np.array, optional, default=None
+            Values of selected features to plot. Defaults to None.
+        plot_importances : bool, optional, Default=False
+            Whether to plot feature importances as either line plot or color, or just plot locations of selected features. Defaults to False.
+        **kwargs : dict
+            additional keyword arguments for plotting. 
         """
         super().__init__(**kwargs)
         self.model = model
@@ -353,7 +402,14 @@ class PlotModel(SpectraScopePlotting):
             self.colors.append(rgb2hex(rgba))
 
     def plot_polynomial_featuresall(self, sizex=100, sizey=10):
-        """_summary_
+        """Plot polynomial features selected features.
+        
+        Parameters
+        ----------
+        sizex : int, optional
+            x size of polynomial annotation. Defaults to 100.
+        sizey : int, optional
+            y size of polynomial annotation. Defaults to 10.
         """
         
         self.fig.add_trace(
@@ -413,7 +469,12 @@ class PlotModel(SpectraScopePlotting):
         self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
 
     def plot_pointwise_features(self, **kwargs):
-        """_summary_
+        """Plot pointwise features selected features.
+        
+        Parameters
+        ----------
+        **kwargs : dict
+            additional keyword arguments for go.Scatter.
         """
         self.fig.add_trace(
             go.Scatter(x=self.xaxis, y=self.raw, showlegend=False, name="Raw Data"),
@@ -423,7 +484,8 @@ class PlotModel(SpectraScopePlotting):
         if self.plot_importances:
             self.fig.add_trace(
                 go.Scatter(
-                    x=self.xaxis, y=self.selected_features, name="Feature Importances"
+                    x=self.xaxis, y=self.selected_features, name="Feature Importances", 
+                    **kwargs 
                 ),
                 secondary_y=True,
                 row=self.row,
@@ -439,13 +501,19 @@ class PlotModel(SpectraScopePlotting):
     def plot_cwt(self, wavelet="mexh"):
         """Not implemented yet. 
 
-        Args:
-            wavelet (str, optional): _description_. Defaults to "mexh".
+        Parameters
+        wavelet : str, optional, Default = "mexh"
+            wavelet used in model fitting. 
         """
         pass
 
     def plot_cdf(self, **kwargs):
-        """Summary of the method.
+        """Plot cumulative distribution function selected features.
+        
+        Parameters
+        ----------
+        **kwargs : dict
+            additional keyword arguments for go.Scatter.
         
         """
         self.fig.add_trace(
@@ -456,7 +524,8 @@ class PlotModel(SpectraScopePlotting):
         if self.plot_importances:
             self.fig.add_trace(
                 go.Scatter(
-                    x=self.xaxis, y=self.selected_features, name="Feature Importances"
+                    x=self.xaxis, y=self.selected_features, name="Feature Importances", 
+                    **kwargs
                 ),
                 secondary_y=True,
                 row=self.row,
@@ -468,7 +537,12 @@ class PlotModel(SpectraScopePlotting):
         self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
 
     def plot_featureagg(self, **kwargs):
-        """_summary_
+        """Plot feature agglomeration selected features.
+        
+        Parameters
+        ----------
+        **kwargs : dict
+            additional keyword arguments for PlotSpectralFeatures.plot_featureagg.
         """
         
         c = self.selected_features[:2]
@@ -486,7 +560,12 @@ class PlotModel(SpectraScopePlotting):
         featureagg_plotter.plot_featureagg(c, **kwargs)
 
     def plot_pca(self, **kwargs):
-        """_summary_
+        """Plot principal component analysis selected features.
+        
+        Parameters
+        ----------
+        **kwargs : dict
+            additional keyword arguments for PlotSpectralFeatures.plot_pca.
         """
         
         arr = kwargs["feat"]
@@ -504,13 +583,18 @@ class PlotModel(SpectraScopePlotting):
         pca_plotter.plot_pca(c, **kwargs)
 
     def plot_tsne(self, **kwargs):
-        """_summary_
+        """Plot t-distributed stochastic neighbor embedding selected features.
+        
+        Parameters
+        ----------
+        **kwargs : dict
+            additional keyword arguments for PlotSpectralFeatures.plot_tsne.
         """
         
         arr = kwargs["feat"]
         kwargs.pop("feat")
         c = self.selected_features[:2]
-        tsne_plotter = plot_spectral_features(
+        tsne_plotter = PlotSpectralFeatures(
             arr,
             fig=self.fig,
             xaxis=self.xaxis,
@@ -534,7 +618,13 @@ class PlotModel(SpectraScopePlotting):
         pass
 
     def plot_lines(self, **kwargs):
-        """_summary_
+        """Plot lines at the location of selected features 
+        
+        Parameters
+        ----------
+        **kwargs : dict
+            additional keyword arguments for go.Scatter.
+        
         """
         
         kwargs = {
