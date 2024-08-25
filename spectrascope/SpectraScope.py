@@ -617,7 +617,7 @@ class SpectraScope:
             self.best_fits["LCEN"] = {Xattr + "_" + yattr: score}  # score
         else:
             self.best_fits["LCEN"][Xattr + "_" + yattr] = score  # score
-
+        out[0]['LCEN']['score'] = score
         if savef is not None:
             self.check_dir_exists(f"{self.save_path}/{self.today}")
             with open(

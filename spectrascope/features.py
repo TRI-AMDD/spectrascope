@@ -18,6 +18,7 @@ from scipy.ndimage import gaussian_filter
 from sklearn.cluster import FeatureAgglomeration
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
+from sklearn.gaussian_process import GaussianProcessRegressor
 
 class SpectralFeatures:
     """Spectral Features class used by SpectraScope main class to generate features on datasets. 

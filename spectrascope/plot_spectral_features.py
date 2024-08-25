@@ -409,8 +409,8 @@ class PlotModel(SpectraScopePlotting):
                             layer="above",
                         ),
                     row=self.row, col=self.col)
-        self.fig.update_xaxes(title_text=self.xaxis_label)
-        self.fig.update_yaxes(title_text=self.yaxis_label)
+        self.fig.update_xaxes(title_text=self.xaxis_label, row=self.row, col=self.col)
+        self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
 
     def plot_pointwise_features(self, **kwargs):
         """_summary_
@@ -431,8 +431,8 @@ class PlotModel(SpectraScopePlotting):
             )
         else:
             self.plot_lines()
-        self.fig.update_xaxes(title_text=self.xaxis_label)
-        self.fig.update_yaxes(title_text=self.yaxis_label)
+        self.fig.update_xaxes(title_text=self.xaxis_label, row=self.row, col=self.col)
+        self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col, secondary_y=False)
 
         self.fig.layout.yaxis2.update(showticklabels=False)
 
@@ -464,8 +464,8 @@ class PlotModel(SpectraScopePlotting):
             )
         else:
             self.plot_lines()
-        self.fig.update_xaxes(title_text=self.xaxis_label)
-        self.fig.update_yaxes(title_text=self.yaxis_label)
+        self.fig.update_xaxes(title_text=self.xaxis_label, row=self.row, col=self.col)
+        self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
 
     def plot_featureagg(self, **kwargs):
         """_summary_
