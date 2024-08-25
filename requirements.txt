@@ -11,6 +11,6 @@ streamlit==1.36.0
 plotly==5.22.0
 # Code-SPA @ git+https://github.com/PedroSeber/SmartProcessAnalytics.git
 pdoc3==0.11.1
-matminer==0.9.3.dev10
+matminer==0.9.2
 PIL==10.3.0
 matplotlib==3.8.3
