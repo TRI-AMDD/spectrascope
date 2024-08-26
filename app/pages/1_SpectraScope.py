@@ -1,8 +1,8 @@
 import streamlit as st
 
 from spectrascope.ss_classification import *
-from spectrascope.plot_spectral_features import plot_model as pm
-from spectrascope.plot_spectral_features import plot_spectral_features as psf
+from spectrascope.plot_spectral_features import PlotModel as pm
+from spectrascope.plot_spectral_features import PlotSpectralFeatures as psf
 
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
