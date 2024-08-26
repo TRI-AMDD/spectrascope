@@ -6,8 +6,7 @@ on:
     #branches:
     #  - main
     # Alternative: only build for tags.
-    tags:
-      - 'docs'
+    tags: ['docs']
 
 # security: restrict permissions for CI jobs.permissions:
   contents: read
