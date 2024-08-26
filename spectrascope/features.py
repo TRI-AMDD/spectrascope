@@ -653,7 +653,7 @@ class SpectralFeatures:
         return_features : bool, optional, default=False
             return features.
         **kwargs: dict
-            additional parameters to pass to shapelet.
+            additional parameters to pass to ShapeletTransform.
 
         Attributes
         ----------
@@ -662,8 +662,8 @@ class SpectralFeatures:
         """
         
         x, y = self.check_xinterp(verbose)
-        st = ShapeletTransform()
-        self.shapelet_features = st.fit_transform(X=y, y=labels, **kwargs)
+        st = ShapeletTransform(**kwargs)
+        self.shapelet_features = st.fit_transform(X=y, y=labels)
         if return_features:
             return self.shapelet_features
         
