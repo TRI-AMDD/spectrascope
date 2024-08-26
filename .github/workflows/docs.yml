@@ -3,13 +3,16 @@ name: website
 # build the documentation whenever there are new commits on main
 on:
   push:
-    branches:
-      - main
+    #branches:
+    #  - main
     # Alternative: only build for tags.
-    #tags: ['docs']
+    tags:
+      - '*'
+ 
 
 # security: restrict permissions for CI jobs.permissions:
-  contents: read
+  permissions: 
+    contents: read
 
 jobs:
   # Build the documentation and upload the static HTML files as an artifact.
