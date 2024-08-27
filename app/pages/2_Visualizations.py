@@ -2,7 +2,7 @@ import streamlit as st
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import plotly.express as px
-from spectrascope.plot_spectral_features import plot_model as pm
+from spectrascope.plot_spectral_features import PlotModel as pm
 import numpy as np
 from PIL import Image
 

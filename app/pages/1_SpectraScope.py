@@ -19,7 +19,7 @@ st.set_page_config(
 
 pretty_names = {
     "Raw Data": "pointwise_features",
-    "Principle Component Analysis": "pca",
+    "Principal Component Analysis": "pca",
     "Fourier Transform": "fft_features",
     "Cumulative Distribution Function": "cdf",
     "Agglomerative Clustering": "featureagg",
