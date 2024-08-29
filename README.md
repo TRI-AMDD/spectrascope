@@ -30,4 +30,4 @@ streamlit run home.py
 ```
 
 ## Docs 
-The [docs](/html/spectrascope) contain further information on the details of spectrascope. 
+The [docs](/docs) contain html documentation on the details of spectrascope. Can be used to create github pages website.  
