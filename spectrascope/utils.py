@@ -6,6 +6,8 @@ from multiprocessing import Queue
 import numpy as np
 import pandas as pd
 
+__docformat__ = "numpy"
+
 
 def load_data(fn):
     """Load data from a file.

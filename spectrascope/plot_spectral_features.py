@@ -7,6 +7,8 @@ from PIL import Image
 from matplotlib.colors import rgb2hex
 import matplotlib.cm as cm
 
+__docformat__ = "numpy"
+
 
 class SpectraScopePlotting:
     """Base class for plotting spectral features."""

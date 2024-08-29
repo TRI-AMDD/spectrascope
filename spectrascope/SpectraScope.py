@@ -21,7 +21,7 @@ from sklearn.utils.validation import check_is_fitted
 from sklearn.exceptions import NotFittedError
 from sklearn.base import clone
 
-
+__docformat__ = "numpy"
 
 class SpectraScope:
     """The main SpectraScope class encompasses all data loading, feature generation, model training, and model evaluation.

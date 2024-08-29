@@ -11,6 +11,7 @@ from spectrascope.utils import *
 from scipy.spatial.distance import cdist
 from matminer.featurizers.structure import SiteStatsFingerprint
 
+__docformat__ = "numpy"
 
 class BinaryClassifications(SpectraScope):
 

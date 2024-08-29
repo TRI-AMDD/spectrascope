@@ -2,7 +2,7 @@
 Spectral Features class for Spectrascope
 
 """
-# __docformat__ = "numpy"
+__docformat__ = "numpy"
 
 import numpy as np
 from scipy.interpolate import interp1d
