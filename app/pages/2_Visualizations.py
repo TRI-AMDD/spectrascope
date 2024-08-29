@@ -12,6 +12,7 @@ st.set_page_config(
     layout="wide",
 )
 
+# Uses PlotModel for visualizng selected features 
 
 pretty_names = {
     "pointwise_features": "Raw Data",

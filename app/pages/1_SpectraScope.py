@@ -44,6 +44,8 @@ spec_to_featurize = st.multiselect("Input column(s) to featurize", data.specname
 
 st.session_state["fitted_models"] = []
 
+
+# kwargs for plotting 
 kwargs_dict = {
     "pca": {
         "mode": "markers",
@@ -64,6 +66,7 @@ kwargs_dict = {
     "tsne": {"mode": "markers", "marker": dict(color=y, colorscale="Viridis")},
 }
 
+# labels for plotting
 xaxis_pdf = "r"
 xaxis_xanes = "Energy (eV)"
 yaxis_pdf = "G(r)"
@@ -76,7 +79,9 @@ features_available = list(kwargs_dict.keys())
 pretty_features = st.multiselect("Visualize Features", list(pretty_names.keys()))
 features = [pretty_names[f] for f in pretty_features]
 
-
+# Visualize the features 
+# Adds feature for full dataset 
+# May be better/ faster to do for just one example spectra, but that doesn't make sense for PCA / clustering ones
 nfeats = len(features)
 
 if nfeats > 0:
@@ -140,6 +145,7 @@ for spec in spec_to_featurize:
 
 features_selected = st.multiselect("Select from Features Computed", all_features)
 
+# This is adding features if they haven't been computed, but with the new implementation, anything that is plotted has been computed for all spectra in dataset
 with st.spinner(text="featurizing....(say that 10 times fast)"):
     for spec in spec_to_featurize:
         for feat in features_selected:
@@ -147,6 +153,7 @@ with st.spinner(text="featurizing....(say that 10 times fast)"):
             if not hasattr(data, feat):
                 data.add_spectral_feature(spec, feat.replace(f"{spec}_", ""))
 
+# Combine any features
 multi_modal_selected = st.text_input(
     "Would you like to combine any of these features? (format: feat1,feat2; feat1,feat3)",
     None,
@@ -163,6 +170,8 @@ if multi_modal_selected is not None:
 
             features_selected.append(attr_name)
 
+
+#Further linear and polynomial transformations, this is possible if LCEN is imported, if not this wont work 
 st.write(
     "#### Would you like to apply further transformations to any of these features?"
 )
@@ -202,6 +211,7 @@ cross_validate = st.radio(
 )
 cross_validate = {"Default Models": False, "Tune Hyperparameters": True}[cross_validate]
 
+#Default Models
 if not cross_validate:
     rf_kwargs = {"estimator": RandomForestRegressor()}
     lcen_kwargs = lcen_kwargs = {
@@ -217,6 +227,7 @@ if not cross_validate:
         "scale_y": True,
     }
 
+#Tuning hyperparameters 
 elif cross_validate:
 
     model = RandomForestRegressor()
@@ -278,8 +289,8 @@ elif cross_validate:
     }
 
 sk_kwargs = [rf_kwargs]
-st.markdown("## 5. Run!")
 
+st.markdown("## 5. Run!")
 seed = st.number_input("Random Seed", 1, 100, 20, 1)
 test_size = st.number_input("Test Set Size", 0.0, 1.0, 0.25)
 

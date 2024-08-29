@@ -7,8 +7,6 @@ st.set_page_config(page_title="SpectraScope", page_icon="👋", layout="wide")
 
 st.write("# Welcome to SpectraScope! 👋")
 
-# st.sidebar.success("Select a prediction schema")
-
 st.markdown(
     """
     SpectraScope is an app and python package for machine learning on spectral data. 
@@ -16,40 +14,21 @@ st.markdown(
 """
 )
 
-
-fnX = "/Users/amalyajohnson/Desktop/Spectrascope/spectrascope_local/tests/test_files/X_testfile.npy"
-fny = "/Users/amalyajohnson/Desktop/Spectrascope/spectrascope_local/tests/test_files/y_testfile.npy"
+# Load Data 
+# 
+fnX = "../tests/test_files/X_testfile.npy"
+fny = "../tests/test_files/y_testfile.npy"
 X = np.load(fnX)
 y = np.load(fny)
-
-fn = "/Users/amalyajohnson/Desktop/Spectrascope/Datasets/XAS_PDF/Ti/processed_billinge.json"
-data = pd.read_json(fn)
-structures = data["structure"].apply(lambda x: Structure.from_dict(x))
-structures = structures.to_numpy()
-mpids = data["mp_id"].to_list()
-
-info = BinaryClassifications(
-    structures,
-    mpids,
-    X=X,
-    y=y,
-    specnames=["pdf", "xanes"],
-    yname="nn",
-    random_seed=10,
-    generate_dict=False,
-)
 
 
 @st.cache_data
 def load_data(X, y, specnames=["pdf", "xanes"], yname="nn"):
-    data = BinaryClassifications(
-        structures=structures,
-        mpids=mpids,
+    data = SpectraScope(
         X=X,
         y=y,
         specnames=specnames,
         yname=yname,
-        generate_dict=False,
     )
     return data
 
@@ -71,6 +50,7 @@ data.add_x_axis(specname="xanes", value=np.linspace(4969.0, 5021.0, 200))
 data.add_x_axis(specname="pdf", value=np.linspace(0, 10, 200))
 
 
+# Labels for plottign 
 xaxis_pdf = "r"
 xaxis_xanes = "Energy (eV)"
 yaxis_pdf = "G(r)"
@@ -79,6 +59,7 @@ yaxis_xanes = "Intensity (arb)"
 axis_dict = {"xanes": (xaxis_xanes, yaxis_xanes), "pdf": (xaxis_pdf, yaxis_pdf)}
 
 
+# Look at dataframes
 for Xi, name in zip(data.X, data.specnames):
     df = pd.DataFrame(
         Xi, columns=[str(round(i, 2)) for i in getattr(data, f"{name}_xaxis")]
@@ -86,6 +67,7 @@ for Xi, name in zip(data.X, data.specnames):
     if st.checkbox(f"Show {name} Data"):
         st.write(df.head())
 
+# Save name of yattr in session state 
 yattr = st.text_input("Name of prediction", "nn")
 st.session_state["yattr"] = yattr
 
@@ -93,6 +75,8 @@ st.session_state["fitted"] = False
 
 st.markdown("Raw Data")
 
+
+# Plot raw data
 fig1 = make_subplots(
     rows=1,
     cols=st.session_state["ndatasets"],
