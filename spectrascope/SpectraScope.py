@@ -483,7 +483,8 @@ class SpectraScope:
             print("already fitted")
             estimator = clone(estimator)
         except NotFittedError as exc:
-            print(f"Model is not fitted yet.")
+            # print(f"Model is not fitted yet.")
+            pass
 
         P = make_pipeline(
             GridSearchCV(
@@ -549,7 +550,8 @@ class SpectraScope:
             print("already fitted")
             estimator = clone(estimator)
         except NotFittedError as exc:
-            print(f"Model is not fitted yet.")
+            # print(f"Model is not fitted yet.")
+            pass 
 
         est = estimator
         est.fit(X_train, y_train)
