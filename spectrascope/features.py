@@ -2,7 +2,6 @@
 Spectral Features class for Spectrascope
 
 """
-__docformat__ = "numpy"
 
 import numpy as np
 from scipy.interpolate import interp1d
@@ -20,6 +19,8 @@ from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 from sklearn.gaussian_process import GaussianProcessRegressor
 
+# __docformat__ = "numpy"
+
 class SpectralFeatures:
     """Spectral Features class used by SpectraScope main class to generate features on datasets. 
 
@@ -31,13 +32,13 @@ class SpectralFeatures:
     
     """
 
-    def __init__(self, energies: np.array, intensities: np.array):
+    def __init__(self, energies, intensities):
         """
         Parameters
         ----------
-            energies : np.array
+            energies : array-like
                 x axis (energy, time). shape: (n_features,))
-            intensities : np.array
+            intensities : array-like
                 y axis (intensity, current, etc). shape: (n_samples, n_features))
         """
         
@@ -737,7 +738,7 @@ def degree_based_features(
 ):
     """Function to extract features from the data.
 
-    .. deprecated:: 
+    
     
     Parameters
     ---------- 
