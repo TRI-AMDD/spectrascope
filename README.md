@@ -17,10 +17,8 @@ SpectraScope can run without LCEN, however you will lose feature selection and p
 
 To Use LCEN, install v1.4.1 of SmartProcessAnalytics. Currently must be v1.4.1.
 
-A working version can be found on the main branch of this [fork](https://github.com/AmalyaJohnson-TRI/SmartProcessAnalytics/tree/main). 
-
-
-Follow the installation of the repo. 
+A working version can be found on the "main" branch of this [fork](https://github.com/AmalyaJohnson-TRI/SmartProcessAnalytics/tree/main). 
+Clone this repo and run pip install -e .
 
 ## Streamlit app usage 
 SpectraScope is most flexible when used directly with python. Please reference the notebooks in [examples](examples) for a variety of examples. Analysis can also be run through the streamlit app. To run the app: 
