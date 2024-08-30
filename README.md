@@ -15,9 +15,10 @@ pip install -e .
 This installs all the required packages except for SmartProcessAnalytics, which holds the LCEN algorithm. 
 SpectraScope can run without LCEN, however you will lose feature selection and polynomial/interaction transformations. 
 
-To Use LCEN, install v1.4.1 of SmartProcessAnalytics. Currently MUST BE v1.4.1.
+To Use LCEN, install v1.4.1 of SmartProcessAnalytics. Currently must be v1.4.1.
 
-https://github.com/PedroSeber/SmartProcessAnalytics/releases
+A working version can be found on the main branch of this [fork](https://github.com/AmalyaJohnson-TRI/SmartProcessAnalytics/tree/main). 
+
 
 Follow the installation of the repo. 
 
