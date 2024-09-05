@@ -14,13 +14,6 @@ st.markdown(
 """
 )
 
-# Load Data 
-# 
-fnX = "../tests/test_files/X_testfile.npy"
-fny = "../tests/test_files/y_testfile.npy"
-X = np.load(fnX)
-y = np.load(fny)
-
 
 @st.cache_data
 def load_data(X, y, specnames=["pdf", "xanes"], yname="nn"):
@@ -35,9 +28,31 @@ def load_data(X, y, specnames=["pdf", "xanes"], yname="nn"):
 
 st.markdown("Please Load Your Data")
 
-data_load_state = st.text("Loading X data...")
-data = load_data(X, y)
-data_load_state.text("Done! (using st.cache_data)")
+data_option = st.radio("Select Data Option", ("default", "custom"))
+if data_option == "default":
+    fnX = "../tests/test_files/X_testfile.npy"
+    fny = "../tests/test_files/y_testfile.npy"
+    X = np.load(fnX)
+    y = np.load(fny)
+
+    data_load_state = st.text("Loading default data...")
+    data = load_data(X, y)
+    data_load_state.text("Default data loaded!")
+else:
+    X = st.file_uploader("Upload X data", type=["npy"])
+    y = st.file_uploader("Upload y data", type=["npy"])
+    specnames = st.text_input(
+        "Enter the names of the spectra separated by commas", "pdf,xanes"
+    ).split(",")
+    if X and y and specnames:
+        data_load_state = st.text("Loading custom data...")
+        X = np.load(X)
+        y = np.load(y)
+        data = load_data(X, y, specnames=specnames)
+        data_load_state.text("Custom data loaded!")
+    else:
+        st.warning("Please upload your data")
+        st.stop()
 
 st.session_state["data"] = data
 st.session_state["ndatasets"] = data.X.shape[0]
@@ -50,7 +65,7 @@ data.add_x_axis(specname="xanes", value=np.linspace(4969.0, 5021.0, 200))
 data.add_x_axis(specname="pdf", value=np.linspace(0, 10, 200))
 
 
-# Labels for plottign 
+# Labels for plottign
 xaxis_pdf = "r"
 xaxis_xanes = "Energy (eV)"
 yaxis_pdf = "G(r)"
@@ -67,7 +82,7 @@ for Xi, name in zip(data.X, data.specnames):
     if st.checkbox(f"Show {name} Data"):
         st.write(df.head())
 
-# Save name of yattr in session state 
+# Save name of yattr in session state
 yattr = st.text_input("Name of prediction", "nn")
 st.session_state["yattr"] = yattr
 
