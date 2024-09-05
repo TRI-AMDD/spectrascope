@@ -176,3 +176,8 @@ examples/y_test_temp.npy
 examples/y_train_temp.npy
 
 examples/*SPA*
+app/*.json
+app/*.p
+app/*.npy
+SmartProcessAnalytics
+**/Grape-Chemical-Composition**
