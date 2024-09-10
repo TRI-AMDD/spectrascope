@@ -28,5 +28,10 @@ cd app
 streamlit run home.py  
 ```
 
+Or use the docker image: 
+```
+docker compose up --build
+```
+
 ## Docs 
 The [docs](/docs) contain html documentation on the details of spectrascope. Can be used to create github pages website.  
