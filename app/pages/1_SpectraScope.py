@@ -45,7 +45,7 @@ spec_to_featurize = st.multiselect("Input column(s) to featurize", data.specname
 st.session_state["fitted_models"] = []
 
 
-# kwargs for plotting 
+# kwargs for plotting
 kwargs_dict = {
     "pca": {
         "mode": "markers",
@@ -66,21 +66,14 @@ kwargs_dict = {
     "tsne": {"mode": "markers", "marker": dict(color=y, colorscale="Viridis")},
 }
 
-# labels for plotting
-xaxis_pdf = "r"
-xaxis_xanes = "Energy (eV)"
-yaxis_pdf = "G(r)"
-yaxis_xanes = "Intensity (arb)"
-
-axis_dict = {"xanes": (xaxis_xanes, yaxis_xanes), "pdf": (xaxis_pdf, yaxis_pdf)}
-
+axis_dict = st.session_state["axis_dict"]
 features_available = list(kwargs_dict.keys())
 
 pretty_features = st.multiselect("Visualize Features", list(pretty_names.keys()))
 features = [pretty_names[f] for f in pretty_features]
 
-# Visualize the features 
-# Adds feature for full dataset 
+# Visualize the features
+# Adds feature for full dataset
 # May be better/ faster to do for just one example spectra, but that doesn't make sense for PCA / clustering ones
 nfeats = len(features)
 
@@ -171,7 +164,7 @@ if multi_modal_selected is not None:
             features_selected.append(attr_name)
 
 
-#Further linear and polynomial transformations, this is possible if LCEN is imported, if not this wont work 
+# Further linear and polynomial transformations, this is possible if LCEN is imported, if not this wont work
 st.write(
     "#### Would you like to apply further transformations to any of these features?"
 )
@@ -211,7 +204,7 @@ cross_validate = st.radio(
 )
 cross_validate = {"Default Models": False, "Tune Hyperparameters": True}[cross_validate]
 
-#Default Models
+# Default Models
 if not cross_validate:
     rf_kwargs = {"estimator": RandomForestRegressor()}
     lcen_kwargs = lcen_kwargs = {
@@ -227,7 +220,7 @@ if not cross_validate:
         "scale_y": True,
     }
 
-#Tuning hyperparameters 
+# Tuning hyperparameters
 elif cross_validate:
 
     model = RandomForestRegressor()
