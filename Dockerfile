@@ -60,4 +60,4 @@ HEALTHCHECK CMD curl --fail http://localhost:8501/_stcore/health
 
 # Run the application.
 WORKDIR /app/app
-CMD streamlit run home.py
+ENTRYPOINT ["streamlit", "run", "home.py", "--server.port=8501", "--server.address=0.0.0.0"]
