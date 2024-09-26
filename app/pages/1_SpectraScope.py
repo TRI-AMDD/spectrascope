@@ -1,13 +1,12 @@
 import streamlit as st
 
 from spectrascope.ss_classification import *
-from spectrascope.plot_spectral_features import PlotModel as pm
 from spectrascope.plot_spectral_features import PlotSpectralFeatures as psf
 
 from plotly.subplots import make_subplots
-import plotly.graph_objects as go
 import plotly.express as px
-from itertools import product
+
+from app.auth_utils import authenticate_user, render_sidebar
 
 
 st.set_page_config(
@@ -15,6 +14,9 @@ st.set_page_config(
     # page_icon="👋",
     layout="wide",
 )
+
+authenticator = authenticate_user()
+render_sidebar(authenticator)
 
 
 pretty_names = {

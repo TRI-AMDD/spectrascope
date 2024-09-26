@@ -4,7 +4,8 @@ import plotly.graph_objects as go
 import plotly.express as px
 from spectrascope.plot_spectral_features import PlotModel as pm
 import numpy as np
-from PIL import Image
+
+from app.auth_utils import authenticate_user, render_sidebar
 
 st.set_page_config(
     page_title="Model Visualization",
@@ -12,7 +13,10 @@ st.set_page_config(
     layout="wide",
 )
 
-# Uses PlotModel for visualizng selected features 
+authenticator = authenticate_user()
+render_sidebar(authenticator)
+
+# Uses PlotModel for visualizng selected features
 
 pretty_names = {
     "pointwise_features": "Raw Data",
