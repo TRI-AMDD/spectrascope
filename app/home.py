@@ -3,7 +3,13 @@ from attr import dataclass
 from spectrascope.ss_classification import *
 from spectrascope.plot_spectral_features import PlotSpectralFeatures as psf
 
+from app.auth_utils import authenticate_user, render_sidebar
+
 st.set_page_config(page_title="SpectraScope", page_icon="👋", layout="wide")
+
+authenticator = authenticate_user()
+render_sidebar(authenticator)
+
 
 st.write("# Welcome to SpectraScope! 👋")
 st.markdown(
