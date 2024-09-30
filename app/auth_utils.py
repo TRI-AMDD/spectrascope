@@ -1,20 +1,19 @@
 import os
+import pathlib
 
 import streamlit as st
+from dotenv import load_dotenv
 from streamlit_cognito_auth import CognitoHostedUIAuthenticator
+
+load_dotenv(pathlib.Path(__file__).parent / ".env")
 
 
 def authenticate_user():
-    pool_id = os.getenv("COGNITO_POOL_ID", "us-east-1_bLHpPO2vu")
-    app_client_id = os.getenv("COGNITO_APP_CLIENT_ID", "5718oir6vu2lf675co2cs36bu0")
-    app_client_secret = os.getenv(
-        "COGNITO_APP_CLIENT_SECRET",
-        "1ktad0valnammk2q9m8ep4jflcv5umu7q1kvf948813q38k9qj0k",
-    )
-    cognito_domain = os.getenv(
-        "COGNITO_DOMAIN", "https://em-stage-apps.auth.us-east-1.amazoncognito.com"
-    )
-    redirect_uri = os.getenv("COGNITO_REDIRECT_URI", "http://localhost:8501")
+    pool_id = os.getenv("COGNITO_POOL_ID")
+    app_client_id = os.getenv("COGNITO_APP_CLIENT_ID")
+    app_client_secret = os.getenv("COGNITO_APP_CLIENT_SECRET")
+    cognito_domain = os.getenv("COGNITO_DOMAIN")
+    redirect_uri = os.getenv("COGNITO_REDIRECT_URI")
 
     authenticator = CognitoHostedUIAuthenticator(
         pool_id=pool_id,
