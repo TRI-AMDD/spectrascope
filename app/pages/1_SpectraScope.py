@@ -82,7 +82,10 @@ nfeats = len(features)
 if nfeats > 0:
     for spec in spec_to_featurize:
         fig = make_subplots(
-            rows=1, cols=nfeats, subplot_titles=pretty_features, horizontal_spacing=0.15
+            rows=1,
+            cols=nfeats,
+            subplot_titles=[f"{spec}: {p}" for p in pretty_features],
+            horizontal_spacing=0.14,
         )
         for i, feat in enumerate(features):
             kwargs = kwargs_dict[feat]
