@@ -1,3 +1,5 @@
+import contextlib
+
 import streamlit as st
 
 from spectrascope.ss_classification import *
@@ -299,6 +301,20 @@ fit_lcen = st.checkbox("Fit LCEN")
 model_names = []
 
 
+@contextlib.contextmanager
+def try_fit(attr_name, yattr, model_name):
+    try:
+        yield
+    except Exception as e:
+        msg = f"Could not fit {attr_name} with {model_name}. Skipping..."
+        st.warning(msg)
+        print(f"{msg}: {e}")
+        if data.best_fits[model_name]:
+            data.best_fits[model_name][attr_name + "_" + yattr] = np.nan
+        else:
+            data.best_fits[model_name] = {attr_name + "_" + yattr: np.nan}
+
+
 def fit(sk_kwargs, lcen_kwargs, test_size, scale_X, yattr):
     Nm = 0
     if fit_sk:
@@ -316,25 +332,29 @@ def fit(sk_kwargs, lcen_kwargs, test_size, scale_X, yattr):
     for attr_name in features_selected:
         if fit_sk:
             for sk in sk_kwargs:
-                data.do_sk(
-                    attr_name,
-                    yattr,
-                    test_size,
-                    use_pipeline=cross_validate,
-                    scale_X=scale_X,
-                    **sk,
-                )
+                model_name = sk["estimator"].__str__().split("()")[0]
+                with try_fit(attr_name, yattr, model_name):
+                    data.do_sk(
+                        attr_name,
+                        yattr,
+                        test_size,
+                        use_pipeline=cross_validate,
+                        scale_X=scale_X,
+                        **sk,
+                    )
+                    fitted_models.append(attr_name + "_" + yattr + "_" + model_name)
+
                 completed += 1
                 my_bar.progress(completed / N, text=progress_text)
-                model_name = sk["estimator"].__str__().split("()")[0]
-                fitted_models.append(attr_name + "_" + yattr + "_" + model_name)
 
         if fit_lcen:
-            data.do_LCEN(attr_name, yattr, test_size, None, **lcen_kwargs)
+            model_name = "LCEN"
+            with try_fit(attr_name, yattr, model_name):
+                data.do_LCEN(attr_name, yattr, test_size, None, **lcen_kwargs)
+                fitted_models.append(attr_name + "_" + yattr + "_" + model_name)
+
             completed += 1
             my_bar.progress(completed / N, text=progress_text)
-            model_name = "LCEN"
-            fitted_models.append(attr_name + "_" + yattr + "_" + model_name)
 
     my_bar.empty()
 
