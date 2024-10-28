@@ -129,8 +129,6 @@ if nfeats > 0:
 
         st.plotly_chart(fig)
 
-features.append("pointwise_features")
-
 st.markdown("## 3. Choose Features to Build Model On")
 
 all_features = []
