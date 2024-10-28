@@ -227,6 +227,7 @@ if not cross_validate:
 
 # Tuning hyperparameters
 elif cross_validate:
+    st.markdown("#### Build Random Forest")
 
     model = RandomForestRegressor()
     n_estimators = st.text_input("n_estimators", "100")  # 50, 200, 300
