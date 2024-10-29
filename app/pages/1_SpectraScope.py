@@ -1,3 +1,5 @@
+import contextlib
+
 import streamlit as st
 
 from spectrascope.ss_classification import *
@@ -82,7 +84,10 @@ nfeats = len(features)
 if nfeats > 0:
     for spec in spec_to_featurize:
         fig = make_subplots(
-            rows=1, cols=nfeats, subplot_titles=pretty_features, horizontal_spacing=0.15
+            rows=1,
+            cols=nfeats,
+            subplot_titles=[f"{spec}: {p}" for p in pretty_features],
+            horizontal_spacing=0.14,
         )
         for i, feat in enumerate(features):
             kwargs = kwargs_dict[feat]
@@ -128,8 +133,6 @@ if nfeats > 0:
             getattr(temp, f"plot_{feat}").__call__(showlegend=False, **kwargs)
 
         st.plotly_chart(fig)
-
-features.append("pointwise_features")
 
 st.markdown("## 3. Choose Features to Build Model On")
 
@@ -224,6 +227,7 @@ if not cross_validate:
 
 # Tuning hyperparameters
 elif cross_validate:
+    st.markdown("#### Build Random Forest")
 
     model = RandomForestRegressor()
     n_estimators = st.text_input("n_estimators", "100")  # 50, 200, 300
@@ -298,6 +302,20 @@ fit_lcen = st.checkbox("Fit LCEN")
 model_names = []
 
 
+@contextlib.contextmanager
+def try_fit(attr_name, yattr, model_name):
+    try:
+        yield
+    except Exception as e:
+        msg = f"Could not fit {attr_name} with {model_name}. Skipping..."
+        st.warning(msg)
+        print(f"{msg}: {e}")
+        if data.best_fits[model_name]:
+            data.best_fits[model_name][attr_name + "_" + yattr] = np.nan
+        else:
+            data.best_fits[model_name] = {attr_name + "_" + yattr: np.nan}
+
+
 def fit(sk_kwargs, lcen_kwargs, test_size, scale_X, yattr):
     Nm = 0
     if fit_sk:
@@ -315,25 +333,29 @@ def fit(sk_kwargs, lcen_kwargs, test_size, scale_X, yattr):
     for attr_name in features_selected:
         if fit_sk:
             for sk in sk_kwargs:
-                data.do_sk(
-                    attr_name,
-                    yattr,
-                    test_size,
-                    use_pipeline=cross_validate,
-                    scale_X=scale_X,
-                    **sk,
-                )
+                model_name = sk["estimator"].__str__().split("()")[0]
+                with try_fit(attr_name, yattr, model_name):
+                    data.do_sk(
+                        attr_name,
+                        yattr,
+                        test_size,
+                        use_pipeline=cross_validate,
+                        scale_X=scale_X,
+                        **sk,
+                    )
+                    fitted_models.append(attr_name + "_" + yattr + "_" + model_name)
+
                 completed += 1
                 my_bar.progress(completed / N, text=progress_text)
-                model_name = sk["estimator"].__str__().split("()")[0]
-                fitted_models.append(attr_name + "_" + yattr + "_" + model_name)
 
         if fit_lcen:
-            data.do_LCEN(attr_name, yattr, test_size, None, **lcen_kwargs)
+            model_name = "LCEN"
+            with try_fit(attr_name, yattr, model_name):
+                data.do_LCEN(attr_name, yattr, test_size, None, **lcen_kwargs)
+                fitted_models.append(attr_name + "_" + yattr + "_" + model_name)
+
             completed += 1
             my_bar.progress(completed / N, text=progress_text)
-            model_name = "LCEN"
-            fitted_models.append(attr_name + "_" + yattr + "_" + model_name)
 
     my_bar.empty()
 
