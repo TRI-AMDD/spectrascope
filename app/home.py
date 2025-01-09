@@ -115,26 +115,29 @@ def load_custom_data(csv_uploads: list[UploadedFile]):
     """
     X = []
     y = None
-    yname = "yname"
+    yname = None
     specnames = []
     spec_metadata = {}
     for csv_upload in csv_uploads:
         csv_df = pd.read_csv(csv_upload, index_col=0)
         curr_X = csv_df.iloc[:-1, :-1].to_numpy()
         curr_y = csv_df.iloc[:-1, -1].to_numpy()
+        curr_y_name = csv_df.columns[-1]
         curr_xaxis = csv_df.iloc[-1, :-1].to_numpy()
+        curr_xaxis_label = csv_df.index[-1]
         curr_specname = pathlib.Path(csv_upload.name).name.removesuffix(".csv")
 
         X.append(curr_X)
         if y is not None and not np.array_equal(y, curr_y):
-            st.error("all datasets must have same y")
+            st.error("all datasets must have same y data")
             st.stop()
         y = curr_y
+        yname = curr_y_name
         specnames.append(curr_specname)
         spec_metadata[curr_specname] = SpecMetadata(
             name=curr_specname,
-            xaxis_label=f"{curr_specname}_xaxis",
-            yaxis_label=f"{curr_specname}_yaxis",
+            xaxis_label=curr_xaxis_label,
+            yaxis_label=curr_y_name,
             xaxis=curr_xaxis,
         )
     return SpectraScopeInput(
