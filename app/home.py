@@ -1,5 +1,9 @@
+import pathlib
+
 import streamlit as st
 from attr import dataclass
+from streamlit.runtime.uploaded_file_manager import UploadedFile
+
 from spectrascope.ss_classification import *
 from spectrascope.plot_spectral_features import PlotSpectralFeatures as psf
 
@@ -41,6 +45,7 @@ def load_data(X, y, specnames, yname):
     return SpectraScope(X=X, y=y, specnames=specnames, yname=yname)
 
 
+@st.cache_data
 def load_default_data(option):
     if option == "default (pdf,xanes)":
         return load_pdf_xanes_data()
@@ -104,63 +109,40 @@ def load_wine_data():
     )
 
 
-def load_custom_data():
-    try:
-        specnames = st.text_input(
-            "Enter the names of the spectra separated by commas", ""
-        ).split(",")
-        assert specnames != [""], "Please enter at least one spectrum name"
-
-        custom_x_option = st.radio(
-            "Select X upload option",
-            ("all spectra in one .npy file", "one .npy file per spectrum"),
-        )
-        X = load_custom_X_data(custom_x_option, specnames)
-        y = np.load(st.file_uploader("Upload y data", type=["npy"]))
-        yname = st.text_input("Enter the name of the prediction", "")
-        assert y is not None and yname != "", "Please fill in all the fields"
-
-        spec_metadata = load_custom_spec_metadata(specnames)
-        return SpectraScopeInput(
-            X=X,
-            y=y,
-            specnames=specnames,
-            yname=yname,
-            spec_metadata=spec_metadata,
-        )
-    except Exception:
-        st.warning("Please fill in all the fields")
-        st.stop()
-
-
-def load_custom_X_data(option, specnames):
-    if option == "all spectra in one .npy file":
-        return np.load(st.file_uploader("Upload X data", type=["npy"]))
+def load_custom_data(csv_uploads: list[UploadedFile]):
+    """
+    see toy_data.ipyb for explanation of the csv format
+    """
     X = []
-    for spec in specnames:
-        f = st.file_uploader(f"Upload X data for {spec}", type=["npy"])
-        X.append(np.load(f))
-    return X
-
-
-def load_custom_spec_metadata(specnames):
+    y = None
+    yname = None
+    specnames = []
     spec_metadata = {}
-    for spec in specnames:
-        xaxis_label = st.text_input(f"Enter x-axis label for {spec}", "")
-        yaxis_label = st.text_input(f"Enter y-axis label for {spec}", "")
-        linspace = st.text_input(
-            f"Enter linspace for {spec} as a comma separated tuple min,max,numvalues",
-            "",
-        ).split(",")
-        assert xaxis_label != "" and yaxis_label != "" and len(linspace) == 3
-        xaxis = np.linspace(float(linspace[0]), float(linspace[1]), int(linspace[2]))
-        spec_metadata[spec] = SpecMetadata(
-            name=spec,
-            xaxis_label=xaxis_label,
-            yaxis_label=yaxis_label,
-            xaxis=xaxis,
+    for csv_upload in csv_uploads:
+        csv_df = pd.read_csv(csv_upload, index_col=0)
+        curr_X = csv_df.iloc[:-1, :-1].to_numpy()
+        curr_y = csv_df.iloc[:-1, -1].to_numpy()
+        curr_y_name = csv_df.columns[-1]
+        curr_xaxis = csv_df.iloc[-1, :-1].to_numpy()
+        curr_xaxis_label = csv_df.index[-1]
+        curr_specname = pathlib.Path(csv_upload.name).name.removesuffix(".csv")
+
+        X.append(curr_X)
+        if y is not None and not np.array_equal(y, curr_y):
+            st.error("all datasets must have same y data")
+            st.stop()
+        y = curr_y
+        yname = curr_y_name
+        specnames.append(curr_specname)
+        spec_metadata[curr_specname] = SpecMetadata(
+            name=curr_specname,
+            xaxis_label=curr_xaxis_label,
+            yaxis_label=curr_y_name,
+            xaxis=curr_xaxis,
         )
-    return spec_metadata
+    return SpectraScopeInput(
+        X=X, y=y, specnames=specnames, yname=yname, spec_metadata=spec_metadata
+    )
 
 
 def plot_raw_data(data, spec_input):
@@ -199,11 +181,18 @@ def main():
     data_option = st.radio(
         "Select Data Option", ("default (pdf,xanes)", "default (wine)", "custom")
     )
-    spec_input = (
-        load_default_data(data_option)
-        if data_option != "custom"
-        else load_custom_data()
-    )
+
+    if data_option == "custom":
+        csv_uploads = st.file_uploader(
+            "Upload CSV files", type=["csv"], accept_multiple_files=True
+        )
+        if csv_uploads:
+            spec_input = load_custom_data(csv_uploads)
+        else:
+            st.warning("Upload CSV files to load custom data")
+            st.stop()
+    else:
+        spec_input = load_default_data(data_option)
 
     data_load_state = st.text(f"Loading {data_option} data...")
     data = load_data(spec_input.X, spec_input.y, spec_input.specnames, spec_input.yname)
