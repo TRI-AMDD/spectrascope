@@ -1,17 +1,17 @@
-import plotly.express as px
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 import numpy as np
 from spectrascope.utils import *
 from PIL import Image
 from matplotlib.colors import rgb2hex
 import matplotlib.cm as cm
+import matplotlib.colors as mcolors
 
 __docformat__ = "numpy"
 
 
 class SpectraScopePlotting:
     """Base class for plotting spectral features."""
+
     def __init__(
         self,
         xaxis=None,
@@ -56,16 +56,15 @@ class SpectraScopePlotting:
 
 
 class PlotSpectralFeatures(SpectraScopePlotting):
-    """Plotting class for spectral features.
-    
-    """
+    """Plotting class for spectral features."""
+
     def __init__(self, arr, **kwargs) -> None:
         """
 
         Parameters
         ----------
         arr : np.array or list
-            feature array. 
+            feature array.
         """
         super().__init__(**kwargs)
 
@@ -79,17 +78,15 @@ class PlotSpectralFeatures(SpectraScopePlotting):
         Returns
         -------
         self.xaxis : (array-like)
-            xaxis values 
+            xaxis values
         self.feature : (array-like)
             feature values
         """
-        
+
         return self.xaxis, self.feature
 
     def plot_raw_spec(self):
-        """Plot the raw spectrum.
-        
-        """
+        """Plot the raw spectrum."""
         assert self.fig is not None, "please provide a figure for plotting"
         for yi in self.feature:
             self.fig.add_trace(
@@ -117,14 +114,13 @@ class PlotSpectralFeatures(SpectraScopePlotting):
         self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
 
     def plot(self):
-        """Not implemented yet.
-        """
-        
+        """Not implemented yet."""
+
         pass
 
     def plot_pointwise_features(self, **kwargs):
         """Plot pointwise features.
-        
+
         Parameters
         ----------
         **kwargs : dict
@@ -147,17 +143,17 @@ class PlotSpectralFeatures(SpectraScopePlotting):
 
     def plot_gaussian_peaks(self, **kwargs):
         """Summary of the method.
-    
+
         Parameters
         ----------
         **kwargs : dict
-            additional keyword arguments for go.Scatter.    
+            additional keyword arguments for go.Scatter.
         Returns
         -------
-        np.array 
+        np.array
             x values for plotting gaussian peaks.
         fitted : np.array
-            y values for plotting gaussian peaks. 
+            y values for plotting gaussian peaks.
         """
         if self.fig is None:
             pass
@@ -173,7 +169,9 @@ class PlotSpectralFeatures(SpectraScopePlotting):
             amp = self.feature[i + 1]
             wid = self.feature[i + 2]
             yfit = amp * np.exp(-((x - ctr) ** 2 / (2 * (wid / 2.355) ** 2)))
-            self.fig.add_trace(go.Scatter(self.xaxis, yfit, linestyle="-.", color="grey", **kwargs))
+            self.fig.add_trace(
+                go.Scatter(self.xaxis, yfit, linestyle="-.", color="grey", **kwargs)
+            )
 
         fitted = np.array(fitted).ravel()
         return np.arange(len(fitted)), fitted
@@ -184,11 +182,11 @@ class PlotSpectralFeatures(SpectraScopePlotting):
         ----------
         **kwargs : dict
             additional keyword arguments for go.Heatmap.
-            
+
         Returns
         -------
-        np.array 
-            Reshaped feature array. 
+        np.array
+            Reshaped feature array.
         """
         widths = len(self.feature) / len(self.xaxis)
         widths = int(widths)
@@ -214,7 +212,7 @@ class PlotSpectralFeatures(SpectraScopePlotting):
 
         Returns
         -------
-        plot_x : np.array 
+        plot_x : np.array
             x values for plotting.
         plot_y : np.array
             y values for plotting.
@@ -241,10 +239,10 @@ class PlotSpectralFeatures(SpectraScopePlotting):
         ----------
         **kwargs : dict
             additional keyword arguments for go.Scatter.
-            
+
         Returns
         -------
-        plot_x : np.array 
+        plot_x : np.array
             x values for plotting.
         plot_y : np.array
             y values for plotting.
@@ -292,9 +290,9 @@ class PlotSpectralFeatures(SpectraScopePlotting):
             )
 
     def plot_featureagg(self, c=(0, 1), **kwargs):
-        """Plot feature agglomeration features. 
+        """Plot feature agglomeration features.
         Uses plot_pca.
-        
+
         Parameters
         ----------
         c : tuple, optional, default=(0, 1)
@@ -306,7 +304,7 @@ class PlotSpectralFeatures(SpectraScopePlotting):
 
     def plot_tsne(self, c=(0, 1), **kwargs):
         """Plot t-distributed stochastic neighbor embedding features.
-        Uses plot_pca. 
+        Uses plot_pca.
 
         Parameters
         ----------
@@ -319,8 +317,8 @@ class PlotSpectralFeatures(SpectraScopePlotting):
 
     def plot_fft_features(self, **kwargs):
         """Plot fast fourier transform features.
-        Needs original xaxis. 
-        
+        Needs original xaxis.
+
         Parameters
         ----------
         **kwargs : dict
@@ -350,10 +348,8 @@ class PlotSpectralFeatures(SpectraScopePlotting):
 
 
 class PlotModel(SpectraScopePlotting):
-    """Plotting class for model results.
-    
-    """
-    
+    """Plotting class for model results."""
+
     def __init__(
         self,
         model=None,
@@ -371,9 +367,9 @@ class PlotModel(SpectraScopePlotting):
         model : _type_, optional, default=None
             Fitted model object. Either a dict (LCEN) or sklearn model.
         selected_features : list or np.array, optional, default=None
-            Indices of selected features to plot. 
+            Indices of selected features to plot.
         raw : _type_, optional, default=None
-            Raw data to plot. Often pointwise features. 
+            Raw data to plot. Often pointwise features.
         cmap_name : str, optional
             colormap for plotting. Defaults to "viridis".
         selected_vals : list or np.array, optional, default=None
@@ -381,7 +377,7 @@ class PlotModel(SpectraScopePlotting):
         plot_importances : bool, optional, Default=False
             Whether to plot feature importances as either line plot or color, or just plot locations of selected features. Defaults to False.
         **kwargs : dict
-            additional keyword arguments for plotting. 
+            additional keyword arguments for plotting.
         """
         super().__init__(**kwargs)
         self.model = model
@@ -405,7 +401,7 @@ class PlotModel(SpectraScopePlotting):
 
     def plot_polynomial_featuresall(self, sizex=100, sizey=10):
         """Plot polynomial features selected features.
-        
+
         Parameters
         ----------
         sizex : int, optional
@@ -413,11 +409,14 @@ class PlotModel(SpectraScopePlotting):
         sizey : int, optional
             y size of polynomial annotation. Defaults to 10.
         """
-        
+
         self.fig.add_trace(
-            go.Scatter(x=self.xaxis, y=self.raw, showlegend=False), row=self.row, col=self.col
+            go.Scatter(x=self.xaxis, y=self.raw, showlegend=False),
+            row=self.row,
+            col=self.col,
         )
         from spectrascope.features import SpectralFeatures
+
         temp = SpectralFeatures(self.xaxis, self.raw)
 
         temp.generate_bins(4)
@@ -427,23 +426,22 @@ class PlotModel(SpectraScopePlotting):
 
         # plot_key = {}
         for selected_id in self.selected_features:
-
             if selected_id < 16:
-                bin_label = 'bin_indices_4'
+                bin_label = "bin_indices_4"
                 poly_label = "const"
-                search_party = np.linspace(0,16,4)
+                search_party = np.linspace(0, 16, 4)
             elif selected_id >= 16 and selected_id < 36:
-                bin_label = 'bin_indices_5'
+                bin_label = "bin_indices_5"
                 poly_label = "line"
-                search_party = np.linspace(16,36,5)
+                search_party = np.linspace(16, 36, 5)
             elif selected_id >= 36 and selected_id < 76:
-                bin_label = 'bin_indices_10'
+                bin_label = "bin_indices_10"
                 poly_label = "par"
-                search_party = np.linspace(36,76,10)
+                search_party = np.linspace(36, 76, 10)
             elif selected_id >= 76:
-                bin_label = 'bin_indices_20' 
+                bin_label = "bin_indices_20"
                 poly_label = "cubic"
-                search_party = np.linspace(76,156,20)
+                search_party = np.linspace(76, 156, 20)
             located_bin = np.argwhere(selected_id < search_party)[0][0]
             center = np.median(self.xaxis[getattr(temp, bin_label) == located_bin])
             height_id = find_nearest(self.xaxis, center)
@@ -452,27 +450,29 @@ class PlotModel(SpectraScopePlotting):
             im = Image.open(f"../app/static/{poly_label}.png")
 
             self.fig.add_layout_image(
-                        dict(
-                            source=im,
-                            xref="x",
-                            yref="y",
-                            xanchor="center",
-                            yanchor='middle',
-                            x=center,
-                            y=height,
-                            sizex=sizex,
-                            sizey=sizey,
-                            # sizing="contain",
-                            opacity=1,
-                            layer="above",
-                        ),
-                    row=self.row, col=self.col)
+                dict(
+                    source=im,
+                    xref="x",
+                    yref="y",
+                    xanchor="center",
+                    yanchor="middle",
+                    x=center,
+                    y=height,
+                    sizex=sizex,
+                    sizey=sizey,
+                    # sizing="contain",
+                    opacity=1,
+                    layer="above",
+                ),
+                row=self.row,
+                col=self.col,
+            )
         self.fig.update_xaxes(title_text=self.xaxis_label, row=self.row, col=self.col)
         self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
 
     def plot_pointwise_features(self, **kwargs):
         """Plot pointwise features selected features.
-        
+
         Parameters
         ----------
         **kwargs : dict
@@ -486,8 +486,10 @@ class PlotModel(SpectraScopePlotting):
         if self.plot_importances:
             self.fig.add_trace(
                 go.Scatter(
-                    x=self.xaxis, y=self.selected_features, name="Feature Importances", 
-                    **kwargs 
+                    x=self.xaxis,
+                    y=self.selected_features,
+                    name="Feature Importances",
+                    **kwargs,
                 ),
                 secondary_y=True,
                 row=self.row,
@@ -496,27 +498,29 @@ class PlotModel(SpectraScopePlotting):
         else:
             self.plot_lines()
         self.fig.update_xaxes(title_text=self.xaxis_label, row=self.row, col=self.col)
-        self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col, secondary_y=False)
+        self.fig.update_yaxes(
+            title_text=self.yaxis_label, row=self.row, col=self.col, secondary_y=False
+        )
 
         self.fig.layout.yaxis2.update(showticklabels=False)
 
     def plot_cwt(self, wavelet="mexh"):
-        """Not implemented yet. 
+        """Not implemented yet.
 
         Parameters
         wavelet : str, optional, Default = "mexh"
-            wavelet used in model fitting. 
+            wavelet used in model fitting.
         """
         pass
 
     def plot_cdf(self, **kwargs):
         """Plot cumulative distribution function selected features.
-        
+
         Parameters
         ----------
         **kwargs : dict
             additional keyword arguments for go.Scatter.
-        
+
         """
         self.fig.add_trace(
             go.Scatter(x=self.xaxis, y=self.raw, showlegend=False),
@@ -526,8 +530,10 @@ class PlotModel(SpectraScopePlotting):
         if self.plot_importances:
             self.fig.add_trace(
                 go.Scatter(
-                    x=self.xaxis, y=self.selected_features, name="Feature Importances", 
-                    **kwargs
+                    x=self.xaxis,
+                    y=self.selected_features,
+                    name="Feature Importances",
+                    **kwargs,
                 ),
                 secondary_y=True,
                 row=self.row,
@@ -540,13 +546,13 @@ class PlotModel(SpectraScopePlotting):
 
     def plot_featureagg(self, **kwargs):
         """Plot feature agglomeration selected features.
-        
+
         Parameters
         ----------
         **kwargs : dict
             additional keyword arguments for PlotSpectralFeatures.plot_featureagg.
         """
-        
+
         c = self.selected_features[:2]
         arr = kwargs["feat"]
         kwargs.pop("feat")
@@ -563,13 +569,13 @@ class PlotModel(SpectraScopePlotting):
 
     def plot_pca(self, **kwargs):
         """Plot principal component analysis selected features.
-        
+
         Parameters
         ----------
         **kwargs : dict
             additional keyword arguments for PlotSpectralFeatures.plot_pca.
         """
-        
+
         arr = kwargs["feat"]
         kwargs.pop("feat")
         c = self.selected_features[:2]
@@ -586,13 +592,13 @@ class PlotModel(SpectraScopePlotting):
 
     def plot_tsne(self, **kwargs):
         """Plot t-distributed stochastic neighbor embedding selected features.
-        
+
         Parameters
         ----------
         **kwargs : dict
             additional keyword arguments for PlotSpectralFeatures.plot_tsne.
         """
-        
+
         arr = kwargs["feat"]
         kwargs.pop("feat")
         c = self.selected_features[:2]
@@ -608,56 +614,41 @@ class PlotModel(SpectraScopePlotting):
         tsne_plotter.plot_tsne(c, **kwargs)
 
     def plot_fft_features(self):
-        """Not implemented yet.
-        
-        """
+        """Not implemented yet."""
         pass
 
     def plot_gaussian_peaks(self):
-        """Not implemented yet.
-        
-        """
+        """Not implemented yet."""
         pass
 
     def plot_lines(self, **kwargs):
-        """Plot lines at the location of selected features 
-        
+        """Plot lines at the location of selected features
+
         Parameters
         ----------
         **kwargs : dict
             additional keyword arguments for go.Scatter.
-        
+
         """
-        
-        kwargs = {
-            "marker_size": 15,
-            "marker_symbol": "line-ns",
-            "marker_line_width": 2,
-            "mode": "markers",
-            "hoverinfo": "none",
-            "marker": dict(
-                color=self.selected_vals,
-                colorscale="Viridis",
-                showscale=self.show_scale,
-                line=dict(width=2, color=self.selected_vals, colorscale="Viridis"),
-            ),
-        }
-        for i in np.arange(0, np.max(self.raw), 0.1):
-            self.fig.add_trace(
-                go.Scatter(
-                    x=self.xaxis[self.selected_features],
-                    y=i * np.ones_like(self.selected_features),
-                    showlegend=False,
-                    name="Selected Features",
-                    **kwargs,
+
+        # Normalize the selected values to the range [0, 1]
+        norm = mcolors.Normalize(
+            vmin=min(self.selected_vals), vmax=max(self.selected_vals)
+        )
+        cmap = cm.get_cmap("viridis")
+        colors = [mcolors.rgb2hex(cmap(norm(val))) for val in self.selected_vals]
+        for i, x in enumerate(self.xaxis[self.selected_features]):
+            self.fig.add_vline(
+                x=x,
+                line=dict(
+                    color=colors[i] if self.show_scale else mcolors.rgb2hex(cmap(0.5)),
+                    width=3,
                 ),
-                row=1,
-                col=1,
-                secondary_y=True,
             )
+
         # self.fig.update_layout(coloraxis_colorbar=dict(title="Coefficient or Importance"))
         self.fig.update_layout(hovermode="x")
-        
+
         # self.fig.layout.yaxis2.update(showticklabels=False)
 
         # customdata=self.xaxis[self.selected_features], hovertemplate="x:%{customdata[0]}"
