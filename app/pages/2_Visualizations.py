@@ -69,17 +69,6 @@ feat = raw_name.replace(f"{spec}_", "")
 
 xaxis = getattr(data, f"{spec}_xaxis")
 raw = getattr(data, raw_name)
-if len(raw[0].ravel()) > len(xaxis):
-    # multi modal
-    spec = "_".join(split_name[:2])
-    spec1, spec2 = spec.split("_")
-    point1 = getattr(data, f"{spec1}_pointwise_features")
-    point2 = getattr(data, f"{spec2}_pointwise_features")
-    point_raw = np.concatenate([point1, point2], axis=1)
-    xaxis = np.arange(point_raw.shape[1])
-    feat = "pointwise_features"
-else:
-    point_raw = getattr(data, f"{spec}_pointwise_features")
 
 model = getattr(data, model_name)
 
@@ -136,8 +125,9 @@ if (
     or "tsne" in model_name
     or "polynomial" in model_name
     or "fft" in model_name
+    or "cwt" in model_name
 ):
-    if "polynomial" in model_name or "fft" in model_name:
+    if "polynomial" in model_name or "fft" in model_name or "cwt" in model_name:
         st.markdown("Visualization not implemented yet")
         import pandas as pd
 
@@ -180,6 +170,18 @@ if (
 
 
 else:
+    if len(raw[0].ravel()) > len(xaxis):
+        # multi modal
+        spec = "_".join(split_name[:2])
+        spec1, spec2 = spec.split("_")
+        point1 = getattr(data, f"{spec1}_pointwise_features")
+        point2 = getattr(data, f"{spec2}_pointwise_features")
+        point_raw = np.concatenate([point1, point2], axis=1)
+        xaxis = np.arange(point_raw.shape[1])
+        feat = "pointwise_features"
+    else:
+        point_raw = getattr(data, f"{spec}_pointwise_features")
+
     raw = point_raw.mean(axis=0)
     if "LCEN" in model_name:
         plotter = pm(
