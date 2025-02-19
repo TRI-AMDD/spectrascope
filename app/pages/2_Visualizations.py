@@ -5,16 +5,12 @@ import plotly.express as px
 from spectrascope.plot_spectral_features import PlotModel as pm
 import numpy as np
 
-from app.auth_utils import authenticate_user, render_sidebar
-
 st.set_page_config(
     page_title="Model Visualization",
     # page_icon="👋",
     layout="wide",
 )
 
-authenticator = authenticate_user()
-render_sidebar(authenticator)
 
 # Uses PlotModel for visualizng selected features
 
