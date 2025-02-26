@@ -8,17 +8,12 @@ from spectrascope.plot_spectral_features import PlotSpectralFeatures as psf
 from plotly.subplots import make_subplots
 import plotly.express as px
 
-from app.auth_utils import authenticate_user, render_sidebar
-
 
 st.set_page_config(
     page_title="Feature Generation and Model Training",
     # page_icon="👋",
     layout="wide",
 )
-
-authenticator = authenticate_user()
-render_sidebar(authenticator)
 
 
 pretty_names = {
