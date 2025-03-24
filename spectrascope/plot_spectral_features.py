@@ -5,6 +5,7 @@ from PIL import Image
 from matplotlib.colors import rgb2hex
 import matplotlib.cm as cm
 import matplotlib.colors as mcolors
+from scipy.fft import fftfreq
 
 __docformat__ = "numpy"
 
@@ -613,9 +614,70 @@ class PlotModel(SpectraScopePlotting):
         )
         tsne_plotter.plot_tsne(c, **kwargs)
 
-    def plot_fft_features(self):
-        """Not implemented yet."""
-        pass
+    def plot_fft_features(self, **kwargs):
+        """Plot fft features."""
+        arr = kwargs["feat"]
+        kwargs.pop("feat")
+
+        N = len(self.xaxis)
+        de = np.diff(self.xaxis)[0]
+        fft_freq = np.abs(fftfreq(N, de))[: N // 2]
+        xaxis_label = "Frequency"
+
+        # Plot the fft
+        self.fig.add_trace(
+            go.Scatter(x=fft_freq, y=arr, **(kwargs | {"name": "fft"})),
+            row=self.row,
+            col=self.col,
+        )
+        self.fig.update_xaxes(title_text=xaxis_label, row=self.row, col=self.col)
+        self.fig.update_yaxes(title_text="fft", row=self.row, col=self.col)
+
+        # Plot the fft features
+        y_name = (
+            ""  # Feature Importances" if self.plot_importances else "Coefficient Value"
+        )
+        if self.plot_importances:
+            # Plot the selected features
+            self.fig.add_trace(
+                go.Scatter(
+                    x=fft_freq,
+                    y=self.selected_features,
+                    **(kwargs | {"name": "Feature Importances"}),
+                ),
+                row=self.row,
+                col=self.col,
+            )
+        else:
+            # Normalize the selected values to the range [0, 1]
+            norm = mcolors.Normalize(
+                vmin=min(self.selected_vals), vmax=max(self.selected_vals)
+            )
+            cmap = cm.get_cmap("viridis")
+            colors = [mcolors.rgb2hex(cmap(norm(val))) for val in self.selected_vals]
+            y_min, y_max = np.min(arr), np.max(arr)
+
+            for i, x in enumerate(fft_freq[self.selected_features]):
+                curr_color = (
+                    colors[i] if self.show_scale else mcolors.rgb2hex(cmap(0.5))
+                )
+                curr_val = self.selected_vals[i]
+                curr_feature = self.selected_features[i]
+                self.fig.add_trace(
+                    go.Scatter(
+                        x=[x, x],
+                        y=[y_min, y_max],
+                        mode="lines",
+                        line=dict(color=curr_color, width=3),
+                        hovertemplate=f"Feature ID: {curr_feature}<br>Value: {curr_val}",
+                        showlegend=False,
+                    )
+                )
+
+            # self.fig.update_layout(coloraxis_colorbar=dict(title="Coefficient or Importance"))
+            self.fig.update_layout(hovermode="x")
+        self.fig.update_xaxes(title_text=xaxis_label, row=self.row, col=self.col)
+        self.fig.update_yaxes(title_text=y_name, row=self.row, col=self.col)
 
     def plot_gaussian_peaks(self):
         """Not implemented yet."""

@@ -113,17 +113,16 @@ model_kwargs = {
     "pointwise_features": {},
     "polynomial_featuresall": {},
     "cdf": {},
-    "fft_features": {},
+    "fft_features": {"feat": data.__getattribute__(spec + "_" + feat)[0].ravel()},
 }
 if (
     "pca" in model_name
     or "featureagg" in model_name
     or "tsne" in model_name
     or "polynomial" in model_name
-    or "fft" in model_name
     or "cwt" in model_name
 ):
-    if "polynomial" in model_name or "fft" in model_name or "cwt" in model_name:
+    if "polynomial" in model_name or "cwt" in model_name:
         st.markdown("Visualization not implemented yet")
         import pandas as pd
 
