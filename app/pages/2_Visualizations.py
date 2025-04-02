@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import plotly.express as px
@@ -46,7 +47,6 @@ elif "trans" in model_name:
     model = getattr(data, model_name)
 
     st.markdown("Visualization not implemented yet")
-    import pandas as pd
 
     selected_features = model["selected_features"]
     selected_vals = model["selected_vals"]
@@ -122,10 +122,8 @@ if (
     or "polynomial" in model_name
     or "cwt" in model_name
 ):
-    if "polynomial" in model_name or "cwt" in model_name:
+    if "polynomial" in model_name:
         st.markdown("Visualization not implemented yet")
-        import pandas as pd
-
         try:
             if "LCEN" in model_name:
                 temp = pd.DataFrame(
@@ -142,9 +140,62 @@ if (
                     }
                 )
                 st.write(temp)
+                print(raw.shape)
         except:
             pass
         st.stop()
+    elif "cwt" in model_name:
+        if "LCEN" in model_name:
+            temp = pd.DataFrame(
+                {"Selected Feature IDs": selected_features, "Values": selected_vals}
+            )
+            fig.add_trace(
+                go.Scatter(
+                    x=temp.index,
+                    y=temp["Selected Feature IDs"],
+                    mode="markers",
+                    marker=dict(
+                        color=temp["Values"],  # Use values for color mapping
+                        colorscale="Viridis",  # Colorscale similar to cmap='viridis'
+                        showscale=True,  # Displays the colorbar
+                        colorbar={"title": "Values"},
+                    ),
+                )
+            )
+            fig.update_layout(
+                xaxis_title="index",
+                yaxis_title="Selected Feature IDs",
+                title="CWT Feature Values",
+            )
+        elif "RandomForest" in model_name:
+            temp = pd.DataFrame(
+                {
+                    "Feature IDs": np.argsort(feature_importances)[::-1],
+                    "Feature Importances": feature_importances[
+                        np.argsort(feature_importances)[::-1]
+                    ],
+                }
+            )
+            fig.add_trace(
+                go.Scatter(
+                    x=temp.index,
+                    y=temp["Feature IDs"],
+                    mode="markers",
+                    marker=dict(
+                        color=temp[
+                            "Feature Importances"
+                        ],  # Use values for color mapping
+                        colorscale="Viridis",  # Colorscale similar to cmap='viridis'
+                        showscale=True,  # Displays the colorbar
+                        colorbar={"title": "Feature Importances"},
+                    ),
+                )
+            )
+            fig.update_layout(
+                xaxis_title="index",
+                yaxis_title="Feature IDs",
+                title="CWT Feature Importances",
+            )
     else:
         i = selected_features[0]
         j = selected_features[1]
