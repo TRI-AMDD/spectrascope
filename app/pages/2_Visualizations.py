@@ -114,13 +114,13 @@ model_kwargs = {
     "polynomial_featuresall": {},
     "cdf": {},
     "fft_features": {"feat": data.__getattribute__(spec + "_" + feat)[0].ravel()},
+    "cwt": {"feat": raw, "colorscale": "Viridis"},
 }
 if (
     "pca" in model_name
     or "featureagg" in model_name
     or "tsne" in model_name
     or "polynomial" in model_name
-    or "cwt" in model_name
 ):
     if "polynomial" in model_name:
         st.markdown("Visualization not implemented yet")
@@ -144,58 +144,7 @@ if (
         except:
             pass
         st.stop()
-    elif "cwt" in model_name:
-        if "LCEN" in model_name:
-            temp = pd.DataFrame(
-                {"Selected Feature IDs": selected_features, "Values": selected_vals}
-            )
-            fig.add_trace(
-                go.Scatter(
-                    x=temp.index,
-                    y=temp["Selected Feature IDs"],
-                    mode="markers",
-                    marker=dict(
-                        color=temp["Values"],  # Use values for color mapping
-                        colorscale="Viridis",  # Colorscale similar to cmap='viridis'
-                        showscale=True,  # Displays the colorbar
-                        colorbar={"title": "Values"},
-                    ),
-                )
-            )
-            fig.update_layout(
-                xaxis_title="index",
-                yaxis_title="Selected Feature IDs",
-                title="CWT Feature Values",
-            )
-        elif "RandomForest" in model_name:
-            temp = pd.DataFrame(
-                {
-                    "Feature IDs": np.argsort(feature_importances)[::-1],
-                    "Feature Importances": feature_importances[
-                        np.argsort(feature_importances)[::-1]
-                    ],
-                }
-            )
-            fig.add_trace(
-                go.Scatter(
-                    x=temp.index,
-                    y=temp["Feature IDs"],
-                    mode="markers",
-                    marker=dict(
-                        color=temp[
-                            "Feature Importances"
-                        ],  # Use values for color mapping
-                        colorscale="Viridis",  # Colorscale similar to cmap='viridis'
-                        showscale=True,  # Displays the colorbar
-                        colorbar={"title": "Feature Importances"},
-                    ),
-                )
-            )
-            fig.update_layout(
-                xaxis_title="index",
-                yaxis_title="Feature IDs",
-                title="CWT Feature Importances",
-            )
+
     else:
         i = selected_features[0]
         j = selected_features[1]
@@ -213,10 +162,8 @@ if (
         plotter.show_scale = st.session_state["scale_X"]
         plotter.__getattribute__(f"plot_{feat}").__call__(**model_kwargs[feat])
         fig.layout.annotations[0].update(text="Top 2 Components/Clusters")
-
-
 else:
-    if len(raw[0].ravel()) > len(xaxis):
+    if len(raw[0].ravel()) > len(xaxis) and "cwt" not in model_name:
         # multi modal
         spec = "_".join(split_name[:2])
         spec1, spec2 = spec.split("_")
@@ -242,7 +189,6 @@ else:
         plotter.show_scale = st.session_state["scale_X"]
         plotter.__getattribute__(f"plot_{feat}").__call__(**model_kwargs[feat])
     else:
-        print(len(feature_importances))
         plotter = pm(
             selected_features=feature_importances,
             selected_vals=selected_vals,
