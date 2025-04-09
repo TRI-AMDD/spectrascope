@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import plotly.express as px
@@ -46,7 +47,6 @@ elif "trans" in model_name:
     model = getattr(data, model_name)
 
     st.markdown("Visualization not implemented yet")
-    import pandas as pd
 
     selected_features = model["selected_features"]
     selected_vals = model["selected_vals"]
@@ -114,18 +114,16 @@ model_kwargs = {
     "polynomial_featuresall": {},
     "cdf": {},
     "fft_features": {"feat": data.__getattribute__(spec + "_" + feat)[0].ravel()},
+    "cwt": {"feat": raw, "colorscale": "Viridis"},
 }
 if (
     "pca" in model_name
     or "featureagg" in model_name
     or "tsne" in model_name
     or "polynomial" in model_name
-    or "cwt" in model_name
 ):
-    if "polynomial" in model_name or "cwt" in model_name:
+    if "polynomial" in model_name:
         st.markdown("Visualization not implemented yet")
-        import pandas as pd
-
         try:
             if "LCEN" in model_name:
                 temp = pd.DataFrame(
@@ -142,9 +140,11 @@ if (
                     }
                 )
                 st.write(temp)
+                print(raw.shape)
         except:
             pass
         st.stop()
+
     else:
         i = selected_features[0]
         j = selected_features[1]
@@ -162,10 +162,8 @@ if (
         plotter.show_scale = st.session_state["scale_X"]
         plotter.__getattribute__(f"plot_{feat}").__call__(**model_kwargs[feat])
         fig.layout.annotations[0].update(text="Top 2 Components/Clusters")
-
-
 else:
-    if len(raw[0].ravel()) > len(xaxis):
+    if len(raw[0].ravel()) > len(xaxis) and "cwt" not in model_name:
         # multi modal
         spec = "_".join(split_name[:2])
         spec1, spec2 = spec.split("_")
@@ -191,7 +189,6 @@ else:
         plotter.show_scale = st.session_state["scale_X"]
         plotter.__getattribute__(f"plot_{feat}").__call__(**model_kwargs[feat])
     else:
-        print(len(feature_importances))
         plotter = pm(
             selected_features=feature_importances,
             selected_vals=selected_vals,
