@@ -103,7 +103,9 @@ if nfeats > 0:
                 elif "polynomial" in feat:
                     xaxis_label = "Feature Index"
                     yaxis_label = "Polynomial Coefficientr"
-
+                elif "cwt" in feat:
+                    xaxis_label = "Translation"
+                    yaxis_label = "Scale"
                 else:
                     xaxis_label = ""
                     yaxis_label = ""

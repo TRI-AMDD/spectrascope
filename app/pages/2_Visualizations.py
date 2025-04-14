@@ -163,19 +163,23 @@ if (
         plotter.__getattribute__(f"plot_{feat}").__call__(**model_kwargs[feat])
         fig.layout.annotations[0].update(text="Top 2 Components/Clusters")
 else:
-    if len(raw[0].ravel()) > len(xaxis) and "cwt" not in model_name:
-        # multi modal
-        spec = "_".join(split_name[:2])
-        spec1, spec2 = spec.split("_")
-        point1 = getattr(data, f"{spec1}_pointwise_features")
-        point2 = getattr(data, f"{spec2}_pointwise_features")
-        point_raw = np.concatenate([point1, point2], axis=1)
-        xaxis = np.arange(point_raw.shape[1])
-        feat = "pointwise_features"
-    else:
-        point_raw = getattr(data, f"{spec}_pointwise_features")
+    if "pointwise" in model_name:
+        if len(raw[0].ravel()) > len(xaxis) and "cwt" not in model_name:
+            # multi modal
+            spec = "_".join(split_name[:2])
+            spec1, spec2 = spec.split("_")
+            point1 = getattr(data, f"{spec1}_pointwise_features")
+            point2 = getattr(data, f"{spec2}_pointwise_features")
+            point_raw = np.concatenate([point1, point2], axis=1)
+            xaxis = np.arange(point_raw.shape[1])
+            feat = "pointwise_features"
+        else:
+            point_raw = getattr(data, f"{spec}_pointwise_features")
 
-    raw = point_raw.mean(axis=0)
+        raw = point_raw.mean(axis=0)
+    else:
+        raw = None
+
     if "LCEN" in model_name:
         plotter = pm(
             selected_features=selected_features,
