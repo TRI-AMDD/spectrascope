@@ -103,7 +103,9 @@ if nfeats > 0:
                 elif "polynomial" in feat:
                     xaxis_label = "Feature Index"
                     yaxis_label = "Polynomial Coefficientr"
-
+                elif "cwt" in feat:
+                    xaxis_label = "Translation"
+                    yaxis_label = "Scale"
                 else:
                     xaxis_label = ""
                     yaxis_label = ""
@@ -182,16 +184,68 @@ if do_transform:
         "Choose features to transform",
         features_selected,
     )
-    for transform in transform_selected:
-        additional_naming = f"_{degree}_{interaction}_{trans_type}"
-        data.transform_feature(
-            transform,
-            degree=degree,
-            interaction=interaction,
-            trans_type=trans_type,
-            additional_naming=additional_naming,
+
+    if transform_selected:
+        fig = make_subplots(
+            rows=1,
+            cols=len(transform_selected),
+            subplot_titles=transform_selected,
+            horizontal_spacing=0.14,
         )
-        features_selected.append(transform + "_trans" + additional_naming)
+        for i, transform in enumerate(transform_selected):
+            additional_naming = f"_{degree}_{interaction}_{trans_type}"
+            data.transform_feature(
+                transform,
+                degree=degree,
+                interaction=interaction,
+                trans_type=trans_type,
+                additional_naming=additional_naming,
+            )
+            transformed_feature = transform + "_trans" + additional_naming
+            features_selected.append(transformed_feature)
+
+            spec, _, feat = transform.partition("_")
+            kwargs = kwargs_dict[feat]
+            if "fft" in feat or "pointwise" in feat:
+                if "pointwise" in feat:
+                    xaxis_label, yaxis_label = axis_dict[spec]
+                else:
+                    xaxis_label = "Frequency"
+                    yaxis_label = "FFT"
+            else:
+                if "cdf" in feat:
+                    xaxis_label, yaxis_label = axis_dict[spec]
+                    yaxis_label = "Cumulative Intensity"
+                elif "polynomial" in feat:
+                    xaxis_label = "Feature Index"
+                    yaxis_label = "Polynomial Coefficientr"
+                elif "cwt" in feat:
+                    xaxis_label = "Translation"
+                    yaxis_label = "Scale"
+                else:
+                    xaxis_label = ""
+                    yaxis_label = ""
+
+            arr = data.__getattribute__(transformed_feature)
+            if feat == "pca" or feat == "featureagg" or feat == "tsne":
+                xaxis_label = "Component 1"
+                yaxis_label = "Component 2"
+            else:
+                arr = arr[0].ravel()
+
+            xaxis = getattr(data, f"{spec}_xaxis")
+            temp = psf(
+                arr,
+                xaxis=xaxis,
+                fig=fig,
+                row=1,
+                col=i + 1,
+                xaxis_label=xaxis_label,
+                yaxis_label=yaxis_label,
+            )
+            getattr(temp, f"plot_{feat}").__call__(showlegend=False, **kwargs)
+
+        st.plotly_chart(fig)
 
 st.write(f"#### Final Features selected for model building:")
 for feat in features_selected:

@@ -512,6 +512,9 @@ class PlotModel(SpectraScopePlotting):
         wavelet : str, optional, Default = "mexh"
             wavelet used in model fitting.
         """
+        xaxis_label = self.xaxis_label or "Translation"
+        yaxis_label = self.yaxis_label or "Scale"
+
         arr = kwargs["feat"]
         kwargs.pop("feat")
         if self.plot_importances:
@@ -524,14 +527,14 @@ class PlotModel(SpectraScopePlotting):
             features,
             fig=self.fig,
             xaxis=self.xaxis,
-            xaxis_label=self.xaxis_label,
-            yaxis_label=self.yaxis_label,
+            xaxis_label=xaxis_label,
+            yaxis_label=yaxis_label,
             row=self.row,
             col=self.col,
         )
         cwt_plotter.plot_cwt(**kwargs)
-        self.fig.update_xaxes(title_text=self.xaxis_label, row=self.row, col=self.col)
-        self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
+        self.fig.update_xaxes(title_text=xaxis_label, row=self.row, col=self.col)
+        self.fig.update_yaxes(title_text=yaxis_label, row=self.row, col=self.col)
 
     def plot_cdf(self, **kwargs):
         """Plot cumulative distribution function selected features.
