@@ -202,6 +202,7 @@ if do_transform:
                 additional_naming=additional_naming,
             )
             transformed_feature = transform + "_trans" + additional_naming
+            transformed_feature_names = transform + "_trans_names" + additional_naming
             features_selected.append(transformed_feature)
 
             spec, _, feat = transform.partition("_")
@@ -227,6 +228,7 @@ if do_transform:
                     yaxis_label = ""
 
             arr = data.__getattribute__(transformed_feature)
+            arr_names = data.__getattribute__(transformed_feature_names)
             if feat == "pca" or feat == "featureagg" or feat == "tsne":
                 xaxis_label = "Component 1"
                 yaxis_label = "Component 2"
@@ -234,16 +236,33 @@ if do_transform:
                 arr = arr[0].ravel()
 
             xaxis = getattr(data, f"{spec}_xaxis")
-            temp = psf(
-                arr,
-                xaxis=xaxis,
-                fig=fig,
-                row=1,
-                col=i + 1,
-                xaxis_label=xaxis_label,
-                yaxis_label=yaxis_label,
-            )
-            getattr(temp, f"plot_{feat}").__call__(showlegend=False, **kwargs)
+            df = pd.DataFrame(arr_names, columns=["name"])
+            # build a grouping key → “strip every digit and any trailing ‘(’ ”
+            df["group"] = df["name"].str.replace(
+                r"x\d+", "x", regex=True
+            )  # kill digits
+            for g, sub in df.groupby("group"):
+                try:
+                    if feat == "pca" or feat == "featureagg" or feat == "tsne":
+                        sub_arr = arr[:, sub.index]
+                    else:
+                        sub_arr = arr[sub.index]
+                    temp = psf(
+                        sub_arr,
+                        xaxis=xaxis,
+                        fig=fig,
+                        row=1,
+                        col=i + 1,
+                        xaxis_label=xaxis_label,
+                        yaxis_label=yaxis_label,
+                    )
+                    getattr(temp, f"plot_{feat}").__call__(
+                        showlegend=True, name=g, **kwargs
+                    )
+                except Exception as e:
+                    msg = f"Could not plot {feat} with {g}. Skipping..."
+                    st.warning(msg)
+                    print(f"{msg}: {e}")
 
         st.plotly_chart(fig)
 

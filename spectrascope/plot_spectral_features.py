@@ -189,9 +189,12 @@ class PlotSpectralFeatures(SpectraScopePlotting):
         np.array
             Reshaped feature array.
         """
-        widths = len(self.feature) / len(self.xaxis)
+        widths = len(self.feature) // len(self.xaxis)
         widths = int(widths)
-        temp = self.feature.reshape(widths, len(self.xaxis))
+        if len(self.feature) % len(self.xaxis) != 0:
+            widths += 1
+        temp = np.full((widths, len(self.xaxis)), np.nan)
+        temp.flat[: len(self.feature)] = self.feature
 
         if self.fig is None:
             return temp
@@ -275,6 +278,8 @@ class PlotSpectralFeatures(SpectraScopePlotting):
             additional keyword arguments for go.Scatter.
         """
         c1, c2 = c
+        if self.feature.shape[1] == 1:
+            c1, c2 = 0, 0
         if self.fig is None:
             pass
         else:
