@@ -42,11 +42,11 @@ def load_data(X, y, specnames, yname):
     return SpectraScope(X=X, y=y, specnames=specnames, yname=yname)
 
 
-@st.cache_data
+# @st.cache_data  # Temporarily disabled to allow updates
 def load_default_data(option):
-    if option == "default (pdf,xanes)":
+    if option == "Default (PDF,XANES)":
         return load_pdf_xanes_data()
-    elif option == "default (wine)":
+    elif option == "Default (Wine)":
         return load_wine_data()
     return None
 
@@ -55,14 +55,14 @@ def load_pdf_xanes_data():
     fnX = "../tests/test_files/X_testfile.npy"
     fny = "../tests/test_files/y_testfile.npy"
     spec_metadata = {
-        "pdf": SpecMetadata(
-            name="pdf",
+        "PDF": SpecMetadata(
+            name="PDF",
             xaxis_label="r",
             yaxis_label="G(r)",
             xaxis=np.linspace(0, 10, 200),
         ),
-        "xanes": SpecMetadata(
-            name="xanes",
+        "XANES": SpecMetadata(
+            name="XANES",
             xaxis_label="Energy (eV)",
             yaxis_label="Intensity (arb)",
             xaxis=np.linspace(4969.0, 5021.0, 200),
@@ -71,8 +71,8 @@ def load_pdf_xanes_data():
     return SpectraScopeInput(
         X=np.load(fnX),
         y=np.load(fny),
-        specnames=["pdf", "xanes"],
-        yname="nn",
+        specnames=["PDF", "XANES"],
+        yname="bondlength",
         spec_metadata=spec_metadata,
     )
 
@@ -84,24 +84,24 @@ def load_wine_data():
     nir_wls = np.load("../tests/test_files/grapes_example/nir_xaxis.npy")
     raman_wls = np.load("../tests/test_files/grapes_example/rm_xaxis.npy")
     spec_metadata = {
-        "nir": SpecMetadata(
-            name="nir",
-            xaxis_label="nir",
-            yaxis_label="yaxis",
+        "NIR": SpecMetadata(
+            name="NIR",
+            xaxis_label="NIR",
+            yaxis_label="Reflection [%]",
             xaxis=nir_wls,
         ),
-        "rm": SpecMetadata(
-            name="rm",
-            xaxis_label="rm",
-            yaxis_label="yaxis",
+        "Raman": SpecMetadata(
+            name="Raman",
+            xaxis_label="Raman",
+            yaxis_label="Intensity (cts.)",
             xaxis=raman_wls,
         ),
     }
     return SpectraScopeInput(
         X=[XSF_br, XRF_br],
         y=br,
-        specnames=["nir", "rm"],
-        yname="br",
+        specnames=["NIR", "Raman"],
+        yname="sugarcontent",
         spec_metadata=spec_metadata,
     )
 
@@ -175,8 +175,14 @@ def plot_raw_data(data, spec_input):
 
 def main():
     st.markdown("Please Load Your Data")
+    
+    # Add a button to clear cache if needed
+    if st.button("Clear Cache ( if data not updating)"):
+        st.cache_data.clear()
+        st.rerun()
+    
     data_option = st.radio(
-        "Select Data Option", ("default (pdf,xanes)", "default (wine)", "custom")
+        "Select Data Option", ("Default (PDF,XANES)", "Default (Wine)", "custom")
     )
 
     if data_option == "custom":
@@ -190,6 +196,9 @@ def main():
             st.stop()
     else:
         spec_input = load_default_data(data_option)
+        if spec_input is None:
+            st.error(f"Unknown data option: {data_option}")
+            st.stop()
 
     data_load_state = st.text(f"Loading {data_option} data...")
     data = load_data(spec_input.X, spec_input.y, spec_input.specnames, spec_input.yname)
@@ -203,7 +212,7 @@ def main():
         data.add_x_axis(specname=name, value=spec_input.spec_metadata[name].xaxis)
 
     for i, name in enumerate(spec_input.specnames):
-        if st.checkbox(f"Show {name} Data"):
+        if st.checkbox(f"Show {name} data"):
             st.write(
                 pd.DataFrame(
                     spec_input.X[i],
@@ -213,7 +222,7 @@ def main():
                 ).head()
             )
 
-    yattr = st.text_input("Name of prediction", spec_input.yname)
+    yattr = st.text_input("Name of Target Variable", spec_input.yname)
     st.session_state["yattr"] = yattr
     st.session_state["fitted"] = False
 

@@ -160,8 +160,20 @@ if (
             yaxis_label=yaxis_label,
         )
         plotter.show_scale = st.session_state["scale_X"]
-        plotter.__getattribute__(f"plot_{feat}").__call__(**model_kwargs[feat])
-        fig.layout.annotations[0].update(text="Top 2 Components/Clusters")
+        try: # hardcoding this for now
+            plotter.__getattribute__(f"plot_{feat}").__call__(**model_kwargs[feat])
+            fig.layout.annotations[0].update(text="Top 2 Components/Clusters")
+        except AttributeError:
+            st.markdown("Visualization not implemented yet")
+
+            selected_features = model["selected_features"]
+            selected_vals = model["selected_vals"]
+            temp = pd.DataFrame(
+                {"Selected Feature IDs": selected_features, "Values": selected_vals}
+            )
+            st.write(temp)
+            st.stop()
+
 else:
     if "pointwise" in model_name:
         if len(raw[0].ravel()) > len(xaxis) and "cwt" not in model_name:
@@ -191,7 +203,17 @@ else:
             yaxis_label=yaxis_label,
         )
         plotter.show_scale = st.session_state["scale_X"]
-        plotter.__getattribute__(f"plot_{feat}").__call__(**model_kwargs[feat])
+        try:
+            plotter.__getattribute__(f"plot_{feat}").__call__(**model_kwargs[feat])
+        except AttributeError:
+            st.markdown("Visualization not implemented yet")
+            selected_features = model["selected_features"]
+            selected_vals = model["selected_vals"]
+            temp = pd.DataFrame(
+                {"Selected Feature IDs": selected_features, "Values": selected_vals}
+            )
+            st.write(temp)
+            st.stop()
     else:
         plotter = pm(
             selected_features=feature_importances,
@@ -204,7 +226,17 @@ else:
             plot_importances=True,
         )
         plotter.show_scale = st.session_state["scale_X"]
-        plotter.__getattribute__(f"plot_{feat}").__call__(**model_kwargs[feat])
+        try:
+            plotter.__getattribute__(f"plot_{feat}").__call__(**model_kwargs[feat])
+        except AttributeError:
+            st.markdown("Visualization not implemented yet")
+            selected_features = model["selected_features"]
+            selected_vals = model["selected_vals"]
+            temp = pd.DataFrame(
+                {"Selected Feature IDs": selected_features, "Values": selected_vals}
+            )
+            st.write(temp)
+            st.stop()
 
     fig.layout.yaxis2.update(showticklabels=False)
 st.plotly_chart(fig)
