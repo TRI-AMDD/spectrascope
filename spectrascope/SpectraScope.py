@@ -118,7 +118,7 @@ class SpectraScope:
 
         self.best_fits = {}
         self.specnames = specnames
-
+        self.generated_features = []
         if save_path is None:
             print(
                 "saving to /examples/models, change save_path kwarg if youd like to change"
@@ -248,8 +248,9 @@ class SpectraScope:
                 .__call__(return_features=True, **kwargs)
             ]
         )
-
-        setattr(self, specname + "_" + feat + additional_naming, new_feat[0])
+        full_name = specname + "_" + feat + additional_naming
+        setattr(self, full_name, new_feat[0])
+        self.generated_features.append(full_name)
 
     def add_y(self, yname:str, y:np.array):
         """Add a new prediction target y attribute to the SpectraScope object.
@@ -333,9 +334,11 @@ class SpectraScope:
         assert hasattr(self, feat2), "please add feature first"
 
         combined_feat = np.append(getattr(self, feat1), getattr(self, feat2), axis=1)
+        full_name = feat1.split("_")[0] + "_" + feat2 + additional_naming
         setattr(
-            self, feat1.split("_")[0] + "_" + feat2 + additional_naming, combined_feat
+            self, full_name, combined_feat
         )
+        self.generated_features.append(full_name)
 
     def transform_feature(
         self,
@@ -857,3 +860,95 @@ class SpectraScope:
 
         fig.add_trace(go.Heatmap(x=df.columns, y=df.index, z=df, **plotly_kwargs))
         fig.show()
+
+    def tsfresh_feature_selection(self, feat, yattr, fdr_level=0.05): 
+        """Use tsfresh to downselect features before fitting a model.
+
+        Parameters
+        ----------
+        feat : str
+            Feature to select features from.
+        yattr : str
+            Target variable to select features for.
+        fdr_level : float, optional, default=0.05
+            FDR level to use for feature selection.
+
+        Returns
+        -------
+        selected_features : list
+            List of selected features.
+        """
+
+        if 'select_features' not in globals():
+            from tsfresh import select_features
+        X = getattr(self, feat)
+        y = getattr(self, yattr)
+        features_df = pd.DataFrame(X)
+        selected_features = select_features(features_df, y, fdr_level=fdr_level)
+        selected_feature_ids = np.array(selected_features.columns)
+        setattr(self, feat + "_tsfresh_selected", features_df[selected_feature_ids].to_numpy())
+        setattr(self, feat + "_tsfresh_selected_feature_ids", selected_feature_ids)
+        self.generated_features.append(feat + "_tsfresh_selected")
+    
+    def pearson_feature_selection(self, yattr, feature_list=[], k=3): 
+        """Use Pearson's correlation coefficient to identify 
+        top k linearly correlated features.
+
+        Parameters
+        ----------
+        yattr : str
+            Target variable to select features for.
+        feature_list : list, optional, default=[]
+            List of features to select from. If empty, will select from all features.
+        k : int, optional, default=3
+            Number of top features to select. Currently, ordering features based on the max
+            pearson's correlation coefficient for a given feature array. 
+        """ 
+        if 'r_regression' not in globals():
+            from sklearn.feature_selection import r_regression
+
+        if feature_list == []:
+            feature_list = self.generated_features
+        
+        max_pearsons = []
+        for feat in feature_list:
+            feat_arr = getattr(self, feat)
+            pearsons = np.abs(r_regression(feat_arr, getattr(self, yattr)))
+            max_pearsons.append(np.max(pearsons))
+        top_k_pearsons = np.argsort(max_pearsons)[::-1][:k]
+        top_k_features = np.array(feature_list)[top_k_pearsons]
+        setattr(self, yattr + "_pearson_selected_features", list(top_k_features))
+
+
+    def mutual_info_feature_selection(self, yattr, feature_list=[], k=3): 
+        """Use mutual information to identify top k features most correlated with the target variable.
+        
+        Parameters
+        ----------
+        yattr : str
+            Target variable to select features for.
+        feature_list : list, optional, default=[]
+            List of features to select from. If empty, will select from all features.
+        k : int, optional, default=3
+            Number of top features to select.
+        """
+        if 'mutual_info_regression' not in globals():
+            from sklearn.feature_selection import mutual_info_regression
+        if feature_list == []:
+            feature_list = self.generated_features
+        max_mutual_infos = []
+        for feat in feature_list:
+            feat_arr = getattr(self, feat)
+            mutual_infos = mutual_info_regression(feat_arr, getattr(self, yattr))
+            max_mutual_infos.append(np.max(mutual_infos))
+        top_k_mutual_infos = np.argsort(max_mutual_infos)[::-1][:k]
+        top_k_features = np.array(feature_list)[top_k_mutual_infos]
+        setattr(self, yattr + "_MIF_selected_features", list(top_k_features))
+
+    def auto_feature_select(): 
+        """Automatic feature selection" 
+
+        Parameters
+        ----------
+        """
+        pass
