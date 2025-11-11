@@ -1,0 +1,18 @@
+spectrascope.features
+=====================
+
+.. automodule:: spectrascope.features
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      degree_based_features
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      SpectralFeatures
+   
