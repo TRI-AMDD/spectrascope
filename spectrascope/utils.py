@@ -302,3 +302,39 @@ def LCEN_selected_features(model, top_features: int):
             vals.append(val)
 
     return vals, selected_features
+
+def maximal_correlation_from_ace(X, y):
+    """Calculate the maximal correlation between X and y using ACE.
+    
+    Parameters
+    ----------
+    X : np.array
+        The input array.
+    y : np.array
+        The target variable.
+    """
+    if 'model' not in globals():
+        from ace import model
+    if 'pearsonr' not in globals():
+        from scipy.stats import pearsonr
+        
+    # 1) Convert to the format this ACE wants: list of 1-D arrays
+    x_list = [X[:, j] for j in range(X.shape[1])]
+
+    # 2) Build ACE model from X and y
+    myace = model.Model()
+    myace.build_model_from_xy(x_list, y)  # runs ACE internally
+
+    # 3) Grab learned transforms
+    x_transforms = myace.ace.x_transforms   # list of length M, arrays of shape (N,)
+    y_transform = myace.ace.y_transform     # array of shape (N,)
+
+    # 4) Sum predictor transforms across features for each sample
+    # theta(Y) is calculated based on the sum of the x_transforms 
+    sum_phi = np.sum(np.column_stack(x_transforms), axis=1)  # shape (N,)
+
+    # 5) Pearson correlation between sum(phi_j(X_j)) and theta(Y)
+    r, _ = pearsonr(sum_phi, y_transform)
+
+    # HGR maximal correlation is nonnegative by definition; take abs
+    return abs(r)
