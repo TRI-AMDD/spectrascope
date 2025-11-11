@@ -1,0 +1,20 @@
+﻿spectrascope
+============
+
+.. automodule:: spectrascope
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   SpectraScope
+   features
+   lcen
+   models
+   plot_spectral_features
+   ss_classification
+   structure_property_featurization
+   utils
