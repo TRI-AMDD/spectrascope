@@ -351,6 +351,17 @@ class PlotSpectralFeatures(SpectraScopePlotting):
             self.fig.update_yaxes(
                 title_text=self.yaxis_label, row=self.row, col=self.col
             )
+    def plot_feature(self, feat):
+        """Plot a feature.
+        Parameters
+        ----------
+        feat : str
+            feature to plot.
+        """
+        try: 
+            getattr(self, f"plot_{feat}")()
+        except AttributeError:
+            raise AttributeError(f"Feature {feat} not found.")
 
 
 class PlotModel(SpectraScopePlotting):
@@ -741,3 +752,107 @@ class PlotModel(SpectraScopePlotting):
         # self.fig.layout.yaxis2.update(showticklabels=False)
 
         # customdata=self.xaxis[self.selected_features], hovertemplate="x:%{customdata[0]}"
+
+
+from spectrascope.features import SpectralFeatures
+import os 
+import matplotlib.pyplot as plt 
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+
+def plot_spectral_features_matplotlib(xaxis, raw, selected_features, ax=None,zoom=0.1,
+                                      plot_raw=True, print_centers=False):
+    """
+    Plot spectral features using matplotlib with annotated representative images.
+
+    Parameters
+    ----------
+    xaxis : np.ndarray
+        Array representing the x-axis values of the spectrum (e.g., energy or wavelength).
+    raw : np.ndarray
+        The raw intensity values of the spectrum corresponding to xaxis.
+    selected_features : list or np.ndarray
+        List of indices of selected features to annotate on the plot.
+    ax : matplotlib.axes.Axes, optional
+        Matplotlib axis object to plot on. If None, a new axis will be created.
+    zoom : float, optional
+        Zoom factor for displaying the annotated images. Default is 0.1.
+    plot_raw : bool, optional
+        Whether to plot the raw spectrum as a black line. Default is True.
+    print_centers : bool, optional
+        If True, prints the center x-values and corresponding selected feature indices.
+    
+    Returns
+    -------
+    ax : matplotlib.axes.Axes
+        The axis object containing the generated plot.
+
+    Notes
+    -----
+    This function overlays annotated images (e.g., icons of feature types) at the
+    bin centers of selected spectral features, using images from static files.
+    The images corresponding to feature types are matched using a pre-defined mapping.
+    The function assumes the existence of static images for each feature type in the
+    '../app/static/' directory.
+
+    Example
+    -------
+    >>> plot_spectral_features_matplotlib(xaxis, spectrum, selected_features, ax=ax, zoom=0.03)
+    """
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(10, 5))
+    # Plot the raw spectrum
+    if plot_raw:
+        ax.plot(xaxis, raw, color='black', lw=1)
+
+    # Generate binned features
+    temp = SpectralFeatures(xaxis, raw)
+    for bins in [4, 5, 10, 20]:
+        temp.generate_bins(bins)
+
+    # Feature ID config
+    feature_config = [
+        (0, 16,  'bin_indices_4',  'const', 4),
+        (16, 36, 'bin_indices_5',  'line',  5),
+        (36, 76, 'bin_indices_10', 'par',   10),
+        (76, 156, 'bin_indices_20', 'cubic', 20),
+    ]
+
+    def find_nearest(array, value):
+        return np.abs(array - value).argmin()
+    try: 
+        centers_used = []
+        for selected_id in selected_features:
+            for id_min, id_max, bin_label, poly_label, num_bins in feature_config:
+                if id_min <= selected_id < id_max:
+                    search_bins = np.linspace(id_min, id_max, num_bins)
+                    located_bin = np.argwhere(selected_id < search_bins)[0][0]
+                    bin_mask = getattr(temp, bin_label) == located_bin
+                    center = np.median(xaxis[bin_mask])
+                    height_id = find_nearest(xaxis, center)
+                    height = raw[height_id]
+
+                    # Load image
+                    img_path = f"../app/static/{poly_label}.png"
+                    if not os.path.exists(img_path):
+                        print(f"Warning: {img_path} not found.")
+                        continue
+                    im = Image.open(img_path)
+
+                    # Convert image to matplotlib offsetbox
+                    imagebox = OffsetImage(im, zoom=zoom)
+                    if center in centers_used: 
+                        add_to_height = 1  # slight offset to avoid overlap
+                    else: 
+                        add_to_height = 0 
+                    ab = AnnotationBbox(imagebox, (center, height + add_to_height), frameon=False)
+                    centers_used.append(center)
+                    if print_centers: 
+                        print(center, selected_id)
+
+                    ax.add_artist(ab)
+                    break  # stop after first matching range
+    except ValueError as e:
+        print(e) 
+        print('Warning : Image size too large. You probably have to plot something else on this axis first.')
+        print('Try reducing the zoom, set plot_raw=True, or plotting other spectra on the axis first')
+    return ax

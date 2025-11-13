@@ -86,6 +86,10 @@ class SpectraScope:
 
         # add X
         if X is not None:
+            if isinstance(X, list):
+                self.X = X
+            else:
+                self.X = [X]
             self.X = X
         elif fnX is not None:
             self.X = self.load_file(fnX)
@@ -921,7 +925,7 @@ class SpectraScope:
             feature_list = self.generated_features
         
         max_pearsons = []
-        for feat in feature_list:
+        for feat in tqdm(feature_list):
             feat_arr = getattr(self, feat)
             pearsons = np.abs(r_regression(feat_arr, getattr(self, yattr)))
             max_pearsons.append(np.max(pearsons))
@@ -950,7 +954,7 @@ class SpectraScope:
         if feature_list == []:
             feature_list = self.generated_features
         max_mutual_infos = []
-        for feat in feature_list:
+        for feat in tqdm(feature_list):
             feat_arr = getattr(self, feat)
             mutual_infos = mutual_info_regression(feat_arr, getattr(self, yattr))
             max_mutual_infos.append(np.max(mutual_infos))
@@ -1002,6 +1006,9 @@ class SpectraScope:
         if feature_generation_dict == {}: 
             print('generating features on all input spectra for all available features with default ranges')
             for spec in self.specnames: 
+                if not hasattr(self, spec + '_xaxis'):
+                    print(f'warning, {spec} does not have x-axis, adding x-axis that is just np.arange(len({spec}))')
+                    self.add_x_axis(spec, np.arange(getattr(self, spec).shape[1]))
                 feature_generation_dict[spec] = {
                     'pointwise_features':{'xrange':getattr(self, spec + '_xaxis')},
                     'polynomial_featuresall':{},
@@ -1012,6 +1019,9 @@ class SpectraScope:
                     'fft_features':{'xrange':getattr(self, spec + '_xaxis')}
                 }
         for spec in feature_generation_dict:
+            if not hasattr(self, spec + '_xaxis'):
+                print(f'warning, {spec} does not have x-axis, adding x-axis that is just np.arange(len({spec}))')
+                self.add_x_axis(spec, np.arange(getattr(self, spec).shape[1]))
             for feat in feature_generation_dict[spec]: 
                 kwargs = feature_generation_dict[spec][feat]
                 self.add_spectral_feature(spec, feat, **kwargs)
@@ -1067,11 +1077,14 @@ class SpectraScope:
         print(f'2. Selecting {k} Features to build each model on')
         feature_list = self.generated_features 
         if do_ace: 
+            print('Running Maximum Correlation Analysis')
             ace_selected = self.maximal_correlation_feature_selection(yattr, feature_list, k, return_top_k = True)
             print(f'Maximum Correlation Analysis selected {ace_selected}')
         else: 
             ace_selected = []
+        print('Running Mutual Information Analysis')
         mif_selected = self.mutual_info_feature_selection(yattr, feature_list, k, return_top_k=True)
+        print('Running Pearson\'s Correlation Analysis')
         r_selected = self.pearson_feature_selection(yattr, feature_list, k, return_top_k = True)
         print(f'Mutual Information selected {mif_selected}')
         print(f'Pearson\'s correlation selected {r_selected}')
