@@ -193,3 +193,5 @@ tests/test_models.py
 spectrascope/__pycache__/*
 app/.DS_Store
 app/*/.DS_Store
+scripts/.DS_Store
+spectrascope/.DS_Store
