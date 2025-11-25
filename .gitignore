@@ -181,3 +181,11 @@ app/*.p
 app/*.npy
 SmartProcessAnalytics
 **/Grape-Chemical-Composition**
+.vscode/*
+examples/ace_transforms.png
+examples/dash_crystaltoolkit.ipynb
+examples/example2.ipynb
+examples/plotting_demo.ipynb
+spectrascope/lcen.py
+spectrascope/models.py
+tests/test_models.py
