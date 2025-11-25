@@ -1234,9 +1234,12 @@
             <span class="n">feature_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generated_features</span>
         
         <span class="n">max_pearsons</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">all_pearsons</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">feature_list</span><span class="p">):</span>
             <span class="n">feat_arr</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">feat</span><span class="p">)</span>
-            <span class="n">pearsons</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">r_regression</span><span class="p">(</span><span class="n">feat_arr</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">yattr</span><span class="p">)))</span>
+            <span class="n">pearsons</span> <span class="o">=</span> <span class="p">(</span><span class="n">r_regression</span><span class="p">(</span><span class="n">feat_arr</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">yattr</span><span class="p">)))</span>
+            <span class="n">all_pearsons</span><span class="p">[</span><span class="n">feat</span><span class="p">]</span> <span class="o">=</span> <span class="n">pearsons</span>
+            <span class="n">pearsons</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">pearsons</span><span class="p">)</span>
             <span class="n">max_pearsons</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">pearsons</span><span class="p">))</span>
         <span class="n">top_k_pearsons</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">max_pearsons</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="n">k</span><span class="p">]</span>
         <span class="n">top_k_features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">feature_list</span><span class="p">)[</span><span class="n">top_k_pearsons</span><span class="p">]</span>
@@ -1244,7 +1247,7 @@
         <span class="k">if</span> <span class="n">return_top_k</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">top_k_features</span>
         <span class="k">if</span> <span class="n">return_vals</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">max_pearsons</span><span class="p">)[</span><span class="n">top_k_pearsons</span><span class="p">]</span></div>
+            <span class="k">return</span> <span class="n">all_pearsons</span></div>
 
 
 <div class="viewcode-block" id="SpectraScope.mutual_info_feature_selection">
