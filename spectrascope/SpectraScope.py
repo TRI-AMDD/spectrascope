@@ -935,7 +935,7 @@ class SpectraScope:
         if return_top_k:
             return top_k_features
         if return_vals:
-            return max_pearsons
+            return np.array(max_pearsons)[top_k_pearsons]
 
     def mutual_info_feature_selection(self, yattr, feature_list=[], k=3, return_top_k=False, return_vals=False): 
         """Use mutual information to identify top k features most correlated with the target variable.
@@ -967,7 +967,7 @@ class SpectraScope:
         if return_top_k:
             return top_k_features
         if return_vals: 
-            return max_mutual_infos
+            return np.array(max_mutual_infos)[top_k_mutual_infos]
 
 
     def maximal_correlation_feature_selection(self, yattr, feature_list=[], k=3, return_top_k=False, return_vals=False): 
@@ -998,7 +998,7 @@ class SpectraScope:
         if return_top_k:
             return top_k_features
         if return_vals: 
-            return max_maximal_correlations
+            return np.array(max_maximal_correlations)[top_k_maximal_correlations]
 
     def auto_feature_generation(self, feature_generation_dict={}): 
         f"""Generate all available features
