@@ -1,5 +1,5 @@
 ---
-title: 'Spectra-Scope : '
+title: 'Spectra-Scope : A toolkit for automatic characterization of materials properties from spectral data'
 tags:
   - Python
   - Materials Science 
@@ -31,27 +31,18 @@ affiliations:
 date: 28 October 2025
 bibliography: paper.bib
 
-# Optional fields if submitting to a AAS journal too, see this blog post:
-# https://blog.joss.theoj.org/2018/12/a-new-collaboration-with-aas-publishing
-#aas-doi: 10.3847/xxxxx <- update this with the DOI from AAS once you know it.
-#aas-journal: Astrophysical Journal <- The name of the AAS journal.
 ---
 
 # Summary
 
-Summary 
-
-# Statement of need
-
-Spectroscopy is a pillar of materials characterization. It can provide
-crucial information to experimentalists and theorists on properties
+Spectroscopy is a pillar of materials science. It can provide
+ crucial information to experimentalists and theorists on physical properties
 like the structure, composition, or excited state dynamics of a
 system. However, many spectroscopic techniques feature challenges like
 complicated modeling needed for analysis, low signal-to-noise ratio
 for specific materials, or expensive equipment needed for high
 resolution studies. Here, we present Spectra-Scope, an open-source
-Python package and web app for automatic characterization of materials
-from spectral data using interpretable machine learning models. It
+Python package and web app for automatic characterization of materials properties from spectral data using interpretable machine learning models. It
 supports spectral preprocessing, nonlinear feature extraction, machine
 learning model training, and feature selection. Users can easily train
 different types of simple, interpretable ML models on a set of feature
@@ -59,6 +50,22 @@ transformations quickly and with modest computational resources. In
 this work, we outline the methods of Spectra-Scope and its
 effectiveness across diverse datasets, with applications to materials
 and agricultural datasets. 
+
+# Statement of need
+
+Automated machine learning (Auto-ML) software pipelines
+streamline and automate common ML tasks like data preparation, feature
+engineering, model training, and hyper parameter tuning. 
+While Auto-ML is a well-established technique in machine learning communities,
+few tools exist to apply and optimize such pipelines for
+materials-specific data. Previous works have applied Auto-ML techniques 
+to specific materials systems or experimental pipelines, but lack generalizability to other
+experimental techniques or materials datasets [@tsamardinos_automated_2020; @ji_research_2022]. 
+More general purpose frameworks have been established for manufacturing or 
+time-series data [@sun_smart_2021; @sun_alven_2020; @tsfresh]. 
+To the best of our knowledge, the literature lacks a versatile toolkit 
+that seamlessly integrates automated feature generation, model training, 
+feature downselection, and inference for spectroscopy data. 
 
 # Introduction
 
@@ -95,37 +102,13 @@ reliable, and highlight physical insights in spectral data can help
 advance automated experimentation and characterization, thereby
 accelerating materials discovery and development.
 
-Automated machine learning (Auto-ML) refers to software pipelines that
-streamline and automate common ML tasks like data preparation, feature
-engineering, model training, and hyper parameter tuning. Popular tools
-for general purpose Auto-ML are auto-sklearn [@feurer-neurips15a] and
-TPOT [@OlsonGECCO2016], which use Bayesian optimization and genetic
-programming, respectively, to optimize machine learning pipelines. While
-Auto-ML is a well-established technique in machine learning communities,
-few tools exist to apply and optimize such pipelines for
-materials-specific data. Previous works have applied Auto-ML techniques
-to predict the gas adsorption performance of metal-organic-frameworks
-from chemical and structural descriptors [@tsamardinos_automated_2020]
-and the fat and alcohol content of liquids from near-infrared (NIR)
-spectra using wavelength selection [@ji_research_2022]. However, these
-studies focus on building a specific framework for a specific tool or
-materials system, and are not generalizable to other experimental
-techniques or materials datasets. More general purpose frameworks have
-been established which investigate the characteristics of data to choose
-the appropriate model [@sun_smart_2021] or to generate simple nonlinear
-transformations of data [@sun_alven_2020]. To the best of our knowledge,
-the literature lacks a versatile toolkit that seamlessly integrates
-automated feature generation, model training, feature downselection, and
-inference for spectroscopy data.
-
 ## Overview of Work
 
 Here, we present Spectra-Scope, a toolkit for the development of
 characterization models for materials properties based on feature
 exploration and interpretable machine learning models. This
-general-purpose framework is built for feature generation, model
-training, and feature downselection from spectral data (Fig.
-[1](#fig:1){reference-type="ref" reference="fig:1"}). A main component
+general-purpose framework is built for feature generation, model training, and feature downselection from spectral data (Fig.
+[1](#fig:1)). A main component
 of Spectra-Scope is a a set of implemented transformations, or
 "featurizers" to transform input spectra and extract new features that
 may better correlate with a property of interest than the raw spectra.
@@ -180,7 +163,7 @@ source Python package available on
 and a web application available on
 [spectrascope.matr.io](spectrascope.matr.io){.uri}.
 
-[Outline of this paper and the Spectra-Scope pipeline. (a)
+![**Outline of this paper and the Spectra-Scope pipeline.** (a)
 Input data can come from any experimental or simulated 1-D array data
 source for inference on a scalar response variable. (b) Available
 featurizations of spectral data include the cumulative distribution
@@ -194,11 +177,10 @@ either in the form of feature downselection with LCEN, or feature
 importances with random forests. This allows for the identification of
 important features for prediction. (e) The algorithms are used to
 predict the input response variables. Feature selection helps with model
-interpretability and investigating modality importance.]
+interpretability and investigating modality importance.\label{fig:1}](Figures/TOC.pdf){width=90%}
 
-.
 
-# Methods {#sec:methods}
+# Methods
 
 In this section, we will walk through three key components of our work.
 We describe (i) the featurization methods we use, (ii) the models that
@@ -291,10 +273,8 @@ features of interest correlate with the underlying phenomenon.
 
 ### Random Forests
 
-We refer readers who are unfamiliar with random forests
-[@breiman_random_2001] to an introduction in the supplemental
-information. We use the implementation from Scikit-Learn
-[@scikit-learn].
+We refer readers who are unfamiliar with random forests to
+Breiman, 2001 [@breiman_random_2001]. We use the implementation from Scikit-Learn[@scikit-learn].
 
 Random forests have many desirable properties, but we highlight the
 three most relevant ones for this work: First, random forests can
@@ -328,25 +308,10 @@ work[@lundberg2017unified; @lundberg2018consistent].
 The Lasso-Clip-Elastic-Net (LCEN) algorithm of Seber and Braatz,
 introduced and described in detail elsewhere, [@seber_lcen_2024] works
 by sequential fitting and 'clipping' of linear regression coefficients
-under different regularization conditions. For readers who are
-unfamiliar with regularized linear regression, LASSO is the fitting of a
-conventional linear regression algorithm with the addition of an
-$L^1$-norm penalty term in the loss: $$\begin{equation}
-    \mathcal L = \sum_i^N  (\beta x_i -y_i)^2 + \lambda  \sum_i^M |\beta_i|  
-\end{equation}$$ where $N$ is the number of training data points,
-$\beta$ is the vector of coefficients for the input feature vectors $x$
-of length $M$ and $\lambda$ is a parameter that controls the penalty.
-Elastic Net is similar, but incorporates an $L^2$-norm loss:
-$$\begin{equation}
-    \mathcal L = \sum_i^N  (\beta x_i -y_i)^2 + \lambda_1  \sum_i^M  |\beta_i|  + \lambda_2 ||\beta||^2 
-\end{equation}$$ where the right-hand term represents the $L^2$ norm
-over the vector $\beta$.
+under different regularization conditions.
 
 We briefly summarize the four main steps of the LCEN fitting procedure.
-First, LASSO regression is performed on the input features. Second, a
-clip step, where coefficients below a user selected cutoff are set to 0.
-Third, elastic net regression is performed on the features that have not
-been clipped in step 2. Finally, a second clip step is performed on the
+First, LASSO regression [@Tibshirani-1996] is performed on the input features. Second, a clip step, where coefficients below a user selected cutoff are set to 0. Third, elastic net regression is performed on the features that have not been clipped in step 2. Finally, a second clip step is performed on the
 resultant coefficients. The clip steps perform feature selection to
 create accurate but sparse models. The algorithm also performs
 transformations on the input data to find nonlinear relationships
@@ -363,7 +328,9 @@ contributions. Therefore, interpretability comes from examining the
 magnitudes of the coefficients and the user can learn more about which
 features are contributing the most.
 
-[Overview of Spectra-Scope application. (a) Multiple data
+## Application
+
+![**Overview of Spectra-Scope application.** (a) Multiple data
 types can be input and easily visualized on the home page. (b) All input
 spectra can be transformed using the available featurizations. The
 transformed spectra are visualized. (c) The transformed spectra are used
@@ -371,9 +338,7 @@ to train models using random forests or LCEN, and performance of
 different model and featurization schemes is compared. (d) After
 training models, feature downselection allows for the user to visualize
 important or selected features by a model, and identify important
-spectral regions for predicting a specific property.]
-
-## Application
+spectral regions for predicting a specific property.\label{fig:2}](Figures/fig_app.pdf){width=90%}
 
 In addition to an open-source Python library, Spectra-Scope is available
 as a web-based application for convenient no-code usage. Data
@@ -466,7 +431,7 @@ the XANES spectra (XANES, NLTrans), and polynomial transformations of
 the combined XANES and PDF data. The nonlinear feature expansion
 augments the input variable x with a set of nonlinear transformations:
 including
-$x^2, \ln{x}, (\ln{x})^2, \sqrt{x}, \frac{1}{\sqrt{x}}, \frac{1}{x}, \frac{1}{x^2}, x^{1.5}, \frac{\ln{x}}{x}, \frac{1}{\sqrt{x}}$.
+$$x^2, \ln{x}, (\ln{x})^2, \sqrt{x}, \frac{1}{\sqrt{x}}, \frac{1}{x}, \frac{1}{x^2}, x^{1.5}, \frac{\ln{x}}{x}, \frac{1}{\sqrt{x}}$$.
 Further details of the different featurization schemes can be found in
 the Supplementary Information. As LCEN is a linear model, the
 performance of the nonlinear transformations and the polynomial
@@ -520,16 +485,9 @@ report test RMSE of 0.009, 0.011, and 0.020 for the raw intensity, CDF,
 and PCA featurizations, respectively, using random forests for
 regression. These compare with our values of 0.029, 0.028, and 0.024 for
 the same featurizations for Ti-oxide structures. We attribute
-differences in model performance to differences in hyperparameter tuning
-and model regularization. Here, we highlight how Spectra-Scope can
-quickly identify good featurization schemes and promising models.
+differences in model performance to the different datasets used across the studies. 
 
-The identification of PCA as a useful feature set, which is a setwise
-technique, is similar to the use of non-negative matrix factorization as
-a spectral analysis tool. However, we do not restrict our basis
-functions to be non-negative.
-
-[Regressing mean nearest-neighbor distance from simulated
+![Regressing mean nearest-neighbor distance from simulated
 XANES spectra and PDFs of Ti-oxide structures. (a) Summary of RMSE for
 regressing bond length using LCEN and random forests for XANES, PDF,
 XANES + PDF, and other transformations of the data. CDF : cumulative
@@ -553,7 +511,7 @@ The top three most important features are highlighted by the vertical
 dashed line. (f) Average XANES spectra (blue) and PDF (red) for
 simultaneously using both datasets for regression. Dashed lines show the
 top three most important features extracted from fitting XANES (blue)
-and PDF (red) spectra separately.]
+and PDF (red) spectra separately.\label{fig:3}](Figures/fig3_0825.pdf)
 
 ## Raman + NIR for Wine Grapes
 
@@ -722,7 +680,7 @@ important spectral features for prediction. This toolkit may be
 beneficial for applications from autonomous materials discovery to
 high-throughput experimentation to industrial manufacturing.
 
-::: acknowledgement
+::: Acknowledgements
 The authors thank Pedro Seber for advice on the implementation of LCEN,
 Richard Braatz, Tina Na Narong, and Simon Billinge for helpful
 discussions, and Linda Hung for helpful feedback on the manuscript.
@@ -733,35 +691,3 @@ Spectra-Scope is an open-source Python package available at
 github.comTRI-AMDDspectrascope and a web application available at
 spectrascope.matr.io.
 :::
-
-
-
-
-# Citations
-
-Citations to entries in paper.bib should be in
-[rMarkdown](http://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html)
-format.
-
-If you want to cite a software repository URL (e.g. something on GitHub without a preferred
-citation) then you can do it with the example BibTeX entry below for @fidgit.
-
-For a quick reference, the following citation commands can be used:
-- `@author:2001`  ->  "Author et al. (2001)"
-- `[@author:2001]` -> "(Author et al., 2001)"
-- `[@author1:2001; @author2:2001]` -> "(Author1 et al., 2001; Author2 et al., 2002)"
-
-# Figures
-
-Figures can be included like this:
-![Caption for example figure.\label{fig:example}](figure.png)
-and referenced from text using \autoref{fig:example}.
-
-Figure sizes can be customized by adding an optional second parameter:
-![Caption for example figure.](figure.png){ width=20% }
-
-# Acknowledgements
-
-
-
-# References
