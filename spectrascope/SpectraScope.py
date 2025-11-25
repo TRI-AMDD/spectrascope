@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import json
-from spectrascope.features import *
+from spectrascope.Features import *
 
 import datetime
 from sklearn.ensemble import RandomForestRegressor
@@ -11,7 +11,7 @@ from sklearn.pipeline import make_pipeline, Pipeline
 from sklearn.model_selection import GridSearchCV
 import os
 import pickle
-import spectrascope.structure_property_featurization as structure_property_featurization
+import spectrascope.StructurePropertyFeatures as structure_property_featurization
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
@@ -925,9 +925,12 @@ class SpectraScope:
             feature_list = self.generated_features
         
         max_pearsons = []
+        all_pearsons = {}
         for feat in tqdm(feature_list):
             feat_arr = getattr(self, feat)
-            pearsons = np.abs(r_regression(feat_arr, getattr(self, yattr)))
+            pearsons = (r_regression(feat_arr, getattr(self, yattr)))
+            all_pearsons[feat] = pearsons
+            pearsons = np.abs(pearsons)
             max_pearsons.append(np.max(pearsons))
         top_k_pearsons = np.argsort(max_pearsons)[::-1][:k]
         top_k_features = np.array(feature_list)[top_k_pearsons]
@@ -935,7 +938,7 @@ class SpectraScope:
         if return_top_k:
             return top_k_features
         if return_vals:
-            return np.array(max_pearsons)[top_k_pearsons]
+            return all_pearsons
 
     def mutual_info_feature_selection(self, yattr, feature_list=[], k=3, return_top_k=False, return_vals=False): 
         """Use mutual information to identify top k features most correlated with the target variable.

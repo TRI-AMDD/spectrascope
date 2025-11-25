@@ -1,6 +1,6 @@
 from spectrascope.SpectraScope import *
-from spectrascope.features import *
-from spectrascope.structure_property_featurization import *
+from spectrascope.Features import *
+from spectrascope.StructurePropertyFeatures import *
 from collections import OrderedDict
 from tqdm import tqdm_notebook, tqdm
 import plotly.express as px
