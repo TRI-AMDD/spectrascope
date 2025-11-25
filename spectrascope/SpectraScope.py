@@ -902,7 +902,7 @@ class SpectraScope:
         setattr(self, feat + "_tsfresh_selected_feature_ids", selected_feature_ids)
         self.add_generated_feature(feat + "_tsfresh_selected")
     
-    def pearson_feature_selection(self, yattr, feature_list=[], k=3, return_top_k=False): 
+    def pearson_feature_selection(self, yattr, feature_list=[], k=3, return_top_k=False, return_vals=False): 
         """Use Pearson's correlation coefficient to identify 
         top k linearly correlated features.
 
@@ -934,8 +934,10 @@ class SpectraScope:
         setattr(self, yattr + "_pearson_selected_features", list(top_k_features))
         if return_top_k:
             return top_k_features
+        if return_vals:
+            return max_pearsons
 
-    def mutual_info_feature_selection(self, yattr, feature_list=[], k=3, return_top_k=False): 
+    def mutual_info_feature_selection(self, yattr, feature_list=[], k=3, return_top_k=False, return_vals=False): 
         """Use mutual information to identify top k features most correlated with the target variable.
         
         Parameters
@@ -964,9 +966,11 @@ class SpectraScope:
         
         if return_top_k:
             return top_k_features
+        if return_vals: 
+            return max_mutual_infos
 
 
-    def maximal_correlation_feature_selection(self, yattr, feature_list=[], k=3, return_top_k=False): 
+    def maximal_correlation_feature_selection(self, yattr, feature_list=[], k=3, return_top_k=False, return_vals=False): 
         """Use maximal correlation to identify top k features most correlated with the target variable.
         
         Parameters
@@ -993,6 +997,8 @@ class SpectraScope:
         setattr(self, yattr + "_maximal_correlation_selected_features", list(top_k_features))
         if return_top_k:
             return top_k_features
+        if return_vals: 
+            return max_maximal_correlations
 
     def auto_feature_generation(self, feature_generation_dict={}): 
         f"""Generate all available features
