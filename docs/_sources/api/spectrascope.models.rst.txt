@@ -1,12 +1,6 @@
-spectrascope.models
+﻿spectrascope.models
 ===================
 
 .. automodule:: spectrascope.models
 
-   
-   .. rubric:: Classes
-
-   .. autosummary::
-   
-      LassoRegression
    

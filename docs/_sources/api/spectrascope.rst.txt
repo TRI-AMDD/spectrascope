@@ -10,11 +10,9 @@
    :toctree:
    :recursive:
 
+   Features
+   SSClassification
+   SSPlotting
    SpectraScope
-   features
-   lcen
-   models
-   plot_spectral_features
-   ss_classification
-   structure_property_featurization
+   StructurePropertyFeatures
    utils

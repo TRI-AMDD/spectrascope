@@ -197,13 +197,11 @@
 </ul>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/spectrascope.html">spectrascope</a><input aria-label="Toggle navigation of spectrascope" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.features.html">spectrascope.features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.StructurePropertyFeatures.html">spectrascope.StructurePropertyFeatures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.lcen.html">spectrascope.lcen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.models.html">spectrascope.models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.plot_spectral_features.html">spectrascope.plot_spectral_features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.ss_classification.html">spectrascope.ss_classification</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.structure_property_featurization.html">spectrascope.structure_property_featurization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.utils.html">spectrascope.utils</a></li>
 </ul>
 </li>
@@ -244,7 +242,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">spectrascope.features</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spectrascope.Features</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestRegressor</span>
@@ -253,7 +251,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">GridSearchCV</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">spectrascope.structure_property_featurization</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">structure_property_featurization</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">spectrascope.StructurePropertyFeatures</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">structure_property_featurization</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">plotly.express</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">px</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">plotly.graph_objects</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">go</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">plotly.subplots</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_subplots</span>

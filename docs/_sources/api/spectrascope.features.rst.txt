@@ -1,7 +1,7 @@
-spectrascope.features
+spectrascope.Features
 =====================
 
-.. automodule:: spectrascope.features
+.. automodule:: spectrascope.Features
 
    
    .. rubric:: Functions

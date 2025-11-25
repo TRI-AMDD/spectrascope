@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>spectrascope.features - SpectraScope 0.0.1 documentation</title>
+        <title>spectrascope.Features - SpectraScope 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
@@ -197,13 +197,11 @@
 </ul>
 <ul>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../api/spectrascope.html">spectrascope</a><input aria-label="Toggle navigation of spectrascope" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.features.html">spectrascope.features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.StructurePropertyFeatures.html">spectrascope.StructurePropertyFeatures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.lcen.html">spectrascope.lcen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.models.html">spectrascope.models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.plot_spectral_features.html">spectrascope.plot_spectral_features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.ss_classification.html">spectrascope.ss_classification</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.structure_property_featurization.html">spectrascope.structure_property_featurization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../api/spectrascope.utils.html">spectrascope.utils</a></li>
 </ul>
 </li>
@@ -239,7 +237,7 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <h1>Source code for spectrascope.features</h1><div class="highlight"><pre>
+          <h1>Source code for spectrascope.Features</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Spectral Features class for Spectrascope</span>
 
@@ -264,7 +262,7 @@
 <span class="c1"># __docformat__ = &quot;numpy&quot;</span>
 
 <div class="viewcode-block" id="SpectralFeatures">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">SpectralFeatures</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Spectral Features class used by SpectraScope main class to generate features on datasets. </span>
 
@@ -277,7 +275,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="SpectralFeatures.__init__">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.__init__">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energies</span><span class="p">,</span> <span class="n">intensities</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parameters</span>
@@ -295,7 +293,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.pointwise_features">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.pointwise_features">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.pointwise_features">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">pointwise_features</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">xrange</span><span class="p">,</span> <span class="n">return_features</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="s2">&quot;extrapolate&quot;</span>
     <span class="p">):</span>
@@ -327,7 +325,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.generate_bins">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.generate_bins">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.generate_bins">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_bins</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">N</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span>
     <span class="p">):</span>
@@ -402,7 +400,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.polynomial_featuresN">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.polynomial_featuresN">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.polynomial_featuresN">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">polynomial_featuresN</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">N</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
@@ -502,7 +500,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.polynomial_featuresall">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.polynomial_featuresall">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.polynomial_featuresall">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">polynomial_featuresall</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">degree</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
@@ -551,7 +549,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.uneven_features">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.uneven_features">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.uneven_features">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">uneven_features</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">eV_splits</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">],</span>
@@ -621,7 +619,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.cdf">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.cdf">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.cdf">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">cdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_features</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute cumulative distribution function: probability that f(x) will take on a value less than or equal to x at x.</span>
 
@@ -649,7 +647,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.tsne">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.tsne">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.tsne">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">tsne</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_features</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
@@ -687,7 +685,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.cwt">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.cwt">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.cwt">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">cwt</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">scales</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">),</span>
@@ -735,7 +733,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.gaussian_peaks">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.gaussian_peaks">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.gaussian_peaks">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">gaussian_peaks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_peaks</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_features</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Fit n=num_peaks gaussians to intensity.</span>
@@ -779,7 +777,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.fft_features">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.fft_features">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.fft_features">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">fft_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">return_features</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        FFT Spectra and return positive real FFT values. </span>
@@ -817,7 +815,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.gaussian_filter_features">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.gaussian_filter_features">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.gaussian_filter_features">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">gaussian_filter_features</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_features</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
@@ -849,7 +847,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.gaussian_mixture_features">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.gaussian_mixture_features">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.gaussian_mixture_features">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">gaussian_mixture_features</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">n_components</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">return_features</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
@@ -875,7 +873,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.pca">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.pca">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.pca">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">pca</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">n_components</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_features</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
@@ -907,7 +905,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.featureagg">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.featureagg">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.featureagg">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">featureagg</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">n_clusters</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">verbose</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_features</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
     <span class="p">):</span>
@@ -932,7 +930,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.shapelet">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.shapelet">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.shapelet">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">shapelet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_features</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Transforms a data set to identify shapelets. Only works for classification?</span>
 <span class="sd">        </span>
@@ -961,7 +959,7 @@
 
         
 <div class="viewcode-block" id="SpectralFeatures.b_splines">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.b_splines">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.b_splines">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">b_splines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Not implemented yet.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -969,7 +967,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.bow_features">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.bow_features">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.bow_features">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">bow_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Not implemented yet.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -978,7 +976,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.bop_features">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.bop_features">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.bop_features">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">bop_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Not implemented yet.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -987,7 +985,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.boss_features">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.boss_features">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.boss_features">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">boss_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Not implemented yet.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -996,7 +994,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.WEASEL_features">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.WEASEL_features">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.WEASEL_features">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">WEASEL_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Not implemented yet.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1005,7 +1003,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.ROCKET_features">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.ROCKET_features">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.ROCKET_features">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">ROCKET_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Not implemented yet.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -1014,7 +1012,7 @@
 
 
 <div class="viewcode-block" id="SpectralFeatures.check_xinterp">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.SpectralFeatures.check_xinterp">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.SpectralFeatures.check_xinterp">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">check_xinterp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if interpolated data exists and return either interpolated data or raw data.</span>
 <span class="sd">        </span>
@@ -1048,7 +1046,7 @@
     
 
 <div class="viewcode-block" id="degree_based_features">
-<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.features.degree_based_features">[docs]</a>
+<a class="viewcode-back" href="../../api/spectrascope.features.html#spectrascope.Features.degree_based_features">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">degree_based_features</span><span class="p">(</span>
     <span class="n">X</span><span class="p">,</span> <span class="n">degree</span><span class="p">,</span> <span class="n">exclude_features</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">input_labels</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
 <span class="p">):</span>

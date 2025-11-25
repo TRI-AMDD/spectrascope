@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="spectrascope.ss_classification" href="spectrascope.ss_classification.html"><link rel="prev" title="spectrascope.models" href="spectrascope.models.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>spectrascope.plot_spectral_features - SpectraScope 0.0.1 documentation</title>
@@ -173,7 +173,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
       </label>
     </div>
@@ -196,15 +196,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current has-children"><a class="reference internal" href="spectrascope.html">spectrascope</a><input aria-label="Toggle navigation of spectrascope" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="spectrascope.html">spectrascope</a><input aria-label="Toggle navigation of spectrascope" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="spectrascope.Features.html">spectrascope.Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.features.html">spectrascope.features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.lcen.html">spectrascope.lcen</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.models.html">spectrascope.models</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">spectrascope.plot_spectral_features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.ss_classification.html">spectrascope.ss_classification</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.structure_property_featurization.html">spectrascope.structure_property_featurization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spectrascope.StructurePropertyFeatures.html">spectrascope.StructurePropertyFeatures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spectrascope.utils.html">spectrascope.utils</a></li>
 </ul>
 </li>
@@ -241,458 +238,13 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="module-spectrascope.plot_spectral_features">
-<span id="spectrascope-plot-spectral-features"></span><h1>spectrascope.plot_spectral_features<a class="headerlink" href="#module-spectrascope.plot_spectral_features" title="Link to this heading">¶</a></h1>
-<p class="rubric">Functions</p>
-<div class="table-wrapper autosummary longtable docutils container">
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#spectrascope.plot_spectral_features.plot_spectral_features_matplotlib" title="spectrascope.plot_spectral_features.plot_spectral_features_matplotlib"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_spectral_features_matplotlib</span></code></a>(xaxis, ...)</p></td>
-<td><p>Plot spectral features using matplotlib with annotated representative images.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p class="rubric">Classes</p>
-<div class="table-wrapper autosummary longtable docutils container">
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotModel" title="spectrascope.plot_spectral_features.PlotModel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PlotModel</span></code></a>([model, selected_features, raw, ...])</p></td>
-<td><p>Plotting class for model results.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures" title="spectrascope.plot_spectral_features.PlotSpectralFeatures"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PlotSpectralFeatures</span></code></a>(arr, **kwargs)</p></td>
-<td><p>Plotting class for spectral features.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#spectrascope.plot_spectral_features.SpectraScopePlotting" title="spectrascope.plot_spectral_features.SpectraScopePlotting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SpectraScopePlotting</span></code></a>([xaxis, xaxis_label, ...])</p></td>
-<td><p>Base class for plotting spectral features.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<dl class="py class">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotModel">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">spectrascope.plot_spectral_features.</span></span><span class="sig-name descname"><span class="pre">PlotModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'viridis'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_vals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_importances</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotModel" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#spectrascope.plot_spectral_features.SpectraScopePlotting" title="spectrascope.plot_spectral_features.SpectraScopePlotting"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpectraScopePlotting</span></code></a></p>
-<p>Plotting class for model results.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model</strong> (<em>_type_</em><em>, </em><em>optional</em><em>, </em><em>default=None</em>) – Fitted model object. Either a dict (LCEN) or sklearn model.</p></li>
-<li><p><strong>selected_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> or </em><em>np.array</em><em>, </em><em>optional</em><em>, </em><em>default=None</em>) – Indices of selected features to plot.</p></li>
-<li><p><strong>raw</strong> (<em>_type_</em><em>, </em><em>optional</em><em>, </em><em>default=None</em>) – Raw data to plot. Often pointwise features.</p></li>
-<li><p><strong>cmap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – colormap for plotting. Defaults to “viridis”.</p></li>
-<li><p><strong>selected_vals</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> or </em><em>np.array</em><em>, </em><em>optional</em><em>, </em><em>default=None</em>) – Values of selected features to plot. Defaults to None.</p></li>
-<li><p><strong>plot_importances</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em><em>, </em><em>Default=False</em>) – Whether to plot feature importances as either line plot or color, or just plot locations of selected features. Defaults to False.</p></li>
-<li><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – additional keyword arguments for plotting.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotModel.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmap_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'viridis'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_vals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_importances</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotModel.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotModel.__init__" title="Link to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model</strong> (<em>_type_</em><em>, </em><em>optional</em><em>, </em><em>default=None</em>) – Fitted model object. Either a dict (LCEN) or sklearn model.</p></li>
-<li><p><strong>selected_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> or </em><em>np.array</em><em>, </em><em>optional</em><em>, </em><em>default=None</em>) – Indices of selected features to plot.</p></li>
-<li><p><strong>raw</strong> (<em>_type_</em><em>, </em><em>optional</em><em>, </em><em>default=None</em>) – Raw data to plot. Often pointwise features.</p></li>
-<li><p><strong>cmap_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – colormap for plotting. Defaults to “viridis”.</p></li>
-<li><p><strong>selected_vals</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> or </em><em>np.array</em><em>, </em><em>optional</em><em>, </em><em>default=None</em>) – Values of selected features to plot. Defaults to None.</p></li>
-<li><p><strong>plot_importances</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em><em>, </em><em>Default=False</em>) – Whether to plot feature importances as either line plot or color, or just plot locations of selected features. Defaults to False.</p></li>
-<li><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – additional keyword arguments for plotting.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotModel.plot_cdf">
-<span class="sig-name descname"><span class="pre">plot_cdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotModel.plot_cdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotModel.plot_cdf" title="Link to this definition">¶</a></dt>
-<dd><p>Plot cumulative distribution function selected features.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – additional keyword arguments for go.Scatter.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotModel.plot_cwt">
-<span class="sig-name descname"><span class="pre">plot_cwt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mexh'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotModel.plot_cwt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotModel.plot_cwt" title="Link to this definition">¶</a></dt>
-<dd><p>Not implemented yet.</p>
-<p>Parameters
-wavelet : str, optional, Default = “mexh”</p>
-<blockquote>
-<div><p>wavelet used in model fitting.</p>
-</div></blockquote>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotModel.plot_featureagg">
-<span class="sig-name descname"><span class="pre">plot_featureagg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotModel.plot_featureagg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotModel.plot_featureagg" title="Link to this definition">¶</a></dt>
-<dd><p>Plot feature agglomeration selected features.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – additional keyword arguments for PlotSpectralFeatures.plot_featureagg.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotModel.plot_fft_features">
-<span class="sig-name descname"><span class="pre">plot_fft_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotModel.plot_fft_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotModel.plot_fft_features" title="Link to this definition">¶</a></dt>
-<dd><p>Plot fft features.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotModel.plot_gaussian_peaks">
-<span class="sig-name descname"><span class="pre">plot_gaussian_peaks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotModel.plot_gaussian_peaks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotModel.plot_gaussian_peaks" title="Link to this definition">¶</a></dt>
-<dd><p>Not implemented yet.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotModel.plot_lines">
-<span class="sig-name descname"><span class="pre">plot_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotModel.plot_lines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotModel.plot_lines" title="Link to this definition">¶</a></dt>
-<dd><p>Plot lines at the location of selected features</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – additional keyword arguments for go.Scatter.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotModel.plot_pca">
-<span class="sig-name descname"><span class="pre">plot_pca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotModel.plot_pca"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotModel.plot_pca" title="Link to this definition">¶</a></dt>
-<dd><p>Plot principal component analysis selected features.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – additional keyword arguments for PlotSpectralFeatures.plot_pca.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotModel.plot_pointwise_features">
-<span class="sig-name descname"><span class="pre">plot_pointwise_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotModel.plot_pointwise_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotModel.plot_pointwise_features" title="Link to this definition">¶</a></dt>
-<dd><p>Plot pointwise features selected features.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – additional keyword arguments for go.Scatter.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotModel.plot_polynomial_featuresall">
-<span class="sig-name descname"><span class="pre">plot_polynomial_featuresall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sizex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sizey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotModel.plot_polynomial_featuresall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotModel.plot_polynomial_featuresall" title="Link to this definition">¶</a></dt>
-<dd><p>Plot polynomial features selected features.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>sizex</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – x size of polynomial annotation. Defaults to 100.</p></li>
-<li><p><strong>sizey</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – y size of polynomial annotation. Defaults to 10.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotModel.plot_tsne">
-<span class="sig-name descname"><span class="pre">plot_tsne</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotModel.plot_tsne"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotModel.plot_tsne" title="Link to this definition">¶</a></dt>
-<dd><p>Plot t-distributed stochastic neighbor embedding selected features.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – additional keyword arguments for PlotSpectralFeatures.plot_tsne.</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotSpectralFeatures">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">spectrascope.plot_spectral_features.</span></span><span class="sig-name descname"><span class="pre">PlotSpectralFeatures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotSpectralFeatures"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#spectrascope.plot_spectral_features.SpectraScopePlotting" title="spectrascope.plot_spectral_features.SpectraScopePlotting"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpectraScopePlotting</span></code></a></p>
-<p>Plotting class for spectral features.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>arr</strong> (<em>np.array</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – feature array.</p>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotSpectralFeatures.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotSpectralFeatures.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.__init__" title="Link to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>arr</strong> (<em>np.array</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – feature array.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotSpectralFeatures.get_xy">
-<span class="sig-name descname"><span class="pre">get_xy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotSpectralFeatures.get_xy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.get_xy" title="Link to this definition">¶</a></dt>
-<dd><p>Get the x and y values for plotting.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p><strong>self.xaxis</strong> (<em>(array-like)</em>) – xaxis values</p></li>
-<li><p><strong>self.feature</strong> (<em>(array-like)</em>) – feature values</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot">
-<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotSpectralFeatures.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot" title="Link to this definition">¶</a></dt>
-<dd><p>Not implemented yet.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_cdf">
-<span class="sig-name descname"><span class="pre">plot_cdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotSpectralFeatures.plot_cdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_cdf" title="Link to this definition">¶</a></dt>
-<dd><p>Plot cumulative distribution function.
-:type **kwargs: dict
-:param **kwargs: additional keyword arguments for go.Scatter.
-:type **kwargs: dict</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p><strong>plot_x</strong> (<em>np.array</em>) – x values for plotting.</p></li>
-<li><p><strong>plot_y</strong> (<em>np.array</em>) – y values for plotting.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_cwt">
-<span class="sig-name descname"><span class="pre">plot_cwt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotSpectralFeatures.plot_cwt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_cwt" title="Link to this definition">¶</a></dt>
-<dd><p>Plot continuous wavelet transform.
-:type **kwargs: dict
-:param **kwargs: additional keyword arguments for go.Heatmap.
-:type **kwargs: dict</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Reshaped feature array.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>np.array</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_feature">
-<span class="sig-name descname"><span class="pre">plot_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feat</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotSpectralFeatures.plot_feature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_feature" title="Link to this definition">¶</a></dt>
-<dd><p>Plot a feature.
-:type feat: str
-:param feat: feature to plot.
-:type feat: str</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_featureagg">
-<span class="sig-name descname"><span class="pre">plot_featureagg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">1)</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotSpectralFeatures.plot_featureagg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_featureagg" title="Link to this definition">¶</a></dt>
-<dd><p>Plot feature agglomeration features.
-Uses plot_pca.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em>, </em><em>optional</em><em>, </em><em>default=</em><em>(</em><em>0</em><em>, </em><em>1</em><em>)</em>) – selected components to plot. default first and second components.</p></li>
-<li><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – additional keyword arguments for go.Scatter.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_fft_features">
-<span class="sig-name descname"><span class="pre">plot_fft_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotSpectralFeatures.plot_fft_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_fft_features" title="Link to this definition">¶</a></dt>
-<dd><p>Plot fast fourier transform features.
-Needs original xaxis.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – additional keyword arguments for go.Scatter.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_gaussian_peaks">
-<span class="sig-name descname"><span class="pre">plot_gaussian_peaks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotSpectralFeatures.plot_gaussian_peaks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_gaussian_peaks" title="Link to this definition">¶</a></dt>
-<dd><p>Summary of the method.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – additional keyword arguments for go.Scatter.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p><em>np.array</em> – x values for plotting gaussian peaks.</p></li>
-<li><p><strong>fitted</strong> (<em>np.array</em>) – y values for plotting gaussian peaks.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_pca">
-<span class="sig-name descname"><span class="pre">plot_pca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">1)</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotSpectralFeatures.plot_pca"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_pca" title="Link to this definition">¶</a></dt>
-<dd><p>Plot principal component features.
-:type c: tuple, optional, default=(0, 1)
-:param c: selected components to plot. default first and second components.
-:type c: tuple, optional, default=(0, 1)
-:type **kwargs: dict
-:param **kwargs: additional keyword arguments for go.Scatter.
-:type **kwargs: dict</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_pointwise_features">
-<span class="sig-name descname"><span class="pre">plot_pointwise_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotSpectralFeatures.plot_pointwise_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_pointwise_features" title="Link to this definition">¶</a></dt>
-<dd><p>Plot pointwise features.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – additional keyword arguments for go.Scatter.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_polynomial_featuresall">
-<span class="sig-name descname"><span class="pre">plot_polynomial_featuresall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotSpectralFeatures.plot_polynomial_featuresall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_polynomial_featuresall" title="Link to this definition">¶</a></dt>
-<dd><p>Plot polynomial features.
-:type **kwargs: dict
-:param **kwargs: additional keyword arguments for go.Scatter.
-:type **kwargs: dict</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p><strong>plot_x</strong> (<em>np.array</em>) – x values for plotting.</p></li>
-<li><p><strong>plot_y</strong> (<em>np.array</em>) – y values for plotting.</p></li>
-</ul>
-</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_raw_spec">
-<span class="sig-name descname"><span class="pre">plot_raw_spec</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotSpectralFeatures.plot_raw_spec"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_raw_spec" title="Link to this definition">¶</a></dt>
-<dd><p>Plot the raw spectrum.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_tsne">
-<span class="sig-name descname"><span class="pre">plot_tsne</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">1)</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#PlotSpectralFeatures.plot_tsne"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_tsne" title="Link to this definition">¶</a></dt>
-<dd><p>Plot t-distributed stochastic neighbor embedding features.
-Uses plot_pca.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>c</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em>, </em><em>optional</em><em>, </em><em>default=</em><em>(</em><em>0</em><em>, </em><em>1</em><em>)</em>) – selected components to plot. default first and second components.</p></li>
-<li><p><strong>**kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – additional keyword arguments for go.Scatter.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.SpectraScopePlotting">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">spectrascope.plot_spectral_features.</span></span><span class="sig-name descname"><span class="pre">SpectraScopePlotting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xaxis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xaxis_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaxis_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">twoD</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#SpectraScopePlotting"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.SpectraScopePlotting" title="Link to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Base class for plotting spectral features.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>xaxis</strong> (<em>_type_</em><em>, </em><em>optional</em>) – _description_, by default None</p></li>
-<li><p><strong>xaxis_label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – _description_, by default “”</p></li>
-<li><p><strong>yaxis_label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – _description_, by default “”</p></li>
-<li><p><strong>twoD</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – _description_, by default False</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – _description_, by default “”</p></li>
-<li><p><strong>fig</strong> (<em>_type_</em><em>, </em><em>optional</em>) – _description_, by default None</p></li>
-<li><p><strong>row</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – _description_, by default 1</p></li>
-<li><p><strong>col</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – _description_, by default 1</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.SpectraScopePlotting.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xaxis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xaxis_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yaxis_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">twoD</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#SpectraScopePlotting.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.SpectraScopePlotting.__init__" title="Link to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>xaxis</strong> (<em>_type_</em><em>, </em><em>optional</em>) – _description_, by default None</p></li>
-<li><p><strong>xaxis_label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – _description_, by default “”</p></li>
-<li><p><strong>yaxis_label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – _description_, by default “”</p></li>
-<li><p><strong>twoD</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – _description_, by default False</p></li>
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – _description_, by default “”</p></li>
-<li><p><strong>fig</strong> (<em>_type_</em><em>, </em><em>optional</em>) – _description_, by default None</p></li>
-<li><p><strong>row</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – _description_, by default 1</p></li>
-<li><p><strong>col</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – _description_, by default 1</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="spectrascope.plot_spectral_features.plot_spectral_features_matplotlib">
-<span class="sig-prename descclassname"><span class="pre">spectrascope.plot_spectral_features.</span></span><span class="sig-name descname"><span class="pre">plot_spectral_features_matplotlib</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xaxis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zoom</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_centers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/plot_spectral_features.html#plot_spectral_features_matplotlib"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.plot_spectral_features.plot_spectral_features_matplotlib" title="Link to this definition">¶</a></dt>
-<dd><p>Plot spectral features using matplotlib with annotated representative images.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>xaxis</strong> (<em>np.ndarray</em>) – Array representing the x-axis values of the spectrum (e.g., energy or wavelength).</p></li>
-<li><p><strong>raw</strong> (<em>np.ndarray</em>) – The raw intensity values of the spectrum corresponding to xaxis.</p></li>
-<li><p><strong>selected_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em> or </em><em>np.ndarray</em>) – List of indices of selected features to annotate on the plot.</p></li>
-<li><p><strong>ax</strong> (<em>matplotlib.axes.Axes</em><em>, </em><em>optional</em>) – Matplotlib axis object to plot on. If None, a new axis will be created.</p></li>
-<li><p><strong>zoom</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>optional</em>) – Zoom factor for displaying the annotated images. Default is 0.1.</p></li>
-<li><p><strong>plot_raw</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – Whether to plot the raw spectrum as a black line. Default is True.</p></li>
-<li><p><strong>print_centers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, prints the center x-values and corresponding selected feature indices.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ax</strong> – The axis object containing the generated plot.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>matplotlib.axes.Axes</p>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<p>This function overlays annotated images (e.g., icons of feature types) at the
-bin centers of selected spectral features, using images from static files.
-The images corresponding to feature types are matched using a pre-defined mapping.
-The function assumes the existence of static images for each feature type in the
-‘../app/static/’ directory.</p>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plot_spectral_features_matplotlib</span><span class="p">(</span><span class="n">xaxis</span><span class="p">,</span> <span class="n">spectrum</span><span class="p">,</span> <span class="n">selected_features</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">zoom</span><span class="o">=</span><span class="mf">0.03</span><span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
+          <section id="spectrascope-plot-spectral-features">
+<h1>spectrascope.plot_spectral_features<a class="headerlink" href="#spectrascope-plot-spectral-features" title="Link to this heading">¶</a></h1>
 </section>
 
         </article>
@@ -700,26 +252,8 @@ The function assumes the existence of static images for each feature type in the
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="spectrascope.ss_classification.html">
-              <div class="page-info">
-                <div class="context">
-                  <span>Next</span>
-                </div>
-                <div class="title">spectrascope.ss_classification</div>
-              </div>
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-            </a>
-          <a class="prev-page" href="spectrascope.models.html">
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-              <div class="page-info">
-                <div class="context">
-                  <span>Previous</span>
-                </div>
-                
-                <div class="title">spectrascope.models</div>
-                
-              </div>
-            </a>
+          
+          
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
@@ -738,62 +272,8 @@ The function assumes the existence of static images for each feature type in the
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">spectrascope.plot_spectral_features</a><ul>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotModel"><code class="docutils literal notranslate"><span class="pre">PlotModel</span></code></a><ul>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotModel.__init__"><code class="docutils literal notranslate"><span class="pre">PlotModel.__init__()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotModel.plot_cdf"><code class="docutils literal notranslate"><span class="pre">PlotModel.plot_cdf()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotModel.plot_cwt"><code class="docutils literal notranslate"><span class="pre">PlotModel.plot_cwt()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotModel.plot_featureagg"><code class="docutils literal notranslate"><span class="pre">PlotModel.plot_featureagg()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotModel.plot_fft_features"><code class="docutils literal notranslate"><span class="pre">PlotModel.plot_fft_features()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotModel.plot_gaussian_peaks"><code class="docutils literal notranslate"><span class="pre">PlotModel.plot_gaussian_peaks()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotModel.plot_lines"><code class="docutils literal notranslate"><span class="pre">PlotModel.plot_lines()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotModel.plot_pca"><code class="docutils literal notranslate"><span class="pre">PlotModel.plot_pca()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotModel.plot_pointwise_features"><code class="docutils literal notranslate"><span class="pre">PlotModel.plot_pointwise_features()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotModel.plot_polynomial_featuresall"><code class="docutils literal notranslate"><span class="pre">PlotModel.plot_polynomial_featuresall()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotModel.plot_tsne"><code class="docutils literal notranslate"><span class="pre">PlotModel.plot_tsne()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures"><code class="docutils literal notranslate"><span class="pre">PlotSpectralFeatures</span></code></a><ul>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.__init__"><code class="docutils literal notranslate"><span class="pre">PlotSpectralFeatures.__init__()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.get_xy"><code class="docutils literal notranslate"><span class="pre">PlotSpectralFeatures.get_xy()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot"><code class="docutils literal notranslate"><span class="pre">PlotSpectralFeatures.plot()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_cdf"><code class="docutils literal notranslate"><span class="pre">PlotSpectralFeatures.plot_cdf()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_cwt"><code class="docutils literal notranslate"><span class="pre">PlotSpectralFeatures.plot_cwt()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_feature"><code class="docutils literal notranslate"><span class="pre">PlotSpectralFeatures.plot_feature()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_featureagg"><code class="docutils literal notranslate"><span class="pre">PlotSpectralFeatures.plot_featureagg()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_fft_features"><code class="docutils literal notranslate"><span class="pre">PlotSpectralFeatures.plot_fft_features()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_gaussian_peaks"><code class="docutils literal notranslate"><span class="pre">PlotSpectralFeatures.plot_gaussian_peaks()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_pca"><code class="docutils literal notranslate"><span class="pre">PlotSpectralFeatures.plot_pca()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_pointwise_features"><code class="docutils literal notranslate"><span class="pre">PlotSpectralFeatures.plot_pointwise_features()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_polynomial_featuresall"><code class="docutils literal notranslate"><span class="pre">PlotSpectralFeatures.plot_polynomial_featuresall()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_raw_spec"><code class="docutils literal notranslate"><span class="pre">PlotSpectralFeatures.plot_raw_spec()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.PlotSpectralFeatures.plot_tsne"><code class="docutils literal notranslate"><span class="pre">PlotSpectralFeatures.plot_tsne()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.SpectraScopePlotting"><code class="docutils literal notranslate"><span class="pre">SpectraScopePlotting</span></code></a><ul>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.SpectraScopePlotting.__init__"><code class="docutils literal notranslate"><span class="pre">SpectraScopePlotting.__init__()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#spectrascope.plot_spectral_features.plot_spectral_features_matplotlib"><code class="docutils literal notranslate"><span class="pre">plot_spectral_features_matplotlib()</span></code></a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>

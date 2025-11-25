@@ -3,10 +3,10 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="spectrascope.lcen" href="spectrascope.lcen.html"><link rel="prev" title="spectrascope.SpectraScope" href="spectrascope.SpectraScope.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="spectrascope.SSClassification" href="spectrascope.SSClassification.html"><link rel="prev" title="spectrascope" href="spectrascope.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
-        <title>spectrascope.features - SpectraScope 0.0.1 documentation</title>
+        <title>spectrascope.Features - SpectraScope 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=580074bf" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
@@ -198,13 +198,10 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current has-children"><a class="reference internal" href="spectrascope.html">spectrascope</a><input aria-label="Toggle navigation of spectrascope" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">spectrascope.Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">spectrascope.features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.lcen.html">spectrascope.lcen</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.models.html">spectrascope.models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.plot_spectral_features.html">spectrascope.plot_spectral_features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.ss_classification.html">spectrascope.ss_classification</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.structure_property_featurization.html">spectrascope.structure_property_featurization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spectrascope.StructurePropertyFeatures.html">spectrascope.StructurePropertyFeatures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spectrascope.utils.html">spectrascope.utils</a></li>
 </ul>
 </li>
@@ -228,7 +225,7 @@
         </a>
         <div class="content-icon-container">
           <div class="view-this-page">
-  <a class="muted-link" href="../_sources/api/spectrascope.features.rst.txt" title="View this page">
+  <a class="muted-link" href="../_sources/api/spectrascope.Features.rst.txt" title="View this page">
     <svg><use href="#svg-eye"></use></svg>
     <span class="visually-hidden">View this page</span>
   </a>
@@ -246,14 +243,14 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="module-spectrascope.features">
-<span id="spectrascope-features"></span><h1>spectrascope.features<a class="headerlink" href="#module-spectrascope.features" title="Link to this heading">¶</a></h1>
+          <section id="module-spectrascope.Features">
+<span id="spectrascope-features"></span><h1>spectrascope.Features<a class="headerlink" href="#module-spectrascope.Features" title="Link to this heading">¶</a></h1>
 <p>Spectral Features class for Spectrascope</p>
 <p class="rubric">Functions</p>
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#spectrascope.features.degree_based_features" title="spectrascope.features.degree_based_features"><code class="xref py py-obj docutils literal notranslate"><span class="pre">degree_based_features</span></code></a>(X, degree, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#spectrascope.Features.degree_based_features" title="spectrascope.Features.degree_based_features"><code class="xref py py-obj docutils literal notranslate"><span class="pre">degree_based_features</span></code></a>(X, degree, ...)</p></td>
 <td><p>Function to extract features from the data.</p></td>
 </tr>
 </tbody>
@@ -263,15 +260,15 @@
 <div class="table-wrapper autosummary longtable docutils container">
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#spectrascope.features.SpectralFeatures" title="spectrascope.features.SpectralFeatures"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SpectralFeatures</span></code></a>(energies, intensities)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#spectrascope.Features.SpectralFeatures" title="spectrascope.Features.SpectralFeatures"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SpectralFeatures</span></code></a>(energies, intensities)</p></td>
 <td><p>Spectral Features class used by SpectraScope main class to generate features on datasets.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <dl class="py class">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">spectrascope.features.</span></span><span class="sig-name descname"><span class="pre">SpectralFeatures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensities</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">spectrascope.Features.</span></span><span class="sig-name descname"><span class="pre">SpectralFeatures</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensities</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Spectral Features class used by SpectraScope main class to generate features on datasets.</p>
 <p>A class that creates feature vectors extracted from 1D array data.
@@ -288,20 +285,20 @@ Most featurizer functions are vectorized and can accept multiple samples at once
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.ROCKET_features">
-<span class="sig-name descname"><span class="pre">ROCKET_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.ROCKET_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.ROCKET_features" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.ROCKET_features">
+<span class="sig-name descname"><span class="pre">ROCKET_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.ROCKET_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.ROCKET_features" title="Link to this definition">¶</a></dt>
 <dd><p>Not implemented yet.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.WEASEL_features">
-<span class="sig-name descname"><span class="pre">WEASEL_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.WEASEL_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.WEASEL_features" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.WEASEL_features">
+<span class="sig-name descname"><span class="pre">WEASEL_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.WEASEL_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.WEASEL_features" title="Link to this definition">¶</a></dt>
 <dd><p>Not implemented yet.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensities</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.__init__" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">energies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intensities</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.__init__" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -313,32 +310,32 @@ Most featurizer functions are vectorized and can accept multiple samples at once
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.b_splines">
-<span class="sig-name descname"><span class="pre">b_splines</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.b_splines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.b_splines" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.b_splines">
+<span class="sig-name descname"><span class="pre">b_splines</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.b_splines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.b_splines" title="Link to this definition">¶</a></dt>
 <dd><p>Not implemented yet.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.bop_features">
-<span class="sig-name descname"><span class="pre">bop_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.bop_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.bop_features" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.bop_features">
+<span class="sig-name descname"><span class="pre">bop_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.bop_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.bop_features" title="Link to this definition">¶</a></dt>
 <dd><p>Not implemented yet.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.boss_features">
-<span class="sig-name descname"><span class="pre">boss_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.boss_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.boss_features" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.boss_features">
+<span class="sig-name descname"><span class="pre">boss_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.boss_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.boss_features" title="Link to this definition">¶</a></dt>
 <dd><p>Not implemented yet.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.bow_features">
-<span class="sig-name descname"><span class="pre">bow_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.bow_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.bow_features" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.bow_features">
+<span class="sig-name descname"><span class="pre">bow_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.bow_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.bow_features" title="Link to this definition">¶</a></dt>
 <dd><p>Not implemented yet.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.cdf">
-<span class="sig-name descname"><span class="pre">cdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.cdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.cdf" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.cdf">
+<span class="sig-name descname"><span class="pre">cdf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.cdf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.cdf" title="Link to this definition">¶</a></dt>
 <dd><p>Compute cumulative distribution function: probability that f(x) will take on a value less than or equal to x at x.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -349,8 +346,8 @@ Most featurizer functions are vectorized and can accept multiple samples at once
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.cdf_features">
-<span class="sig-name descname"><span class="pre">cdf_features</span></span><a class="headerlink" href="#spectrascope.features.SpectralFeatures.cdf_features" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.cdf_features">
+<span class="sig-name descname"><span class="pre">cdf_features</span></span><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.cdf_features" title="Link to this definition">¶</a></dt>
 <dd><p>cumulative distribution function for spectrum.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -362,8 +359,8 @@ Most featurizer functions are vectorized and can accept multiple samples at once
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.check_xinterp">
-<span class="sig-name descname"><span class="pre">check_xinterp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.check_xinterp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.check_xinterp" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.check_xinterp">
+<span class="sig-name descname"><span class="pre">check_xinterp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.check_xinterp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.check_xinterp" title="Link to this definition">¶</a></dt>
 <dd><p>Check if interpolated data exists and return either interpolated data or raw data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -380,8 +377,8 @@ Most featurizer functions are vectorized and can accept multiple samples at once
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.cwt">
-<span class="sig-name descname"><span class="pre">cwt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scales</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">10])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mexh'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.cwt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.cwt" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.cwt">
+<span class="sig-name descname"><span class="pre">cwt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scales</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6,</span> <span class="pre">7,</span> <span class="pre">8,</span> <span class="pre">9,</span> <span class="pre">10])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelet</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mexh'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.cwt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.cwt" title="Link to this definition">¶</a></dt>
 <dd><p>Compute continuous wavelet transform on spectrum: uses inner products to measure the similarity between a signal and an analyzing function (wavelet).
 Compare signal to shifted and compressed or stretched versions of a wavelet. Can choose different wavelets</p>
 <dl class="field-list simple">
@@ -395,8 +392,8 @@ Compare signal to shifted and compressed or stretched versions of a wavelet. Can
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.cwt_coefs">
-<span class="sig-name descname"><span class="pre">cwt_coefs</span></span><a class="headerlink" href="#spectrascope.features.SpectralFeatures.cwt_coefs" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.cwt_coefs">
+<span class="sig-name descname"><span class="pre">cwt_coefs</span></span><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.cwt_coefs" title="Link to this definition">¶</a></dt>
 <dd><p>continuous wavelet transform of the imput signal for the given scales and wavelet. First axis corresponds to the scales, remaining axes match the shape of intensity.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -406,8 +403,8 @@ Compare signal to shifted and compressed or stretched versions of a wavelet. Can
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.cwt_frequencies">
-<span class="sig-name descname"><span class="pre">cwt_frequencies</span></span><a class="headerlink" href="#spectrascope.features.SpectralFeatures.cwt_frequencies" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.cwt_frequencies">
+<span class="sig-name descname"><span class="pre">cwt_frequencies</span></span><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.cwt_frequencies" title="Link to this definition">¶</a></dt>
 <dd><p>if the unit of sampling period are seconds and given, then frequencies are in herts, otherwise a sampling period of 1 assumed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -419,8 +416,8 @@ Compare signal to shifted and compressed or stretched versions of a wavelet. Can
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.featureagg">
-<span class="sig-name descname"><span class="pre">featureagg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.featureagg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.featureagg" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.featureagg">
+<span class="sig-name descname"><span class="pre">featureagg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.featureagg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.featureagg" title="Link to this definition">¶</a></dt>
 <dd><p>Recursively merges pairs of clusters of features that minimally increases a given linkage distance.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -441,8 +438,8 @@ Compare signal to shifted and compressed or stretched versions of a wavelet. Can
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.fft_features">
-<span class="sig-name descname"><span class="pre">fft_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.fft_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.fft_features" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.fft_features">
+<span class="sig-name descname"><span class="pre">fft_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.fft_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.fft_features" title="Link to this definition">¶</a></dt>
 <dd><p>FFT Spectra and return positive real FFT values.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -454,8 +451,8 @@ Compare signal to shifted and compressed or stretched versions of a wavelet. Can
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.fft_feat">
-<span class="sig-name descname"><span class="pre">fft_feat</span></span><a class="headerlink" href="#spectrascope.features.SpectralFeatures.fft_feat" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.fft_feat">
+<span class="sig-name descname"><span class="pre">fft_feat</span></span><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.fft_feat" title="Link to this definition">¶</a></dt>
 <dd><p>fft features. shape (n_samples, n_features/2).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -465,8 +462,8 @@ Compare signal to shifted and compressed or stretched versions of a wavelet. Can
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.fft_freq">
-<span class="sig-name descname"><span class="pre">fft_freq</span></span><a class="headerlink" href="#spectrascope.features.SpectralFeatures.fft_freq" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.fft_freq">
+<span class="sig-name descname"><span class="pre">fft_freq</span></span><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.fft_freq" title="Link to this definition">¶</a></dt>
 <dd><p>fft frequencies. shape (n_features/2,).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -478,8 +475,8 @@ Compare signal to shifted and compressed or stretched versions of a wavelet. Can
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.gaussian_filter_features">
-<span class="sig-name descname"><span class="pre">gaussian_filter_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.gaussian_filter_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.gaussian_filter_features" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.gaussian_filter_features">
+<span class="sig-name descname"><span class="pre">gaussian_filter_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigma</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.gaussian_filter_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.gaussian_filter_features" title="Link to this definition">¶</a></dt>
 <dd><p>Convolve intensity with a gaussian filter.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -492,8 +489,8 @@ Compare signal to shifted and compressed or stretched versions of a wavelet. Can
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.gausian_filter">
-<span class="sig-name descname"><span class="pre">gausian_filter</span></span><a class="headerlink" href="#spectrascope.features.SpectralFeatures.gausian_filter" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.gausian_filter">
+<span class="sig-name descname"><span class="pre">gausian_filter</span></span><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.gausian_filter" title="Link to this definition">¶</a></dt>
 <dd><p>gaussian filter features.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -505,8 +502,8 @@ Compare signal to shifted and compressed or stretched versions of a wavelet. Can
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.gaussian_mixture_features">
-<span class="sig-name descname"><span class="pre">gaussian_mixture_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.gaussian_mixture_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.gaussian_mixture_features" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.gaussian_mixture_features">
+<span class="sig-name descname"><span class="pre">gaussian_mixture_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.gaussian_mixture_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.gaussian_mixture_features" title="Link to this definition">¶</a></dt>
 <dd><p>Representation of a Gaussian mixture model probability distribution.</p>
 <p>Not impplemented yet.</p>
 <dl class="field-list simple">
@@ -521,8 +518,8 @@ Compare signal to shifted and compressed or stretched versions of a wavelet. Can
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.gaussian_peaks">
-<span class="sig-name descname"><span class="pre">gaussian_peaks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_peaks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.gaussian_peaks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.gaussian_peaks" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.gaussian_peaks">
+<span class="sig-name descname"><span class="pre">gaussian_peaks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_peaks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.gaussian_peaks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.gaussian_peaks" title="Link to this definition">¶</a></dt>
 <dd><p>Fit n=num_peaks gaussians to intensity.
 Not vectorized yet.</p>
 <dl class="field-list simple">
@@ -535,8 +532,8 @@ Not vectorized yet.</p>
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.peak_features">
-<span class="sig-name descname"><span class="pre">peak_features</span></span><a class="headerlink" href="#spectrascope.features.SpectralFeatures.peak_features" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.peak_features">
+<span class="sig-name descname"><span class="pre">peak_features</span></span><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.peak_features" title="Link to this definition">¶</a></dt>
 <dd><p>peak features. length = num_peaks * 3.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -548,8 +545,8 @@ Not vectorized yet.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.generate_bins">
-<span class="sig-name descname"><span class="pre">generate_bins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.generate_bins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.generate_bins" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.generate_bins">
+<span class="sig-name descname"><span class="pre">generate_bins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.generate_bins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.generate_bins" title="Link to this definition">¶</a></dt>
 <dd><p>Generate N bins for polynomial fitting.</p>
 <p>Generate N bins even in energy for self.energies. If custom x and y not given, performs binning on
 interpolated data if it exists. Otherwise, performs on self.energies, self.intensities.</p>
@@ -588,8 +585,8 @@ interpolated data if it exists. Otherwise, performs on self.energies, self.inten
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.pca">
-<span class="sig-name descname"><span class="pre">pca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.pca"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.pca" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.pca">
+<span class="sig-name descname"><span class="pre">pca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.pca"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.pca" title="Link to this definition">¶</a></dt>
 <dd><p>Principle component analysis</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -602,8 +599,8 @@ interpolated data if it exists. Otherwise, performs on self.energies, self.inten
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.pca_features">
-<span class="sig-name descname"><span class="pre">pca_features</span></span><a class="headerlink" href="#spectrascope.features.SpectralFeatures.pca_features" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.pca_features">
+<span class="sig-name descname"><span class="pre">pca_features</span></span><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.pca_features" title="Link to this definition">¶</a></dt>
 <dd><p>pca features.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -615,8 +612,8 @@ interpolated data if it exists. Otherwise, performs on self.energies, self.inten
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.pointwise_features">
-<span class="sig-name descname"><span class="pre">pointwise_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xrange</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'extrapolate'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.pointwise_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.pointwise_features" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.pointwise_features">
+<span class="sig-name descname"><span class="pre">pointwise_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xrange</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'extrapolate'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.pointwise_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.pointwise_features" title="Link to this definition">¶</a></dt>
 <dd><p>Interpolates self.energies, self.intensities onto ne evenly spaced points.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -630,8 +627,8 @@ interpolated data if it exists. Otherwise, performs on self.energies, self.inten
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.polynomial_featuresN">
-<span class="sig-name descname"><span class="pre">polynomial_featuresN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.polynomial_featuresN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.polynomial_featuresN" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.polynomial_featuresN">
+<span class="sig-name descname"><span class="pre">polynomial_featuresN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">N</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.polynomial_featuresN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.polynomial_featuresN" title="Link to this definition">¶</a></dt>
 <dd><p>Performs polynomial fitting on N energy equivalent sections.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -657,8 +654,8 @@ interpolated data if it exists. Otherwise, performs on self.energies, self.inten
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.polynomial_featuresall">
-<span class="sig-name descname"><span class="pre">polynomial_featuresall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">degree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Narr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([4,</span> <span class="pre">5,</span> <span class="pre">10,</span> <span class="pre">20])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interpolate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.polynomial_featuresall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.polynomial_featuresall" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.polynomial_featuresall">
+<span class="sig-name descname"><span class="pre">polynomial_featuresall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">degree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Narr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([4,</span> <span class="pre">5,</span> <span class="pre">10,</span> <span class="pre">20])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interpolate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.polynomial_featuresall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.polynomial_featuresall" title="Link to this definition">¶</a></dt>
 <dd><p>Performs polynomial fitting on multiple energy equivalent sections.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -672,8 +669,8 @@ interpolated data if it exists. Otherwise, performs on self.energies, self.inten
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.polyfeatures_all">
-<span class="sig-name descname"><span class="pre">polyfeatures_all</span></span><a class="headerlink" href="#spectrascope.features.SpectralFeatures.polyfeatures_all" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.polyfeatures_all">
+<span class="sig-name descname"><span class="pre">polyfeatures_all</span></span><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.polyfeatures_all" title="Link to this definition">¶</a></dt>
 <dd><p>An array of polynomial coefficients for the bins. Shape is sum((degree + 1) * n for n in Narr) + 1 (max energy position).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -685,8 +682,8 @@ interpolated data if it exists. Otherwise, performs on self.energies, self.inten
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.shapelet">
-<span class="sig-name descname"><span class="pre">shapelet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.shapelet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.shapelet" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.shapelet">
+<span class="sig-name descname"><span class="pre">shapelet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.shapelet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.shapelet" title="Link to this definition">¶</a></dt>
 <dd><p>Transforms a data set to identify shapelets. Only works for classification?</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -699,8 +696,8 @@ interpolated data if it exists. Otherwise, performs on self.energies, self.inten
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.shapelet_features">
-<span class="sig-name descname"><span class="pre">shapelet_features</span></span><a class="headerlink" href="#spectrascope.features.SpectralFeatures.shapelet_features" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.shapelet_features">
+<span class="sig-name descname"><span class="pre">shapelet_features</span></span><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.shapelet_features" title="Link to this definition">¶</a></dt>
 <dd><p>shapelet features.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -712,8 +709,8 @@ interpolated data if it exists. Otherwise, performs on self.energies, self.inten
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.tsne">
-<span class="sig-name descname"><span class="pre">tsne</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.tsne"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.tsne" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.tsne">
+<span class="sig-name descname"><span class="pre">tsne</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.tsne"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.tsne" title="Link to this definition">¶</a></dt>
 <dd><p>T-distributed Stochastic neighbor embedding</p>
 <p>Converts similarities between data points to joint probabilities and tries to minimize
 the Kullback-Leibler divergence between the joint probabilties of the low-dimensional embedding
@@ -731,8 +728,8 @@ Recommended to apply PCA first to reduce dimensions (to ~50) then peform TSNE on
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.tsne_features">
-<span class="sig-name descname"><span class="pre">tsne_features</span></span><a class="headerlink" href="#spectrascope.features.SpectralFeatures.tsne_features" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.tsne_features">
+<span class="sig-name descname"><span class="pre">tsne_features</span></span><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.tsne_features" title="Link to this definition">¶</a></dt>
 <dd><p>tsne features shape (n_samples, n_components).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -744,8 +741,8 @@ Recommended to apply PCA first to reduce dimensions (to ~50) then peform TSNE on
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.features.SpectralFeatures.uneven_features">
-<span class="sig-name descname"><span class="pre">uneven_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eV_splits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[20,</span> <span class="pre">40]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{0:</span> <span class="pre">10,</span> <span class="pre">1:</span> <span class="pre">4,</span> <span class="pre">2:</span> <span class="pre">5}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{0:</span> <span class="pre">3,</span> <span class="pre">1:</span> <span class="pre">5,</span> <span class="pre">2:</span> <span class="pre">3}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#SpectralFeatures.uneven_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.SpectralFeatures.uneven_features" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.uneven_features">
+<span class="sig-name descname"><span class="pre">uneven_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eV_splits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[20,</span> <span class="pre">40]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">N_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{0:</span> <span class="pre">10,</span> <span class="pre">1:</span> <span class="pre">4,</span> <span class="pre">2:</span> <span class="pre">5}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{0:</span> <span class="pre">3,</span> <span class="pre">1:</span> <span class="pre">5,</span> <span class="pre">2:</span> <span class="pre">3}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.uneven_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.uneven_features" title="Link to this definition">¶</a></dt>
 <dd><p>Split the data into uneven sections and perform polynomial fitting on each section.</p>
 <p>Option to split each section into different N values and degrees. Generates polynomial_featuresN(N, degree=degree, x=x, y=y, verbose=verbose) for every N, degree on each eV range (np.array).</p>
 <dl class="field-list simple">
@@ -765,8 +762,8 @@ Recommended to apply PCA first to reduce dimensions (to ~50) then peform TSNE on
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="spectrascope.features.degree_based_features">
-<span class="sig-prename descclassname"><span class="pre">spectrascope.features.</span></span><span class="sig-name descname"><span class="pre">degree_based_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/features.html#degree_based_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.features.degree_based_features" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="spectrascope.Features.degree_based_features">
+<span class="sig-prename descclassname"><span class="pre">spectrascope.Features.</span></span><span class="sig-name descname"><span class="pre">degree_based_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#degree_based_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.degree_based_features" title="Link to this definition">¶</a></dt>
 <dd><p>Function to extract features from the data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -793,23 +790,23 @@ Recommended to apply PCA first to reduce dimensions (to ~50) then peform TSNE on
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="spectrascope.lcen.html">
+          <a class="next-page" href="spectrascope.SSClassification.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">spectrascope.lcen</div>
+                <div class="title">spectrascope.SSClassification</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="spectrascope.SpectraScope.html">
+          <a class="prev-page" href="spectrascope.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">spectrascope.SpectraScope</div>
+                <div class="title">spectrascope</div>
                 
               </div>
             </a>
@@ -843,63 +840,63 @@ Recommended to apply PCA first to reduce dimensions (to ~50) then peform TSNE on
         <div class="toc-tree-container">
           <div class="toc-tree">
             <ul>
-<li><a class="reference internal" href="#">spectrascope.features</a><ul>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures</span></code></a><ul>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.ROCKET_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.ROCKET_features()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.WEASEL_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.WEASEL_features()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.__init__"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.__init__()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.b_splines"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.b_splines()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.bop_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.bop_features()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.boss_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.boss_features()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.bow_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.bow_features()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.cdf"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.cdf()</span></code></a><ul>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.cdf_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.cdf_features</span></code></a></li>
+<li><a class="reference internal" href="#">spectrascope.Features</a><ul>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures</span></code></a><ul>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.ROCKET_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.ROCKET_features()</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.WEASEL_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.WEASEL_features()</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.__init__"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.b_splines"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.b_splines()</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.bop_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.bop_features()</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.boss_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.boss_features()</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.bow_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.bow_features()</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.cdf"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.cdf()</span></code></a><ul>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.cdf_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.cdf_features</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.check_xinterp"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.check_xinterp()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.cwt"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.cwt()</span></code></a><ul>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.cwt_coefs"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.cwt_coefs</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.cwt_frequencies"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.cwt_frequencies</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.check_xinterp"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.check_xinterp()</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.cwt"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.cwt()</span></code></a><ul>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.cwt_coefs"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.cwt_coefs</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.cwt_frequencies"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.cwt_frequencies</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.featureagg"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.featureagg()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.fft_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.fft_features()</span></code></a><ul>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.fft_feat"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.fft_feat</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.fft_freq"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.fft_freq</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.featureagg"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.featureagg()</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.fft_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.fft_features()</span></code></a><ul>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.fft_feat"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.fft_feat</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.fft_freq"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.fft_freq</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.gaussian_filter_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.gaussian_filter_features()</span></code></a><ul>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.gausian_filter"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.gausian_filter</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.gaussian_filter_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.gaussian_filter_features()</span></code></a><ul>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.gausian_filter"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.gausian_filter</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.gaussian_mixture_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.gaussian_mixture_features()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.gaussian_peaks"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.gaussian_peaks()</span></code></a><ul>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.peak_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.peak_features</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.gaussian_mixture_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.gaussian_mixture_features()</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.gaussian_peaks"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.gaussian_peaks()</span></code></a><ul>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.peak_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.peak_features</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.generate_bins"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.generate_bins()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.pca"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.pca()</span></code></a><ul>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.pca_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.pca_features</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.generate_bins"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.generate_bins()</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.pca"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.pca()</span></code></a><ul>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.pca_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.pca_features</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.pointwise_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.pointwise_features()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.polynomial_featuresN"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.polynomial_featuresN()</span></code></a></li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.polynomial_featuresall"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.polynomial_featuresall()</span></code></a><ul>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.polyfeatures_all"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.polyfeatures_all</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.pointwise_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.pointwise_features()</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.polynomial_featuresN"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.polynomial_featuresN()</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.polynomial_featuresall"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.polynomial_featuresall()</span></code></a><ul>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.polyfeatures_all"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.polyfeatures_all</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.shapelet"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.shapelet()</span></code></a><ul>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.shapelet_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.shapelet_features</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.shapelet"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.shapelet()</span></code></a><ul>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.shapelet_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.shapelet_features</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.tsne"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.tsne()</span></code></a><ul>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.tsne_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.tsne_features</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.tsne"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.tsne()</span></code></a><ul>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.tsne_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.tsne_features</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#spectrascope.features.SpectralFeatures.uneven_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.uneven_features()</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.SpectralFeatures.uneven_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.uneven_features()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#spectrascope.features.degree_based_features"><code class="docutils literal notranslate"><span class="pre">degree_based_features()</span></code></a></li>
+<li><a class="reference internal" href="#spectrascope.Features.degree_based_features"><code class="docutils literal notranslate"><span class="pre">degree_based_features()</span></code></a></li>
 </ul>
 </li>
 </ul>

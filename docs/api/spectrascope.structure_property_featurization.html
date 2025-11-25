@@ -3,7 +3,7 @@
   <head><meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html"><link rel="next" title="spectrascope.utils" href="spectrascope.utils.html"><link rel="prev" title="spectrascope.ss_classification" href="spectrascope.ss_classification.html">
+<link rel="index" title="Index" href="../genindex.html"><link rel="search" title="Search" href="../search.html">
 
     <!-- Generated with Sphinx 8.2.3 and Furo 2025.09.25 -->
         <title>spectrascope.structure_property_featurization - SpectraScope 0.0.1 documentation</title>
@@ -196,15 +196,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current has-children"><a class="reference internal" href="spectrascope.html">spectrascope</a><input aria-label="Toggle navigation of spectrascope" checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="spectrascope.html">spectrascope</a><input aria-label="Toggle navigation of spectrascope" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="spectrascope.Features.html">spectrascope.Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.features.html">spectrascope.features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.lcen.html">spectrascope.lcen</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.models.html">spectrascope.models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.plot_spectral_features.html">spectrascope.plot_spectral_features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.ss_classification.html">spectrascope.ss_classification</a></li>
-<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">spectrascope.structure_property_featurization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spectrascope.StructurePropertyFeatures.html">spectrascope.StructurePropertyFeatures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spectrascope.utils.html">spectrascope.utils</a></li>
 </ul>
 </li>
@@ -246,48 +243,8 @@
           </label>
         </div>
         <article role="main" id="furo-main-content">
-          <section id="module-spectrascope.structure_property_featurization">
-<span id="spectrascope-structure-property-featurization"></span><h1>spectrascope.structure_property_featurization<a class="headerlink" href="#module-spectrascope.structure_property_featurization" title="Link to this heading">¶</a></h1>
-<p class="rubric">Functions</p>
-<div class="table-wrapper autosummary longtable docutils container">
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_symmetry</span></code>(structure, symmetry_operation)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">identify_crystal_system</span></code>(structure)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_cn_present</span></code>(structure, cn[, indices, ...])</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_crystal_system</span></code>(structure, crystal_system)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_element_cn_present</span></code>(structure, element, cn)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_element_nn_distance_present</span></code>(structure, ...)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_element_oxidation_state_present</span></code>(...[, ...])</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_element_present</span></code>(structure, element[, ...])</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_in_space_group</span></code>(structure, space_group[, ...])</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_nn_distance_present</span></code>(structure, ...[, ...])</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_oxidation_state_present</span></code>(structure, ...[, ...])</p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-</div>
+          <section id="spectrascope-structure-property-featurization">
+<h1>spectrascope.structure_property_featurization<a class="headerlink" href="#spectrascope-structure-property-featurization" title="Link to this heading">¶</a></h1>
 </section>
 
         </article>
@@ -295,26 +252,8 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="spectrascope.utils.html">
-              <div class="page-info">
-                <div class="context">
-                  <span>Next</span>
-                </div>
-                <div class="title">spectrascope.utils</div>
-              </div>
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-            </a>
-          <a class="prev-page" href="spectrascope.ss_classification.html">
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-              <div class="page-info">
-                <div class="context">
-                  <span>Previous</span>
-                </div>
-                
-                <div class="title">spectrascope.ss_classification</div>
-                
-              </div>
-            </a>
+          
+          
         </div>
         <div class="bottom-of-page">
           <div class="left-details">
