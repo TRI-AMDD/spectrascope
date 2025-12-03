@@ -4,7 +4,7 @@ from sklearn.base import BaseEstimator, RegressorMixin
 import cvxpy as cp
 
 
-class FusedLassoRegressor(BaseEstimator, RegressorMixin):
+class FusedLasso(BaseEstimator, RegressorMixin):
     """
     Fused lasso regression:
         minimize  (1 / (2n)) * ||y - (X w + b)||_2^2

@@ -634,6 +634,9 @@ class SpectraScope:
         elif "LogisticRegression" in model_name:
             selected_features = np.argsort(P.coef_)[::-1][:top_features]
             selected_vals = P.coef_[np.argsort(P.coef_)[::-1]][:top_features]
+        elif "FusedLasso" in model_name: #TODO : think about how to find the important regions from here 
+            selected_features = []
+            selected_vals = []
         else:
             selected_features = []
             selected_vals = []
