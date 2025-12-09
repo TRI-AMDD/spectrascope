@@ -52,7 +52,7 @@ class BinaryClassifications(SpectraScope):
         self.nns_present = []
         self.space_groups_present = {}
 
-        for i, struct in tqdm_notebook(enumerate(self.structures)):
+        for i, struct in tqdm(enumerate(self.structures)):
             self.structures_library[self.mpids[i]] = {"structure": struct.as_dict()}
 
             temp = identify_crystal_system(struct)
