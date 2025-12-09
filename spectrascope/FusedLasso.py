@@ -6,6 +6,7 @@ import cvxpy as cp
 
 class FusedLasso(BaseEstimator, RegressorMixin):
     """
+    TODO : include standardization 
     Fused lasso regression:
         minimize  (1 / (2n)) * ||y - (X w + b)||_2^2
                   + alpha * sum_j |w_{j+1} - w_j|
@@ -25,14 +26,21 @@ class FusedLasso(BaseEstimator, RegressorMixin):
     solver : str or None, default=None
         CVXPY solver name (e.g. "OSQP", "ECOS", "SCS"). If None, cvxpy chooses.
     """
-    def __init__(self, alpha=1.0, l1_ratio=0.0, fit_intercept=True, solver=None):
+    def __init__(self, alpha=1.0, l1_ratio=0.0, fit_intercept=True, solver=None, standardize_X = True):
         self.alpha = alpha
         self.l1_ratio = l1_ratio
         self.fit_intercept = fit_intercept
-        self.solver = solver
+        self.solver = solver        
+        self.standardize_X = standardize_X
+        if not self.standardize_X: 
+            print('You are not standardizing X')
 
     def fit(self, X, y):
-        X = np.asarray(X)
+        X = np.asarray(X)  
+        if self.standardize_X: 
+            stds = X.std(axis=0)
+            max_std = stds.max()  
+            X = X / max_std
         y = np.asarray(y).ravel()
         n_samples, n_features = X.shape
 

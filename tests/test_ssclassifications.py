@@ -1,9 +1,9 @@
 from spectrascope.SpectraScope import *
-from spectrascope.features import *
+from spectrascope.Features import *
 from sklearn.linear_model import Ridge, Lasso, ElasticNet
 import SPA
 import seaborn as sns
-from spectrascope.ss_classification import *
+from spectrascope.SSClassification import *
 
 
 fnX = "test_files/X_testfile.npy"

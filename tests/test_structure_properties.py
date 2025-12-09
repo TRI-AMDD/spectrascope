@@ -1,4 +1,4 @@
-from spectrascope.structure_property_featurization import *
+from spectrascope.StructurePropertyFeatures import *
 import os
 from pymatgen.core import Structure
 

@@ -432,7 +432,7 @@ class PlotModel(SpectraScopePlotting):
             row=self.row,
             col=self.col,
         )
-        from spectrascope.features import SpectralFeatures
+        from spectrascope.Features import SpectralFeatures
 
         temp = SpectralFeatures(self.xaxis, self.raw)
 
@@ -754,7 +754,7 @@ class PlotModel(SpectraScopePlotting):
         # customdata=self.xaxis[self.selected_features], hovertemplate="x:%{customdata[0]}"
 
 
-from spectrascope.features import SpectralFeatures
+from spectrascope.Features import SpectralFeatures
 import os 
 import matplotlib.pyplot as plt 
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox

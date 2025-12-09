@@ -408,7 +408,8 @@ class SpectraScope:
         if X_test_out is not None:
             setattr(self, feat + "_test_trans" + additional_naming, X_test_out)
         setattr(self, feat + "_trans_names" + additional_naming, names)
-
+        
+        self.add_generated_feature(feat + "_trans" + additional_naming)
     def split_X(self, attr:str, test_size, scale_X=False):
         """Split X attribute using sklearn train_test_split.
 
@@ -962,10 +963,12 @@ class SpectraScope:
         if feature_list == []:
             feature_list = self.generated_features
         max_mutual_infos = []
+        all_mutual_infos = {}
         for feat in tqdm(feature_list):
             feat_arr = getattr(self, feat)
             mutual_infos = mutual_info_regression(feat_arr, getattr(self, yattr))
             max_mutual_infos.append(np.max(mutual_infos))
+            all_mutual_infos[feat] = mutual_infos
         top_k_mutual_infos = np.argsort(max_mutual_infos)[::-1][:k]
         top_k_features = np.array(feature_list)[top_k_mutual_infos]
         setattr(self, yattr + "_MIF_selected_features", list(top_k_features))
@@ -973,7 +976,7 @@ class SpectraScope:
         if return_top_k:
             return top_k_features
         if return_vals: 
-            return np.array(max_mutual_infos)[top_k_mutual_infos]
+            return all_mutual_infos
 
 
     def maximal_correlation_feature_selection(self, yattr, feature_list=[], k=3, return_top_k=False, return_vals=False): 
@@ -994,17 +997,19 @@ class SpectraScope:
             print('WARNING : running on all features,this can take ~2 min per feature to run')
 
         max_maximal_correlations = []
+        all_maximal_correlations = {}
         for feat in tqdm(feature_list):
             feat_arr = getattr(self, feat)
             maximal_correlations = maximal_correlation_from_ace(feat_arr, getattr(self, yattr))
             max_maximal_correlations.append(maximal_correlations)
+            all_maximal_correlations[feat] = maximal_correlations
         top_k_maximal_correlations = np.argsort(max_maximal_correlations)[::-1][:k]
         top_k_features = np.array(feature_list)[top_k_maximal_correlations]
         setattr(self, yattr + "_maximal_correlation_selected_features", list(top_k_features))
         if return_top_k:
             return top_k_features
         if return_vals: 
-            return np.array(max_maximal_correlations)[top_k_maximal_correlations]
+            return all_maximal_correlations
 
     def auto_feature_generation(self, feature_generation_dict={}): 
         f"""Generate all available features

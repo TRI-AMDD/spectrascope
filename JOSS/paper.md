@@ -42,7 +42,8 @@ system. However, many spectroscopic techniques feature challenges like
 complicated modeling needed for analysis, low signal-to-noise ratio
 for specific materials, or expensive equipment needed for high
 resolution studies. Here, we present Spectra-Scope, an open-source
-Python package and web app for automatic characterization of materials properties from spectral data using interpretable machine learning models. It
+Python package and web app for automatic characterization of materials 
+properties from spectral data using interpretable machine learning models. It
 supports spectral preprocessing, nonlinear feature extraction, machine
 learning model training, and feature selection. Users can easily train
 different types of simple, interpretable ML models on a set of feature
@@ -122,7 +123,7 @@ transformations may be best for their data.
 
 The generated features are then used to train a machine learning
 algorithm to predict a property of interest. These features are model
-agnostic, and can be implemented into any machine learning model.
+agnostic, and can be implemented into any machine learning algorithm.
 However, the user interface and toolkit we implemented here is primarily
 built around random forests (RF) and regularized linear regression
 models. Due to their simplicity and interpretability, these models allow
@@ -133,7 +134,7 @@ we incorporate the LCEN algorithm [@seber_lcen_2024-1] which combines
 lasso and elastic net regression with "clip" steps that provide
 additional constraints for feature downselection. Further details on
 featurization, feature downselection, and the available models are
-discussed in the Methods section and the Supplementary Materials. These
+discussed in the Methods section. These
 techniques allow Spectra-Scope to highlight the most important features
 of a spectrum for prediction of a specific property within a particular
 dataset. This provides users with "glass box" models where one can
@@ -150,17 +151,16 @@ This may be useful if different techniques provide information that,
 when combined, aids a model in prediction. Feature selection can
 highlight how spectral features of different techniques are related and
 transformations may be able to uncover relationships previously
-unidentified in the raw
-data[@torrisi_random_2020; @na_narong_interpretable_2025].
+unidentified in the raw data [@torrisi_random_2020; @na_narong_interpretable_2025].
 
 We hope that a focus on sparse and interpretable models will make for
 easier application of the featurization strategies highlighted by
 Spectra-Scope into production. For example, models which operate on only
 a few features may be more easy to verify, troubleshoot, and deploy to
 operate without supervision. For future users, Spectra-Scope is an open
-source Python package available on
+source Python package available at
 [github.com/TRI-AMDD/spectrascope](github.com/TRI-AMDD/spectrascope){.uri}
-and a web application available on
+and a web application available at
 [spectrascope.matr.io](spectrascope.matr.io){.uri}.
 
 ![**Outline of this paper and the Spectra-Scope pipeline.** (a)
@@ -206,8 +206,8 @@ prediction. Setwise features like PCA create greater risks for
 extrapolation as they rely on properties of the original training
 dataset.
 
-We summarize our featurization methods in the table below, and leave
-full descriptions of them to the supplemental information.
+We summarize our featurization methods in the table below. Additional information 
+on the different featurizations can be found in the [API documentation](github.com/TRI-AMDD/spectrascope){.uri}. 
 
   **Featurization**                  **Type**
   ---------------------------------- ----------
@@ -300,8 +300,7 @@ features in model training, making the model more interpretable and
 possibly highlighting physical relationships between a spectral feature
 and property. Further interpretability with random forests can be
 obtained using Shapley additive explanation (SHAP) analysis, but we do
-not implement this in this
-work[@lundberg2017unified; @lundberg2018consistent].
+not implement this in this work [@lundberg2017unified; @lundberg2018consistent].
 
 ### LCEN
 
@@ -328,6 +327,25 @@ contributions. Therefore, interpretability comes from examining the
 magnitudes of the coefficients and the user can learn more about which
 features are contributing the most.
 
+### Fused Lasso 
+We include the fused lasso as a built-in model to Spectra-Scope. The fused lasso is lasso regression with penalty on the differences of adjacent coefficients [@tibshirani_solution_2011]. The loss function is 
+
+\begin{equation}
+\min_{\beta \in {R}^p} \;
+\frac{1}{2}\|y - X\beta\|_2^2 + \lambda \|D\beta\|_1,
+\qquad
+D =
+\begin{bmatrix} 
+    -1 & 1 & 0  & \dots & 0 \\
+    0 & -1 & 1 * \ddots & vdots \\
+    \vdots & \ddots & \ddots & \ddots & 0 \\
+    0 & \dots & 0 & -1 & 1
+\end{bmatrix}
+\in {R}^{(p-1)\times p}.
+\end{equation}
+
+It has previously been used to create sparse, interpretable models for battery cycle life prediction [@rhyu_systematic_2025]. Minimizing the difference between adjacent coefficients lends itself to spectroscopy or time-series data because neighboring time or wavelength components are often highly correlated. This can guide partitioning of the input data into smaller sections and improve interpretability. 
+
 ## Application
 
 ![**Overview of Spectra-Scope application.** (a) Multiple data
@@ -344,7 +362,7 @@ In addition to an open-source Python library, Spectra-Scope is available
 as a web-based application for convenient no-code usage. Data
 preparation into an appropriate tabular format must first be done by the
 user, but then can be used as input for the Spectra-Scope workflow.
-Figure [2](#fig:2){reference-type="ref" reference="fig:2"} shows a
+\autoref{fig:2} shows a
 summary of the main workflow using the Spectra-Scope web app. After
 inputing the data of interest (a), we can quickly visualize the
 different featurizations of the data (b). The user can choose the
@@ -457,7 +475,7 @@ The lowest RMSE for this case comes from training a random forest on the
 10 principal components of the XANES spectra. Figure
 [3](#fig:3){reference-type="ref" reference="fig:3"}c visualizes the
 first two principal components of the data, and the corresponding bond
-length. Figure [3](#fig:3){reference-type="ref" reference="fig:3"}d
+length. \autoref{fig:3}d
 highlights the top 10 (d,e) and top 20 (f) important polynomial
 coefficients identified for prediction using just the XANES (d), PDF
 (e), or both XANES and PDF (f) datasets. The polynomial coefficients
@@ -643,7 +661,7 @@ hyperparameter tuning and further training.
 
 Further, both datasets showcase the importance of feature downselection
 in model interpretation. In both cases, similar parts of spectra are
-highighlighted as important across different featurization schemes,
+highlighted as important across different featurization schemes,
 suggesting that different models are identifying truly physically
 important regions. This can help identify erroneous fits if some
 featurization schemes select random or unphysical regions of spectra for
@@ -651,11 +669,16 @@ prediction.
 
 Finally, for both cases, non-linear transformations of features perform
 better than just using the raw, interpolated spectra as the training
-data. This highlights the power of featurization to identify non-linear
-relationships between spectra and properties, even when using linear
-models like LCEN. Spectra-Scope gives users the ability to quickly train
-models on different transformations of the data, and generate simple and
-useful models for small datasets.
+data. Using Spectra-Scope, we can quickly analyze the linear correlation, mutual information, 
+and maximal correlation between the generated features and the output. We compute 
+Pearson's correlation coefficient using `sklearn.feature_selection.r_regression`. With this analysis, 
+we find that the features generated for the Grapes case study have higher 
+linear correlations with the target than those generated for the XANES + PDF case study. 
+This could be why the LCEN algorithm performed better over Random Forests for the grapes case. 
+Additionally, this analysis showcases how generating nonlinear features can find linear correlations
+with the response variable. For the Grapes dataset, 6 of the generated features have stronger linear
+correlations with the target than the raw data. For the XANES dataset, 3 features have stronger 
+linear correlations.
 
 # Conclusion
 

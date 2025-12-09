@@ -1,4 +1,4 @@
-from spectrascope.features import *
+from spectrascope.Features import *
 
 x1, y1 = np.load("test_files/test_xas.npy")
 fnX = "test_files/X_testfile.npy"
