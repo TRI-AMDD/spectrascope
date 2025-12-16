@@ -408,7 +408,7 @@ class SpectraScope:
         if X_test_out is not None:
             setattr(self, feat + "_test_trans" + additional_naming, X_test_out)
         setattr(self, feat + "_trans_names" + additional_naming, names)
-        
+
         self.add_generated_feature(feat + "_trans" + additional_naming)
     def split_X(self, attr:str, test_size, scale_X=False):
         """Split X attribute using sklearn train_test_split.
@@ -633,8 +633,8 @@ class SpectraScope:
                 :top_features
             ]
         elif "LogisticRegression" in model_name:
-            selected_features = np.argsort(P.coef_)[::-1][:top_features]
-            selected_vals = P.coef_[np.argsort(P.coef_)[::-1]][:top_features]
+            selected_features = np.argsort(np.abs(P.coef_))[::-1][:top_features]
+            selected_vals = P.coef_[np.argsort(np.abs(P.coef_))[::-1]][:top_features]
         elif "FusedLasso" in model_name: #TODO : think about how to find the important regions from here 
             selected_features = []
             selected_vals = []

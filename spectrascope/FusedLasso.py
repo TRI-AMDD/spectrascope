@@ -26,11 +26,11 @@ class FusedLasso(BaseEstimator, RegressorMixin):
     solver : str or None, default=None
         CVXPY solver name (e.g. "OSQP", "ECOS", "SCS"). If None, cvxpy chooses.
     """
-    def __init__(self, alpha=1.0, l1_ratio=0.0, fit_intercept=True, solver=None, standardize_X = True):
+    def __init__(self, alpha=1.0, l1_ratio=0.0, fit_intercept=True, standardize_X = True, solver_path=None):
         self.alpha = alpha
         self.l1_ratio = l1_ratio
         self.fit_intercept = fit_intercept
-        self.solver = solver        
+        self.solver_path = solver_path        
         self.standardize_X = standardize_X
         if not self.standardize_X: 
             print('You are not standardizing X')
@@ -70,7 +70,7 @@ class FusedLasso(BaseEstimator, RegressorMixin):
         objective = loss + self.alpha * fused_penalty + self.l1_ratio * l1_penalty
 
         prob = cp.Problem(cp.Minimize(objective))
-        prob.solve(solver=self.solver)
+        prob.solve(solver_path=self.solver_path)
 
         if prob.status not in ["optimal", "optimal_inaccurate"]:
             raise RuntimeError(f"Optimization failed with status: {prob.status}")
