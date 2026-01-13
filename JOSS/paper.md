@@ -532,6 +532,8 @@ In \autoref{fig:4}b and c we highlight the
 
 Many of the wavelengths selected as important by the models correspond with second or third overtones of molecular infrared vibrational frequencies that may be prevalent in grapes. The absorption peak at 970nm likely corresponds with water, which has a near-IR absorption band near 970 nm due to overtones of the O-H stretching mode of water [@lin_theory_2009; @golic_short-wavelength_2003]. The third overtone of this vibrational frequency is at 738nm, which is picked up by 3 of the model-feature pairs. The small feature around 840nm may correspond with the second overtone of the 1100nm O-H combination band in water. The broader peak at 1200nm may correspond with the second overtone of C-H and C-H$_2$ stretching frequencies, which would come from organic solutes like glucose and sucrose, and have been reported at 1100-1230nm and 1215nm, respectively [@golic_short-wavelength_2003]. These spectral features have previously been used for glucose monitoring [@golic_short-wavelength_2003]. For the interpolated and polynomial featurization schemes shown in \autoref{fig:4}c, the final LCEN model selects 86 and 33 features, respectively.
 ((???? QUESTION: USING WHICH REGULARIZATION PARAMETER????))
+((???? QUESTION: SHOULD WE INCLUDE THIS FOR XANES TOO????))
+
  Random forest models  predict on all the available features in a dataset, which are of size 899 and 157, respectively. This highlights the utility of regularization for feature down-selection, as nonzero features can be more easily judged for their importance than a feature score which is computed for all features in a random forest model.
 
 ![**Regressing grape sugar content.** (a) % RMSE for random
