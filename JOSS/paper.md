@@ -13,7 +13,7 @@ authors:
     equal-contrib: false
     affiliation: 1 # (Multiple affiliations must be quoted)
   - name: Chris Fajardo 
-    equal-contrib: false›
+    equal-contrib: false
     affiliation: 1
   - name: Leena Sansguiri 
     corresponding: false # (This is how to denote the corresponding author)
@@ -37,22 +37,24 @@ bibliography: paper.bib
 
 # Summary
 
-Spectroscopy is a pillar of materials science. It can provide
-crucial information to experimentalists and theorists on physical properties
-like the structure, composition, or excited state dynamics of a
-system. However, many spectroscopic techniques feature challenges like
-complicated modeling needed for analysis, low signal-to-noise ratio
-for specific materials, or expensive equipment needed for high
-resolution studies. Here, we present Spectra-Scope, an open-source
-Python package and web app for automatic characterization of materials 
-properties from spectral data using interpretable machine learning models. It
-supports spectral preprocessing, nonlinear feature extraction, machine
-learning model training, and feature selection. Users can easily train
+Spectroscopy is a central class of characterization methodology, providing
+useful information on properties
+like structure, composition, or excited state dynamics of a given
+system. However, many spectroscopic techniques present challenges in development of
+interpretable, performant, and reliable supervised learning models due to the wide range of possible
+nonlinear correlations that can exist between signal and the response variable (target) of interest.
+ Here, we present Spectra-Scope, an open-source AutoML framework implemented in
+Python and with a web app for automatic characterization of materials 
+properties from spectral data using interpretable machine learning models. It comprises tools for spectral preprocessing, nonlinear feature extraction, machine
+learning model training, and feature downselection. Users can easily train
 different types of simple, interpretable ML models on a set of feature
 transformations quickly and with modest computational resources. In
 this work, we outline the methods of Spectra-Scope and its
 effectiveness across diverse datasets, with applications to materials
-and agricultural datasets. 
+and agricultural spectral data. We show that Spectra-Scope can reproduce
+performance of comparable models in the literature, and highlight how our
+emphasis on interpretability
+can be used to rationalize the behavior of individual models.
 
 # Statement of need
 
@@ -67,8 +69,13 @@ experimental techniques or materials datasets [@tsamardinos_automated_2020; @ji_
 More general purpose frameworks have been established for manufacturing or 
 time-series data [@sun_smart_2021; @sun_alven_2020; @tsfresh]. 
 To the best of our knowledge, the literature lacks a versatile toolkit 
-that seamlessly integrates automated feature generation, model training, 
-feature downselection, and inference for spectroscopy data. 
+that seamlessly integrates existing methods for
+automated feature generation, model training, 
+feature downselection, and inference for spectroscopy data.
+Exposing these functionalities in a common package and interface
+might help accelerate the model development and data interrogation process for both
+experts and novice users.
+
 
 # Introduction
 
@@ -78,92 +85,66 @@ Spectroscopy is a powerful method for scientific analysis that probes
 the interaction of matter with electromagnetic radiation. It allows for
 the investigation of electronic, structural, and dynamic properties of
 physical systems, and is widely employed across disciplines such as
-materials science, chemistry, physics, and the life sciences. Recently,
-spectroscopic techniques have become integrated into high-throughput
-experimentation schemes and autonomous laboratories, which are
-increasingly used in materials science for accelerated exploration and
-development of materials
+materials science, chemistry, physics, and the life sciences. Autonomous and high throughput laboratories are increasingly
+popular for exploring the synthesis process space for materials
 [@szymanski_autonomous_2023; @gregoire_combinatorial_2023; @baird_building_2023; @ebrahimi_advancing_2024; @chao_cuttingedge].
-However, these high-throughput experimental schemes necessitate
+These high-throughput experimental schemes necessitate
 companion analysis pipelines for characterization of the complex
 datasets they produce.
 
-Automatic spectroscopic analysis tools have thus become a critical
+Automatic spectroscopic analysis tools have thus become a key
 component of the high-throughput experimentation pipeline. This analysis
 can span from simple peak fitting [@takeuchi_datamanagement] to advanced
 machine learning (ML)
 [@ogunlade_2024; @solis_mltblg; @SHEREMETYEVA2020455] depending on the
-experimental technique and ultimate goal, and can enable real-time
+experimental technique and ultimate goal. Spectroscopic models 
+can enable real-time
 feedback that supports decision-making during experiments
 [@liang_realtime], enhance the detection of subtle features and patterns
 in data[@zhang_identifying_2020], and alleviate the burden of repetitive
 manual analysis [@joy_simple_2022]. Thus, designing robust,
 interpretable, and computationally efficient models for spectroscopic
-data analysis is a key challenge and opportunity in high-throughput
-experimentation and analysis. Analytic pipelines that are simple,
-reliable, and highlight physical insights in spectral data can help
-advance automated experimentation and characterization, thereby
-accelerating materials discovery and development.
+data analysis is a ubiquitous and important challenge in developing high-throughput
+experimentation workflows.
+
+
+# Sections we need to add:
+## State of the field - As part of intro
+
+(((PROPOSED OUTLINE HERE)))
+- Review some Domain-specific AutoML methods - move from where currently exists
+- Shout out general time series and manufacturing AutoML e.g. SPA and Tsfresh
+- Deep learning aproaches used
+- No-code web interface for computational novices
+
+## Software design- Before Methods
+
+- Focus on lightweight 'glass box' models that can be ran on laptops or via simple web interfaces
+- Modular featurization, application that allows mix & match combination of features
+- App exposure of functionality makes it easier for experimentalists to work with
+- Use of off-the-shelf methods eg SKlearn and SPA 
+- Standard visualization libraries used too
+
+## Research Impact Statement- Before conlusion
+- Talk about internal usage within Toyota possibly?
+- Benchmarking against literature e.g. our reproducibility detailed in the case studies
+- Open sourcing and web app
+- Documentation
+- Notebooks with figure generation explicitly highlighted
+
+## AI Usage Disclosure
+(Elsewhere, below)
 
 ## Overview of Work
 
-Here, we present Spectra-Scope, a toolkit for the development of
-characterization models for materials properties based on feature
-exploration and interpretable machine learning models. This
-general-purpose framework is built for feature generation, model training, and 
-feature downselection from spectral data (\autoref{fig:1}). A main component
-of Spectra-Scope is a a set of implemented transformations, or
-"featurizers" to transform input spectra and extract new features that
-may better correlate with a property of interest than the raw spectra.
-For example, transformations such as the cumulative distribution
-function [@chen_robust_2024] and multi-scale polynomial fitting
-[@torrisi_random_2020] have proven successful for prediction of
-coordination number and mean nearest-neighbor distance, respectively,
-from XAS spectra of transition metal oxide structures. The available
-featurizers in Spectra-Scope allow a practitioner to explore what
-transformations may be best for their data.
-
-The generated features are then used to train a machine learning
-algorithm to predict a property of interest. These features are model
-agnostic, and can be implemented into any machine learning algorithm.
-However, the user interface and toolkit we implemented here is primarily
-built around random forests (RF) and regularized linear regression
-models. Due to their simplicity and interpretability, these models allow
-users to identify the most important features for prediction via the
-feature importances returned by random forests [@breiman_random_2001]
-and feature downselection during regularized linear regression. Further,
-we incorporate the LCEN algorithm [@seber_lcen_2024-1] which combines
-lasso and elastic net regression with "clip" steps that provide
-additional constraints for feature downselection. Further details on
-featurization, feature downselection, and the available models are
-discussed in the Methods section. These
-techniques allow Spectra-Scope to highlight the most important features
-of a spectrum for prediction of a specific property within a particular
-dataset. This provides users with "glass box" models where one can
-identify how the model obtains answers and weed out erroneous fits. More
-importantly, it can elucidate physical relationships between spectra and
-materials properties if specific peaks, energies, or spectral features
-are labeled as important predictors for a given property.
-
-Finally, Spectra-Scope has the ability to train models on combined
-spectra from different experimental techniques. Multi-modal machine
-learning has proven a promising way to improve the prediction of certain
-materials properties using foundation models[@moro_multimodal_2025].
-This may be useful if different techniques provide information that,
-when combined, aids a model in prediction. Feature selection can
-highlight how spectral features of different techniques are related and
-transformations may be able to uncover relationships previously
-unidentified in the raw data [@torrisi_random_2020; @na_narong_interpretable_2025].
-
-We hope that a focus on sparse and interpretable models will make for
-easier application of the featurization strategies highlighted by
-Spectra-Scope into production. For example, models which operate on only
-a few features may be more easy to verify, troubleshoot, and deploy to
-operate without supervision. For future users, Spectra-Scope is an open
-source Python package available at
-[github.com/TRI-AMDD/spectrascope](github.com/TRI-AMDD/spectrascope){.uri}
-and a web application available at
-[spectrascope.matr.io](spectrascope.matr.io){.uri}.
+This work describes Spectra-Scope, an open-source AutoML framework with a Python and web app implementation
+ that automates simple supervised learning model development from spectral data. It
+comprises three main capabilities:
+(i) A library of spectral featurizers that can help transform raw spectra into features that better correlate with target properties, (ii) Model training using random forests[@breiman_random_2001] and regularized linear regression, both of which offer handles for interpretability,
+and (iii) Demonstrated support for different simultaneous modalities of data. 
+The capabilities demonstrated here all only require modest computational resources.
+The overall workflow is described in (\autoref{fig:1}).
+Full details are provided in the Methods section.
 
 ![**Outline of this paper and the Spectra-Scope pipeline.** (a)
 Input data can come from any experimental or simulated 1-D array data
@@ -174,10 +155,10 @@ polynomial peak fitting, and others as outlined in the methods. (c)
 Transformed spectra are used to train a machine learning algorithm. This
 paper focuses on the LCEN algorithm and random forests, but
 Spectra-Scope can be incorporated with user built models as well. (d)
-Model training of LCEN and random forests will include feature selection
-either in the form of feature downselection with LCEN, or feature
-importances with random forests. This allows for the identification of
-important features for prediction. (e) The algorithms are used to
+Model training of LCEN and random forests includes feature selection
+either in the form of LCEN feature downselection or RF feature
+importances. 
+(e) The algorithms are used to
 predict the input response variables. Feature selection helps with model
 interpretability and investigating modality importance.\label{fig:1}](Figures/TOC.pdf){width=100%}
 
@@ -190,7 +171,17 @@ we implement, and (iii) an overview of the application.
 
 ## Featurization
 
-We categorize our transformations and features into three sets: 1.
+We present a bundled implementation of "featurizers" to
+transform input spectra, extracting features that
+may better correlate with a property of interest than the raw spectra.
+This compiles techniques seen across the literature in one place.
+This allows practitioners to screen over featurizations with no *a priori* knowledge of the
+expected relationships between spectral signal and response variables.
+Examples include transformations such as the cumulative distribution
+function [@chen_robust_2024] and multi-scale polynomial fitting
+[@torrisi_random_2020]. 
+
+We categorize our transformations and features into three conceptual sets: 1.
 "Local" features (that capture information in finite neighborhoods along
 the spectrum e.g. polynomial fitting[@torrisi_random_2020]), 2.
 "Nonlocal" features (which incorporate information from the entire
@@ -201,12 +192,12 @@ Local features are useful when spectral features are localized to
 specific energy regions. They allow for easy interpretation between
 transformed features and energy regions, which can help identify why
 specific features may be important for prediction. However, they can
-miss global information on periodic or oscillatory trends that nonlocal
+miss global information on e.g. periodic or oscillatory trends that nonlocal
 features can highlight. For this reason we provide both local and
 nonlocal featurization techniques to complement each other for
 prediction. Setwise features like PCA create greater risks for
 extrapolation as they rely on properties of the original training
-dataset.
+dataset, but may help with understanding properties of the dataset.
 
 We summarize our featurization methods in the table below. Additional information 
 on the different featurizations can be found in the [API documentation](github.com/TRI-AMDD/spectrascope){.uri}. 
@@ -223,40 +214,53 @@ on the different featurizations can be found in the [API documentation](github.c
   Principal Component Analysis       Setwise
   Feature Agglomeration              Setwise
 
+
+### Nonlinear Feature Expansion
+Because raw spectral values and featurized values may not always have a 
+linear correlation with the response variable, nonlinear feature expansion
+can help augment the input variables with a set of nonlinear transformations.
+For example,
+$$x^2, \ln{x}, (\ln{x})^2, \sqrt{x}, \frac{1}{\sqrt{x}}, \frac{1}{x}, \frac{1}{x^2}, x^{1.5}, \frac{\ln{x}}{x}, \frac{1}{\sqrt{x}}$$.
+Any feature, such as polynomial coefficients, may be used as inputs to this feature expansion,
+but here we focus exclusively on raw 'pointwise' spectral values.
+((((QUESTION:: THIS IS TRUE RIGHT?))))
+In deployment, any nonlinear transformations used by the model should be vetted to ensure that
+overfitting to spurious correlation is not occuring.
+
 ## Feature Discovery and Down-Selection
 
-Spectral data featurization has several objectives. The first practical
-goal is to find transformed spectral features which provide a useful
-mathematical correlation with the output of interest, which may also
-have a conceptual connection to the physical mechanism that generates
-the spectrum. Transformed features may then be more likely to work well
-with a model's functional form (such as linear regression in LCEN or
-nonlinear regression by random forests) and therefore improve
-performance. Put differently, the transformations may have the effect of
-making similar/dissimilar spectrum-property pairs closer/further in
-feature space which then makes it easier for models to be fit to said
-relationships. One way to identify such a relationship without fitting a
-model is linear and nonlinear correlation analysis[@sun_smart_2021],
+There are several objectives in spectral featurization. The first
+ is to find features which have a useful
+mathematical correlation with the output of interest, which should have 
+ a conceptual connection to the physical mechanism that generates
+ the spectrum. Transformed features, by exploring a wider set of data representations,
+ may be more likely to improve performance by working better with a model's functional form, such as
+ by making the relationship between signal and response linear.
+Put differently, transformations may make more similar/dissimilar spectrum-property pairs closer/further in
+feature space which makes for easier model fitting.
+ One model-free way to identify such relationships 
+ is linear and nonlinear correlation analysis[@sun_smart_2021],
 using tools such as Pearson's correlation coefficient
 [@bertsekas2008introduction] and maximal correlation analysis
-[@renyi_measures_1959]. Here, we rely on model performance to determine
-goodness of fit, which assumes that the model is capable of capturing
-the relationships between input and output variables present in the
-data. Further nonlinear transformations or combinations of features can
-be applied as well [@sun_alven_2020-1].
+[@renyi_measures_1959]. While these model-free methods exist, here, we rely on model performance to judge
+feature suitability. Further nonlinear transformations or combinations of features can
+be applied as well [@sun_alven_2020-1], which we explore in the Case Study section below.
 
-The second goal is for interpretability. There are two primary use cases
+The second goal is interpretability. There are two primary use cases
 here: gaining knowledge about the system, and gaining knowledge about
-the model. If the user does not have a physical model for the processes
-that yield the response variable, and/or if the process has a
-corresponding expression in the spectrum, they may not know *a priori*
-which transformations will be best. In this case, feature
-interpretability may help the user build a model for the underlying
-process and gain knowledge about the system - for example, identifying
-if the presence or absence of a feature in the spectrum is predictive of
-the response variable. Secondly, interpretability can help with model
+the model. If the user does not have an *a priori* physical model for the processes
+that yield the response variable and/or if the response variable has a
+corresponding signal in the spectrum, it may be unknown
+which transformations are best. In this case, feature
+interpretability may help the user build a mental model for the underlying
+process and learn about the system - for example, identifying
+if the presence/absence of a feature in the spectrum predicts
+the response variable. Further, interpretability can help with model
 trustworthiness, as it can help the practitioner diagnose why a failure
-during training or inference occurs.
+during training or inference occurs, or predict possible failures ahead of time.
+
+
+
 
 ## Models
 
@@ -278,31 +282,19 @@ features of interest correlate with the underlying phenomenon.
 We refer readers who are unfamiliar with random forests to
 Breiman, 2001 [@breiman_random_2001]. We use the implementation from Scikit-Learn[@scikit-learn].
 
-Random forests have many desirable properties, but we highlight the
-three most relevant ones for this work: First, random forests can
-capture nonlinear relationships between input and response variables
-without intermediate transformations. By contrast, linear models perform
-best when the features are transformed such that the correlation between
-the input features and output is linear. This means that random forests
-are easier to use for 'first-pass' modeling efforts and therefore might
-more easily help users discover useful featurization techniques.
-Secondly, random forests train an ensemble of decision trees on
+Random forests have many desirable properties:
+(1) They can capture nonlinear relationships without intermediate transformations, 
+making them useful for 'first-pass' modeling and screening different featurizations.
+(2)Random forests train an ensemble of decision trees on
 bootstrap aggregates (bagging) of the training dataset, and the trained
 trees only use a random subset of the features for each feature split.
-This has many desirable results, like reducing correlation between trees
-and mitigating overfitting. For our purposes, it means a negative impact
-on model performance is less severe when adding irrelevant features.
-Therefore, random forests can handle a large feature space and so can be
-used when attempting to discover useful featurization strategies.
-Finally, off-the-shelf implementations of random forests allow users to
-access a measure of importance of different parts of the feature space
-in the training dataset. When random forests are used in Spectra-Scope,
-the user is able to easily identify and visualize the most important
-features in model training, making the model more interpretable and
-possibly highlighting physical relationships between a spectral feature
-and property. Further interpretability with random forests can be
-obtained using Shapley additive explanation (SHAP) analysis, but we do
-not implement this in this work [@lundberg2017unified; @lundberg2018consistent].
+This reduces correlation between trees in the ensemble
+and mitigates overfitting. For Spectra-Scope it means less negative impact
+ when adding irrelevant features, assisting feature screening.
+(3) Finally, off-the-shelf implementations of random forests allow users to
+gauge the importance of different parts of the feature space
+in the training dataset using feature importance scores.
+Further interpretability via Shapley additive explanation (SHAP) analysis is possible, but is not implemented here[@lundberg2017unified; @lundberg2018consistent].
 
 ### LCEN
 
@@ -329,8 +321,8 @@ contributions. Therefore, interpretability comes from examining the
 magnitudes of the coefficients and the user can learn more about which
 features are contributing the most.
 
-### Fused Lasso 
-We include the fused lasso as a built-in model to Spectra-Scope. The fused lasso is lasso regression with penalty on the differences of adjacent coefficients [@tibshirani_solution_2011]. The loss function is 
+### Fused LASSO 
+We include the fused LASSO as a built-in model to Spectra-Scope. The fused lasso is lasso regression with penalty on the differences of adjacent coefficients [@tibshirani_solution_2011], which is well suited to spectral data. The loss function is 
 
 \begin{equation}
 \min_{\beta \in {R}^p} \;
@@ -339,14 +331,16 @@ We include the fused lasso as a built-in model to Spectra-Scope. The fused lasso
 D =
 \begin{bmatrix} 
     -1 & 1 & 0  & \dots & 0 \\
-    0 & -1 & 1 * \ddots & \vdots \\
+    0 & -1 & 1 \ddots & \vdots \\
     \vdots & \ddots & \ddots & \ddots & 0 \\
     0 & \dots & 0 & -1 & 1
 \end{bmatrix}
 \in {R}^{(p-1)\times p}.
 \end{equation}
 
-It has previously been used to create sparse, interpretable models for battery cycle life prediction [@rhyu_systematic_2025]. Minimizing the difference between adjacent coefficients lends itself to spectroscopy or time-series data because neighboring time or wavelength components are often highly correlated. This can guide partitioning of the input data into smaller sections and improve interpretability. 
+It has previously been used to create sparse, interpretable models for battery cycle life prediction and identify regions of interest for closer study[@rhyu_systematic_2025]. 
+ Minimizing the difference between adjacent coefficients lends itself to spectroscopy or time-series data because neighboring time or wavelength components are often highly correlated. This can guide partitioning of the input data into smaller sections and improve interpretability. 
+ Fused lasso models themselves may be useful, or the regions they identify can be used to build understanding of the relationships between signal and response in a dataset, as we show later in the Case Study section.
 
 ## Application
 
@@ -355,24 +349,16 @@ types can be input and visualized on the home page. The app includes abilities t
 featurize data, visualize featurizations, train models using random forests or LCEN, 
 and visualize the important or downselected features by the model.\label{fig:2}](Figures/Fig2_120925.pdf){width=50%}
 
-In addition to an open-source Python library, Spectra-Scope is available
-as a web-based application for convenient no-code usage. Data
-preparation into an appropriate tabular format must first be done by the
-user, but then can be used as input for the Spectra-Scope workflow.
-\autoref{fig:2} shows the landing page for the app. 
-While more flexibility is availability when
-interfacing with Spectra-Scope with Python, the app provides easily
-accessible model comparisons and feature downselection for quick
-analyses. The app is available at
-[spectrascope.matr.io](spectrascope.matr.io){.uri}.
+Spectra-Scope is available as a no-code web-based application at [spectrascope.matr.io](spectrascope.matr.io){.uri} (See \autoref{fig:2}) and can be hosted locally using the repository.
+After data preparation into an appropriate tabular format is done by the
+user, uploading data allows for feature generation and model fitting using RF and LCEN.
+(((??? QUESTION: ADD A LITTLE MORE DETAIL ABOUT IMPLEMENTATION??? )))
 
 # Case Studies
 
-We benchmark Spectra-Scope on a variety of spectral datasets with
-diverse origins, modalities, and underlying physical characteristics.
-These test cases highlight the flexibility of Spectra-Scope, its ability
-to highlight physical relationships between spectra and properties, and
-its ease of application to a variety of contexts.
+We benchmark Spectra-Scope on a two distinct spectral datasets from the literature, 
+recapitulating results from other studies and demonstrating how the workflow can
+be used to build understanding of data.
 
 ## XANES + PDF for Transition Metal Oxides
 
@@ -380,63 +366,56 @@ The first dataset consists of transition metal XAS spectra from the
 Materials Project
 [@jain2013commentary; @mathew2018high; @zheng_automated_2018], and
 computed pair distribution functions (PDFs) by Na Narong *et
-al.*[@na_narong_interpretable_2025]. Briefly, PDFs describe the
-probability of finding a pair of atoms separated by a given distance in
-a material, encoding local structural information[@TAKESHI201255], and
-XAS measures the absorption of X-ray photons in a material. In XAS,
-absorption is dominated by core-level electrons and is element and
-orbital-specific. Many atomic-scale properties can be inferred from XAS
+al.*[@na_narong_interpretable_2025]. Briefly, PDFs describe 
+pairwise atomic distance probabilities, encoding local structural information[@TAKESHI201255].
+XAS is an element- and orbital-specific measurement X-ray photon absorption.
+Many atomic-scale properties can be inferred from XAS
 data, including oxidation states, density of states, coordination, and
 bond length in a local environment [@chantler_x-ray_2024]. X-ray
 absorption near-edge spectra (XANES) refers to the spectra $\sim$ 50-100
-eV above the core electron energy level and involves multiple scattering
-of the photoelectron [@chantler_x-ray_2024]. Simulated and experimental
+eV above the core electron energy level [@chantler_x-ray_2024]. Simulated and experimental
 XANES spectra have previously been used to predict oxidation states,
 bond length [@chen_robust_2024], Bader charge [@torrisi_random_2020],
 and coordination number
 [@torrisi_random_2020; @zheng_automated_2018; @na_narong_interpretable_2025]
 using machine learning models. For this case, we regress bond length
 from XANES and PDF data using random forests and LCEN in Spectra-Scope.
-We highlight Spectra-Scope's ability to compare the performance of
+
+
+Multi-modal machine
+learning has proven a promising way to improve the prediction of certain
+materials properties using foundation models[@moro_multimodal_2025].
+Combining features from different data sources may be used to both exploit and reveal how different techniques provide complementary information[@na_narong_interpretable_2025]. We highlight Spectra-Scope's ability to compare the performance of
 different spectra in prediction, and work with multiple modalities
 simultaneously to perform prediction.
 
+
 ### Results
 
-First, we use Spectra-Scope to regress mean nearest-neighbor distance
+We first regress mean Ti atom nearest-neighbor distance
 from simulated XANES spectra of Titanium oxide structures, as was
 performed in Na Narong, *et al.* and Torrisi, *et al*
 [@na_narong_interpretable_2025; @torrisi_random_2020]. We train both
 random forests and LCEN models on the featurized XANES and PDF datasets.
 5-fold cross-validation is used to find the optimal model for all
 feature and model combinations. Full details of the model training can
-be found in the supplementary. The test root-mean-square-errors (RMSEs)
+be found in the supplementary information. The test root-mean-square-errors (RMSEs)
 ranged from 0.024 to 0.073 Å, i.e., percentage errors in the range
-1.23 - 3.67 % of the mean bond lengths. Figure
+1.23 - 3.67 % of the mean bond lengths. 
 \autoref{fig:3}a provides a summary
-of this regression task. We find that the random forest models perform
-the best, and that some transformation schemes give slight improvement
+of this regression task. 
+
+Across the board, RF models perform better than the LCEN
+models, and some transformation schemes give slight improvement
 in performance over using the raw XANES intensity data. The top three
-performing features are: the first 10 principal components of the XANES
+performing features for RF are: the first 10 principal components of the XANES
 spectra, polynomial transformations of the
 combined XANES and PDF data, and the raw
 intensity of the combined XANES and PDF data.
-
-Across the board, the random forest models perform better than the LCEN
-models. The top featurization schemes for the LCEN models are the
+The top featurization schemes for the LCEN models are the
 intensity of the combined XANES and PDF data, nonlinear expansions of
 the XANES spectra (XANES, NLTrans), and polynomial transformations of
-the combined XANES and PDF data. The nonlinear feature expansion
-augments the input variable x with a set of nonlinear transformations:
-including
-$$x^2, \ln{x}, (\ln{x})^2, \sqrt{x}, \frac{1}{\sqrt{x}}, \frac{1}{x}, \frac{1}{x^2}, x^{1.5}, \frac{\ln{x}}{x}, \frac{1}{\sqrt{x}}$$.
-As LCEN is a linear model, the
-performance of the nonlinear transformations and the polynomial
-transformations over the raw XANES intensity highlights that there is a
-nonlinear relationship between the spectra and the target that the model
-is trying to uncover. The better performance of the random forest models
-over the LCEN models further supports this, as random forests are more
-easily able to uncover nonlinear relationships.
+the combined XANES and PDF data. 
 
 \autoref{fig:3}(b-f) gives
 visualizations for a few of the different transformations used for this
@@ -455,16 +434,12 @@ first two principal components of the data, and the corresponding bond
 length. \autoref{fig:3}d
 highlights the top 10 (d,e) and top 20 (f) important polynomial
 coefficients identified for prediction using just the XANES (d), PDF
-(e), or both XANES and PDF (f) datasets. The polynomial coefficients
-featurization scheme extracts the shape of the spectra and can be
-sensitive to peak-like features in data. When combining the two
-datasets, this featurization scheme may help identify shapes in the
-different spectra that may work together for prediction. The most
+(e), or both XANES and PDF (f) datasets. The most
 important polynomial features selected from the XANES dataset come from
 a similar energy region as the CDF, near the main edge, further
 highlighting its importance in regressing bond length. When combining
 the two datasets, the most important features come from regions across
-the datasets, rather than concentrated in particular energetic regions.
+the datasets, rather than concentrated in particular energetic regions (in agreement with Ref. [@na_narong_interpretable_2025]).
 
 Our models perform similar to previous studies using random forests to
 regress bond length of transition metal oxide structures. Na Narong, *et
@@ -510,27 +485,25 @@ and PDF (red) spectra separately.\label{fig:3}](Figures/fig3_120825.pdf)
 
 ## Raman + NIR for Wine Grapes
 
-Next, Spectra-Scope is applied to a publicly available dataset of
-optical spectra of wine grapes to predict their pH and sugar content by
-Ebrahimi *et al* [@ebrahimi_advancing_2024]. The difference in
-technique, properties, and materials of this dataset to the transition
-metal oxide dataset highlights the flexibility of Spectra-Scope.
+Next, Spectra-Scope is applied to a publicly available experimental dataset of
+optical spectra from wine grapes to predict their pH and sugar content by
+Ebrahimi *et al* [@ebrahimi_advancing_2024]. The differences of 
+this dataset to the transition metal oxide dataset highlights the flexibility of Spectra-Scope.
 
 The dataset included Visible-Near-Infrared (Vis-NIR) and Raman spectra
 of two types of grape varieties, and ground truth labels of the acidity
 and total soluble solids (TSS) content of grapes. Understanding the
-chemical composition of grapes is essential for winemakers to make
-informed decisions during growth and harvesting. Both sugar content and
+chemical composition of grapes helps winemakers make
+informed decisions during growth and harvesting. Sugar content and
 acidity are important indicators for determining when to harvest grapes
 and can influence the potential alcoholic content and fermentation
-process of wines, respectively [@cramer_transcriptomic_2014]. These
-methodologies allow non-invasive, real time analysis of grape chemistry
-at vineyards, and is an improvement over the typical process of sending
-grapes to outside laboratories to determine their composition
+process of wines, respectively [@cramer_transcriptomic_2014]. Spectral analysis 
+allows non-invasive, real time measurements of grape chemistry
+at vineyards, reducing the need for costly off-site processing and analysis
 [@ebrahimi_advancing_2024]. Vis-NIR spectra have been applied to
 estimate TSS in a variety of crops
 [@jha_nondestructive_2004; @Liu_2011], and Raman spectroscopy is used to
-identify molecular profiles present in a sample.
+identify molecular profiles present in a sample. 
 
 ### Results
 
@@ -545,7 +518,7 @@ $100 \times \frac{\text{RMSE}}{{y_{\max}}}$ where $y_{\max}$ is the
 maximum value of the $^\circ$Brix data.
 
 We train a series of random forest and LCEN models using Spectra-Scope
-to predict TSS using the Vis-NIR and Raman spectra from the dataset. We use similar preprocessing steps as Ebrahimi *et al.* : centering and scaling the data, and restricting the Vis-NIR spectra to between 400 and 1300 nm, where the strongest absorption values are. The
+to predict TSS using the Vis-NIR and Raman spectra from the dataset. We use similar preprocessing steps as Ebrahimi *et al.*: centering and scaling the data, and restricting the Vis-NIR spectra to between 400 and 1300 nm, where the strongest absorption values are. The
 models are trained on the raw data or features generated by different
 transformations. Again, we can use Spectra-Scope to quickly visualize
 model performance of different models and feature transformations as
@@ -553,11 +526,15 @@ given in \autoref{fig:4}a. Our reported % RMSE are similar or better than that r
 better prediction of TSS is found when training on the Vis-NIR
 absorption spectra.
 
+Thus, we focus primarily on Vis-NIR spectra for our analysis.
 In \autoref{fig:4}b and c we highlight the
-20 most important features or highest magnitude coefficients using the interpolated data (i) and the polynomial coefficients (ii) featurization scheme for both the Random Forest (b) and LCEN (c) models. Each featurization and model combination highlights different components of the spectra as important for prediction. In \autoref{fig:4}b(i), the random forest selects many wavelengths from 450-900 as important. In (ii), the polynomial coefficients around 738nm, 970nm, and ~1200nm are important. In \autoref{fig:4}c(i), the LCEN model selects many high magnitude coefficients  around 970 nm and 1200nm. In (ii), polynomial coefficients around 738nm, 840nm, 970nm, 1100nm, and 1200nm are selected by the model. 
+20 most important features or highest magnitude coefficients using (i) interpolated data and (ii) polynomial coefficients for both the (b) Random Forest and (c) LCEN models. Each featurization and model combination highlights different components of the spectra as important for prediction. In \autoref{fig:4}b(i), the random forest selects many wavelengths from 450-900 as important. In (ii), the polynomial coefficients around 738nm, 970nm, and ~1200nm are important. In \autoref{fig:4}c(i), the LCEN model selects many high magnitude coefficients around 970 nm and 1200nm. In (ii), polynomial coefficients around 738nm, 840nm, 970nm, 1100nm, and 1200nm are selected by the model. 
 
-Many of the wavelengths selected as important by the models correspond with second or third overtones of molecular infrared vibrational frequencies that may be prevalent in grapes. The absorption peak at 970nm likely corresponds with water, which has a near-IR absorption band near 970 nm due to overtones of the O-H stretching mode of water [@lin_theory_2009; @golic_short-wavelength_2003]. The third overtone of this vibrational frequency is at 738nm, which is picked up by 3 of the model-feature pairs. The small feature around 840nm may correspond with the second overtone of the 1100nm O-H combination band in water. The broader peak at 1200nm may correspond with the second overtone of C-H and C-H$_2$ stretching frequencies, which would come from organic solutes like glucose and sucrose, and have been reported at 1100-1230nm and 1215nm, respectively [@golic_short-wavelength_2003]. These spectral features have previously been used for glucose monitoring [@golic_short-wavelength_2003]. For the interpolated and polynomial featurization schemes shown in \autoref{fig:4}c, the final LCEN model selects 86 and 33 features, respectively. This is in contrast to the random forest models which will predict on all the available features in a dataset, which are 899 and 157, respectively. This highlights the power of a sparse and simple
-model for prediction in this dataset, and the significance of the regions selected for prediction. 
+Many of the wavelengths selected as important by the models correspond with second or third overtones of molecular infrared vibrational frequencies that may be prevalent in grapes. The absorption peak at 970nm likely corresponds with water, which has a near-IR absorption band near 970 nm due to overtones of the O-H stretching mode of water [@lin_theory_2009; @golic_short-wavelength_2003]. The third overtone of this vibrational frequency is at 738nm, which is picked up by 3 of the model-feature pairs. The small feature around 840nm may correspond with the second overtone of the 1100nm O-H combination band in water. The broader peak at 1200nm may correspond with the second overtone of C-H and C-H$_2$ stretching frequencies, which would come from organic solutes like glucose and sucrose, and have been reported at 1100-1230nm and 1215nm, respectively [@golic_short-wavelength_2003]. These spectral features have previously been used for glucose monitoring [@golic_short-wavelength_2003]. For the interpolated and polynomial featurization schemes shown in \autoref{fig:4}c, the final LCEN model selects 86 and 33 features, respectively.
+((???? QUESTION: USING WHICH REGULARIZATION PARAMETER????))
+((???? QUESTION: SHOULD WE INCLUDE THIS FOR XANES TOO????))
+
+ Random forest models  predict on all the available features in a dataset, which are of size 899 and 157, respectively. This highlights the utility of regularization for feature down-selection, as nonzero features can be more easily judged for their importance than a feature score which is computed for all features in a random forest model.
 
 ![**Regressing grape sugar content.** (a) % RMSE for random
 forests and LCEN models built on Vis-NIR and Raman spectra transformed
@@ -570,49 +547,86 @@ polynomial features extracted from the spectrum (ii) using LCEN. Blue
 vertical lines : selected/important features. Characteristic polynomials
 : selected/important features.\label{fig:4}](Figures/fig4_121525.pdf)
 
-\autoref{fig:5} shows the regression coefficients of a fused lasso model trained on the raw intensity data. As the fused lasso penalizes differences between neighboring coefficients, the model returns regions of the spectra with the same or very similar coefficients. This suggests that data within these regions give similar information to predicting the output. As the regularization term increases, regions that are less important for prediction will be sent to 0. The regions that remain "on" with greater regularization are ~550nm to ~700nm and ~700nm to ~850nm. This suggests that the 738nm overtone that was highlighted by the Random Forest and LCEN models in \autoref{fig:4}, is important for this case as well. Additionally, the coefficients change value near 840nm, 970nm, and 1150nm for all regularization parameters. This highlights these wavelengths as important, as they resist the regularization penalty imposed by the fused lasso model.  
+
+
+\autoref{fig:5} shows the regression coefficients of a fused lasso model trained on the raw intensity data. As the fused lasso penalizes differences between neighboring coefficients, the model returns regions of the spectra with the same or very similar coefficients. Positive/negative coefficient values suggest that data within these regions correlate/anticorrelate with the output. As the regularization term increases, regions that are less important for prediction will approach 0. The regions that remain "on" with greater regularization are ~550nm to ~700nm and ~700nm to ~850nm. This suggests that the 738nm overtone that was highlighted by the Random Forest and LCEN models in \autoref{fig:4}, is important for this case as well. Additionally, the coefficients change value near 840nm, 970nm, and 1150nm for all regularization parameters. This highlights these wavelengths as important, as they resist the regularization penalty imposed by the fused lasso model.
+The fact the most consequential (judging by largest coefficient magnitude) regions correlate with the vibrational modes of organic solutes indicated above builds confidence in this model.
+Seeing model agreement across different featurization modes in certain regions can be taken as evidence that they are fitting on consistent signal.
 
 ![**LCEN and Fused Lasso selected Features.** The top panel shows all of the NIR spectra in the dataset. The bottom panel shows the regression coefficients for fused lasso models with different regularization parameters $\alpha$.\label{fig:5}](Figures/Fig5_121525.pdf)
 
 
-# Discussion
-
-These case studies highlight how the ability to compare a variety of transformations and models at once allows a Spectra-Scope user to quickly identify which model may be best for their regression or classification task. While training many models can lead to over-fitting, and identifying the model with the lowest RMSE from this summary may not be the best model to generalize to other materials or spectra, this procedure can be useful for getting a quick summary on the performance of simple tasks. 
-
-Further, both datasets show the importance of feature downselection in model interpretation. In both cases, similar parts of spectra are highlighted as important across different featurization schemes, suggesting that different models are identifying truly physically
-important regions. This can help identify erroneous fits if some featurization schemes select random or unphysical regions of spectra for
-prediction.
-
-Finally, for both cases, non-linear transformations of features perform better than just using the raw, interpolated spectra as the training
-data. Using Spectra-Scope, we can quickly analyze the linear correlation and maximal correlation between the generated features and the output. We compute 
-Pearson's correlation coefficient using 
-`sklearn.feature_selection.r_regression`. Maximal correlation analysis is implemented with the `ace` package in Spectra-Scope, but is not explored in this text. 
-
-For the grapes dataset, we find that the features that perform the best with the LCEN model (and overall) have the highest pearson's correlation coefficients in this dataset. This suggests that LCEN models perform well due to the nonlinear transformations uncovering linear correlations with the target variable. For the XANES + PDF dataset, there is less of a correlation between those features with the highest pearson's correlation coefficients, and the lowest RMSE. This suggests that the underlying relationship is more nonlinear, and could be why the random forests perform better than LCEN for this case study. 
+Finally, we brieflycompare feature-performance correlations across datasets. As a sanity check, we find that the features that perform the best with the LCEN model (and overall) have the highest pearson's correlation coefficients in this dataset. This suggests that LCEN models perform well due to nonlinear transformations uncovering linear correlations with the target variable. For the XANES + PDF dataset, there is less of a correlation between those features with the highest pearson's correlation coefficients, and the lowest RMSE. This suggests that the underlying relationship is more nonlinear, and could explain why the random forests perform better than LCEN for this case study. 
 
 ![**Linear Correlation Assessment.** Analysis for (a) XANES + PDF and (b) Grapes dataset for predicting their respective target variable. r : pearson's correlation coefficient. Corresponding metric for each model. \label{fig:6}](Figures/Correlation_121525.pdf){width=80%}
 
+
+# Discussion
+
+These case studies highlight how the ability to compare a variety of transformations and models at once allows a Spectra-Scope user to quickly identify which model may be best for their regression or classification task.
+Our agreement with past literature validates that Spectra-Scope recovers physically meaningful features, supporting the toolkit's reliability for exploratory analysis.
+
+Attempting different featurizations and model types and comparing which parts of spectra are used may be used for hypothesis formation and building confidence. For example, if fused LASSO and polynomial featurization highlight the same regions, it may be taken as evidence that the energy ranges contain meaningful signal.
+When using LCEN, the subsets of data that are used by the fitting procedure should be studied as the regularization parameter changes.
+We see consistency in our fused lasso results, but we encourage checking this in future deployment.
+
+There are some limitations to the AutoML approach. 
+As mentioned earlier, using model performance alone as a  "winner-take-all" measure of feature selection risks overfitting.
+ Models that perform slightly worse across the same set of validation tests may work better in deployment or generalize better to out-of-distribution data if they verifiably are fitting on physically meaningful signals.
+Sanity checks on the feature sets employed should be performed for physical plausibility.
+For example, if there is expected to be periodic signal in the data, then the fourier and wavelet transforms are more sensible choices of featurization.
+Depending on dataset size, it may be more desirable to perform first-pass maximal correlation analysis. We use the `ace` package in our library to perform this, but do not discuss this in the manuscript.
+
+Here, we only explore random forests and LCEN. Poor performance with these models doesn't mean that a data-driven approach should be disregarded. Maximum accuracy may come from more dedicated feature and model design.
+If more data is available, featurization techniques may not be as necessary, as one of the hallmarks of artificial neural networks is that they learn their own representations of data depending on the task at hand. They may in these cases obtain better performance and robustness.
+We expect featurization techniques to be most useful in a lower-data regime (e.g. order 100s-1000s of data points), where they represent a form of inductive bias introduced to the data.
+
+Furthermore, some use cases may be beyond the scope of Spectra-Scope.
+Uncertainty quantification is not formally supported.
+For multimodality, we demonstrate simple concatenation of feature sets together for simultaneous study, but expect that
+more sophisticated methods that combine information from two different datasets could be employed.
+((( QUESTION: CITE EXACTNN? OTHER STUFF?? )))
+
+
+
+We highlight some failure modes for models discovered using an AutoML approach.
+Users should verify that adequately performing feature sets correspond with meaningful physical signals and the needs of future deployment.
+For example, identifying correlations between the Vis-NIR regions of interest and vibrational modes that are likely to matter for $^\circ$Brix data.
+If regions highlighted as important are known to have low signal-to-noise ratios, then the model should be vetted for overfitting, as spurious correlations may be picked up by the model.
+For setwise features like PCA, understanding the similarity between inference-time data and training data is very important.
+
+
+
+
 # Conclusion
 
-Spectra-Scope is a flexible platform for building interpretable machine learning models with spectral data. Here we highlight its ability to draw insights from diverse datasets and aid practitioners in better
-understanding their data and models. Its accessibility is enhanced by its corresponding web app, allowing it to be used by scientists with and without Python experience. While we've currently focused on spectral
+Spectra-Scope is a flexible platform for building interpretable machine learning models with spectral data. 
+We highlight its ability to draw insights from diverse datasets and aid practitioners in better
+understanding their data and models. Its accessibility is enhanced by its corresponding web app, allowing it to be used by scientists with and without Python experience. 
+While we've currently focused on spectral
 data, Spectra-Scope can take any array-like data as input, allowing it to be used with other characterization techniques, and applied to
 problems beyond materials science.
 
-Machine learning has emerged as a promising tool for accelerating materials discovery, however highly flexible black box models like neural networks need large datasets, can have high variance, and can
-obscure physical relationships between data and a prediction. To contrast, Spectra-Scope is well-positioned for aiding materials
-scientists due to its ability to produce sparse and generalizable models with LCEN, work well with small experimental datasets, and identify
-important spectral features for prediction. This toolkit may be beneficial for applications from autonomous materials discovery to
-high-throughput experimentation to industrial manufacturing.
+We hope that a focus on sparsity and interpretability will make for
+easier deployment of models in production in contexts ranging from automated materials discovery and high-throughput experimentation to industrial manufacturing. For example, models which operate on only
+a few features may be more easy to verify, troubleshoot, and deploy to
+operate without supervision. For future users, Spectra-Scope is an open
+source Python package available at
+[github.com/TRI-AMDD/spectrascope](github.com/TRI-AMDD/spectrascope){.uri}
+and a web application available at
+[spectrascope.matr.io](spectrascope.matr.io){.uri}.
 
 # Acknowledgements
 The authors thank Pedro Seber for advice on the implementation of LCEN,
 Richard Braatz, Tina Na Narong, and Simon Billinge for helpful
 discussions, and Linda Hung for helpful feedback on the manuscript.
 
+# AI Usage Disclosure
+Grammar, concision, and typo checks were performed using Claude Opus 4.5. Generated suggestions were considered but not necessarily applied, 
+and all changes were directly mediated after review by the authors. All authors have reviewed and approved all information demonstrated in this work.
+
 # Supplementary Information 
-Spectra-Scope is an open-source Python package available at
-github.comTRI-AMDDspectrascope and a web application available at
-spectrascope.matr.io.
+
+## NEEDS TO BE WRITTEN WITH THE INFO AS PROMISED ABOVE
 
 # References
