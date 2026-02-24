@@ -753,7 +753,7 @@ class SpectraScope:
         multi_modal=None,
         savef=None,
         do_all_existing=False,
-        use_pipeline=False,
+        use_pipeline=True,
         scale_X=True,
     ):
         """Perform a list of transformations and fitting. 
