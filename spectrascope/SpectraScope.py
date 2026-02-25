@@ -449,7 +449,7 @@ class SpectraScope:
         y_train,
         y_test,
         estimator=RandomForestRegressor(),
-        scoring="neg_mean_squared_error",
+        scoring="r2",
         cv=5,
         param_grid: dict = {"n_estimators": [50, 100], "criterion": ["squared_error"]},
         refit=True,
@@ -470,8 +470,8 @@ class SpectraScope:
             test labels.
         estimator : _type_, optional, default RandomForestRegressor()
             initialized sklearn estimator for training 
-        scoring : str, optional, default "neg_mean_squared_error"
-            scoring metric for GridSearchCV
+        scoring : str, optional, default "r2"
+            scoring metric for GridSearchCV (e.g. "r2", "neg_mean_squared_error")
         cv : int, optional, default 5
             folds for k-fold cross validation
         param_grid : dict, optional
@@ -507,7 +507,7 @@ class SpectraScope:
                 param_grid=param_grid,
                 cv=cv,
                 refit=refit,
-                # scoring=scoring,
+                scoring=scoring,
                 n_jobs=-1,
             )
         )
