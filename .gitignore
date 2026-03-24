@@ -8,6 +8,13 @@ tests/__pycache__/
 # Clean up 
 /docs/*
 /JOSS/*
+/docsrc/*
+/examples/TMNA.ipynb
+/examples/volume_prediction.ipynb
+/examples/maly_correlation.ipynb
+/jupyter_execute
+spectrascope_manuscript.zip
+/examples/gaussian_xanes_*
 # C extensions
 *.so
 
