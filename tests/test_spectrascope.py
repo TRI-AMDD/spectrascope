@@ -4,8 +4,9 @@ test_json = ""
 test_npy = ""
 test_df = ""
 
-fnX = "test_files/X_testfile.npy"
-fny = "test_files/y_testfile.npy"
+test_dir = os.path.join(os.path.dirname(__file__), "test_files")
+fnX = os.path.join(test_dir, "X_testfile.npy")
+fny = os.path.join(test_dir, "y_testfile.npy")
 X = np.load(fnX)
 y = np.load(fny)
 

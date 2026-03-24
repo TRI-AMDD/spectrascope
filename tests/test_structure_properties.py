@@ -7,7 +7,7 @@ from pymatgen.core import Structure
 # Then, load in the structures from the .json files
 
 
-test_files = "test_files/"  # Replace with the actual path to the test files directory
+test_files = os.path.join(os.path.dirname(__file__), "test_files")
 
 structure_list = []
 comp_to_structure = {}
