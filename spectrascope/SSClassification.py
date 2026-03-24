@@ -2,7 +2,7 @@ from spectrascope.SpectraScope import *
 from spectrascope.Features import *
 from spectrascope.StructurePropertyFeatures import *
 from collections import OrderedDict
-from tqdm import tqdm_notebook, tqdm
+from tqdm.auto import tqdm
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
@@ -12,6 +12,7 @@ from scipy.spatial.distance import cdist
 from matminer.featurizers.structure import SiteStatsFingerprint
 
 __docformat__ = "numpy"
+
 
 class BinaryClassifications(SpectraScope):
 
@@ -269,7 +270,7 @@ class BinaryClassifications(SpectraScope):
 
         if not chosen:
             chosen = self.chosen_keys(my_dict, id2, id1)
-        for i, struct in tqdm_notebook(enumerate(self.structures)):
+        for i, struct in tqdm(enumerate(self.structures)):
             for key in chosen:
                 if (
                     type(key) != tuple
@@ -404,7 +405,7 @@ class BinaryClassifications(SpectraScope):
             masks[:, i] = full_prediction
 
         mask_df = pd.DataFrame(masks, columns=yattrs)
-        #calculating the entropy of the different yattr columns
+        # calculating the entropy of the different yattr columns
         entropies = arr_entropy(mask_df)
         best_order = np.argsort(entropies)
         yattr_ordered = np.array(yattrs)[best_order]

@@ -1,45 +1,76 @@
-
+import logging
 import numpy as np
 from sklearn.base import BaseEstimator, RegressorMixin
 import cvxpy as cp
 
+logger = logging.getLogger(__name__)
+
 
 class FusedLasso(BaseEstimator, RegressorMixin):
-    """
-    TODO : include standardization 
-    Fused lasso regression:
+    """Fused lasso regression using CVXPY.
+
+    Solves:
         minimize  (1 / (2n)) * ||y - (X w + b)||_2^2
                   + alpha * sum_j |w_{j+1} - w_j|
                   + l1_ratio * ||w||_1   (optional)
+
+    Input X is optionally standardized by dividing by max standard deviation
+    across features, controlled by ``standardize_X``.
 
     Parameters
     ----------
     alpha : float, default=1.0
         Strength of the fused penalty on successive differences.
-
     l1_ratio : float, default=0.0
         Strength of an optional L1 penalty on the coefficients themselves.
-
     fit_intercept : bool, default=True
         Whether to fit an intercept term.
-
-    solver : str or None, default=None
+    standardize_X : bool, default=True
+        Whether to standardize X by dividing by max feature standard deviation before fitting.
+    solver_path : str or None, default=None
         CVXPY solver name (e.g. "OSQP", "ECOS", "SCS"). If None, cvxpy chooses.
     """
-    def __init__(self, alpha=1.0, l1_ratio=0.0, fit_intercept=True, standardize_X = True, solver_path=None):
+
+    def __init__(
+        self,
+        alpha=1.0,
+        l1_ratio=0.0,
+        fit_intercept=True,
+        standardize_X=True,
+        solver_path=None,
+    ):
         self.alpha = alpha
         self.l1_ratio = l1_ratio
         self.fit_intercept = fit_intercept
-        self.solver_path = solver_path        
+        self.solver_path = solver_path
         self.standardize_X = standardize_X
-        if not self.standardize_X: 
-            print('You are not standardizing X')
+        if not self.standardize_X:
+            logger.warning("You are not standardizing X")
 
     def fit(self, X, y):
-        X = np.asarray(X)  
-        if self.standardize_X: 
+        """Fit the fused lasso model.
+
+        Parameters
+        ----------
+        X : array-like of shape (n_samples, n_features)
+            Training data.
+        y : array-like of shape (n_samples,)
+            Target values.
+
+        Returns
+        -------
+        self : FusedLasso
+            Fitted estimator.
+
+        Raises
+        ------
+        RuntimeError
+            If the CVXPY optimization does not converge.
+        """
+        X = np.asarray(X)
+        if self.standardize_X:
             stds = X.std(axis=0)
-            max_std = stds.max()  
+            max_std = stds.max()
             X = X / max_std
         y = np.asarray(y).ravel()
         n_samples, n_features = X.shape
@@ -58,7 +89,7 @@ class FusedLasso(BaseEstimator, RegressorMixin):
 
         # Fused lasso penalty on differences between successive coefficients
         if n_features > 1:
-            diffs = w[1:] - w[:-1]   # shape (n_features-1,)
+            diffs = w[1:] - w[:-1]  # shape (n_features-1,)
             fused_penalty = cp.norm1(diffs)
         else:
             fused_penalty = 0.0
@@ -81,5 +112,17 @@ class FusedLasso(BaseEstimator, RegressorMixin):
         return self
 
     def predict(self, X):
+        """Predict target values for X.
+
+        Parameters
+        ----------
+        X : array-like of shape (n_samples, n_features)
+            Samples to predict.
+
+        Returns
+        -------
+        y_pred : np.ndarray of shape (n_samples,)
+            Predicted target values.
+        """
         X = np.asarray(X)
         return X @ self.coef_ + self.intercept_

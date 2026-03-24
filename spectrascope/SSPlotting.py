@@ -1,3 +1,11 @@
+"""Plotting utilities for SpectraScope feature and model visualizations.
+
+Provides three main classes:
+- ``SpectraScopePlotting``: base class with shared axis/figure configuration.
+- ``PlotSpectralFeatures``: visualize raw feature arrays (CWT, PCA, CDF, FFT, etc.).
+- ``PlotModel``: overlay model-selected features on spectra for result interpretation.
+"""
+
 import plotly.graph_objects as go
 import numpy as np
 from spectrascope.utils import *
@@ -28,22 +36,22 @@ class SpectraScopePlotting:
 
         Parameters
         ----------
-        xaxis : _type_, optional
-            _description_, by default None
+        xaxis : np.ndarray, optional
+            X-axis values for plotting. Default None.
         xaxis_label : str, optional
-            _description_, by default ""
+            Label for the x-axis. Default "".
         yaxis_label : str, optional
-            _description_, by default ""
+            Label for the y-axis. Default "".
         twoD : bool, optional
-            _description_, by default False
+            Reserved for future 2D plotting support. Default False.
         name : str, optional
-            _description_, by default ""
-        fig : _type_, optional
-            _description_, by default None
+            Trace name used in the plot legend. Default "".
+        fig : plotly.graph_objects.Figure, optional
+            Existing Plotly figure to add traces to. Default None.
         row : int, optional
-            _description_, by default 1
+            Subplot row index (1-based) when using make_subplots. Default 1.
         col : int, optional
-            _description_, by default 1
+            Subplot column index (1-based) when using make_subplots. Default 1.
         """
         self.xaxis_label = xaxis_label
         self.yaxis_label = yaxis_label
@@ -351,6 +359,7 @@ class PlotSpectralFeatures(SpectraScopePlotting):
             self.fig.update_yaxes(
                 title_text=self.yaxis_label, row=self.row, col=self.col
             )
+
     def plot_feature(self, feat):
         """Plot a feature.
         Parameters
@@ -358,7 +367,7 @@ class PlotSpectralFeatures(SpectraScopePlotting):
         feat : str
             feature to plot.
         """
-        try: 
+        try:
             getattr(self, f"plot_{feat}")()
         except AttributeError:
             raise AttributeError(f"Feature {feat} not found.")
@@ -755,12 +764,14 @@ class PlotModel(SpectraScopePlotting):
 
 
 from spectrascope.Features import SpectralFeatures
-import os 
-import matplotlib.pyplot as plt 
+import os
+import matplotlib.pyplot as plt
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
-def plot_spectral_features_matplotlib(xaxis, raw, selected_features, ax=None,zoom=0.1,
-                                      plot_raw=True, print_centers=False):
+
+def plot_spectral_features_matplotlib(
+    xaxis, raw, selected_features, ax=None, zoom=0.1, plot_raw=True, print_centers=False
+):
     """
     Plot spectral features using matplotlib with annotated representative images.
 
@@ -780,7 +791,7 @@ def plot_spectral_features_matplotlib(xaxis, raw, selected_features, ax=None,zoo
         Whether to plot the raw spectrum as a black line. Default is True.
     print_centers : bool, optional
         If True, prints the center x-values and corresponding selected feature indices.
-    
+
     Returns
     -------
     ax : matplotlib.axes.Axes
@@ -802,7 +813,7 @@ def plot_spectral_features_matplotlib(xaxis, raw, selected_features, ax=None,zoo
         fig, ax = plt.subplots(figsize=(10, 5))
     # Plot the raw spectrum
     if plot_raw:
-        ax.plot(xaxis, raw, color='black', lw=1)
+        ax.plot(xaxis, raw, color="black", lw=1)
 
     # Generate binned features
     temp = SpectralFeatures(xaxis, raw)
@@ -811,15 +822,16 @@ def plot_spectral_features_matplotlib(xaxis, raw, selected_features, ax=None,zoo
 
     # Feature ID config
     feature_config = [
-        (0, 16,  'bin_indices_4',  'const', 4),
-        (16, 36, 'bin_indices_5',  'line',  5),
-        (36, 76, 'bin_indices_10', 'par',   10),
-        (76, 156, 'bin_indices_20', 'cubic', 20),
+        (0, 16, "bin_indices_4", "const", 4),
+        (16, 36, "bin_indices_5", "line", 5),
+        (36, 76, "bin_indices_10", "par", 10),
+        (76, 156, "bin_indices_20", "cubic", 20),
     ]
 
     def find_nearest(array, value):
         return np.abs(array - value).argmin()
-    try: 
+
+    try:
         centers_used = []
         for selected_id in selected_features:
             for id_min, id_max, bin_label, poly_label, num_bins in feature_config:
@@ -840,19 +852,25 @@ def plot_spectral_features_matplotlib(xaxis, raw, selected_features, ax=None,zoo
 
                     # Convert image to matplotlib offsetbox
                     imagebox = OffsetImage(im, zoom=zoom)
-                    if center in centers_used: 
+                    if center in centers_used:
                         add_to_height = 1  # slight offset to avoid overlap
-                    else: 
-                        add_to_height = 0 
-                    ab = AnnotationBbox(imagebox, (center, height + add_to_height), frameon=False)
+                    else:
+                        add_to_height = 0
+                    ab = AnnotationBbox(
+                        imagebox, (center, height + add_to_height), frameon=False
+                    )
                     centers_used.append(center)
-                    if print_centers: 
+                    if print_centers:
                         print(center, selected_id)
 
                     ax.add_artist(ab)
                     break  # stop after first matching range
     except ValueError as e:
-        print(e) 
-        print('Warning : Image size too large. You probably have to plot something else on this axis first.')
-        print('Try reducing the zoom, set plot_raw=True, or plotting other spectra on the axis first')
+        print(e)
+        print(
+            "Warning : Image size too large. You probably have to plot something else on this axis first."
+        )
+        print(
+            "Try reducing the zoom, set plot_raw=True, or plotting other spectra on the axis first"
+        )
     return ax
