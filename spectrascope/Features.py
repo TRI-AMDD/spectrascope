@@ -19,7 +19,7 @@ from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 from sklearn.gaussian_process import GaussianProcessRegressor
 
-# __docformat__ = "numpy"
+__docformat__ = "numpy"
 
 class SpectralFeatures:
     """Spectral Features class used by SpectraScope main class to generate features on datasets. 
@@ -730,55 +730,3 @@ class SpectralFeatures:
             x = self.xinterp
             y = self.yinterp
         return x, y
-    
-    
-
-def degree_based_features(
-    X, degree, exclude_features: list[str], input_labels: list[str]
-):
-    """Function to extract features from the data.
-
-    
-    
-    Parameters
-    ---------- 
-    X : np.array
-        input data.
-    degree : int
-        degree of polynomial to fit.
-    exclude_features : list
-        list of features to exclude.
-    input_labels : list
-        list of labels for each feature.
-
-    Returns
-    -------
-    new_features : np.array
-        new features extracted from the data.
-    """
-
-    # TODO implement degree >=3
-    # TODO make dataframe implementation w/ labels
-    new_features = []
-    if degree >= 1:
-        for x in X:
-
-            new_features.append(x)
-            new_features.append(np.log(x))
-            new_features.append(np.sqrt(x))
-            new_features.append(1 / x)
-
-    if degree >= 2:
-
-        for x in X:
-            new_features.append(x * x)
-            new_features.append(np.log(x) ** 2)
-            new_features.append(np.sqrt(x) ** 3)
-            new_features.append(1 / x**2)
-            new_features.append(np.log(x) / x)
-
-        # Loop through pairs of values in X
-        for xi, xj in combinations(X, 2):
-            new_features.append(xi * xj)
-
-    return new_features

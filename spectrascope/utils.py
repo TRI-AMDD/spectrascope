@@ -303,6 +303,80 @@ def LCEN_selected_features(model, top_features: int):
 
     return vals, selected_features
 
+
+def predict_LCEN(model: dict, X: np.ndarray) -> np.ndarray:
+    """Predict using the parameters of a fitted LCEN model.
+
+    Uses the stored model_params (coefficients and intercept) from a fitted
+    LCEN model (from SPA) to compute predictions for a given design matrix X.
+    In model_params, entries like "x0", "x1" indicate which feature indices
+    have nonzero coefficients; all other coefficients are zero. The coefficient
+    vector length matches X.shape[1].
+
+    Parameters
+    ----------
+    model : dict
+        Fitted LCEN model from main.SPA. Must contain key "model_params".
+    X : np.ndarray
+        Design matrix, shape (n_samples, n_features). Must have the same
+        number of features as the model was trained on, in the same order.
+
+    Returns
+    -------
+    y_pred : np.ndarray
+        Predicted values, shape (n_samples,).
+
+    Notes
+    -----
+    Linear-in-X models only. If model_params contain polynomial or other
+    transformed terms (e.g. "x0^2"), NotImplementedError is raised.
+    The caller must pass X in the same scale/preprocessing as at training
+    (e.g. same StandardScaler); the LCEN dict does not store scaler parameters.
+    """
+    if "model_params" not in model:
+        raise KeyError('model must contain key "model_params".')
+    params = model["model_params"]
+    if not params:
+        raise ValueError("model_params is empty.")
+
+    par_names = np.array(params)[:, 0]
+    par_locs = np.array(
+        [
+            p.split("^")[0].replace("x", "") if p != "intercept" else "intercept"
+            for p in par_names
+        ]
+    )
+    par_vals = np.array(params)[:, 1].astype("float64")
+
+    # Linear case only: reject polynomial/transformed terms
+    if np.any(["^" in str(p) for p in par_names]):
+        raise NotImplementedError(
+            "predict_LCEN supports only linear-in-X models; polynomial or "
+            "transformed terms in model_params are not supported. Pass X in "
+            "the same transformed design matrix form if needed."
+        )
+
+    X = np.atleast_2d(X)
+    n_features = X.shape[1]
+    coef = np.zeros(n_features)
+    intercept = 0.0
+
+    for loc, val in zip(par_locs, par_vals):
+        if loc == "intercept":
+            intercept = float(val)
+        else:
+            idx = int(loc)
+            if idx >= n_features:
+                raise ValueError(
+                    f"model_params has index {idx} but X has only "
+                    f"{n_features} features."
+                )
+            coef[idx] = float(val)
+
+    y_pred = X @ coef + intercept
+    return np.asarray(y_pred).ravel()
+
+
 def maximal_correlation_from_ace(X, y):
     """Calculate the maximal correlation between X and y using ACE.
     
