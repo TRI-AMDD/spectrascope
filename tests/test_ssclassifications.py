@@ -24,6 +24,5 @@ info = BinaryClassifications(
 
 
 def test_update_defaults():
-    pass
-    #info.update_structures_library_defaults()
-    #info.structure_library_to_df()
+    info.update_structures_library_defaults()
+    info.structure_library_to_df()
