@@ -19,3 +19,4 @@ python-dotenv
 ace
 tqdm
 cvpxy #comment out if not using FusedLasso
+black
