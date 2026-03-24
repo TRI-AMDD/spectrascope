@@ -28,4 +28,3 @@ API Reference
    :recursive:
 
    spectrascope
-
