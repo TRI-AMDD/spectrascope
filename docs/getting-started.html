@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -47,8 +47,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'getting-started';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Usage" href="usage.html" />
-    <link rel="prev" title="SpectraScope documentation" href="index.html" />
+    <link rel="next" title="Spectra-Scope Quick Start" href="notebooks/Quick_Start.html" />
+    <link rel="prev" title="SpectraScope" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -154,23 +154,26 @@
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
-</ul>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="api/spectrascope.html">spectrascope</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/spectrascope.Features.html">spectrascope.Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/spectrascope.StructurePropertyFeatures.html">spectrascope.StructurePropertyFeatures</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/spectrascope.utils.html">spectrascope.utils</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Getting Started</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/Quick_Start.html">Spectra-Scope Quick Start</a></li>
 </ul>
 </details></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Notebooks</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="notebooks/Quick_Start.html">Spectra-Scope Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/spectrascope.Features.html">spectrascope.Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/spectrascope.FusedLasso.html">spectrascope.FusedLasso</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/spectrascope.utils.html">spectrascope.utils</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="api/spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/spectrascope.Features.html">spectrascope.Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/spectrascope.FusedLasso.html">spectrascope.FusedLasso</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/spectrascope.utils.html">spectrascope.utils</a></li>
 </ul>
 
     </div>
@@ -296,7 +299,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -312,6 +317,20 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#without-lcen">Without LCEN</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#with-lcen">With LCEN</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-the-streamlit-app">Running the Streamlit App</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -323,7 +342,64 @@ document.write(`
                   
   <section id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h1>
-<p>How to do it</p>
+<p>SpectraScope is a Python package for feature generation, model training, and feature
+downselection for spectral data. It is primarily built for spectral data but can be applied
+to any 1D array-like data. Future development will expand to 2D data.</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading">#</a></h2>
+<section id="without-lcen">
+<h3>Without LCEN<a class="headerlink" href="#without-lcen" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:TRI-AMDD/spectrascope.git
+<span class="nb">cd</span><span class="w"> </span>spectrascope
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+<p>This installs all required packages except SmartProcessAnalytics, which holds the LCEN
+algorithm. SpectraScope runs without LCEN, but you will lose feature selection and
+polynomial/interaction transformations.</p>
+</section>
+<section id="with-lcen">
+<h3>With LCEN<a class="headerlink" href="#with-lcen" title="Link to this heading">#</a></h3>
+<p>To use LCEN, install v1.5.1 of SmartProcessAnalytics (must be v1.5.1).
+Download the release <a class="reference external" href="https://github.com/PedroSeber/SmartProcessAnalytics/releases">here</a>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/PedroSeber/SmartProcessAnalytics.git
+<span class="nb">cd</span><span class="w"> </span>SmartProcessAnalytics-1.5.1
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+<span class="c1"># note: if there are errors with ace-cream installation, you can comment it out</span>
+
+git<span class="w"> </span>clone<span class="w"> </span>git@github.com:TRI-AMDD/spectrascope.git
+<span class="nb">cd</span><span class="w"> </span>spectrascope
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+</section>
+<section id="running-the-streamlit-app">
+<h2>Running the Streamlit App<a class="headerlink" href="#running-the-streamlit-app" title="Link to this heading">#</a></h2>
+<p>SpectraScope is most flexible when used directly in Python (see the Quick Start notebook
+below). Analysis can also be run interactively through the Streamlit app:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>app
+streamlit<span class="w"> </span>run<span class="w"> </span>home.py
+</pre></div>
+</div>
+<p>Or with Docker:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>--build
+</pre></div>
+</div>
+</section>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading">#</a></h2>
+<p>The best way to get started is the <strong>Quick Start example notebook</strong>, which walks through
+a full workflow: loading data, generating spectral features, training a model, and
+visualizing the results.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/Quick_Start.html">Spectra-Scope Quick Start</a></li>
+</ul>
+</div>
+</section>
 </section>
 
 
@@ -343,15 +419,15 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">SpectraScope documentation</p>
+        <p class="prev-next-title">SpectraScope</p>
       </div>
     </a>
     <a class="right-next"
-       href="usage.html"
+       href="notebooks/Quick_Start.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Usage</p>
+        <p class="prev-next-title">Spectra-Scope Quick Start</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -362,6 +438,27 @@ document.write(`
             
             
               
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installation">Installation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#without-lcen">Without LCEN</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#with-lcen">With LCEN</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-the-streamlit-app">Running the Streamlit App</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quick-start">Quick Start</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
             
           </div>
           <footer class="bd-footer-content">
@@ -371,7 +468,7 @@ document.write(`
   <div class="footer-item">
     
 <p class="component-author">
-By Accelerated Materials Design and Descovery, Toyota Research Institute
+By Accelerated Materials Design and Discovery, Toyota Research Institute
 </p>
 
   </div>
@@ -381,7 +478,7 @@ By Accelerated Materials Design and Descovery, Toyota Research Institute
 
   <p class="copyright">
     
-      © Copyright 2025, Accelerated Materials Design and Descovery, Toyota Research Institute.
+      © Copyright 2025, Accelerated Materials Design and Discovery, Toyota Research Institute.
       <br/>
     
   </p>

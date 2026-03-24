@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -154,23 +154,26 @@
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
-</ul>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="spectrascope.html">spectrascope</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.Features.html">spectrascope.Features</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">spectrascope.SSClassification</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.StructurePropertyFeatures.html">spectrascope.StructurePropertyFeatures</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.utils.html">spectrascope.utils</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../getting-started.html">Getting Started</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/Quick_Start.html">Spectra-Scope Quick Start</a></li>
 </ul>
 </details></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Notebooks</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../notebooks/Quick_Start.html">Spectra-Scope Quick Start</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.Features.html">spectrascope.Features</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">spectrascope.SSClassification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.FusedLasso.html">spectrascope.FusedLasso</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.utils.html">spectrascope.utils</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.Features.html">spectrascope.Features</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">spectrascope.SSClassification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.FusedLasso.html">spectrascope.FusedLasso</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.utils.html">spectrascope.utils</a></li>
 </ul>
 
     </div>
@@ -320,21 +323,14 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.today"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.today</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.X"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.X</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.y"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.y</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.best_fits"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.best_fits</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.specnames"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.specnames</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.random_seed"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.random_seed</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.save_path"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.save_path</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.__init__"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.__init__()</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id0"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.today</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.X</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.y</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.best_fits</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.specnames</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.random_seed</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.save_path</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.today"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.today</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.X"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.X</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.y"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.y</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.best_fits"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.best_fits</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.specnames"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.specnames</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.random_seed"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.random_seed</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.save_path"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.save_path</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -356,7 +352,7 @@ document.write(`
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#spectrascope.SSClassification.BinaryClassifications" title="spectrascope.SSClassification.BinaryClassifications"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BinaryClassifications</span></code></a></p></td>
-<td><p>Can load X, y via an array or file path.</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -365,7 +361,10 @@ document.write(`
 <dt class="sig sig-object py" id="spectrascope.SSClassification.BinaryClassifications">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">spectrascope.SSClassification.</span></span><span class="sig-name descname"><span class="pre">BinaryClassifications</span></span><a class="reference internal" href="../_modules/spectrascope/SSClassification.html#BinaryClassifications"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SSClassification.BinaryClassifications" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="spectrascope.SpectraScope.html#spectrascope.SpectraScope.SpectraScope" title="spectrascope.SpectraScope.SpectraScope"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpectraScope</span></code></a></p>
-<p>Can load X, y via an array or file path. If file path, will try to infer file type.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SSClassification.BinaryClassifications.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">structures</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nn_algo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">CrystalNN()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generate_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SSClassification.html#BinaryClassifications.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SSClassification.BinaryClassifications.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Can load X, y via an array or file path. If file path, will try to infer file type.</p>
 <p>Data will be referred to as “spectrums” but can be any 1D array like data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -458,102 +457,6 @@ document.write(`
 </dl>
 </dd></dl>
 
-<dl class="py method">
-<dt class="sig sig-object py" id="spectrascope.SSClassification.BinaryClassifications.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">structures</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpids</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nn_algo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">CrystalNN()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">generate_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SSClassification.html#BinaryClassifications.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SSClassification.BinaryClassifications.__init__" title="Link to this definition">#</a></dt>
-<dd><p>Can load X, y via an array or file path. If file path, will try to infer file type.</p>
-<p>Data will be referred to as “spectrums” but can be any 1D array like data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<em>arr</em><em>, </em><em>optional</em>) – Input X. Defaults to None.</p></li>
-<li><p><strong>y</strong> (<em>arr</em><em>, </em><em>optional</em>) – Input y. Defaults to None.</p></li>
-<li><p><strong>fnX</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Input X file path. Defaults to None.</p></li>
-<li><p><strong>fny</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Input y file path. Defaults to None.</p></li>
-<li><p><strong>specnames</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>optional</em>) – Names of different spectra that have loaded, if loading multiple modalities. Defaults to [].</p></li>
-<li><p><strong>yname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Name of yprediction. Defaults to “”.</p></li>
-<li><p><strong>random_seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – Random seed for splitting data and training. Suggested to set a random seed to keep same splits when comparing across models. Defaults to None.</p></li>
-<li><p><strong>save_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Path for saving results. Defaults to None (saves to /examples/models).</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id0">
-<span class="sig-name descname"><span class="pre">today</span></span><a class="headerlink" href="#id0" title="Link to this definition">#</a></dt>
-<dd><p>Today’s date in format MM_DD_YYYY.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id1">
-<span class="sig-name descname"><span class="pre">X</span></span><a class="headerlink" href="#id1" title="Link to this definition">#</a></dt>
-<dd><p>Input X.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>arr</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id2">
-<span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#id2" title="Link to this definition">#</a></dt>
-<dd><p>Input y.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>arr</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id3">
-<span class="sig-name descname"><span class="pre">best_fits</span></span><a class="headerlink" href="#id3" title="Link to this definition">#</a></dt>
-<dd><p>Dictionary of best fits.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id4">
-<span class="sig-name descname"><span class="pre">specnames</span></span><a class="headerlink" href="#id4" title="Link to this definition">#</a></dt>
-<dd><p>Names of different spectra that have loaded.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id5">
-<span class="sig-name descname"><span class="pre">random_seed</span></span><a class="headerlink" href="#id5" title="Link to this definition">#</a></dt>
-<dd><p>Random seed for splitting data and training.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="id6">
-<span class="sig-name descname"><span class="pre">save_path</span></span><a class="headerlink" href="#id6" title="Link to this definition">#</a></dt>
-<dd><p>Path for saving results.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 </dd></dl>
@@ -606,21 +509,14 @@ document.write(`
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.today"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.today</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.X"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.X</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.y"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.y</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.best_fits"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.best_fits</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.specnames"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.specnames</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.random_seed"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.random_seed</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.save_path"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.save_path</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.__init__"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.__init__()</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id0"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.today</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.X</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.y</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.best_fits</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.specnames</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.random_seed</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.save_path</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.today"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.today</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.X"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.X</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.y"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.y</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.best_fits"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.best_fits</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.specnames"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.specnames</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.random_seed"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.random_seed</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SSClassification.BinaryClassifications.save_path"><code class="docutils literal notranslate"><span class="pre">BinaryClassifications.save_path</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -639,7 +535,7 @@ document.write(`
   <div class="footer-item">
     
 <p class="component-author">
-By Accelerated Materials Design and Descovery, Toyota Research Institute
+By Accelerated Materials Design and Discovery, Toyota Research Institute
 </p>
 
   </div>
@@ -649,7 +545,7 @@ By Accelerated Materials Design and Descovery, Toyota Research Institute
 
   <p class="copyright">
     
-      © Copyright 2025, Accelerated Materials Design and Descovery, Toyota Research Institute.
+      © Copyright 2025, Accelerated Materials Design and Discovery, Toyota Research Institute.
       <br/>
     
   </p>

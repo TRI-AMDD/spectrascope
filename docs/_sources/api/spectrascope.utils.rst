@@ -19,6 +19,7 @@ spectrascope.utils
       load_data
       maximal_correlation_from_ace
       oxidation_state_worker
+      predict_LCEN
       sort_get_value
       tamimoto
    

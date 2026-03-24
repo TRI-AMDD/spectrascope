@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -47,8 +47,6 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/spectrascope';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="spectrascope.Features" href="spectrascope.Features.html" />
-    <link rel="prev" title="Usage" href="../usage.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -111,6 +109,8 @@
       
       
       
+        
+      
       <div class="bd-sidebar-primary bd-sidebar">
         
 
@@ -154,23 +154,26 @@
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
-</ul>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">spectrascope</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.Features.html">spectrascope.Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.StructurePropertyFeatures.html">spectrascope.StructurePropertyFeatures</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.utils.html">spectrascope.utils</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../getting-started.html">Getting Started</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/Quick_Start.html">Spectra-Scope Quick Start</a></li>
 </ul>
 </details></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Notebooks</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../notebooks/Quick_Start.html">Spectra-Scope Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.Features.html">spectrascope.Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.FusedLasso.html">spectrascope.FusedLasso</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.utils.html">spectrascope.utils</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.Features.html">spectrascope.Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.FusedLasso.html">spectrascope.FusedLasso</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.utils.html">spectrascope.utils</a></li>
 </ul>
 
     </div>
@@ -331,19 +334,22 @@ spectral or array-like data.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="spectrascope.Features.html#module-spectrascope.Features" title="spectrascope.Features"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Features</span></code></a></p></td>
 <td><p>Spectral Features class for Spectrascope</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="spectrascope.SSClassification.html#module-spectrascope.SSClassification" title="spectrascope.SSClassification"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SSClassification</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="spectrascope.FusedLasso.html#module-spectrascope.FusedLasso" title="spectrascope.FusedLasso"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FusedLasso</span></code></a></p></td>
+<td><p>Fused Lasso regression model implemented with CVXPY.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="spectrascope.SSClassification.html#module-spectrascope.SSClassification" title="spectrascope.SSClassification"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SSClassification</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="spectrascope.SSPlotting.html#module-spectrascope.SSPlotting" title="spectrascope.SSPlotting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SSPlotting</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="spectrascope.SSPlotting.html#module-spectrascope.SSPlotting" title="spectrascope.SSPlotting"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SSPlotting</span></code></a></p></td>
+<td><p>Plotting utilities for SpectraScope feature and model visualizations.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="spectrascope.SpectraScope.html#module-spectrascope.SpectraScope" title="spectrascope.SpectraScope"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SpectraScope</span></code></a></p></td>
+<td><p>Core SpectraScope class for spectral data loading, feature generation, model training, and evaluation.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="spectrascope.StructurePropertyFeatures.html#module-spectrascope.StructurePropertyFeatures" title="spectrascope.StructurePropertyFeatures"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StructurePropertyFeatures</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="spectrascope.SpectraScope.html#module-spectrascope.SpectraScope" title="spectrascope.SpectraScope"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SpectraScope</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="spectrascope.StructurePropertyFeatures.html#module-spectrascope.StructurePropertyFeatures" title="spectrascope.StructurePropertyFeatures"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StructurePropertyFeatures</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="spectrascope.utils.html#module-spectrascope.utils" title="spectrascope.utils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">utils</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="spectrascope.utils.html#module-spectrascope.utils" title="spectrascope.utils"><code class="xref py py-obj docutils literal notranslate"><span class="pre">utils</span></code></a></p></td>
 <td><p>Miscellaneous utility functions for SpectraScope</p></td>
 </tr>
 </tbody>
@@ -362,24 +368,6 @@ spectral or array-like data.</p>
                 <footer class="prev-next-footer d-print-none">
                   
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="../usage.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Usage</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="spectrascope.Features.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">spectrascope.Features</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -396,7 +384,7 @@ spectral or array-like data.</p>
   <div class="footer-item">
     
 <p class="component-author">
-By Accelerated Materials Design and Descovery, Toyota Research Institute
+By Accelerated Materials Design and Discovery, Toyota Research Institute
 </p>
 
   </div>
@@ -406,7 +394,7 @@ By Accelerated Materials Design and Descovery, Toyota Research Institute
 
   <p class="copyright">
     
-      © Copyright 2025, Accelerated Materials Design and Descovery, Toyota Research Institute.
+      © Copyright 2025, Accelerated Materials Design and Discovery, Toyota Research Institute.
       <br/>
     
   </p>

@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -47,8 +47,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/spectrascope.utils';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Spectra-Scope Quick Start" href="../notebooks/Quick_Start.html" />
-    <link rel="prev" title="spectrascope.StructurePropertyFeatures" href="spectrascope.StructurePropertyFeatures.html" />
+    <link rel="prev" title="spectrascope.FusedLasso" href="spectrascope.FusedLasso.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -154,23 +153,26 @@
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
-</ul>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="spectrascope.html">spectrascope</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.Features.html">spectrascope.Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.StructurePropertyFeatures.html">spectrascope.StructurePropertyFeatures</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">spectrascope.utils</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../getting-started.html">Getting Started</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/Quick_Start.html">Spectra-Scope Quick Start</a></li>
 </ul>
 </details></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Notebooks</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../notebooks/Quick_Start.html">Spectra-Scope Quick Start</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.Features.html">spectrascope.Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.FusedLasso.html">spectrascope.FusedLasso</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">spectrascope.utils</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.Features.html">spectrascope.Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.FusedLasso.html">spectrascope.FusedLasso</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">spectrascope.utils</a></li>
 </ul>
 
     </div>
@@ -330,6 +332,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.utils.load_data"><code class="docutils literal notranslate"><span class="pre">load_data()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.utils.maximal_correlation_from_ace"><code class="docutils literal notranslate"><span class="pre">maximal_correlation_from_ace()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.utils.oxidation_state_worker"><code class="docutils literal notranslate"><span class="pre">oxidation_state_worker()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.utils.predict_LCEN"><code class="docutils literal notranslate"><span class="pre">predict_LCEN()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.utils.sort_get_value"><code class="docutils literal notranslate"><span class="pre">sort_get_value()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.utils.tamimoto"><code class="docutils literal notranslate"><span class="pre">tamimoto()</span></code></a></li>
 </ul>
@@ -382,10 +385,13 @@ document.write(`
 <tr class="row-odd"><td><p><a class="reference internal" href="#spectrascope.utils.oxidation_state_worker" title="spectrascope.utils.oxidation_state_worker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">oxidation_state_worker</span></code></a>(queue, struct)</p></td>
 <td><p>Helper function for add_oxidation_state_by_guess taking too long.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#spectrascope.utils.sort_get_value" title="spectrascope.utils.sort_get_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_get_value</span></code></a>(my_dict[, id2, id1])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#spectrascope.utils.predict_LCEN" title="spectrascope.utils.predict_LCEN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict_LCEN</span></code></a>(model, X)</p></td>
+<td><p>Predict using the parameters of a fitted LCEN model.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#spectrascope.utils.sort_get_value" title="spectrascope.utils.sort_get_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sort_get_value</span></code></a>(my_dict[, id2, id1])</p></td>
 <td><p>Sort a dictionary by values and return the values between id1 and id2.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#spectrascope.utils.tamimoto" title="spectrascope.utils.tamimoto"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tamimoto</span></code></a>(s1, s2)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#spectrascope.utils.tamimoto" title="spectrascope.utils.tamimoto"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tamimoto</span></code></a>(s1, s2)</p></td>
 <td><p>Tamimoto similarity index between two binary (T/F or 0/1) arrays s1 and s2.</p></td>
 </tr>
 </tbody>
@@ -593,6 +599,37 @@ to deal with possible long calculations.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="spectrascope.utils.predict_LCEN">
+<span class="sig-prename descclassname"><span class="pre">spectrascope.utils.</span></span><span class="sig-name descname"><span class="pre">predict_LCEN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/utils.html#predict_LCEN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.utils.predict_LCEN" title="Link to this definition">#</a></dt>
+<dd><p>Predict using the parameters of a fitted LCEN model.</p>
+<p>Uses the stored model_params (coefficients and intercept) from a fitted
+LCEN model (from SPA) to compute predictions for a given design matrix X.
+In model_params, entries like “x0”, “x1” indicate which feature indices
+have nonzero coefficients; all other coefficients are zero. The coefficient
+vector length matches X.shape[1].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – Fitted LCEN model from main.SPA. Must contain key “model_params”.</p></li>
+<li><p><strong>X</strong> (<em>np.ndarray</em>) – Design matrix, shape (n_samples, n_features). Must have the same
+number of features as the model was trained on, in the same order.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>y_pred</strong> – Predicted values, shape (n_samples,).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Linear-in-X models only. If model_params contain polynomial or other
+transformed terms (e.g. “x0^2”), NotImplementedError is raised.
+The caller must pass X in the same scale/preprocessing as at training
+(e.g. same StandardScaler); the LCEN dict does not store scaler parameters.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="spectrascope.utils.sort_get_value">
 <span class="sig-prename descclassname"><span class="pre">spectrascope.utils.</span></span><span class="sig-name descname"><span class="pre">sort_get_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">my_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id1</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/utils.html#sort_get_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.utils.sort_get_value" title="Link to this definition">#</a></dt>
 <dd><p>Sort a dictionary by values and return the values between id1 and id2.</p>
@@ -649,22 +686,13 @@ to deal with possible long calculations.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="spectrascope.StructurePropertyFeatures.html"
+       href="spectrascope.FusedLasso.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">spectrascope.StructurePropertyFeatures</p>
+        <p class="prev-next-title">spectrascope.FusedLasso</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="../notebooks/Quick_Start.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Spectra-Scope Quick Start</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -693,6 +721,7 @@ to deal with possible long calculations.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.utils.load_data"><code class="docutils literal notranslate"><span class="pre">load_data()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.utils.maximal_correlation_from_ace"><code class="docutils literal notranslate"><span class="pre">maximal_correlation_from_ace()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.utils.oxidation_state_worker"><code class="docutils literal notranslate"><span class="pre">oxidation_state_worker()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.utils.predict_LCEN"><code class="docutils literal notranslate"><span class="pre">predict_LCEN()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.utils.sort_get_value"><code class="docutils literal notranslate"><span class="pre">sort_get_value()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.utils.tamimoto"><code class="docutils literal notranslate"><span class="pre">tamimoto()</span></code></a></li>
 </ul>
@@ -709,7 +738,7 @@ to deal with possible long calculations.</p>
   <div class="footer-item">
     
 <p class="component-author">
-By Accelerated Materials Design and Descovery, Toyota Research Institute
+By Accelerated Materials Design and Discovery, Toyota Research Institute
 </p>
 
   </div>
@@ -719,7 +748,7 @@ By Accelerated Materials Design and Descovery, Toyota Research Institute
 
   <p class="copyright">
     
-      © Copyright 2025, Accelerated Materials Design and Descovery, Toyota Research Institute.
+      © Copyright 2025, Accelerated Materials Design and Discovery, Toyota Research Institute.
       <br/>
     
   </p>

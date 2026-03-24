@@ -31,7 +31,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -48,7 +48,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="spectrascope.SSClassification" href="spectrascope.SSClassification.html" />
-    <link rel="prev" title="spectrascope" href="spectrascope.html" />
+    <link rel="prev" title="spectrascope.SpectraScope" href="spectrascope.SpectraScope.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -154,23 +154,26 @@
     <div class="bd-toc-item navbar-nav active">
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
-</ul>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="spectrascope.html">spectrascope</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">spectrascope.Features</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.StructurePropertyFeatures.html">spectrascope.StructurePropertyFeatures</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spectrascope.utils.html">spectrascope.utils</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../getting-started.html">Getting Started</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../notebooks/Quick_Start.html">Spectra-Scope Quick Start</a></li>
 </ul>
 </details></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Notebooks</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../notebooks/Quick_Start.html">Spectra-Scope Quick Start</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">spectrascope.Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.FusedLasso.html">spectrascope.FusedLasso</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.utils.html">spectrascope.utils</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">spectrascope.Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.FusedLasso.html">spectrascope.FusedLasso</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrascope.utils.html">spectrascope.utils</a></li>
 </ul>
 
     </div>
@@ -374,7 +377,6 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.Features.SpectralFeatures.uneven_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.uneven_features()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.Features.degree_based_features"><code class="docutils literal notranslate"><span class="pre">degree_based_features()</span></code></a></li>
 </ul>
             </nav>
         </div>
@@ -389,15 +391,6 @@ document.write(`
   <section id="module-spectrascope.Features">
 <span id="spectrascope-features"></span><h1>spectrascope.Features<a class="headerlink" href="#module-spectrascope.Features" title="Link to this heading">#</a></h1>
 <p>Spectral Features class for Spectrascope</p>
-<p class="rubric">Functions</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#spectrascope.Features.degree_based_features" title="spectrascope.Features.degree_based_features"><code class="xref py py-obj docutils literal notranslate"><span class="pre">degree_based_features</span></code></a>(X, degree, ...)</p></td>
-<td><p>Function to extract features from the data.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <p class="rubric">Classes</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
@@ -417,14 +410,6 @@ Current features developed for spectral data, but could be applied to any 1D dat
 Every feature generation method assumes you want to perform on the interpolated spectra, so
 looks for interpolated data before performing operations on the original data.
 Most featurizer functions are vectorized and can accept multiple samples at once.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>energies</strong> (<em>array-like</em>) – x axis (energy, time). shape: (n_features,))</p></li>
-<li><p><strong>intensities</strong> (<em>array-like</em>) – y axis (intensity, current, etc). shape: (n_samples, n_features))</p></li>
-</ul>
-</dd>
-</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="spectrascope.Features.SpectralFeatures.ROCKET_features">
 <span class="sig-name descname"><span class="pre">ROCKET_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#SpectralFeatures.ROCKET_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.SpectralFeatures.ROCKET_features" title="Link to this definition">#</a></dt>
@@ -902,28 +887,6 @@ Recommended to apply PCA first to reduce dimensions (to ~50) then peform TSNE on
 
 </dd></dl>
 
-<dl class="py function">
-<dt class="sig sig-object py" id="spectrascope.Features.degree_based_features">
-<span class="sig-prename descclassname"><span class="pre">spectrascope.Features.</span></span><span class="sig-name descname"><span class="pre">degree_based_features</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_features</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/Features.html#degree_based_features"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.Features.degree_based_features" title="Link to this definition">#</a></dt>
-<dd><p>Function to extract features from the data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>X</strong> (<em>np.array</em>) – input data.</p></li>
-<li><p><strong>degree</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – degree of polynomial to fit.</p></li>
-<li><p><strong>exclude_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – list of features to exclude.</p></li>
-<li><p><strong>input_labels</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a>) – list of labels for each feature.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>new_features</strong> – new features extracted from the data.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>np.array</p>
-</dd>
-</dl>
-</dd></dl>
-
 </section>
 
 
@@ -938,12 +901,12 @@ Recommended to apply PCA first to reduce dimensions (to ~50) then peform TSNE on
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="spectrascope.html"
+       href="spectrascope.SpectraScope.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">spectrascope</p>
+        <p class="prev-next-title">spectrascope.SpectraScope</p>
       </div>
     </a>
     <a class="right-next"
@@ -1026,7 +989,6 @@ Recommended to apply PCA first to reduce dimensions (to ~50) then peform TSNE on
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.Features.SpectralFeatures.uneven_features"><code class="docutils literal notranslate"><span class="pre">SpectralFeatures.uneven_features()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.Features.degree_based_features"><code class="docutils literal notranslate"><span class="pre">degree_based_features()</span></code></a></li>
 </ul>
   </nav></div>
 
@@ -1041,7 +1003,7 @@ Recommended to apply PCA first to reduce dimensions (to ~50) then peform TSNE on
   <div class="footer-item">
     
 <p class="component-author">
-By Accelerated Materials Design and Descovery, Toyota Research Institute
+By Accelerated Materials Design and Discovery, Toyota Research Institute
 </p>
 
   </div>
@@ -1051,7 +1013,7 @@ By Accelerated Materials Design and Descovery, Toyota Research Institute
 
   <p class="copyright">
     
-      © Copyright 2025, Accelerated Materials Design and Descovery, Toyota Research Institute.
+      © Copyright 2025, Accelerated Materials Design and Discovery, Toyota Research Institute.
       <br/>
     
   </p>

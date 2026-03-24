@@ -11,6 +11,7 @@
    :recursive:
 
    Features
+   FusedLasso
    SSClassification
    SSPlotting
    SpectraScope
