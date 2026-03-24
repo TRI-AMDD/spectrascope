@@ -30,8 +30,9 @@ git clone https://github.com/PedroSeber/SmartProcessAnalytics.git
 cd SmartProcessAnalytics-1.5.0 
 pip install -e .
 # note : if there are errors with ace-cream installation, can comment out
-
-git clone git@github.com:TRI-AMDD/spectrascope.git
+ 
+cd .. 
+git clone https://github.com/TRI-AMDD/spectrascope.git
 cd spectrascope
 pip install -r requirements.txt
 pip install -e .
