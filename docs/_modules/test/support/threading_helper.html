@@ -1,0 +1,608 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>test.support.threading_helper &#8212; SpectraScope 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/test/support/threading_helper';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SpectraScope 0.0.1 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/spectrascope.html">spectrascope</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.Features.html">spectrascope.Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.StructurePropertyFeatures.html">spectrascope.StructurePropertyFeatures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.utils.html">spectrascope.utils</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for test.support.threading_helper</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">_thread</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">contextlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">functools</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">unittest</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">test</span><span class="w"> </span><span class="kn">import</span> <span class="n">support</span>
+
+
+<span class="c1">#=======================================================================</span>
+<span class="c1"># Threading support to prevent reporting refleaks when running regrtest.py -R</span>
+
+<span class="c1"># NOTE: we use thread._count() rather than threading.enumerate() (or the</span>
+<span class="c1"># moral equivalent thereof) because a threading.Thread object is still alive</span>
+<span class="c1"># until its __bootstrap() method has returned, even after it has been</span>
+<span class="c1"># unregistered from the threading module.</span>
+<span class="c1"># thread._count(), on the other hand, only gets decremented *after* the</span>
+<span class="c1"># __bootstrap() method has returned, which gives us reliable reference counts</span>
+<span class="c1"># at the end of a test run.</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">threading_setup</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">_thread</span><span class="o">.</span><span class="n">_count</span><span class="p">(),</span> <span class="nb">len</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">_dangling</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">threading_cleanup</span><span class="p">(</span><span class="o">*</span><span class="n">original_values</span><span class="p">):</span>
+    <span class="n">orig_count</span><span class="p">,</span> <span class="n">orig_ndangling</span> <span class="o">=</span> <span class="n">original_values</span>
+
+    <span class="n">timeout</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">support</span><span class="o">.</span><span class="n">sleeping_retry</span><span class="p">(</span><span class="n">timeout</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="c1"># Copy the thread list to get a consistent output. threading._dangling</span>
+        <span class="c1"># is a WeakSet, its value changes when it&#39;s read.</span>
+        <span class="n">dangling_threads</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">_dangling</span><span class="p">)</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="n">_thread</span><span class="o">.</span><span class="n">_count</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">count</span> <span class="o">&lt;=</span> <span class="n">orig_count</span><span class="p">:</span>
+            <span class="k">return</span>
+
+    <span class="c1"># Timeout!</span>
+    <span class="n">support</span><span class="o">.</span><span class="n">environment_altered</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">support</span><span class="o">.</span><span class="n">print_warning</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;threading_cleanup() failed to clean up threads &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;in </span><span class="si">{</span><span class="n">timeout</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> seconds</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;  before: thread count=</span><span class="si">{</span><span class="n">orig_count</span><span class="si">}</span><span class="s2">, dangling=</span><span class="si">{</span><span class="n">orig_ndangling</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;  after: thread count=</span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">, dangling=</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">dangling_threads</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="n">dangling_threads</span><span class="p">:</span>
+        <span class="n">support</span><span class="o">.</span><span class="n">print_warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dangling thread: </span><span class="si">{</span><span class="n">thread</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># The warning happens when a test spawns threads and some of these threads</span>
+    <span class="c1"># are still running after the test completes. To fix this warning, join</span>
+    <span class="c1"># threads explicitly to wait until they complete.</span>
+    <span class="c1">#</span>
+    <span class="c1"># To make the warning more likely, reduce the timeout.</span>
+
+
+<div class="viewcode-block" id="reap_threads">
+<a class="viewcode-back" href="../../../api/test.support.threading_helper.html#test.support.threading_helper.reap_threads">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">reap_threads</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Use this function when threads are being used.  This will</span>
+<span class="sd">    ensure that the threads are cleaned up even when the test fails.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">decorator</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">threading_setup</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">threading_cleanup</span><span class="p">(</span><span class="o">*</span><span class="n">key</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">decorator</span></div>
+
+
+
+<div class="viewcode-block" id="wait_threads_exit">
+<a class="viewcode-back" href="../../../api/test.support.threading_helper.html#test.support.threading_helper.wait_threads_exit">[docs]</a>
+<span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">wait_threads_exit</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    bpo-31234: Context manager to wait until all threads created in the with</span>
+<span class="sd">    statement exit.</span>
+
+<span class="sd">    Use _thread.count() to check if threads exited. Indirectly, wait until</span>
+<span class="sd">    threads exit the internal t_bootstrap() C function of the _thread module.</span>
+
+<span class="sd">    threading_setup() and threading_cleanup() are designed to emit a warning</span>
+<span class="sd">    if a test leaves running threads in the background. This context manager</span>
+<span class="sd">    is designed to cleanup threads started by the _thread.start_new_thread()</span>
+<span class="sd">    which doesn&#39;t allow to wait for thread exit, whereas thread.Thread has a</span>
+<span class="sd">    join() method.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">timeout</span> <span class="o">=</span> <span class="n">support</span><span class="o">.</span><span class="n">SHORT_TIMEOUT</span>
+    <span class="n">old_count</span> <span class="o">=</span> <span class="n">_thread</span><span class="o">.</span><span class="n">_count</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">support</span><span class="o">.</span><span class="n">sleeping_retry</span><span class="p">(</span><span class="n">timeout</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+            <span class="n">support</span><span class="o">.</span><span class="n">gc_collect</span><span class="p">()</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="n">_thread</span><span class="o">.</span><span class="n">_count</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">count</span> <span class="o">&lt;=</span> <span class="n">old_count</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;wait_threads() failed to cleanup </span><span class="si">{</span><span class="n">count</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">old_count</span><span class="si">}</span><span class="s2"> &quot;</span>
+                   <span class="sa">f</span><span class="s2">&quot;threads after </span><span class="si">{</span><span class="n">dt</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> seconds &quot;</span>
+                   <span class="sa">f</span><span class="s2">&quot;(count: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2">, old count: </span><span class="si">{</span><span class="n">old_count</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="join_thread">
+<a class="viewcode-back" href="../../../api/test.support.threading_helper.html#test.support.threading_helper.join_thread">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">join_thread</span><span class="p">(</span><span class="n">thread</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Join a thread. Raise an AssertionError if the thread is still alive</span>
+<span class="sd">    after timeout seconds.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">timeout</span> <span class="o">=</span> <span class="n">support</span><span class="o">.</span><span class="n">SHORT_TIMEOUT</span>
+    <span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">thread</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;failed to join the thread in </span><span class="si">{</span><span class="n">timeout</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> seconds&quot;</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+
+
+
+<span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">start_threads</span><span class="p">(</span><span class="n">threads</span><span class="p">,</span> <span class="n">unlock</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">faulthandler</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="c1"># It isn&#39;t supported on subinterpreters yet.</span>
+        <span class="n">faulthandler</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">threads</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">threads</span><span class="p">)</span>
+    <span class="n">started</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+                <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+                <span class="n">started</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">support</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Can&#39;t start </span><span class="si">%d</span><span class="s2"> threads, only </span><span class="si">%d</span><span class="s2"> threads started&quot;</span> <span class="o">%</span>
+                      <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">threads</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">started</span><span class="p">)))</span>
+            <span class="k">raise</span>
+        <span class="k">yield</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">unlock</span><span class="p">:</span>
+                <span class="n">unlock</span><span class="p">()</span>
+            <span class="n">endtime</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">timeout</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">):</span>
+                <span class="n">endtime</span> <span class="o">+=</span> <span class="mi">60</span>
+                <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">started</span><span class="p">:</span>
+                    <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">endtime</span> <span class="o">-</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">(),</span> <span class="mf">0.01</span><span class="p">))</span>
+                <span class="n">started</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">started</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()]</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">started</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="k">if</span> <span class="n">support</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Unable to join </span><span class="si">%d</span><span class="s1"> threads during a period of &#39;</span>
+                          <span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> minutes&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">started</span><span class="p">),</span> <span class="n">timeout</span><span class="p">))</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">started</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">started</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">is_alive</span><span class="p">()]</span>
+            <span class="k">if</span> <span class="n">started</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">faulthandler</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">faulthandler</span><span class="o">.</span><span class="n">dump_traceback</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s1">&#39;Unable to join </span><span class="si">%d</span><span class="s1"> threads&#39;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">started</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="catch_threading_exception">
+<a class="viewcode-back" href="../../../api/test.support.threading_helper.html#test.support.threading_helper.catch_threading_exception">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">catch_threading_exception</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Context manager catching threading.Thread exception using</span>
+<span class="sd">    threading.excepthook.</span>
+
+<span class="sd">    Attributes set when an exception is caught:</span>
+
+<span class="sd">    * exc_type</span>
+<span class="sd">    * exc_value</span>
+<span class="sd">    * exc_traceback</span>
+<span class="sd">    * thread</span>
+
+<span class="sd">    See threading.excepthook() documentation for these attributes.</span>
+
+<span class="sd">    These attributes are deleted at the context manager exit.</span>
+
+<span class="sd">    Usage:</span>
+
+<span class="sd">        with threading_helper.catch_threading_exception() as cm:</span>
+<span class="sd">            # code spawning a thread which raises an exception</span>
+<span class="sd">            ...</span>
+
+<span class="sd">            # check the thread exception, use cm attributes:</span>
+<span class="sd">            # exc_type, exc_value, exc_traceback, thread</span>
+<span class="sd">            ...</span>
+
+<span class="sd">        # exc_type, exc_value, exc_traceback, thread attributes of cm no longer</span>
+<span class="sd">        # exists at this point</span>
+<span class="sd">        # (to avoid reference cycles)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="catch_threading_exception.__init__">
+<a class="viewcode-back" href="../../../api/test.support.threading_helper.html#test.support.threading_helper.catch_threading_exception.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exc_type</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exc_value</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exc_traceback</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_old_hook</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exc_type</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">exc_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exc_value</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">exc_value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exc_traceback</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">exc_traceback</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">thread</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_old_hook</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">excepthook</span>
+        <span class="n">threading</span><span class="o">.</span><span class="n">excepthook</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hook</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">exc_info</span><span class="p">):</span>
+        <span class="n">threading</span><span class="o">.</span><span class="n">excepthook</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_old_hook</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">exc_type</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">exc_value</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">exc_traceback</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">thread</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_can_start_thread</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Detect whether Python can start new threads.</span>
+
+<span class="sd">    Some WebAssembly platforms do not provide a working pthread</span>
+<span class="sd">    implementation. Thread support is stubbed and any attempt</span>
+<span class="sd">    to create a new thread fails.</span>
+
+<span class="sd">    - wasm32-wasi does not have threading.</span>
+<span class="sd">    - wasm32-emscripten can be compiled with or without pthread</span>
+<span class="sd">      support (-s USE_PTHREADS / __EMSCRIPTEN_PTHREADS__).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;emscripten&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">sys</span><span class="o">.</span><span class="n">_emscripten_info</span><span class="o">.</span><span class="n">pthreads</span>
+    <span class="k">elif</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;wasi&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># assume all other platforms have working thread support.</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+<span class="n">can_start_thread</span> <span class="o">=</span> <span class="n">_can_start_thread</span><span class="p">()</span>
+
+<div class="viewcode-block" id="requires_working_threading">
+<a class="viewcode-back" href="../../../api/test.support.threading_helper.html#test.support.threading_helper.requires_working_threading">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">requires_working_threading</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Skip tests or modules that require working threading.</span>
+
+<span class="sd">    Can be used as a function/class decorator or to skip an entire module.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;requires threading support&quot;</span>
+    <span class="k">if</span> <span class="n">module</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">can_start_thread</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">unittest</span><span class="o">.</span><span class="n">SkipTest</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">unittest</span><span class="o">.</span><span class="n">skipUnless</span><span class="p">(</span><span class="n">can_start_thread</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Accelerated Materials Design and Descovery, Toyota Research Institute
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Accelerated Materials Design and Descovery, Toyota Research Institute.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

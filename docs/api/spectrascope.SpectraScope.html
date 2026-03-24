@@ -1,0 +1,1151 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>spectrascope.SpectraScope &#8212; SpectraScope 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/spectrascope.SpectraScope';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="spectrascope.StructurePropertyFeatures" href="spectrascope.StructurePropertyFeatures.html" />
+    <link rel="prev" title="spectrascope.SSPlotting" href="spectrascope.SSPlotting.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SpectraScope 0.0.1 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="spectrascope.html">spectrascope</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="spectrascope.Features.html">spectrascope.Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">spectrascope.SpectraScope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spectrascope.StructurePropertyFeatures.html">spectrascope.StructurePropertyFeatures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spectrascope.utils.html">spectrascope.utils</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../notebooks/Quick_Start.html">Spectra-Scope Quick Start</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/api/spectrascope.SpectraScope.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>spectrascope.SpectraScope</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope"><code class="docutils literal notranslate"><span class="pre">SpectraScope</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.today"><code class="docutils literal notranslate"><span class="pre">SpectraScope.today</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.X"><code class="docutils literal notranslate"><span class="pre">SpectraScope.X</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.y"><code class="docutils literal notranslate"><span class="pre">SpectraScope.y</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.best_fits"><code class="docutils literal notranslate"><span class="pre">SpectraScope.best_fits</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.specnames"><code class="docutils literal notranslate"><span class="pre">SpectraScope.specnames</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.random_seed"><code class="docutils literal notranslate"><span class="pre">SpectraScope.random_seed</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.save_path"><code class="docutils literal notranslate"><span class="pre">SpectraScope.save_path</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.__init__"><code class="docutils literal notranslate"><span class="pre">SpectraScope.__init__()</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id0"><code class="docutils literal notranslate"><span class="pre">SpectraScope.today</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><code class="docutils literal notranslate"><span class="pre">SpectraScope.X</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><code class="docutils literal notranslate"><span class="pre">SpectraScope.y</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><code class="docutils literal notranslate"><span class="pre">SpectraScope.best_fits</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><code class="docutils literal notranslate"><span class="pre">SpectraScope.specnames</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><code class="docutils literal notranslate"><span class="pre">SpectraScope.random_seed</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><code class="docutils literal notranslate"><span class="pre">SpectraScope.save_path</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.add_spectral_feature"><code class="docutils literal notranslate"><span class="pre">SpectraScope.add_spectral_feature()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.add_structural_label"><code class="docutils literal notranslate"><span class="pre">SpectraScope.add_structural_label()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.add_x_axis"><code class="docutils literal notranslate"><span class="pre">SpectraScope.add_x_axis()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.add_x_label"><code class="docutils literal notranslate"><span class="pre">SpectraScope.add_x_label()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.add_y"><code class="docutils literal notranslate"><span class="pre">SpectraScope.add_y()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.add_y_label"><code class="docutils literal notranslate"><span class="pre">SpectraScope.add_y_label()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.auto_ss"><code class="docutils literal notranslate"><span class="pre">SpectraScope.auto_ss()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.check_dir_exists"><code class="docutils literal notranslate"><span class="pre">SpectraScope.check_dir_exists()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.combine_feature"><code class="docutils literal notranslate"><span class="pre">SpectraScope.combine_feature()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.do_LCEN"><code class="docutils literal notranslate"><span class="pre">SpectraScope.do_LCEN()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.do_all"><code class="docutils literal notranslate"><span class="pre">SpectraScope.do_all()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.do_sk"><code class="docutils literal notranslate"><span class="pre">SpectraScope.do_sk()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.load_file"><code class="docutils literal notranslate"><span class="pre">SpectraScope.load_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.maximal_correlation_feature_selection"><code class="docutils literal notranslate"><span class="pre">SpectraScope.maximal_correlation_feature_selection()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.mutual_info_feature_selection"><code class="docutils literal notranslate"><span class="pre">SpectraScope.mutual_info_feature_selection()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.pearson_feature_selection"><code class="docutils literal notranslate"><span class="pre">SpectraScope.pearson_feature_selection()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.plot_df_heatmap"><code class="docutils literal notranslate"><span class="pre">SpectraScope.plot_df_heatmap()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.scale_X"><code class="docutils literal notranslate"><span class="pre">SpectraScope.scale_X()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.sk"><code class="docutils literal notranslate"><span class="pre">SpectraScope.sk()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.sk_pipeline"><code class="docutils literal notranslate"><span class="pre">SpectraScope.sk_pipeline()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.split_X"><code class="docutils literal notranslate"><span class="pre">SpectraScope.split_X()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.structural_labels"><code class="docutils literal notranslate"><span class="pre">SpectraScope.structural_labels()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.transform_feature"><code class="docutils literal notranslate"><span class="pre">SpectraScope.transform_feature()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.tsfresh_feature_selection"><code class="docutils literal notranslate"><span class="pre">SpectraScope.tsfresh_feature_selection()</span></code></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-spectrascope.SpectraScope">
+<span id="spectrascope-spectrascope"></span><h1>spectrascope.SpectraScope<a class="headerlink" href="#module-spectrascope.SpectraScope" title="Link to this heading">#</a></h1>
+<p class="rubric">Classes</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#spectrascope.SpectraScope.SpectraScope" title="spectrascope.SpectraScope.SpectraScope"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SpectraScope</span></code></a></p></td>
+<td><p>The main SpectraScope class encompasses all data loading, feature generation, model training, and model evaluation.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">spectrascope.SpectraScope.</span></span><span class="sig-name descname"><span class="pre">SpectraScope</span></span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>The main SpectraScope class encompasses all data loading, feature generation, model training, and model evaluation.</p>
+<p>Can load X, y via an array or file path. If file path, will try to infer file type.</p>
+<p>Data will be referred to as “spectrums” but can be any 1D array like data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>arr</em><em>, </em><em>optional</em>) – Input X. Defaults to None.</p></li>
+<li><p><strong>y</strong> (<em>arr</em><em>, </em><em>optional</em>) – Input y. Defaults to None.</p></li>
+<li><p><strong>fnX</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Input X file path. Defaults to None.</p></li>
+<li><p><strong>fny</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Input y file path. Defaults to None.</p></li>
+<li><p><strong>specnames</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>optional</em>) – Names of different spectra that have loaded, if loading multiple modalities. Defaults to [].</p></li>
+<li><p><strong>yname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Name of yprediction. Defaults to “”.</p></li>
+<li><p><strong>random_seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – Random seed for splitting data and training. Suggested to set a random seed to keep same splits when comparing across models. Defaults to None.</p></li>
+<li><p><strong>save_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Path for saving results. Defaults to None (saves to /examples/models).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.today">
+<span class="sig-name descname"><span class="pre">today</span></span><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.today" title="Link to this definition">#</a></dt>
+<dd><p>Today’s date in format MM_DD_YYYY.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.X">
+<span class="sig-name descname"><span class="pre">X</span></span><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.X" title="Link to this definition">#</a></dt>
+<dd><p>Input X.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>arr</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.y">
+<span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.y" title="Link to this definition">#</a></dt>
+<dd><p>Input y.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>arr</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.best_fits">
+<span class="sig-name descname"><span class="pre">best_fits</span></span><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.best_fits" title="Link to this definition">#</a></dt>
+<dd><p>Dictionary of best fits.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.specnames">
+<span class="sig-name descname"><span class="pre">specnames</span></span><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.specnames" title="Link to this definition">#</a></dt>
+<dd><p>Names of different spectra that have loaded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.random_seed">
+<span class="sig-name descname"><span class="pre">random_seed</span></span><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.random_seed" title="Link to this definition">#</a></dt>
+<dd><p>Random seed for splitting data and training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.save_path">
+<span class="sig-name descname"><span class="pre">save_path</span></span><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.save_path" title="Link to this definition">#</a></dt>
+<dd><p>Path for saving results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fnX</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fny</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">specnames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.__init__" title="Link to this definition">#</a></dt>
+<dd><p>Can load X, y via an array or file path. If file path, will try to infer file type.</p>
+<p>Data will be referred to as “spectrums” but can be any 1D array like data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X</strong> (<em>arr</em><em>, </em><em>optional</em>) – Input X. Defaults to None.</p></li>
+<li><p><strong>y</strong> (<em>arr</em><em>, </em><em>optional</em>) – Input y. Defaults to None.</p></li>
+<li><p><strong>fnX</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Input X file path. Defaults to None.</p></li>
+<li><p><strong>fny</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Input y file path. Defaults to None.</p></li>
+<li><p><strong>specnames</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>optional</em>) – Names of different spectra that have loaded, if loading multiple modalities. Defaults to [].</p></li>
+<li><p><strong>yname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Name of yprediction. Defaults to “”.</p></li>
+<li><p><strong>random_seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – Random seed for splitting data and training. Suggested to set a random seed to keep same splits when comparing across models. Defaults to None.</p></li>
+<li><p><strong>save_path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Path for saving results. Defaults to None (saves to /examples/models).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">today</span></span><a class="headerlink" href="#id0" title="Link to this definition">#</a></dt>
+<dd><p>Today’s date in format MM_DD_YYYY.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">X</span></span><a class="headerlink" href="#id1" title="Link to this definition">#</a></dt>
+<dd><p>Input X.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>arr</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">y</span></span><a class="headerlink" href="#id2" title="Link to this definition">#</a></dt>
+<dd><p>Input y.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>arr</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">best_fits</span></span><a class="headerlink" href="#id3" title="Link to this definition">#</a></dt>
+<dd><p>Dictionary of best fits.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">specnames</span></span><a class="headerlink" href="#id4" title="Link to this definition">#</a></dt>
+<dd><p>Names of different spectra that have loaded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">random_seed</span></span><a class="headerlink" href="#id5" title="Link to this definition">#</a></dt>
+<dd><p>Random seed for splitting data and training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">save_path</span></span><a class="headerlink" href="#id6" title="Link to this definition">#</a></dt>
+<dd><p>Path for saving results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.add_spectral_feature">
+<span class="sig-name descname"><span class="pre">add_spectral_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">specname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xaxis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_naming</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.add_spectral_feature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.add_spectral_feature" title="Link to this definition">#</a></dt>
+<dd><p>Add a spectral feature attribute to the SpectraScope object for a specific spectrum.</p>
+<p>Attribute name is {specname}_{feat}{additional_naming}.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>specname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Name of the spectrum to featurize / transform.</p></li>
+<li><p><strong>feat</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Name of the feature to add. This must correspond to a method in the spectral_features module.</p></li>
+<li><p><strong>xaxis</strong> (<em>np.array</em><em>, </em><em>optional</em>) – x-axis values for the spectrum. Defaults to None.</p></li>
+<li><p><strong>additional_naming</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Additional naming for the default attribute. Defaults to “”.</p></li>
+<li><p><strong>**kwargs</strong> – Additional keyword arguments to pass to the spectral_features method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.add_structural_label">
+<span class="sig-name descname"><span class="pre">add_structural_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">structarr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">structfeat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_naming</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.add_structural_label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.add_structural_label" title="Link to this definition">#</a></dt>
+<dd><p>Not Implemented yet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>structarr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Name of structure array attribute</p></li>
+<li><p><strong>structfeat</strong> (<em>_type_</em>) – Name of the structure_property_featurization method to call</p></li>
+<li><p><strong>additional_naming</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – _description_, by default “”</p></li>
+<li><p><strong>**kwargs</strong> (<em>_type_</em>) – Additional kwargs for the structure_property_featurization method called</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.add_x_axis">
+<span class="sig-name descname"><span class="pre">add_x_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">specname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.add_x_axis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.add_x_axis" title="Link to this definition">#</a></dt>
+<dd><p>Add x-axis attribute for a specific spectrum. Attribute name is {specname}_xaxis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>specname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Spectrum to associate x-axis with.</p></li>
+<li><p><strong>value</strong> (<em>np.array</em>) – x-axis values.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.add_x_label">
+<span class="sig-name descname"><span class="pre">add_x_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">specname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.add_x_label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.add_x_label" title="Link to this definition">#</a></dt>
+<dd><p>Add x-axis label attribute for a specific spectrum. Attribute name is {specname}_labelx.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>specname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – spectrum to associate x-axis label with.</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – x-axis label.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.add_y">
+<span class="sig-name descname"><span class="pre">add_y</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.add_y"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.add_y" title="Link to this definition">#</a></dt>
+<dd><p>Add a new prediction target y attribute to the SpectraScope object.</p>
+<p>Attribute name is {yname}.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>yname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Name of target variable.</p></li>
+<li><p><strong>y</strong> (<em>np.array</em>) – Value of target variable. Must be = len(X).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.add_y_label">
+<span class="sig-name descname"><span class="pre">add_y_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">specname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.add_y_label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.add_y_label" title="Link to this definition">#</a></dt>
+<dd><p>Add y-axis label attribute for a specific spectrum. Attribute name is {specname}_labely.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>specname</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – spectrum to associate y-axis label with.</p></li>
+<li><p><strong>value</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – y-axis label.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.auto_ss">
+<span class="sig-name descname"><span class="pre">auto_ss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yattr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{'LCEN':</span> <span class="pre">{},</span> <span class="pre">'RF':</span> <span class="pre">{},</span> <span class="pre">'feature_generation':</span> <span class="pre">{}}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_ace</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.auto_ss"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.auto_ss" title="Link to this definition">#</a></dt>
+<dd><p>Automatic feature selection</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>yattr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Target variable to select features for.</p></li>
+<li><p><strong>auto_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>, </em><em>optional</em><em>, </em><em>default empty dictionary for 'feature_generation'</em><em>, </em><em>'RF'</em><em>, </em><em>and 'LCEN'</em>) – Dictionary for specifics on the features to generate and model cross-validation.
+Defaults to generating all available features, and using default hyperparameter grids for cross validation.
+for spectra + feature pairs.</p></li>
+<li><p><strong>do_ace</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em><em>, </em><em>default = False</em>) – Whether or not to use the ace package to do feature selection with
+maximal correlation analysis. Thus far seems to give the same results as
+pearson’s r. Also can take a long time</p></li>
+<li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em><em>, </em><em>default=3</em>) – Number of top features to select for moddel training.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.check_dir_exists">
+<span class="sig-name descname"><span class="pre">check_dir_exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.check_dir_exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.check_dir_exists" title="Link to this definition">#</a></dt>
+<dd><p>Check if a directory exists, and if not, create it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>directory</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – path to directory</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.combine_feature">
+<span class="sig-name descname"><span class="pre">combine_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feat1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feat2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_naming</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.combine_feature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.combine_feature" title="Link to this definition">#</a></dt>
+<dd><p>Concatenate two features and save as a new attribute for multimodal training.</p>
+<p>Features must exist before combining. Naming assumes that the two features are the same transformation on different types of experimental data. Attribute name is {spec1}_{feat2}{additional_naming}.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feat1</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Name for first feature to combine.</p></li>
+<li><p><strong>feat2</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Name for second feature to combine.</p></li>
+<li><p><strong>additional_naming</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Additional naming for new attribute. Default “”.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.do_LCEN">
+<span class="sig-name descname"><span class="pre">do_LCEN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Xattr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yattr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savef</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.do_LCEN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.do_LCEN" title="Link to this definition">#</a></dt>
+<dd><p>Fit LCEN model using SPA and save results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Xattr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – X attribute to fit model on.</p></li>
+<li><p><strong>yattr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – y attribute to fit model on.</p></li>
+<li><p><strong>test_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em><em>, </em><em>default 0.25</em>) – input for sklearn train_test_split test_size.</p></li>
+<li><p><strong>savef</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> or </em><em>None</em><em>, </em><em>optional</em><em>, </em><em>default=None</em>) – filename to save model, default None. Currently SPA automatically saves model.</p></li>
+<li><p><strong>top_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em><em>, </em><em>default=20</em>) – number of top features to save for future analysis.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.do_all">
+<span class="sig-name descname"><span class="pre">do_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feats</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yattr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sk_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lcen_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">multi_modal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savef</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_all_existing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_pipeline</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.do_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.do_all" title="Link to this definition">#</a></dt>
+<dd><p>Perform a list of transformations and fitting.</p>
+<p>Currently, add transformations separately because transformations aren’t part of add feature function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feats</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a>) – {feature: [feature_kwargs1, feature_kwargs2]}</p></li>
+<li><p><strong>yattr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – name of yattr to regress on</p></li>
+<li><p><strong>test_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – input for sklearn train_test_split test_size</p></li>
+<li><p><strong>sk_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>optional</em><em>, </em><em>default=</em><em>[</em><em>]</em>) – list of additional kwargs for sklearn models.</p></li>
+<li><p><strong>lcen_kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>, </em><em>optional</em><em>, </em><em>default=None</em>) – kwargs for LCEN model.</p></li>
+<li><p><strong>multi_modal</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>optional</em><em>, </em><em>default=None</em>) – [(feat1,feat2),]. Defaults to None.</p></li>
+<li><p><strong>savef</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em><em>, </em><em>default=None</em>) – filename to save model.</p></li>
+<li><p><strong>do_all_existing</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em><em>, </em><em>default=False</em>) – If True, will run on all existing features. If False, will run only features in feats.</p></li>
+<li><p><strong>use_pipeline</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em><em>, </em><em>default=False</em>) – If True, will use sklearn pipeline and GridSearchCV.</p></li>
+<li><p><strong>scale_X</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em><em>, </em><em>default=True</em>) – If True, will scale X data before fitting.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.do_sk">
+<span class="sig-name descname"><span class="pre">do_sk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Xattr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yattr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savef</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_pipeline</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">top_features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.do_sk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.do_sk" title="Link to this definition">#</a></dt>
+<dd><p>Fit sklearn model or pipeline and save results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Xattr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – X attribute to fit model on.</p></li>
+<li><p><strong>yattr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – y attribute to fit model on.</p></li>
+<li><p><strong>test_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em><em>, </em><em>default 0.25</em>) – input for sklearn train_test_split test_size.</p></li>
+<li><p><strong>savef</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> or </em><em>None</em><em>, </em><em>optional</em><em>, </em><em>default None</em>) – filename to save model.</p></li>
+<li><p><strong>use_pipeline</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em><em>, </em><em>default=True</em>) – whether to use sklearn pipeline and GridSearchCV.</p></li>
+<li><p><strong>top_features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em><em>, </em><em>default=20.</em>) – number of top features to save for future analysis.</p></li>
+<li><p><strong>scale_X</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em><em>, </em><em>default=True.</em>) – whether or not to scale X data before fitting using StandardScaler.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.load_file">
+<span class="sig-name descname"><span class="pre">load_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fn</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.load_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.load_file" title="Link to this definition">#</a></dt>
+<dd><p>Load data from a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fn</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – The file path.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>data</strong> – The loaded data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.maximal_correlation_feature_selection">
+<span class="sig-name descname"><span class="pre">maximal_correlation_feature_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yattr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_top_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_vals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.maximal_correlation_feature_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.maximal_correlation_feature_selection" title="Link to this definition">#</a></dt>
+<dd><p>Use maximal correlation to identify top k features most correlated with the target variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>yattr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Target variable to select features for.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.mutual_info_feature_selection">
+<span class="sig-name descname"><span class="pre">mutual_info_feature_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yattr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_top_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_vals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.mutual_info_feature_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.mutual_info_feature_selection" title="Link to this definition">#</a></dt>
+<dd><p>Use mutual information to identify top k features most correlated with the target variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>yattr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Target variable to select features for.</p></li>
+<li><p><strong>feature_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>optional</em><em>, </em><em>default=</em><em>[</em><em>]</em>) – List of features to select from. If empty, will select from all features.</p></li>
+<li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em><em>, </em><em>default=3</em>) – Number of top features to select.</p></li>
+<li><p><strong>return_values</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em><em>, </em><em>default=False</em>) – If True, will return the values of the top k features.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.pearson_feature_selection">
+<span class="sig-name descname"><span class="pre">pearson_feature_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yattr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_list</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_top_k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_vals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.pearson_feature_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.pearson_feature_selection" title="Link to this definition">#</a></dt>
+<dd><p>Use Pearson’s correlation coefficient to identify
+top k linearly correlated features.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>yattr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Target variable to select features for.</p></li>
+<li><p><strong>feature_list</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>optional</em><em>, </em><em>default=</em><em>[</em><em>]</em>) – List of features to select from. If empty, will select from all features.</p></li>
+<li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em><em>, </em><em>default=3</em>) – Number of top features to select. Currently, ordering features based on the max
+pearson’s correlation coefficient for a given feature array.</p></li>
+<li><p><strong>return_top_k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em><em>, </em><em>default=False</em>) – If True, will return the top k features.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.plot_df_heatmap">
+<span class="sig-name descname"><span class="pre">plot_df_heatmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">plotly_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.plot_df_heatmap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.plot_df_heatmap" title="Link to this definition">#</a></dt>
+<dd><p>Plot the heatmap of a dataframe. Used most often to visualize best fit scores of various models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<em>pd.DataFrame</em>) – _description_</p></li>
+<li><p><strong>fig</strong> (<em>_type_</em><em>, </em><em>optional</em><em>, </em><em>default None</em>) – plotly figure for plotting. If None, will create a new figure.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.scale_X">
+<span class="sig-name descname"><span class="pre">scale_X</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.scale_X"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.scale_X" title="Link to this definition">#</a></dt>
+<dd><p>Apply sklearn StandardScaler to the input data.</p>
+<p>Standardize features by removing the mean and scaling to unit variance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong> (<em>np.array</em>) – Input data to scale.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>scaled_X</strong> – Scaled X.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.sk">
+<span class="sig-name descname"><span class="pre">sk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_train</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estimator=RandomForestRegressor()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric=&lt;function</span> <span class="pre">mean_squared_error&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">savef=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.sk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.sk" title="Link to this definition">#</a></dt>
+<dd><p>Fit sklearn estimator without hyperparameter tuning.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_train</strong> (<em>np.array</em>) – train data.</p></li>
+<li><p><strong>X_test</strong> (<em>np.array</em>) – test data.</p></li>
+<li><p><strong>y_train</strong> (<em>np.array</em>) – train labels.</p></li>
+<li><p><strong>y_test</strong> (<em>np.array</em>) – test labels.</p></li>
+<li><p><strong>estimator</strong> (<em>_type_</em><em>, </em><em>optional</em><em>, </em><em>default RandomForestRegressor</em><em>(</em><em>)</em>) – initialized sklearn estimator for training.</p></li>
+<li><p><strong>metric</strong> (<em>function</em><em>, </em><em>optional</em>) – sklearn metric, or any metric function for score, by default mean_squared_error</p></li>
+<li><p><strong>savef</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> or </em><em>None</em><em>, </em><em>optional</em><em>, </em><em>default None</em>) – path to save final model; not implemented currently.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>est</strong> (<em>_type_</em>) – fitted estimator.</p></li>
+<li><p><strong>score</strong> (<em>float</em>) – metric score of fitted estimator.</p></li>
+<li><p><strong>ypred</strong> (<em>np.array</em>) – predicted y values</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.sk_pipeline">
+<span class="sig-name descname"><span class="pre">sk_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">X_train,</span> <span class="pre">X_test,</span> <span class="pre">y_train,</span> <span class="pre">y_test,</span> <span class="pre">estimator=RandomForestRegressor(),</span> <span class="pre">scoring='neg_mean_squared_error',</span> <span class="pre">cv=5,</span> <span class="pre">param_grid={'criterion':</span> <span class="pre">['squared_error'],</span> <span class="pre">'n_estimators':</span> <span class="pre">[50,</span> <span class="pre">100]},</span> <span class="pre">refit=True,</span> <span class="pre">metric=&lt;function</span> <span class="pre">mean_squared_error&gt;,</span> <span class="pre">savef=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.sk_pipeline"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.sk_pipeline" title="Link to this definition">#</a></dt>
+<dd><p>Build pipeline for sklearn model training and hyperparameter tuning using GridSearchCV.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>X_train</strong> (<em>np.array</em>) – train data.</p></li>
+<li><p><strong>X_test</strong> (<em>np.array</em>) – test data.</p></li>
+<li><p><strong>y_train</strong> (<em>np.array</em>) – train labels.</p></li>
+<li><p><strong>y_test</strong> (<em>np.array</em>) – test labels.</p></li>
+<li><p><strong>estimator</strong> (<em>_type_</em><em>, </em><em>optional</em><em>, </em><em>default RandomForestRegressor</em><em>(</em><em>)</em>) – initialized sklearn estimator for training</p></li>
+<li><p><strong>scoring</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em><em>, </em><em>default &quot;neg_mean_squared_error&quot;</em>) – scoring metric for GridSearchCV</p></li>
+<li><p><strong>cv</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em><em>, </em><em>default 5</em>) – folds for k-fold cross validation</p></li>
+<li><p><strong>param_grid</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>, </em><em>optional</em>) – param grid for GridSearchCV, by default {“n_estimators”: [50, 100], “criterion”: [“squared_error”]}</p></li>
+<li><p><strong>refit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em><em>, </em><em>default True</em>) – whether to refit an estimator using the best found parameters on the whole dataset. best_estimator is this final estimator.</p></li>
+<li><p><strong>metric</strong> (<em>function</em><em>, </em><em>optional</em>) – sklearn metric, or any metric function for score, by default mean_squared_error</p></li>
+<li><p><strong>savef</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> or </em><em>None</em><em>, </em><em>optional</em><em>, </em><em>default None</em>) – path to save final model; not implemented currently.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>P</strong> (<em>sklearn.pipeline.Pipeline</em>) – fitted pipelen</p></li>
+<li><p><strong>score</strong> (<em>float</em>) – metric score of best estimator</p></li>
+<li><p><strong>ypred</strong> (<em>np.array</em>) – predicted y values</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.split_X">
+<span class="sig-name descname"><span class="pre">split_X</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale_X</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.split_X"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.split_X" title="Link to this definition">#</a></dt>
+<dd><p>Split X attribute using sklearn train_test_split.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Name of the X attribute to split.</p></li>
+<li><p><strong>test_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a>) – If float, should be between 0.0 and 1.0 and represent the proportion of the dataset to include in the test split. If int, represents the absolute number of test samples.</p></li>
+<li><p><strong>scale_X</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em><em>, </em><em>default=False</em>) – Whether or not to scale the X data first.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.structural_labels">
+<span class="sig-name descname"><span class="pre">structural_labels</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.structural_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.structural_labels" title="Link to this definition">#</a></dt>
+<dd><p>Not implemented yet.</p>
+<p>Collect all structural labels into a single array.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.transform_feature">
+<span class="sig-name descname"><span class="pre">transform_feature</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">degree</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interaction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trans_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pos_y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_naming</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.transform_feature"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.transform_feature" title="Link to this definition">#</a></dt>
+<dd><p>Adds new attribute of polynomial etc. transformations of already generated features.</p>
+<p>Uses _feature_trans function from regression_models in SPA v1.4.1. This version is key to avoid errors.
+Attribute of array is {feat}_trans{additional_naming}.
+Attribute of names of transformations is {feat}_trans_names{additional_naming}.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feat</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Feature attribute to transform. Will transform test if exists. e.g. “spec1_pointwise_features”</p></li>
+<li><p><strong>degree</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – Degree of polynomial transformations. Must be in [1,2,3]. Default 2</p></li>
+<li><p><strong>interaction</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em>) – _description_, by default True</p></li>
+<li><p><strong>trans_type</strong> (<em>str in {'all'</em><em>, </em><em>'poly'</em><em>, </em><em>'simple_interaction'}</em><em>, </em><em>optional</em><em>, </em><em>default &quot;all&quot;</em>) – Whether to include all transforms (polynomial, log, sqrt, inverse) only polynomial transform, or just interaction terms.</p></li>
+<li><p><strong>all_pos_y</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>optional</em><em>, </em><em>default=True</em>) – Whether all entries in the data are positive or also contain some negative entries. This is done to avoid taking sqrt(k) for some k&lt;0.</p></li>
+<li><p><strong>additional_naming</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em><em>, </em><em>default &quot;&quot;</em>) – Additional naming for final feature.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">regression_models._feature_trans</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="spectrascope.SpectraScope.SpectraScope.tsfresh_feature_selection">
+<span class="sig-name descname"><span class="pre">tsfresh_feature_selection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">yattr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fdr_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.05</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/spectrascope/SpectraScope.html#SpectraScope.tsfresh_feature_selection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#spectrascope.SpectraScope.SpectraScope.tsfresh_feature_selection" title="Link to this definition">#</a></dt>
+<dd><p>Use tsfresh to downselect features before fitting a model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>feat</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Feature to select features from.</p></li>
+<li><p><strong>yattr</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Target variable to select features for.</p></li>
+<li><p><strong>fdr_level</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>optional</em><em>, </em><em>default=0.05</em>) – FDR level to use for feature selection.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>selected_features</strong> – List of selected features.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)">list</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="spectrascope.SSPlotting.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">spectrascope.SSPlotting</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="spectrascope.StructurePropertyFeatures.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">spectrascope.StructurePropertyFeatures</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope"><code class="docutils literal notranslate"><span class="pre">SpectraScope</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.today"><code class="docutils literal notranslate"><span class="pre">SpectraScope.today</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.X"><code class="docutils literal notranslate"><span class="pre">SpectraScope.X</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.y"><code class="docutils literal notranslate"><span class="pre">SpectraScope.y</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.best_fits"><code class="docutils literal notranslate"><span class="pre">SpectraScope.best_fits</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.specnames"><code class="docutils literal notranslate"><span class="pre">SpectraScope.specnames</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.random_seed"><code class="docutils literal notranslate"><span class="pre">SpectraScope.random_seed</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.save_path"><code class="docutils literal notranslate"><span class="pre">SpectraScope.save_path</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.__init__"><code class="docutils literal notranslate"><span class="pre">SpectraScope.__init__()</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id0"><code class="docutils literal notranslate"><span class="pre">SpectraScope.today</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1"><code class="docutils literal notranslate"><span class="pre">SpectraScope.X</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id2"><code class="docutils literal notranslate"><span class="pre">SpectraScope.y</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3"><code class="docutils literal notranslate"><span class="pre">SpectraScope.best_fits</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4"><code class="docutils literal notranslate"><span class="pre">SpectraScope.specnames</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5"><code class="docutils literal notranslate"><span class="pre">SpectraScope.random_seed</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><code class="docutils literal notranslate"><span class="pre">SpectraScope.save_path</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.add_spectral_feature"><code class="docutils literal notranslate"><span class="pre">SpectraScope.add_spectral_feature()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.add_structural_label"><code class="docutils literal notranslate"><span class="pre">SpectraScope.add_structural_label()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.add_x_axis"><code class="docutils literal notranslate"><span class="pre">SpectraScope.add_x_axis()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.add_x_label"><code class="docutils literal notranslate"><span class="pre">SpectraScope.add_x_label()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.add_y"><code class="docutils literal notranslate"><span class="pre">SpectraScope.add_y()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.add_y_label"><code class="docutils literal notranslate"><span class="pre">SpectraScope.add_y_label()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.auto_ss"><code class="docutils literal notranslate"><span class="pre">SpectraScope.auto_ss()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.check_dir_exists"><code class="docutils literal notranslate"><span class="pre">SpectraScope.check_dir_exists()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.combine_feature"><code class="docutils literal notranslate"><span class="pre">SpectraScope.combine_feature()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.do_LCEN"><code class="docutils literal notranslate"><span class="pre">SpectraScope.do_LCEN()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.do_all"><code class="docutils literal notranslate"><span class="pre">SpectraScope.do_all()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.do_sk"><code class="docutils literal notranslate"><span class="pre">SpectraScope.do_sk()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.load_file"><code class="docutils literal notranslate"><span class="pre">SpectraScope.load_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.maximal_correlation_feature_selection"><code class="docutils literal notranslate"><span class="pre">SpectraScope.maximal_correlation_feature_selection()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.mutual_info_feature_selection"><code class="docutils literal notranslate"><span class="pre">SpectraScope.mutual_info_feature_selection()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.pearson_feature_selection"><code class="docutils literal notranslate"><span class="pre">SpectraScope.pearson_feature_selection()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.plot_df_heatmap"><code class="docutils literal notranslate"><span class="pre">SpectraScope.plot_df_heatmap()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.scale_X"><code class="docutils literal notranslate"><span class="pre">SpectraScope.scale_X()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.sk"><code class="docutils literal notranslate"><span class="pre">SpectraScope.sk()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.sk_pipeline"><code class="docutils literal notranslate"><span class="pre">SpectraScope.sk_pipeline()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.split_X"><code class="docutils literal notranslate"><span class="pre">SpectraScope.split_X()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.structural_labels"><code class="docutils literal notranslate"><span class="pre">SpectraScope.structural_labels()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.transform_feature"><code class="docutils literal notranslate"><span class="pre">SpectraScope.transform_feature()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spectrascope.SpectraScope.SpectraScope.tsfresh_feature_selection"><code class="docutils literal notranslate"><span class="pre">SpectraScope.tsfresh_feature_selection()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Accelerated Materials Design and Descovery, Toyota Research Institute
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Accelerated Materials Design and Descovery, Toyota Research Institute.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

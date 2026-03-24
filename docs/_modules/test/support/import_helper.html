@@ -1,0 +1,684 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>test.support.import_helper &#8212; SpectraScope 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/test/support/import_helper';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SpectraScope 0.0.1 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/spectrascope.html">spectrascope</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.Features.html">spectrascope.Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.StructurePropertyFeatures.html">spectrascope.StructurePropertyFeatures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.utils.html">spectrascope.utils</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for test.support.import_helper</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">contextlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">_imp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib.util</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">unittest</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.os_helper</span><span class="w"> </span><span class="kn">import</span> <span class="n">unlink</span><span class="p">,</span> <span class="n">temp_dir</span>
+
+
+<span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_ignore_deprecated_imports</span><span class="p">(</span><span class="n">ignore</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Context manager to suppress package and module deprecation</span>
+<span class="sd">    warnings when importing them.</span>
+
+<span class="sd">    If ignore is False, this context manager has no effect.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">ignore</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="s2">&quot;.+ (module|package)&quot;</span><span class="p">,</span>
+                                    <span class="ne">DeprecationWarning</span><span class="p">)</span>
+            <span class="k">yield</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">yield</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">unload</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+
+<div class="viewcode-block" id="forget">
+<a class="viewcode-back" href="../../../api/test.support.import_helper.html#test.support.import_helper.forget">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">forget</span><span class="p">(</span><span class="n">modname</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;&#39;Forget&#39; a module was ever imported.</span>
+
+<span class="sd">    This removes the module from sys.modules and deletes any PEP 3147/488 or</span>
+<span class="sd">    legacy .pyc files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">unload</span><span class="p">(</span><span class="n">modname</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">dirname</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="n">modname</span> <span class="o">+</span> <span class="s1">&#39;.py&#39;</span><span class="p">)</span>
+        <span class="c1"># It doesn&#39;t matter if they exist or not, unlink all possible</span>
+        <span class="c1"># combinations of PEP 3147/488 and legacy pyc files.</span>
+        <span class="n">unlink</span><span class="p">(</span><span class="n">source</span> <span class="o">+</span> <span class="s1">&#39;c&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="n">unlink</span><span class="p">(</span><span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">cache_from_source</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">optimization</span><span class="o">=</span><span class="n">opt</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="make_legacy_pyc">
+<a class="viewcode-back" href="../../../api/test.support.import_helper.html#test.support.import_helper.make_legacy_pyc">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">make_legacy_pyc</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Move a PEP 3147/488 pyc file to its legacy pyc location.</span>
+
+<span class="sd">    :param source: The file system path to the source file.  The source file</span>
+<span class="sd">        does not need to exist, however the PEP 3147/488 pyc file must exist.</span>
+<span class="sd">    :return: The file system path to the legacy pyc file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pyc_file</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">cache_from_source</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">source</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.py&#39;</span><span class="p">)</span>
+    <span class="n">legacy_pyc</span> <span class="o">=</span> <span class="n">source</span> <span class="o">+</span> <span class="s1">&#39;c&#39;</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">pyc_file</span><span class="p">,</span> <span class="n">legacy_pyc</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">legacy_pyc</span></div>
+
+
+
+<div class="viewcode-block" id="import_module">
+<a class="viewcode-back" href="../../../api/test.support.import_helper.html#test.support.import_helper.import_module">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">import_module</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">deprecated</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">required_on</span><span class="o">=</span><span class="p">()):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Import and return the module to be tested, raising SkipTest if</span>
+<span class="sd">    it is not available.</span>
+
+<span class="sd">    If deprecated is True, any module or package deprecation messages</span>
+<span class="sd">    will be suppressed. If a module is required on a platform but optional for</span>
+<span class="sd">    others, set required_on to an iterable of platform prefixes which will be</span>
+<span class="sd">    compared against sys.platform.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">_ignore_deprecated_imports</span><span class="p">(</span><span class="n">deprecated</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">msg</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">required_on</span><span class="p">)):</span>
+                <span class="k">raise</span>
+            <span class="k">raise</span> <span class="n">unittest</span><span class="o">.</span><span class="n">SkipTest</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_save_and_remove_modules</span><span class="p">(</span><span class="n">names</span><span class="p">):</span>
+    <span class="n">orig_modules</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">prefixes</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">modname</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">modname</span> <span class="ow">in</span> <span class="n">names</span> <span class="ow">or</span> <span class="n">modname</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">prefixes</span><span class="p">):</span>
+            <span class="n">orig_modules</span><span class="p">[</span><span class="n">modname</span><span class="p">]</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">modname</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">orig_modules</span>
+
+
+<div class="viewcode-block" id="frozen_modules">
+<a class="viewcode-back" href="../../../api/test.support.import_helper.html#test.support.import_helper.frozen_modules">[docs]</a>
+<span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">frozen_modules</span><span class="p">(</span><span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Force frozen modules to be used (or not).</span>
+
+<span class="sd">    This only applies to modules that haven&#39;t been imported yet.</span>
+<span class="sd">    Also, some essential modules will always be imported frozen.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_imp</span><span class="o">.</span><span class="n">_override_frozen_modules_for_tests</span><span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">enabled</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">_imp</span><span class="o">.</span><span class="n">_override_frozen_modules_for_tests</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="multi_interp_extensions_check">
+<a class="viewcode-back" href="../../../api/test.support.import_helper.html#test.support.import_helper.multi_interp_extensions_check">[docs]</a>
+<span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">multi_interp_extensions_check</span><span class="p">(</span><span class="n">enabled</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Force legacy modules to be allowed in subinterpreters (or not).</span>
+
+<span class="sd">    (&quot;legacy&quot; == single-phase init)</span>
+
+<span class="sd">    This only applies to modules that haven&#39;t been imported yet.</span>
+<span class="sd">    It overrides the PyInterpreterConfig.check_multi_interp_extensions</span>
+<span class="sd">    setting (see support.run_in_subinterp_with_config() and</span>
+<span class="sd">    _xxsubinterpreters.create()).</span>
+
+<span class="sd">    Also see importlib.utils.allowing_all_extensions().</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">old</span> <span class="o">=</span> <span class="n">_imp</span><span class="o">.</span><span class="n">_override_multi_interp_extensions_check</span><span class="p">(</span><span class="mi">1</span> <span class="k">if</span> <span class="n">enabled</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">_imp</span><span class="o">.</span><span class="n">_override_multi_interp_extensions_check</span><span class="p">(</span><span class="n">old</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="import_fresh_module">
+<a class="viewcode-back" href="../../../api/test.support.import_helper.html#test.support.import_helper.import_fresh_module">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">import_fresh_module</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">fresh</span><span class="o">=</span><span class="p">(),</span> <span class="n">blocked</span><span class="o">=</span><span class="p">(),</span> <span class="o">*</span><span class="p">,</span>
+                        <span class="n">deprecated</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="n">usefrozen</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                        <span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Import and return a module, deliberately bypassing sys.modules.</span>
+
+<span class="sd">    This function imports and returns a fresh copy of the named Python module</span>
+<span class="sd">    by removing the named module from sys.modules before doing the import.</span>
+<span class="sd">    Note that unlike reload, the original module is not affected by</span>
+<span class="sd">    this operation.</span>
+
+<span class="sd">    *fresh* is an iterable of additional module names that are also removed</span>
+<span class="sd">    from the sys.modules cache before doing the import. If one of these</span>
+<span class="sd">    modules can&#39;t be imported, None is returned.</span>
+
+<span class="sd">    *blocked* is an iterable of module names that are replaced with None</span>
+<span class="sd">    in the module cache during the import to ensure that attempts to import</span>
+<span class="sd">    them raise ImportError.</span>
+
+<span class="sd">    The named module and any modules named in the *fresh* and *blocked*</span>
+<span class="sd">    parameters are saved before starting the import and then reinserted into</span>
+<span class="sd">    sys.modules when the fresh import is complete.</span>
+
+<span class="sd">    Module and package deprecation messages are suppressed during this import</span>
+<span class="sd">    if *deprecated* is True.</span>
+
+<span class="sd">    This function will raise ImportError if the named module cannot be</span>
+<span class="sd">    imported.</span>
+
+<span class="sd">    If &quot;usefrozen&quot; is False (the default) then the frozen importer is</span>
+<span class="sd">    disabled (except for essential modules like importlib._bootstrap).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># NOTE: test_heapq, test_json and test_warnings include extra sanity checks</span>
+    <span class="c1"># to make sure that this utility function is working as expected</span>
+    <span class="k">with</span> <span class="n">_ignore_deprecated_imports</span><span class="p">(</span><span class="n">deprecated</span><span class="p">):</span>
+        <span class="c1"># Keep track of modules saved for later restoration as well</span>
+        <span class="c1"># as those which just need a blocking entry removed</span>
+        <span class="n">fresh</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">fresh</span><span class="p">)</span>
+        <span class="n">blocked</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">blocked</span><span class="p">)</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">fresh</span><span class="p">,</span> <span class="o">*</span><span class="n">blocked</span><span class="p">}</span>
+        <span class="n">orig_modules</span> <span class="o">=</span> <span class="n">_save_and_remove_modules</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">modname</span> <span class="ow">in</span> <span class="n">blocked</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">modname</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">frozen_modules</span><span class="p">(</span><span class="n">usefrozen</span><span class="p">):</span>
+                <span class="c1"># Return None when one of the &quot;fresh&quot; modules can not be imported.</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">modname</span> <span class="ow">in</span> <span class="n">fresh</span><span class="p">:</span>
+                        <span class="nb">__import__</span><span class="p">(</span><span class="n">modname</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="kc">None</span>
+                <span class="k">return</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">_save_and_remove_modules</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">orig_modules</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="CleanImport">
+<a class="viewcode-back" href="../../../api/test.support.import_helper.html#test.support.import_helper.CleanImport">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">CleanImport</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Context manager to force import to return a new module reference.</span>
+
+<span class="sd">    This is useful for testing module-level behaviours, such as</span>
+<span class="sd">    the emission of a DeprecationWarning on import.</span>
+
+<span class="sd">    Use like this:</span>
+
+<span class="sd">        with CleanImport(&quot;foo&quot;):</span>
+<span class="sd">            importlib.import_module(&quot;foo&quot;) # new reference</span>
+
+<span class="sd">    If &quot;usefrozen&quot; is False (the default) then the frozen importer is</span>
+<span class="sd">    disabled (except for essential modules like importlib._bootstrap).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="CleanImport.__init__">
+<a class="viewcode-back" href="../../../api/test.support.import_helper.html#test.support.import_helper.CleanImport.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">module_names</span><span class="p">,</span> <span class="n">usefrozen</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">original_modules</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="n">module_names</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">module_name</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">:</span>
+                <span class="n">module</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span>
+                <span class="c1"># It is possible that module_name is just an alias for</span>
+                <span class="c1"># another module (e.g. stub for modules renamed in 3.x).</span>
+                <span class="c1"># In that case, we also need delete the real module to clear</span>
+                <span class="c1"># the import cache.</span>
+                <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">!=</span> <span class="n">module_name</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module</span><span class="o">.</span><span class="vm">__name__</span><span class="p">]</span>
+                <span class="k">del</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">module_name</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_frozen_modules</span> <span class="o">=</span> <span class="n">frozen_modules</span><span class="p">(</span><span class="n">usefrozen</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_frozen_modules</span><span class="o">.</span><span class="fm">__enter__</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">ignore_exc</span><span class="p">):</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">original_modules</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_frozen_modules</span><span class="o">.</span><span class="fm">__exit__</span><span class="p">(</span><span class="o">*</span><span class="n">ignore_exc</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="DirsOnSysPath">
+<a class="viewcode-back" href="../../../api/test.support.import_helper.html#test.support.import_helper.DirsOnSysPath">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DirsOnSysPath</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Context manager to temporarily add directories to sys.path.</span>
+
+<span class="sd">    This makes a copy of sys.path, appends any directories given</span>
+<span class="sd">    as positional arguments, then reverts sys.path to the copied</span>
+<span class="sd">    settings when the context ends.</span>
+
+<span class="sd">    Note that *all* sys.path modifications in the body of the</span>
+<span class="sd">    context manager, including replacement of the object,</span>
+<span class="sd">    will be reverted at the end of the block.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DirsOnSysPath.__init__">
+<a class="viewcode-back" href="../../../api/test.support.import_helper.html#test.support.import_helper.DirsOnSysPath.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">paths</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">original_value</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">[:]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">original_object</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">ignore_exc</span><span class="p">):</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">original_object</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">[:]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">original_value</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">modules_setup</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">modules_cleanup</span><span class="p">(</span><span class="n">oldmodules</span><span class="p">):</span>
+    <span class="c1"># Encoders/decoders are registered permanently within the internal</span>
+    <span class="c1"># codec cache. If we destroy the corresponding modules their</span>
+    <span class="c1"># globals will be set to None which will trip up the cached functions.</span>
+    <span class="n">encodings</span> <span class="o">=</span> <span class="p">[(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                 <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;encodings.&#39;</span><span class="p">)]</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">encodings</span><span class="p">)</span>
+    <span class="c1"># XXX: This kind of problem can affect more than just encodings.</span>
+    <span class="c1"># In particular extension modules (such as _ssl) don&#39;t cope</span>
+    <span class="c1"># with reloading properly. Really, test modules should be cleaning</span>
+    <span class="c1"># out the test specific modules they know they added (ala test_runpy)</span>
+    <span class="c1"># rather than relying on this function (as test_importhooks and test_pkg</span>
+    <span class="c1"># do currently). Implicitly imported *real* modules should be left alone</span>
+    <span class="c1"># (see issue 10556).</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">oldmodules</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="isolated_modules">
+<a class="viewcode-back" href="../../../api/test.support.import_helper.html#test.support.import_helper.isolated_modules">[docs]</a>
+<span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">isolated_modules</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Save modules on entry and cleanup on exit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="p">(</span><span class="n">saved</span><span class="p">,)</span> <span class="o">=</span> <span class="n">modules_setup</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="n">modules_cleanup</span><span class="p">(</span><span class="n">saved</span><span class="p">)</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">mock_register_at_fork</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="c1"># bpo-30599: Mock os.register_at_fork() when importing the random module,</span>
+    <span class="c1"># since this function doesn&#39;t allow to unregister callbacks and would leak</span>
+    <span class="c1"># memory.</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">unittest</span><span class="w"> </span><span class="kn">import</span> <span class="n">mock</span>
+    <span class="k">return</span> <span class="n">mock</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="s1">&#39;os.register_at_fork&#39;</span><span class="p">,</span> <span class="n">create</span><span class="o">=</span><span class="kc">True</span><span class="p">)(</span><span class="n">func</span><span class="p">)</span>
+
+
+<span class="nd">@contextlib</span><span class="o">.</span><span class="n">contextmanager</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ready_to_import</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">test.support</span><span class="w"> </span><span class="kn">import</span> <span class="n">script_helper</span>
+
+    <span class="c1"># 1. Sets up a temporary directory and removes it afterwards</span>
+    <span class="c1"># 2. Creates the module file</span>
+    <span class="c1"># 3. Temporarily clears the module from sys.modules (if any)</span>
+    <span class="c1"># 4. Reverts or removes the module when cleaning up</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span> <span class="ow">or</span> <span class="s2">&quot;spam&quot;</span>
+    <span class="k">with</span> <span class="n">temp_dir</span><span class="p">()</span> <span class="k">as</span> <span class="n">tempdir</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">script_helper</span><span class="o">.</span><span class="n">make_script</span><span class="p">(</span><span class="n">tempdir</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
+        <span class="n">old_module</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tempdir</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">name</span><span class="p">,</span> <span class="n">path</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">tempdir</span><span class="p">)</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">old_module</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">old_module</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Accelerated Materials Design and Descovery, Toyota Research Institute
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Accelerated Materials Design and Descovery, Toyota Research Institute.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

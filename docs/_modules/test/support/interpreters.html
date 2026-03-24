@@ -1,0 +1,589 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>test.support.interpreters &#8212; SpectraScope 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/test/support/interpreters';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SpectraScope 0.0.1 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/spectrascope.html">spectrascope</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.Features.html">spectrascope.Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.StructurePropertyFeatures.html">spectrascope.StructurePropertyFeatures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.utils.html">spectrascope.utils</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for test.support.interpreters</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Subinterpreters High Level Module.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">_xxsubinterpreters</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">_interpreters</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">_xxinterpchannels</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">_channels</span>
+
+<span class="c1"># aliases:</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">_xxsubinterpreters</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_shareable</span><span class="p">,</span> <span class="n">RunFailedError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">_xxinterpchannels</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ChannelError</span><span class="p">,</span> <span class="n">ChannelNotFoundError</span><span class="p">,</span> <span class="n">ChannelEmptyError</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Interpreter&#39;</span><span class="p">,</span> <span class="s1">&#39;get_current&#39;</span><span class="p">,</span> <span class="s1">&#39;get_main&#39;</span><span class="p">,</span> <span class="s1">&#39;create&#39;</span><span class="p">,</span> <span class="s1">&#39;list_all&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;SendChannel&#39;</span><span class="p">,</span> <span class="s1">&#39;RecvChannel&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;create_channel&#39;</span><span class="p">,</span> <span class="s1">&#39;list_all_channels&#39;</span><span class="p">,</span> <span class="s1">&#39;is_shareable&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ChannelError&#39;</span><span class="p">,</span> <span class="s1">&#39;ChannelNotFoundError&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ChannelEmptyError&#39;</span><span class="p">,</span>
+    <span class="p">]</span>
+
+
+<div class="viewcode-block" id="create">
+<a class="viewcode-back" href="../../../api/test.support.interpreters.html#test.support.interpreters.create">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">isolated</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a new (idle) Python interpreter.&quot;&quot;&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">_interpreters</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">isolated</span><span class="o">=</span><span class="n">isolated</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Interpreter</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">isolated</span><span class="o">=</span><span class="n">isolated</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="list_all">
+<a class="viewcode-back" href="../../../api/test.support.interpreters.html#test.support.interpreters.list_all">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_all</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return all existing interpreters.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">Interpreter</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span> <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">_interpreters</span><span class="o">.</span><span class="n">list_all</span><span class="p">()]</span></div>
+
+
+
+<div class="viewcode-block" id="get_current">
+<a class="viewcode-back" href="../../../api/test.support.interpreters.html#test.support.interpreters.get_current">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_current</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the currently running interpreter.&quot;&quot;&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">_interpreters</span><span class="o">.</span><span class="n">get_current</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">Interpreter</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_main">
+<a class="viewcode-back" href="../../../api/test.support.interpreters.html#test.support.interpreters.get_main">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the main interpreter.&quot;&quot;&quot;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">_interpreters</span><span class="o">.</span><span class="n">get_main</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">Interpreter</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="Interpreter">
+<a class="viewcode-back" href="../../../api/test.support.interpreters.html#test.support.interpreters.Interpreter">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Interpreter</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A single Python interpreter.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Interpreter.__init__">
+<a class="viewcode-back" href="../../../api/test.support.interpreters.html#test.support.interpreters.Interpreter.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">isolated</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">_interpreters</span><span class="o">.</span><span class="n">InterpreterID</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;id must be an int, got </span><span class="si">{</span><span class="nb">id</span><span class="si">!r}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_isolated</span> <span class="o">=</span> <span class="n">isolated</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">),</span> <span class="n">isolated</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_isolated</span><span class="p">)</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">=</span><span class="si">{</span><span class="n">v</span><span class="si">!r}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">(</span><span class="si">{</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Interpreter</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">other</span><span class="o">.</span><span class="n">_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">isolated</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isolated</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># XXX The low-level function has not been added yet.</span>
+            <span class="c1"># See bpo-....</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_isolated</span> <span class="o">=</span> <span class="n">_interpreters</span><span class="o">.</span><span class="n">is_isolated</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_isolated</span>
+
+<div class="viewcode-block" id="Interpreter.is_running">
+<a class="viewcode-back" href="../../../api/test.support.interpreters.html#test.support.interpreters.Interpreter.is_running">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_running</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return whether or not the identified interpreter is running.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_interpreters</span><span class="o">.</span><span class="n">is_running</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Interpreter.close">
+<a class="viewcode-back" href="../../../api/test.support.interpreters.html#test.support.interpreters.Interpreter.close">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Finalize and destroy the interpreter.</span>
+
+<span class="sd">        Attempting to destroy the current interpreter results</span>
+<span class="sd">        in a RuntimeError.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">_interpreters</span><span class="o">.</span><span class="n">destroy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Interpreter.run">
+<a class="viewcode-back" href="../../../api/test.support.interpreters.html#test.support.interpreters.Interpreter.run">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src_str</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run the given source code in the interpreter.</span>
+
+<span class="sd">        This blocks the current Python thread until done.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_interpreters</span><span class="o">.</span><span class="n">run_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">,</span> <span class="n">src_str</span><span class="p">,</span> <span class="n">channels</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="create_channel">
+<a class="viewcode-back" href="../../../api/test.support.interpreters.html#test.support.interpreters.create_channel">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_channel</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return (recv, send) for a new cross-interpreter channel.</span>
+
+<span class="sd">    The channel may be used to pass data safely between interpreters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cid</span> <span class="o">=</span> <span class="n">_channels</span><span class="o">.</span><span class="n">create</span><span class="p">()</span>
+    <span class="n">recv</span><span class="p">,</span> <span class="n">send</span> <span class="o">=</span> <span class="n">RecvChannel</span><span class="p">(</span><span class="n">cid</span><span class="p">),</span> <span class="n">SendChannel</span><span class="p">(</span><span class="n">cid</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">recv</span><span class="p">,</span> <span class="n">send</span></div>
+
+
+
+<div class="viewcode-block" id="list_all_channels">
+<a class="viewcode-back" href="../../../api/test.support.interpreters.html#test.support.interpreters.list_all_channels">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_all_channels</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a list of (recv, send) for all open channels.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[(</span><span class="n">RecvChannel</span><span class="p">(</span><span class="n">cid</span><span class="p">),</span> <span class="n">SendChannel</span><span class="p">(</span><span class="n">cid</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">cid</span> <span class="ow">in</span> <span class="n">_channels</span><span class="o">.</span><span class="n">list_all</span><span class="p">()]</span></div>
+
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_ChannelEnd</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The base class for RecvChannel and SendChannel.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">_channels</span><span class="o">.</span><span class="n">ChannelID</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;id must be an int, got </span><span class="si">{</span><span class="nb">id</span><span class="si">!r}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="nb">id</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">(id=</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">)</span><span class="si">}</span><span class="s1">)&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__hash__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">hash</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">RecvChannel</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">RecvChannel</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">SendChannel</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+        <span class="k">return</span> <span class="n">other</span><span class="o">.</span><span class="n">_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span>
+
+
+<span class="n">_NOT_SET</span> <span class="o">=</span> <span class="nb">object</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="RecvChannel">
+<a class="viewcode-back" href="../../../api/test.support.interpreters.html#test.support.interpreters.RecvChannel">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RecvChannel</span><span class="p">(</span><span class="n">_ChannelEnd</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The receiving end of a cross-interpreter channel.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="RecvChannel.recv">
+<a class="viewcode-back" href="../../../api/test.support.interpreters.html#test.support.interpreters.RecvChannel.recv">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">recv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">_sentinel</span><span class="o">=</span><span class="nb">object</span><span class="p">(),</span> <span class="n">_delay</span><span class="o">=</span><span class="mi">10</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">):</span>  <span class="c1"># 10 milliseconds</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the next object from the channel.</span>
+
+<span class="sd">        This blocks until an object has been sent, if none have been</span>
+<span class="sd">        sent already.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">_channels</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">,</span> <span class="n">_sentinel</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">obj</span> <span class="ow">is</span> <span class="n">_sentinel</span><span class="p">:</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">_delay</span><span class="p">)</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">_channels</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">,</span> <span class="n">_sentinel</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">obj</span></div>
+
+
+<div class="viewcode-block" id="RecvChannel.recv_nowait">
+<a class="viewcode-back" href="../../../api/test.support.interpreters.html#test.support.interpreters.RecvChannel.recv_nowait">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">recv_nowait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">_NOT_SET</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return the next object from the channel.</span>
+
+<span class="sd">        If none have been sent then return the default if one</span>
+<span class="sd">        is provided or fail with ChannelEmptyError.  Otherwise this</span>
+<span class="sd">        is the same as recv().</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">default</span> <span class="ow">is</span> <span class="n">_NOT_SET</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_channels</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">_channels</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="SendChannel">
+<a class="viewcode-back" href="../../../api/test.support.interpreters.html#test.support.interpreters.SendChannel">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SendChannel</span><span class="p">(</span><span class="n">_ChannelEnd</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The sending end of a cross-interpreter channel.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SendChannel.send">
+<a class="viewcode-back" href="../../../api/test.support.interpreters.html#test.support.interpreters.SendChannel.send">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send the object (i.e. its data) to the channel&#39;s receiving end.</span>
+
+<span class="sd">        This blocks until the object is received.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_channels</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+        <span class="c1"># XXX We are missing a low-level channel_send_wait().</span>
+        <span class="c1"># See bpo-32604 and gh-19829.</span>
+        <span class="c1"># Until that shows up we fake it:</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SendChannel.send_nowait">
+<a class="viewcode-back" href="../../../api/test.support.interpreters.html#test.support.interpreters.SendChannel.send_nowait">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">send_nowait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Send the object to the channel&#39;s receiving end.</span>
+
+<span class="sd">        If the object is immediately received then return True</span>
+<span class="sd">        (else False).  Otherwise this is the same as send().</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># XXX Note that at the moment channel_send() only ever returns</span>
+        <span class="c1"># None.  This should be fixed when channel_send_wait() is added.</span>
+        <span class="c1"># See bpo-32604 and gh-19829.</span>
+        <span class="k">return</span> <span class="n">_channels</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_id</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Accelerated Materials Design and Descovery, Toyota Research Institute
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Accelerated Materials Design and Descovery, Toyota Research Institute.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

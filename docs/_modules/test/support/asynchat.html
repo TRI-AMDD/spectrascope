@@ -1,0 +1,672 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>test.support.asynchat &#8212; SpectraScope 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/test/support/asynchat';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SpectraScope 0.0.1 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/spectrascope.html">spectrascope</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.Features.html">spectrascope.Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.StructurePropertyFeatures.html">spectrascope.StructurePropertyFeatures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.utils.html">spectrascope.utils</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for test.support.asynchat</h1><div class="highlight"><pre>
+<span></span><span class="c1"># TODO: This module was deprecated and removed from CPython 3.12</span>
+<span class="c1"># Now it is a test-only helper. Any attempts to rewrite exising tests that</span>
+<span class="c1"># are using this module and remove it completely are appreciated!</span>
+<span class="c1"># See: https://github.com/python/cpython/issues/72719</span>
+
+<span class="c1"># -*- Mode: Python; tab-width: 4 -*-</span>
+<span class="c1">#       Id: asynchat.py,v 2.26 2000/09/07 22:29:26 rushing Exp</span>
+<span class="c1">#       Author: Sam Rushing &lt;rushing@nightmare.com&gt;</span>
+
+<span class="c1"># ======================================================================</span>
+<span class="c1"># Copyright 1996 by Sam Rushing</span>
+<span class="c1">#</span>
+<span class="c1">#                         All Rights Reserved</span>
+<span class="c1">#</span>
+<span class="c1"># Permission to use, copy, modify, and distribute this software and</span>
+<span class="c1"># its documentation for any purpose and without fee is hereby</span>
+<span class="c1"># granted, provided that the above copyright notice appear in all</span>
+<span class="c1"># copies and that both that copyright notice and this permission</span>
+<span class="c1"># notice appear in supporting documentation, and that the name of Sam</span>
+<span class="c1"># Rushing not be used in advertising or publicity pertaining to</span>
+<span class="c1"># distribution of the software without specific, written prior</span>
+<span class="c1"># permission.</span>
+<span class="c1">#</span>
+<span class="c1"># SAM RUSHING DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,</span>
+<span class="c1"># INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN</span>
+<span class="c1"># NO EVENT SHALL SAM RUSHING BE LIABLE FOR ANY SPECIAL, INDIRECT OR</span>
+<span class="c1"># CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS</span>
+<span class="c1"># OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,</span>
+<span class="c1"># NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN</span>
+<span class="c1"># CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.</span>
+<span class="c1"># ======================================================================</span>
+
+<span class="sa">r</span><span class="sd">&quot;&quot;&quot;A class supporting chat-style (command/response) protocols.</span>
+
+<span class="sd">This class adds support for &#39;chat&#39; style protocols - where one side</span>
+<span class="sd">sends a &#39;command&#39;, and the other sends a response (examples would be</span>
+<span class="sd">the common internet protocols - smtp, nntp, ftp, etc..).</span>
+
+<span class="sd">The handle_read() method looks at the input stream for the current</span>
+<span class="sd">&#39;terminator&#39; (usually &#39;\r\n&#39; for single-line responses, &#39;\r\n.\r\n&#39;</span>
+<span class="sd">for multi-line output), calling self.found_terminator() on its</span>
+<span class="sd">receipt.</span>
+
+<span class="sd">for example:</span>
+<span class="sd">Say you build an async nntp client using this class.  At the start</span>
+<span class="sd">of the connection, you&#39;ll have self.terminator set to &#39;\r\n&#39;, in</span>
+<span class="sd">order to process the single-line greeting.  Just before issuing a</span>
+<span class="sd">&#39;LIST&#39; command you&#39;ll set it to &#39;\r\n.\r\n&#39;.  The output of the LIST</span>
+<span class="sd">command will be accumulated (using your own &#39;collect_incoming_data&#39;</span>
+<span class="sd">method) up to the terminator, and then control will be returned to</span>
+<span class="sd">you - by calling your self.found_terminator() method.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">deque</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">test.support</span><span class="w"> </span><span class="kn">import</span> <span class="n">asyncore</span>
+
+
+<div class="viewcode-block" id="async_chat">
+<a class="viewcode-back" href="../../../api/test.support.asynchat.html#test.support.asynchat.async_chat">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">async_chat</span><span class="p">(</span><span class="n">asyncore</span><span class="o">.</span><span class="n">dispatcher</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This is an abstract class.  You must derive from this class, and add</span>
+<span class="sd">    the two methods collect_incoming_data() and found_terminator()&quot;&quot;&quot;</span>
+
+    <span class="c1"># these are overridable defaults</span>
+
+    <span class="n">ac_in_buffer_size</span> <span class="o">=</span> <span class="mi">65536</span>
+    <span class="n">ac_out_buffer_size</span> <span class="o">=</span> <span class="mi">65536</span>
+
+    <span class="c1"># we don&#39;t want to enable the use of encoding by default, because that is a</span>
+    <span class="c1"># sign of an application bug that we don&#39;t want to pass silently</span>
+
+    <span class="n">use_encoding</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;latin-1&#39;</span>
+
+<div class="viewcode-block" id="async_chat.__init__">
+<a class="viewcode-back" href="../../../api/test.support.asynchat.html#test.support.asynchat.async_chat.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sock</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">map</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># for string terminator matching</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
+
+        <span class="c1"># we use a list here rather than io.BytesIO for a few reasons...</span>
+        <span class="c1"># del lst[:] is faster than bio.truncate(0)</span>
+        <span class="c1"># lst = [] is faster than bio.truncate(0)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">incoming</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># we toss the use of the &quot;simple producer&quot; and replace it with</span>
+        <span class="c1"># a pure deque, which the original fifo was a wrapping of</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">producer_fifo</span> <span class="o">=</span> <span class="n">deque</span><span class="p">()</span>
+        <span class="n">asyncore</span><span class="o">.</span><span class="n">dispatcher</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sock</span><span class="p">,</span> <span class="nb">map</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">collect_incoming_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;must be implemented in subclass&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_collect_incoming_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">incoming</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">incoming</span><span class="p">)</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">incoming</span><span class="p">[:]</span>
+        <span class="k">return</span> <span class="n">d</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">found_terminator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;must be implemented in subclass&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="async_chat.set_terminator">
+<a class="viewcode-back" href="../../../api/test.support.asynchat.html#test.support.asynchat.async_chat.set_terminator">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_terminator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set the input delimiter.</span>
+
+<span class="sd">        Can be a fixed string of any length, an integer, or None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_encoding</span><span class="p">:</span>
+            <span class="n">term</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="n">term</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;the number of received bytes must be positive&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">terminator</span> <span class="o">=</span> <span class="n">term</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_terminator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminator</span>
+
+    <span class="c1"># grab some more data from the socket,</span>
+    <span class="c1"># throw it to the collector method,</span>
+    <span class="c1"># check for the terminator,</span>
+    <span class="c1"># if found, transition to the next state.</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer_size</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">BlockingIOError</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handle_error</span><span class="p">()</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_encoding</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span> <span class="o">+</span> <span class="n">data</span>
+
+        <span class="c1"># Continue to search for self.terminator in self.ac_in_buffer,</span>
+        <span class="c1"># while calling self.collect_incoming_data.  The while loop</span>
+        <span class="c1"># is necessary because we might read several data+terminator</span>
+        <span class="c1"># combos with a single recv(4096).</span>
+
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span><span class="p">:</span>
+            <span class="n">lb</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span><span class="p">)</span>
+            <span class="n">terminator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_terminator</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">terminator</span><span class="p">:</span>
+                <span class="c1"># no terminator, collect it all</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">collect_incoming_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">terminator</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="c1"># numeric terminator</span>
+                <span class="n">n</span> <span class="o">=</span> <span class="n">terminator</span>
+                <span class="k">if</span> <span class="n">lb</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">collect_incoming_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">terminator</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">terminator</span> <span class="o">-</span> <span class="n">lb</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">collect_incoming_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span><span class="p">[:</span><span class="n">n</span><span class="p">])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span><span class="p">[</span><span class="n">n</span><span class="p">:]</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">terminator</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">found_terminator</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># 3 cases:</span>
+                <span class="c1"># 1) end of buffer matches terminator exactly:</span>
+                <span class="c1">#    collect data, transition</span>
+                <span class="c1"># 2) end of buffer matches some prefix:</span>
+                <span class="c1">#    collect data to the prefix</span>
+                <span class="c1"># 3) end of buffer does not match any prefix:</span>
+                <span class="c1">#    collect data</span>
+                <span class="n">terminator_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">terminator</span><span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">terminator</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">index</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># we found the terminator</span>
+                    <span class="k">if</span> <span class="n">index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="c1"># don&#39;t bother reporting the empty string</span>
+                        <span class="c1"># (source of subtle bugs)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">collect_incoming_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span><span class="p">[:</span><span class="n">index</span><span class="p">])</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span><span class="p">[</span><span class="n">index</span><span class="o">+</span><span class="n">terminator_len</span><span class="p">:]</span>
+                    <span class="c1"># This does the Right Thing if the terminator</span>
+                    <span class="c1"># is changed here.</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">found_terminator</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># check for a prefix of the terminator</span>
+                    <span class="n">index</span> <span class="o">=</span> <span class="n">find_prefix_at_end</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span><span class="p">,</span> <span class="n">terminator</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">index</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">index</span> <span class="o">!=</span> <span class="n">lb</span><span class="p">:</span>
+                            <span class="c1"># we found a prefix, collect up to the prefix</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">collect_incoming_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span><span class="p">[:</span><span class="o">-</span><span class="n">index</span><span class="p">])</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span><span class="p">[</span><span class="o">-</span><span class="n">index</span><span class="p">:]</span>
+                        <span class="k">break</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># no prefix, collect it all</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">collect_incoming_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span><span class="p">)</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_write</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initiate_send</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">push</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="nb">bytes</span><span class="p">,</span> <span class="nb">bytearray</span><span class="p">,</span> <span class="nb">memoryview</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;data argument must be byte-ish (</span><span class="si">%r</span><span class="s1">)&#39;</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="n">sabs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ac_out_buffer_size</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">sabs</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">sabs</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">producer_fifo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="n">sabs</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">producer_fifo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initiate_send</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">push_with_producer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">producer</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">producer_fifo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">producer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initiate_send</span><span class="p">()</span>
+
+<div class="viewcode-block" id="async_chat.readable">
+<a class="viewcode-back" href="../../../api/test.support.asynchat.html#test.support.asynchat.async_chat.readable">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">readable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s2">&quot;predicate for inclusion in the readable for select()&quot;</span>
+        <span class="c1"># cannot use the old predicate, it violates the claim of the</span>
+        <span class="c1"># set_terminator method.</span>
+
+        <span class="c1"># return (len(self.ac_in_buffer) &lt;= self.ac_in_buffer_size)</span>
+        <span class="k">return</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="async_chat.writable">
+<a class="viewcode-back" href="../../../api/test.support.asynchat.html#test.support.asynchat.async_chat.writable">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">writable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s2">&quot;predicate for inclusion in the writable for select()&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">producer_fifo</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="async_chat.close_when_done">
+<a class="viewcode-back" href="../../../api/test.support.asynchat.html#test.support.asynchat.async_chat.close_when_done">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">close_when_done</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s2">&quot;automatically close this channel once the outgoing queue is empty&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">producer_fifo</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">initiate_send</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">producer_fifo</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+            <span class="n">first</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">producer_fifo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># handle empty string/buffer or None entry</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">first</span><span class="p">:</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">producer_fifo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">first</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">handle_close</span><span class="p">()</span>
+                    <span class="k">return</span>
+
+            <span class="c1"># handle classic producer behavior</span>
+            <span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ac_out_buffer_size</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">first</span><span class="p">[:</span><span class="n">obs</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">first</span><span class="o">.</span><span class="n">more</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">data</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">producer_fifo</span><span class="o">.</span><span class="n">appendleft</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">producer_fifo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_encoding</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
+
+            <span class="c1"># send the data</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">num_sent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">handle_error</span><span class="p">()</span>
+                <span class="k">return</span>
+
+            <span class="k">if</span> <span class="n">num_sent</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">num_sent</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="ow">or</span> <span class="n">obs</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">first</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">producer_fifo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">first</span><span class="p">[</span><span class="n">num_sent</span><span class="p">:]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">producer_fifo</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># we tried to send some actual data</span>
+            <span class="k">return</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">discard_buffers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Emergencies only!</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ac_in_buffer</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">incoming</span><span class="p">[:]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">producer_fifo</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
+
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">simple_producer</span><span class="p">:</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">buffer_size</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">buffer_size</span> <span class="o">=</span> <span class="n">buffer_size</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">more</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">buffer_size</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer_size</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">buffer_size</span><span class="p">:]</span>
+            <span class="k">return</span> <span class="n">result</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span>
+            <span class="k">return</span> <span class="n">result</span>
+
+
+<span class="c1"># Given &#39;haystack&#39;, see if any prefix of &#39;needle&#39; is at its end.  This</span>
+<span class="c1"># assumes an exact match has already been checked.  Return the number of</span>
+<span class="c1"># characters matched.</span>
+<span class="c1"># for example:</span>
+<span class="c1"># f_p_a_e(&quot;qwerty\r&quot;, &quot;\r\n&quot;) =&gt; 1</span>
+<span class="c1"># f_p_a_e(&quot;qwertydkjf&quot;, &quot;\r\n&quot;) =&gt; 0</span>
+<span class="c1"># f_p_a_e(&quot;qwerty\r\n&quot;, &quot;\r\n&quot;) =&gt; &lt;undefined&gt;</span>
+
+<span class="c1"># this could maybe be made faster with a computed regex?</span>
+<span class="c1"># [answer: no; circa Python-2.0, Jan 2001]</span>
+<span class="c1"># new python:   28961/s</span>
+<span class="c1"># old python:   18307/s</span>
+<span class="c1"># re:        12820/s</span>
+<span class="c1"># regex:     14035/s</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">find_prefix_at_end</span><span class="p">(</span><span class="n">haystack</span><span class="p">,</span> <span class="n">needle</span><span class="p">):</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">needle</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">l</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">haystack</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">needle</span><span class="p">[:</span><span class="n">l</span><span class="p">]):</span>
+        <span class="n">l</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">l</span>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Accelerated Materials Design and Descovery, Toyota Research Institute
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Accelerated Materials Design and Descovery, Toyota Research Institute.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

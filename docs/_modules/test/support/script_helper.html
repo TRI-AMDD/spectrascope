@@ -1,0 +1,661 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>test.support.script_helper &#8212; SpectraScope 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/test/support/script_helper';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SpectraScope 0.0.1 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../api/spectrascope.html">spectrascope</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.Features.html">spectrascope.Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.StructurePropertyFeatures.html">spectrascope.StructurePropertyFeatures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/spectrascope.utils.html">spectrascope.utils</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1></h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for test.support.script_helper</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Common utility functions used by various script execution tests</span>
+<span class="c1">#  e.g. test_cmd_line, test_cmd_line_script and test_runpy</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">collections</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">importlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os.path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">py_compile</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">zipfile</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">importlib.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">source_from_cache</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">test</span><span class="w"> </span><span class="kn">import</span> <span class="n">support</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">test.support.import_helper</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_legacy_pyc</span>
+
+
+<span class="c1"># Cached result of the expensive test performed in the function below.</span>
+<span class="n">__cached_interp_requires_environment</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="interpreter_requires_environment">
+<a class="viewcode-back" href="../../../api/test.support.script_helper.html#test.support.script_helper.interpreter_requires_environment">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">interpreter_requires_environment</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns True if our sys.executable interpreter requires environment</span>
+<span class="sd">    variables in order to be able to run at all.</span>
+
+<span class="sd">    This is designed to be used with @unittest.skipIf() to annotate tests</span>
+<span class="sd">    that need to use an assert_python*() function to launch an isolated</span>
+<span class="sd">    mode (-I) or no environment mode (-E) sub-interpreter process.</span>
+
+<span class="sd">    A normal build &amp; test does not run into this situation but it can happen</span>
+<span class="sd">    when trying to run the standard library test suite from an interpreter that</span>
+<span class="sd">    doesn&#39;t have an obvious home with Python&#39;s current home finding logic.</span>
+
+<span class="sd">    Setting PYTHONHOME is one way to get most of the testsuite to run in that</span>
+<span class="sd">    situation.  PYTHONPATH or PYTHONUSERSITE are other common environment</span>
+<span class="sd">    variables that might impact whether or not the interpreter can start.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">__cached_interp_requires_environment</span>
+    <span class="k">if</span> <span class="n">__cached_interp_requires_environment</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># If PYTHONHOME is set, assume that we need it</span>
+        <span class="k">if</span> <span class="s1">&#39;PYTHONHOME&#39;</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">:</span>
+            <span class="n">__cached_interp_requires_environment</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="c1"># cannot run subprocess, assume we don&#39;t need it</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">support</span><span class="o">.</span><span class="n">has_subprocess_support</span><span class="p">:</span>
+            <span class="n">__cached_interp_requires_environment</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="c1"># Try running an interpreter with -E to see if it works or not.</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">check_call</span><span class="p">([</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s1">&#39;-E&#39;</span><span class="p">,</span>
+                                   <span class="s1">&#39;-c&#39;</span><span class="p">,</span> <span class="s1">&#39;import sys; sys.exit(0)&#39;</span><span class="p">])</span>
+        <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">:</span>
+            <span class="n">__cached_interp_requires_environment</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">__cached_interp_requires_environment</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="n">__cached_interp_requires_environment</span></div>
+
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_PythonRunResult</span><span class="p">(</span><span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;_PythonRunResult&quot;</span><span class="p">,</span>
+                                          <span class="p">(</span><span class="s2">&quot;rc&quot;</span><span class="p">,</span> <span class="s2">&quot;out&quot;</span><span class="p">,</span> <span class="s2">&quot;err&quot;</span><span class="p">))):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Helper for reporting Python subprocess run results&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fail</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd_line</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Provide helpful details about failed subcommand runs&quot;&quot;&quot;</span>
+        <span class="c1"># Limit to 300 lines of ASCII characters</span>
+        <span class="n">maxlen</span> <span class="o">=</span> <span class="mi">300</span> <span class="o">*</span> <span class="mi">100</span>
+        <span class="n">out</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">out</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">err</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">maxlen</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;(... truncated stdout ...)&#39;</span> <span class="o">+</span> <span class="n">out</span><span class="p">[</span><span class="o">-</span><span class="n">maxlen</span><span class="p">:]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">maxlen</span><span class="p">:</span>
+            <span class="n">err</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">&#39;(... truncated stderr ...)&#39;</span> <span class="o">+</span> <span class="n">err</span><span class="p">[</span><span class="o">-</span><span class="n">maxlen</span><span class="p">:]</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">,</span> <span class="s1">&#39;replace&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="n">err</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;ascii&#39;</span><span class="p">,</span> <span class="s1">&#39;replace&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span>
+        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="s2">&quot;Process return code is </span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span>
+                             <span class="s2">&quot;command line: </span><span class="si">%r</span><span class="se">\n</span><span class="s2">&quot;</span>
+                             <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                             <span class="s2">&quot;stdout:</span><span class="se">\n</span><span class="s2">&quot;</span>
+                             <span class="s2">&quot;---</span><span class="se">\n</span><span class="s2">&quot;</span>
+                             <span class="s2">&quot;</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span>
+                             <span class="s2">&quot;---</span><span class="se">\n</span><span class="s2">&quot;</span>
+                             <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+                             <span class="s2">&quot;stderr:</span><span class="se">\n</span><span class="s2">&quot;</span>
+                             <span class="s2">&quot;---</span><span class="se">\n</span><span class="s2">&quot;</span>
+                             <span class="s2">&quot;</span><span class="si">%s</span><span class="se">\n</span><span class="s2">&quot;</span>
+                             <span class="s2">&quot;---&quot;</span>
+                             <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rc</span><span class="p">,</span> <span class="n">cmd_line</span><span class="p">,</span>
+                                <span class="n">out</span><span class="p">,</span>
+                                <span class="n">err</span><span class="p">))</span>
+
+
+<span class="c1"># Executing the interpreter in a subprocess</span>
+<span class="nd">@support</span><span class="o">.</span><span class="n">requires_subprocess</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">run_python_until_end</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">env_vars</span><span class="p">):</span>
+    <span class="n">env_required</span> <span class="o">=</span> <span class="n">interpreter_requires_environment</span><span class="p">()</span>
+    <span class="n">cwd</span> <span class="o">=</span> <span class="n">env_vars</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;__cwd&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;__isolated&#39;</span> <span class="ow">in</span> <span class="n">env_vars</span><span class="p">:</span>
+        <span class="n">isolated</span> <span class="o">=</span> <span class="n">env_vars</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;__isolated&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">isolated</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">env_vars</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">env_required</span>
+    <span class="n">cmd_line</span> <span class="o">=</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s1">&#39;-X&#39;</span><span class="p">,</span> <span class="s1">&#39;faulthandler&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">isolated</span><span class="p">:</span>
+        <span class="c1"># isolated mode: ignore Python environment variables, ignore user</span>
+        <span class="c1"># site-packages, and don&#39;t add the current directory to sys.path</span>
+        <span class="n">cmd_line</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-I&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="n">env_vars</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">env_required</span><span class="p">:</span>
+        <span class="c1"># ignore Python environment variables</span>
+        <span class="n">cmd_line</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-E&#39;</span><span class="p">)</span>
+
+    <span class="c1"># But a special flag that can be set to override -- in this case, the</span>
+    <span class="c1"># caller is responsible to pass the full environment.</span>
+    <span class="k">if</span> <span class="n">env_vars</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;__cleanenv&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;win32&#39;</span><span class="p">:</span>
+            <span class="c1"># Windows requires at least the SYSTEMROOT environment variable to</span>
+            <span class="c1"># start Python.</span>
+            <span class="n">env</span><span class="p">[</span><span class="s1">&#39;SYSTEMROOT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;SYSTEMROOT&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Other interesting environment variables, not copied currently:</span>
+        <span class="c1"># COMSPEC, HOME, PATH, TEMP, TMPDIR, TMP.</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Need to preserve the original environment, for in-place testing of</span>
+        <span class="c1"># shared library builds.</span>
+        <span class="n">env</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># set TERM=&#39;&#39; unless the TERM environment variable is passed explicitly</span>
+    <span class="c1"># see issues #11390 and #18300</span>
+    <span class="k">if</span> <span class="s1">&#39;TERM&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">env_vars</span><span class="p">:</span>
+        <span class="n">env</span><span class="p">[</span><span class="s1">&#39;TERM&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+    <span class="n">env</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">env_vars</span><span class="p">)</span>
+    <span class="n">cmd_line</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmd_line</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                         <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                         <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">proc</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">out</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="n">proc</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">_cleanup</span><span class="p">()</span>
+    <span class="n">rc</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">returncode</span>
+    <span class="k">return</span> <span class="n">_PythonRunResult</span><span class="p">(</span><span class="n">rc</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">err</span><span class="p">),</span> <span class="n">cmd_line</span>
+
+
+<span class="nd">@support</span><span class="o">.</span><span class="n">requires_subprocess</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_assert_python</span><span class="p">(</span><span class="n">expected_success</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">env_vars</span><span class="p">):</span>
+    <span class="n">res</span><span class="p">,</span> <span class="n">cmd_line</span> <span class="o">=</span> <span class="n">run_python_until_end</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">env_vars</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">rc</span> <span class="ow">and</span> <span class="n">expected_success</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="ow">not</span> <span class="n">res</span><span class="o">.</span><span class="n">rc</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">expected_success</span><span class="p">):</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">fail</span><span class="p">(</span><span class="n">cmd_line</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
+
+
+<div class="viewcode-block" id="assert_python_ok">
+<a class="viewcode-back" href="../../../api/test.support.script_helper.html#test.support.script_helper.assert_python_ok">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">assert_python_ok</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">env_vars</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Assert that running the interpreter with `args` and optional environment</span>
+<span class="sd">    variables `env_vars` succeeds (rc == 0) and return a (return code, stdout,</span>
+<span class="sd">    stderr) tuple.</span>
+
+<span class="sd">    If the __cleanenv keyword is set, env_vars is used as a fresh environment.</span>
+
+<span class="sd">    Python is started in isolated mode (command line option -I),</span>
+<span class="sd">    except if the __isolated keyword is set to False.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_assert_python</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">env_vars</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="assert_python_failure">
+<a class="viewcode-back" href="../../../api/test.support.script_helper.html#test.support.script_helper.assert_python_failure">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">assert_python_failure</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">env_vars</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Assert that running the interpreter with `args` and optional environment</span>
+<span class="sd">    variables `env_vars` fails (rc != 0) and return a (return code, stdout,</span>
+<span class="sd">    stderr) tuple.</span>
+
+<span class="sd">    See assert_python_ok() for more options.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_assert_python</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">env_vars</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="spawn_python">
+<a class="viewcode-back" href="../../../api/test.support.script_helper.html#test.support.script_helper.spawn_python">[docs]</a>
+<span class="nd">@support</span><span class="o">.</span><span class="n">requires_subprocess</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">spawn_python</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run a Python subprocess with the given arguments.</span>
+
+<span class="sd">    kw is extra keyword args to pass to subprocess.Popen. Returns a Popen</span>
+<span class="sd">    object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cmd_line</span> <span class="o">=</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">interpreter_requires_environment</span><span class="p">():</span>
+        <span class="n">cmd_line</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;-E&#39;</span><span class="p">)</span>
+    <span class="n">cmd_line</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+    <span class="c1"># Under Fedora (?), GNU readline can output junk on stderr when initialized,</span>
+    <span class="c1"># depending on the TERM setting.  Setting TERM=vt100 is supposed to disable</span>
+    <span class="c1"># that.  References:</span>
+    <span class="c1"># - http://reinout.vanrees.org/weblog/2009/08/14/readline-invisible-character-hack.html</span>
+    <span class="c1"># - http://stackoverflow.com/questions/15760712/python-readline-module-prints-escape-character-during-import</span>
+    <span class="c1"># - http://lists.gnu.org/archive/html/bug-readline/2007-08/msg00004.html</span>
+    <span class="n">env</span> <span class="o">=</span> <span class="n">kw</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;env&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">))</span>
+    <span class="n">env</span><span class="p">[</span><span class="s1">&#39;TERM&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;vt100&#39;</span>
+    <span class="k">return</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">cmd_line</span><span class="p">,</span> <span class="n">stdin</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+                            <span class="n">stdout</span><span class="o">=</span><span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">stderr</span><span class="p">,</span>
+                            <span class="o">**</span><span class="n">kw</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="kill_python">
+<a class="viewcode-back" href="../../../api/test.support.script_helper.html#test.support.script_helper.kill_python">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">kill_python</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Run the given Popen process until completion and return stdout.&quot;&quot;&quot;</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">stdin</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="c1"># try to cleanup the child so we don&#39;t appear to leak when running</span>
+    <span class="c1"># with regrtest -R.</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">_cleanup</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">data</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">make_script</span><span class="p">(</span><span class="n">script_dir</span><span class="p">,</span> <span class="n">script_basename</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">omit_suffix</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">script_filename</span> <span class="o">=</span> <span class="n">script_basename</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">omit_suffix</span><span class="p">:</span>
+        <span class="n">script_filename</span> <span class="o">+=</span> <span class="n">os</span><span class="o">.</span><span class="n">extsep</span> <span class="o">+</span> <span class="s1">&#39;py&#39;</span>
+    <span class="n">script_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">script_dir</span><span class="p">,</span> <span class="n">script_filename</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="c1"># The script should be encoded to UTF-8, the default string encoding</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">script_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">script_file</span><span class="p">:</span>
+            <span class="n">script_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">script_name</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">script_file</span><span class="p">:</span>
+            <span class="n">script_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    <span class="n">importlib</span><span class="o">.</span><span class="n">invalidate_caches</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">script_name</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">make_zip_script</span><span class="p">(</span><span class="n">zip_dir</span><span class="p">,</span> <span class="n">zip_basename</span><span class="p">,</span> <span class="n">script_name</span><span class="p">,</span> <span class="n">name_in_zip</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">zip_filename</span> <span class="o">=</span> <span class="n">zip_basename</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="o">+</span><span class="s1">&#39;zip&#39;</span>
+    <span class="n">zip_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">zip_dir</span><span class="p">,</span> <span class="n">zip_filename</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">zip_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_file</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">name_in_zip</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">parts</span> <span class="o">=</span> <span class="n">script_name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;__pycache__&#39;</span><span class="p">:</span>
+                <span class="n">legacy_pyc</span> <span class="o">=</span> <span class="n">make_legacy_pyc</span><span class="p">(</span><span class="n">source_from_cache</span><span class="p">(</span><span class="n">script_name</span><span class="p">))</span>
+                <span class="n">name_in_zip</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">legacy_pyc</span><span class="p">)</span>
+                <span class="n">script_name</span> <span class="o">=</span> <span class="n">legacy_pyc</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">name_in_zip</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">script_name</span><span class="p">)</span>
+        <span class="n">zip_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">script_name</span><span class="p">,</span> <span class="n">name_in_zip</span><span class="p">)</span>
+    <span class="c1">#if test.support.verbose:</span>
+    <span class="c1">#    with zipfile.ZipFile(zip_name, &#39;r&#39;) as zip_file:</span>
+    <span class="c1">#        print &#39;Contents of %r:&#39; % zip_name</span>
+    <span class="c1">#        zip_file.printdir()</span>
+    <span class="k">return</span> <span class="n">zip_name</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">zip_name</span><span class="p">,</span> <span class="n">name_in_zip</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">make_pkg</span><span class="p">(</span><span class="n">pkg_dir</span><span class="p">,</span> <span class="n">init_source</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">pkg_dir</span><span class="p">)</span>
+    <span class="n">make_script</span><span class="p">(</span><span class="n">pkg_dir</span><span class="p">,</span> <span class="s1">&#39;__init__&#39;</span><span class="p">,</span> <span class="n">init_source</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">make_zip_pkg</span><span class="p">(</span><span class="n">zip_dir</span><span class="p">,</span> <span class="n">zip_basename</span><span class="p">,</span> <span class="n">pkg_name</span><span class="p">,</span> <span class="n">script_basename</span><span class="p">,</span>
+                 <span class="n">source</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">compiled</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">unlink</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">init_name</span> <span class="o">=</span> <span class="n">make_script</span><span class="p">(</span><span class="n">zip_dir</span><span class="p">,</span> <span class="s1">&#39;__init__&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">unlink</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">init_name</span><span class="p">)</span>
+    <span class="n">init_basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">init_name</span><span class="p">)</span>
+    <span class="n">script_name</span> <span class="o">=</span> <span class="n">make_script</span><span class="p">(</span><span class="n">zip_dir</span><span class="p">,</span> <span class="n">script_basename</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span>
+    <span class="n">unlink</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">script_name</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">compiled</span><span class="p">:</span>
+        <span class="n">init_name</span> <span class="o">=</span> <span class="n">py_compile</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">init_name</span><span class="p">,</span> <span class="n">doraise</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">script_name</span> <span class="o">=</span> <span class="n">py_compile</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">script_name</span><span class="p">,</span> <span class="n">doraise</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">unlink</span><span class="o">.</span><span class="n">extend</span><span class="p">((</span><span class="n">init_name</span><span class="p">,</span> <span class="n">script_name</span><span class="p">))</span>
+    <span class="n">pkg_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">pkg_name</span><span class="p">]</span><span class="o">*</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">depth</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+    <span class="n">script_name_in_zip</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">pkg_names</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">script_name</span><span class="p">))</span>
+    <span class="n">zip_filename</span> <span class="o">=</span> <span class="n">zip_basename</span><span class="o">+</span><span class="n">os</span><span class="o">.</span><span class="n">extsep</span><span class="o">+</span><span class="s1">&#39;zip&#39;</span>
+    <span class="n">zip_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">zip_dir</span><span class="p">,</span> <span class="n">zip_filename</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">zip_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">zip_file</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">pkg_names</span><span class="p">:</span>
+            <span class="n">init_name_in_zip</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">init_basename</span><span class="p">)</span>
+            <span class="n">zip_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">init_name</span><span class="p">,</span> <span class="n">init_name_in_zip</span><span class="p">)</span>
+        <span class="n">zip_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">script_name</span><span class="p">,</span> <span class="n">script_name_in_zip</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">unlink</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="c1">#if test.support.verbose:</span>
+    <span class="c1">#    with zipfile.ZipFile(zip_name, &#39;r&#39;) as zip_file:</span>
+    <span class="c1">#        print &#39;Contents of %r:&#39; % zip_name</span>
+    <span class="c1">#        zip_file.printdir()</span>
+    <span class="k">return</span> <span class="n">zip_name</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">zip_name</span><span class="p">,</span> <span class="n">script_name_in_zip</span><span class="p">)</span>
+
+
+<span class="nd">@support</span><span class="o">.</span><span class="n">requires_subprocess</span><span class="p">()</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">run_test_script</span><span class="p">(</span><span class="n">script</span><span class="p">):</span>
+    <span class="c1"># use -u to try to get the full output if the test hangs or crash</span>
+    <span class="k">if</span> <span class="n">support</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">title</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;===== </span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2"> ======&quot;</span>
+
+        <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;script </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">script</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="nb">print</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">title</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="c1"># In verbose mode, the child process inherit stdout and stdout,</span>
+        <span class="c1"># to see output in realtime and reduce the risk of losing output.</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="n">sys</span><span class="o">.</span><span class="n">executable</span><span class="p">,</span> <span class="s2">&quot;-E&quot;</span><span class="p">,</span> <span class="s2">&quot;-X&quot;</span><span class="p">,</span> <span class="s2">&quot;faulthandler&quot;</span><span class="p">,</span> <span class="s2">&quot;-u&quot;</span><span class="p">,</span> <span class="n">script</span><span class="p">,</span> <span class="s2">&quot;-v&quot;</span><span class="p">]</span>
+        <span class="n">proc</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> completed: exit code </span><span class="si">{</span><span class="n">proc</span><span class="o">.</span><span class="n">returncode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>
+              <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">proc</span><span class="o">.</span><span class="n">returncode</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> failed&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">assert_python_ok</span><span class="p">(</span><span class="s2">&quot;-u&quot;</span><span class="p">,</span> <span class="n">script</span><span class="p">,</span> <span class="s2">&quot;-v&quot;</span><span class="p">)</span>
+</pre></div>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Accelerated Materials Design and Descovery, Toyota Research Institute
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Accelerated Materials Design and Descovery, Toyota Research Institute.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

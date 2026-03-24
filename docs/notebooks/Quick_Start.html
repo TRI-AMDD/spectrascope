@@ -1,0 +1,733 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Spectra-Scope Quick Start &#8212; SpectraScope 0.0.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css?v=6644e6bb" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=e645c8fa"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'notebooks/Quick_Start';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="spectrascope.utils" href="../api/spectrascope.utils.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">SpectraScope 0.0.1 documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Guides</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api/spectrascope.html">spectrascope</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/spectrascope.Features.html">spectrascope.Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/spectrascope.SSClassification.html">spectrascope.SSClassification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/spectrascope.SSPlotting.html">spectrascope.SSPlotting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/spectrascope.SpectraScope.html">spectrascope.SpectraScope</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/spectrascope.StructurePropertyFeatures.html">spectrascope.StructurePropertyFeatures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/spectrascope.utils.html">spectrascope.utils</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Notebooks</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Spectra-Scope Quick Start</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/notebooks/Quick_Start.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Spectra-Scope Quick Start</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports">0. Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-the-data">1. Loading the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-the-spectrascope-object">2. Initialize the SpectraScope object</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-training">3. Model Training</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-of-the-model-results">4. Visualization of the Model Results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-importance">5. Feature Importance</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="spectra-scope-quick-start">
+<h1>Spectra-Scope Quick Start<a class="headerlink" href="#spectra-scope-quick-start" title="Link to this heading">#</a></h1>
+<p>Welcome, user!</p>
+<p>Spectra-Scope is a Python toolkit designed to streamline and automate the characterization of materials using spectral data. The package provides end-to-end workflows for feature extraction, selection, and model building on spectroscopy datasets. The examples given here and in the paper are NIR, Raman, and XANES datasets, but Spectra-Scope can be used with any spectroscopy or 1D-array like data. Key features include:</p>
+<ul class="simple">
+<li><p>Automated feature engineering from raw spectra, leveraging domain-specific transformations (such as Fourier, wavelet, and polynomial features).</p></li>
+<li><p>Flexible pipelines for machine learning model training and evaluation, with support for various regression and classification algorithms.</p></li>
+<li><p>Integration of multi-modal spectral inputs from different characterization methods</p></li>
+<li><p>Feature importance and downselection for model interpretability</p></li>
+<li><p>Visualization tools</p></li>
+<li><p>Simple <a class="reference internal" href="#spectrascope.matr.io"><span class="xref myst">API</span></a> for exploratory data analysis, interpretability, and visualization.</p></li>
+</ul>
+<p>Spectra-Scope is intended to help materials scientists and data analysts get rapid, reproducible insights from complex spectral measurements. This notebook goes through a quick start of Spectra-Scope, while <a class="reference internal" href="#example1.ipynb"><span class="xref myst">Example 1</span></a> and <a class="reference internal" href="#grapes.ipynb"><span class="xref myst">Example 2</span></a> walk through the case studies in the <a class="reference internal" href="#../JOSS/paper.md"><span class="xref myst">paper</span></a>.</p>
+<section id="imports">
+<h2>0. Imports<a class="headerlink" href="#imports" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+<span class="kn">from</span><span class="w"> </span><span class="nn">spectrascope.SpectraScope</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">spectrascope.Features</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span> 
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">Ridge</span><span class="p">,</span> <span class="n">Lasso</span><span class="p">,</span> <span class="n">ElasticNet</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">gridspec</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;../ss.mplstyle&#39;</span><span class="p">)</span>
+<span class="c1"># from dataset_property_new import * </span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="loading-the-data">
+<h2>1. Loading the data<a class="headerlink" href="#loading-the-data" title="Link to this heading">#</a></h2>
+<p>For the quick start, we will load Vis-NIR (visable near infrared) absorption data from the <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S2666154324001224">Ebrahimi, et al</a> study on vineyard grapes. The target data is the degree Brixs, or total soluble solids content of the grape.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">NIR</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;../tests/test_files/grapes_example/XSF_br.npy&#39;</span><span class="p">)</span>
+<span class="n">br</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;../tests/test_files/grapes_example/br.npy&#39;</span><span class="p">)</span>
+<span class="n">NIR_wls</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;../tests/test_files/grapes_example/nir_xaxis.npy&#39;</span><span class="p">)</span>
+
+<span class="n">n</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="n">NIR</span><span class="o">.</span><span class="n">shape</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;There are </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1"> NIR spectra of length </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s1"> in the dataset&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The length of the labels (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">br</span><span class="p">)</span><span class="si">}</span><span class="s1">) propertly matches this .&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;We also include the x-axis for the NIR spectra, which is the photon wavelength in nanometers.&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;The datasets have shapes : X : </span><span class="si">{</span><span class="n">NIR</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">, (# samples x # wavelength points) </span><span class="se">\n</span><span class="s1"> y : </span><span class="si">{</span><span class="n">br</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1"> (# samples) </span><span class="se">\n</span><span class="s1"> x-axis : </span><span class="si">{</span><span class="n">NIR_wls</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1"> (# wavelength points)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>There are 172 NIR spectra of length 2151 in the dataset
+The length of the labels (172) propertly matches this .
+We also include the x-axis for the NIR spectra, which is the photon wavelength in nanometers.
+The datasets have shapes : X : (172, 2151), (# samples x # wavelength points) 
+ y : (172,) (# samples) 
+ x-axis : (2151,) (# wavelength points)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Visualizing the spectra</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">spec</span> <span class="ow">in</span> <span class="n">NIR</span><span class="p">:</span> 
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">NIR_wls</span><span class="p">,</span> <span class="n">spec</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Reflection [%]&#39;</span><span class="p">);</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;All NIR Spectra&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;All NIR Spectra&#39;)
+</pre></div>
+</div>
+<img alt="../_images/08775382dffdde125c52e9aa48294320eeae2851156b9b5358bdf37576a54176.png" src="../_images/08775382dffdde125c52e9aa48294320eeae2851156b9b5358bdf37576a54176.png" />
+</div>
+</div>
+</section>
+<section id="initialize-the-spectrascope-object">
+<h2>2. Initialize the SpectraScope object<a class="headerlink" href="#initialize-the-spectrascope-object" title="Link to this heading">#</a></h2>
+<p>We now initialize the SpectraScope object to do the feature generation and model training. First, we will use the auto_feature_generation function to automatically generate all available features. Additionally, we add the proper wavelength x-axis for the NIR data. This is necessary for some featurizations</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ss</span> <span class="o">=</span> <span class="n">SpectraScope</span><span class="p">([</span><span class="n">NIR</span><span class="p">],</span> <span class="n">br</span><span class="p">,</span> <span class="n">specnames</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;nir&#39;</span><span class="p">],</span> <span class="n">yname</span><span class="o">=</span><span class="s1">&#39;br&#39;</span><span class="p">,</span> <span class="n">random_seed</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">ss</span><span class="o">.</span><span class="n">add_x_axis</span><span class="p">(</span><span class="s1">&#39;nir&#39;</span><span class="p">,</span> <span class="n">NIR_wls</span><span class="p">)</span>
+<span class="n">ss</span><span class="o">.</span><span class="n">auto_feature_generation</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>saving to /examples/models, change save_path kwarg if youd like to change
+generating features on all input spectra for all available features with default ranges
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can visualize examples of the features generated.</p>
+<p>a. <code class="docutils literal notranslate"><span class="pre">nir_pointwise_features</span></code> : This is the raw absorption data</p>
+<p>b. <code class="docutils literal notranslate"><span class="pre">nir_polynomial_featuresll</span></code> : Polynomials of a user-specified (default=3) degree are fit to user-specified (default 4,5,10,20) bins of the spectrum. For example, <code class="docutils literal notranslate"><span class="pre">polynomial_featuresN</span></code>(degree=3, N=5) applied to a spectra measured from 0-10 eV will split the data into 5 bins of even energy spacing: [0,2),[2,4),[4,6),[6,8), [8,10]. The data/features that falls into each of these 2eV ranges will be fit to
+a degree 3 polynomial. The 4 fit coefficients of the polynomial (a0, a1, a2, a3) are the
+4 new features for each bin. Over 5 bins, this creates 20 new features. The default setting uses N=4,5,10,
+and 20 bins. The result is a new 157 feature array of the input spectrum (156 fit
+coefficients + the energy of the maximum feature in the spectrum).</p>
+<p>c. <code class="docutils literal notranslate"><span class="pre">nir_feature_agg</span></code> : This clustering technique performs hierarchical clustering. Each observation starts in its own cluster, and clusters are formed by computing the linkage between observations, and successively merging similar observations or clusters. The default number of clusters to generate is 15. The default metric used to compute the linkage is “euclidean” and the default linkage method is ”ward”, which minimizes the variance of the clusters being merged.</p>
+<p>d. <code class="docutils literal notranslate"><span class="pre">nir_pca</span></code> : The p principal components of a dataset are a set of orthogonal unit vectors that best describe the variance in the data. The first principal component fits a line to the direction of highest variance in the data, the second fits a line to the direction of second-highest variance, and so on. The default number of principal components is 15.</p>
+<p>e. <code class="docutils literal notranslate"><span class="pre">nir_cdf</span></code> : This is the cumulative distribution function of the data. The cumulative distribution function of a random variable X is the probability P (X ≤ x) and gives the sum of the probability of
+X up to the value of x. In Spectra-Scope the spectra are treated as probability density functions where the CDF is the cumulative sum of the spectra up to the value of x.</p>
+<p>f. <code class="docutils literal notranslate"><span class="pre">nir_cwt</span></code> : he CWT measures the similarity between a signal and a “mother wavelet” function which can be shifted, stretched, or compressed.6 In Spectra-Scope, the default mother wavelet is “mexh” (Mexican Hat Wavelet). The CWT provides information in the frequency- as well as time-domain. Therefore, it is useful for periodic signals which change over time, such as audio, seismic, and other signals.</p>
+<p>g. <code class="docutils literal notranslate"><span class="pre">nir_fft_features</span></code> : The fast fourier transform of the spectra.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spectrascope.plot_spectral_features</span><span class="w"> </span><span class="kn">import</span> <span class="n">PlotSpectralFeatures</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">string</span> 
+
+<span class="n">f</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">axs</span> <span class="o">=</span> <span class="n">axs</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="n">xlabels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Wavelength [nm]&#39;</span><span class="p">,</span> <span class="s1">&#39;Feature Index&#39;</span><span class="p">,</span> <span class="s1">&#39;Cluster 1&#39;</span><span class="p">,</span> <span class="s1">&#39;PC 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Wavelength [nm]&#39;</span><span class="p">,</span> <span class="s1">&#39;Wavelength [nm]&#39;</span><span class="p">,</span> <span class="s1">&#39;Frequency&#39;</span><span class="p">]</span>
+<span class="n">ylabels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Intensity [cts.]&#39;</span><span class="p">,</span> <span class="s1">&#39;Magnitude&#39;</span><span class="p">,</span> <span class="s1">&#39;Cluster 2&#39;</span><span class="p">,</span> <span class="s1">&#39;PC 2&#39;</span><span class="p">,</span> <span class="s1">&#39;Cumulative Intensity&#39;</span><span class="p">,</span> <span class="s1">&#39;Scale&#39;</span><span class="p">,</span>  <span class="s1">&#39;Amplitude&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">feat</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">generated_features</span><span class="p">):</span> 
+    <span class="n">feat_arr</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ss</span><span class="p">,</span> <span class="n">feat</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;cwt&#39;</span> <span class="ow">in</span> <span class="n">feat</span><span class="p">:</span> 
+        <span class="n">cwt_coefs</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">nir_cwt</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">im</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cwt_coefs</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">nir_xaxis</span><span class="p">)),</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span>
+                <span class="n">vmax</span><span class="o">=</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">cwt_coefs</span><span class="p">))</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">vmin</span><span class="o">=-</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">cwt_coefs</span><span class="p">))</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;featureagg&#39;</span> <span class="ow">in</span> <span class="n">feat</span> <span class="ow">or</span> <span class="s1">&#39;pca&#39;</span> <span class="ow">in</span> <span class="n">feat</span><span class="p">:</span> 
+        <span class="n">im</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">feat_arr</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">feat_arr</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">br</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;pointwise&#39;</span> <span class="ow">in</span> <span class="n">feat</span> <span class="ow">or</span> <span class="s1">&#39;polynomial&#39;</span> <span class="ow">in</span> <span class="n">feat</span> <span class="ow">or</span> <span class="s1">&#39;cdf&#39;</span> <span class="ow">in</span> <span class="n">feat</span> <span class="ow">or</span> <span class="s1">&#39;fft&#39;</span> <span class="ow">in</span> <span class="n">feat</span><span class="p">:</span> 
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">feat_arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">feat_arr</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">xlabels</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">ylabels</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="c1"># add subplot label</span>
+    <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.85</span><span class="p">,</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="n">f</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Visualizing Features&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 1.0, 0.0, 1.0)
+</pre></div>
+</div>
+<img alt="../_images/907d8ef88e24711d77639828ae4b602d0041065a9a8730c15bac0cb67c7276d6.png" src="../_images/907d8ef88e24711d77639828ae4b602d0041065a9a8730c15bac0cb67c7276d6.png" />
+</div>
+</div>
+</section>
+<section id="model-training">
+<h2>3. Model Training<a class="headerlink" href="#model-training" title="Link to this heading">#</a></h2>
+<p>Now that we have generated the features, we can set up the models for training. We will train both Random Forest and LCEN models on each feature. We will create hyperparameter grids to do cross-validation during the model training. The model training in <code class="docutils literal notranslate"><span class="pre">SpectraScope</span></code> can be accessed using <code class="docutils literal notranslate"><span class="pre">SpectraScope.do_sk</span></code> for <code class="docutils literal notranslate"><span class="pre">Scikit-Learn</span></code> models, <code class="docutils literal notranslate"><span class="pre">SpectraScope.do_LCEN</span></code> for then LCEN algorithm, or <code class="docutils literal notranslate"><span class="pre">SpectraScope.do_all</span></code> to simultaneously do feature generation and model trainiing in one step. For clarity here we will just use the <code class="docutils literal notranslate"><span class="pre">do_sk</span></code> and <code class="docutils literal notranslate"><span class="pre">do_LCEN</span></code> functions.</p>
+<p>The dictionaries defined here are for the <code class="docutils literal notranslate"><span class="pre">sklearn.pipeline.Pipeline</span></code> objects and <code class="docutils literal notranslate"><span class="pre">SPA.main_SPA</span></code> objects that are accessed in <code class="docutils literal notranslate"><span class="pre">do_sk</span></code> and <code class="docutils literal notranslate"><span class="pre">do_LCEN</span></code> respectively, which do the main cross-validation and model training.</p>
+<blockquote>
+<div><p>NOTE : Here, we skip training to the cwt features because this generates many features and takes longer to train.</p>
+</div></blockquote>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rf_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;estimator&#39;</span><span class="p">:</span><span class="n">RandomForestRegressor</span><span class="p">(),</span> 
+                <span class="s1">&#39;param_grid&#39;</span><span class="p">:{</span><span class="s1">&#39;n_estimators&#39;</span><span class="p">:[</span><span class="mi">50</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">],</span> 
+                                        <span class="s1">&#39;criterion&#39;</span><span class="p">:[</span><span class="s1">&#39;squared_error&#39;</span><span class="p">],</span>
+                                        <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">35</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span><span class="kc">None</span><span class="p">]},</span>
+                <span class="s1">&#39;refit&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span>
+                <span class="s1">&#39;metric&#39;</span><span class="p">:</span><span class="n">mean_squared_error</span><span class="p">}</span>
+        
+<span class="n">lcen_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;l1_ratio&#39;</span><span class="p">:[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">],</span>
+                        <span class="s1">&#39;K_fold&#39;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> 
+                        <span class="s1">&#39;cv_method&#39;</span><span class="p">:</span><span class="s1">&#39;Kfold&#39;</span><span class="p">,</span> 
+                        <span class="s1">&#39;alpha&#39;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> 
+                        <span class="s1">&#39;degree&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">],</span>
+                        <span class="s1">&#39;trans_type&#39;</span><span class="p">:</span><span class="s1">&#39;poly&#39;</span><span class="p">,</span> 
+                        <span class="s1">&#39;LCEN_cutoff&#39;</span><span class="p">:</span><span class="mf">5e-5</span><span class="p">,</span> 
+                        <span class="s1">&#39;LCEN_interaction&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">,</span> 
+                        <span class="s1">&#39;scale_X&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> 
+                        <span class="s1">&#39;scale_y&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> 
+                        <span class="s1">&#39;verbosity_level&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Takes 2 min to run on Macbook Pro 2024 M4 Max</span>
+<span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">ss</span><span class="o">.</span><span class="n">generated_features</span><span class="p">:</span> 
+    <span class="k">if</span> <span class="s1">&#39;cwt&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">feat</span><span class="p">:</span> 
+        <span class="n">ss</span><span class="o">.</span><span class="n">do_LCEN</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="s1">&#39;br&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">lcen_kwargs</span><span class="p">)</span> <span class="c1"># we identify the Xattr (feat) and the yattr (br) for training</span>
+        <span class="n">ss</span><span class="o">.</span><span class="n">do_sk</span><span class="p">(</span><span class="n">feat</span><span class="p">,</span> <span class="s1">&#39;br&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">rf_kwargs</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Completed model LCEN
+The best model is LCEN. View its results via fitting_result[&quot;LCEN&quot;] or by opening the SPA_results json/pickle files.
+Test set : RMSE = 1.5645 | Mean relative error = 0.0757
+Completed model LCEN
+The best model is LCEN. View its results via fitting_result[&quot;LCEN&quot;] or by opening the SPA_results json/pickle files.
+Test set : RMSE = 1.2552 | Mean relative error = 0.0605
+Completed model LCEN
+The best model is LCEN. View its results via fitting_result[&quot;LCEN&quot;] or by opening the SPA_results json/pickle files.
+Test set : RMSE = 1.4813 | Mean relative error = 0.0676
+Completed model LCEN
+The best model is LCEN. View its results via fitting_result[&quot;LCEN&quot;] or by opening the SPA_results json/pickle files.
+Test set : RMSE = 1.5039 | Mean relative error = 0.0722
+Completed model LCEN
+The best model is LCEN. View its results via fitting_result[&quot;LCEN&quot;] or by opening the SPA_results json/pickle files.
+Test set : RMSE = 1.5382 | Mean relative error = 0.0745
+Completed model LCEN
+The best model is LCEN. View its results via fitting_result[&quot;LCEN&quot;] or by opening the SPA_results json/pickle files.
+Test set : RMSE = 1.5814 | Mean relative error = 0.0727
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualization-of-the-model-results">
+<h2>4. Visualization of the Model Results<a class="headerlink" href="#visualization-of-the-model-results" title="Link to this heading">#</a></h2>
+<p>Here we plot the % RMSE of the different model/feature combinations. What we can initially see is that in general, the LCEN algorithm performs better than the Random Forest, and that for both models, a few of the featurization schemes perform better than the raw data. This suggests that while many of these featurizations reduce the dimension of the data, the method of transformation still retains information about the prediction variable.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">best_fits</span><span class="p">)))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">br</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">cbar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">cbar</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;% RMSE&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(557.3577777777779, 0.5, &#39;% RMSE&#39;)
+</pre></div>
+</div>
+<img alt="../_images/2a3b2b5c9dfd1fbab00b237e384051aec084b7697bc12c690a457cbf2478c779.png" src="../_images/2a3b2b5c9dfd1fbab00b237e384051aec084b7697bc12c690a457cbf2478c779.png" />
+</div>
+</div>
+</section>
+<section id="feature-importance">
+<h2>5. Feature Importance<a class="headerlink" href="#feature-importance" title="Link to this heading">#</a></h2>
+<p>Finally, we will visualize the most important features for the best performing models. We will compare the raw spectral data with that of the polynomial featurization.</p>
+<p>a. The top 10 most important features selected by the Random Forest Regressor for the raw NIR data. The vertical blue lines correspond with the features (wavelength) selected.</p>
+<p>b. The top 10 most important features selected by the Random Forest Regressor for the polynomial transformation scheme of the NIR data. The characteristic polynomial images highlight which polynomial coefficient was selected as an important feature, and the position of the polynomial corresponds to the center of the bin from which it was fitted.</p>
+<p>c. The top 10 most important features selected by the LCEN model for the raw NIR data. The top 10 important features are those with the highest magnitude coefficient. The vertical blue lines correspond with the features (wavelength) selected.</p>
+<p>d. The top 10 most important features selected by the LCLEN model for the polynomial transformation scheme of the NIR data. The characteristic polynomial images highlight which polynomial coefficient was selected as an important feature, and the position of the polynomial corresponds to the center of the bin from which it was fitted.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">spectrascope.plot_spectral_features</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_spectral_features_matplotlib</span>  
+<span class="n">fontsize</span> <span class="o">=</span> <span class="mi">15</span>
+<span class="n">ticklabelsize</span> <span class="o">=</span> <span class="mi">12</span>
+
+<span class="n">f</span><span class="p">,</span> <span class="p">((</span><span class="n">ax1</span><span class="p">,</span><span class="n">ax2</span><span class="p">),</span> <span class="p">(</span><span class="n">ax3</span><span class="p">,</span><span class="n">ax4</span><span class="p">))</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">axs</span> <span class="o">=</span> <span class="n">axs</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;RandomForestRegressor&#39;</span><span class="p">,</span> <span class="s1">&#39;LCEN&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">mn</span><span class="p">,</span><span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="p">[</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax3</span><span class="p">]):</span> 
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">mn</span><span class="si">}</span><span class="s1">, Raw Spectra&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">spec</span> <span class="ow">in</span> <span class="n">ss</span><span class="o">.</span><span class="n">nir_pointwise_features</span><span class="p">:</span> 
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">nir_xaxis</span><span class="p">,</span> <span class="n">spec</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#d62728&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">ax_twin</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ss</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;nir_pointwise_features_br_</span><span class="si">{</span><span class="n">mn</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">selected_features</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">][:</span><span class="mi">10</span><span class="p">]</span>
+    <span class="n">selected_vals</span> <span class="o">=</span> <span class="n">model</span><span class="p">[</span><span class="s1">&#39;selected_vals&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">selected_features</span><span class="p">:</span>
+        <span class="n">ax_twin</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">nir_xaxis</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#00ADF2&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax_twin</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+    <span class="n">prmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">best_fits</span><span class="p">[</span><span class="n">mn</span><span class="p">][</span><span class="s1">&#39;nir_pointwise_features_br&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">br</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.55</span><span class="p">,</span><span class="mf">0.75</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;%RMSE=</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">prmse</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">mn</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">models</span><span class="p">,</span> <span class="p">[</span><span class="n">ax2</span><span class="p">,</span><span class="n">ax4</span><span class="p">]):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Polynomial Features&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">ss</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;nir_polynomial_featuresall_br_</span><span class="si">{</span><span class="n">mn</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">prmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">best_fits</span><span class="p">[</span><span class="n">mn</span><span class="p">][</span><span class="s1">&#39;nir_polynomial_featuresall_br&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">br</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.55</span><span class="p">,</span><span class="mf">0.75</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;%RMSE=</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">prmse</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">spec</span> <span class="ow">in</span> <span class="n">ss</span><span class="o">.</span><span class="n">nir_pointwise_features</span><span class="p">:</span> 
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">nir_xaxis</span><span class="p">,</span> <span class="n">spec</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">Set3</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">))[</span><span class="mi">0</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">plot_spectral_features_matplotlib</span><span class="p">(</span><span class="n">ss</span><span class="o">.</span><span class="n">nir_xaxis</span><span class="p">,</span> <span class="n">ss</span><span class="o">.</span><span class="n">nir_pointwise_features</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">model</span><span class="p">[</span><span class="s1">&#39;selected_features&#39;</span><span class="p">][:</span><span class="mi">10</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">zoom</span><span class="o">=</span><span class="mf">0.03</span><span class="p">,</span> <span class="n">plot_raw</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">,</span> <span class="n">ax3</span><span class="p">,</span> <span class="n">ax4</span><span class="p">]):</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Wavelength (nm)&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Reflection (%)&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="n">ticklabelsize</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">set_size</span><span class="p">(</span><span class="n">fontsize</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">set_size</span><span class="p">(</span><span class="n">fontsize</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.87</span><span class="p">,</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_lowercase</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="n">fontsize</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/435144a22aa66363fd73fd19965202686f6f9a94570e4cd19a7fefd442b8fc97.png" src="../_images/435144a22aa66363fd73fd19965202686f6f9a94570e4cd19a7fefd442b8fc97.png" />
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../api/spectrascope.utils.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">spectrascope.utils</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#imports">0. Imports</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-the-data">1. Loading the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-the-spectrascope-object">2. Initialize the SpectraScope object</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-training">3. Model Training</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-of-the-model-results">4. Visualization of the Model Results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-importance">5. Feature Importance</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Accelerated Materials Design and Descovery, Toyota Research Institute
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Accelerated Materials Design and Descovery, Toyota Research Institute.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
