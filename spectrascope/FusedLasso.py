@@ -1,3 +1,12 @@
+"""Fused Lasso regression model implemented with CVXPY.
+
+Provides :class:`FusedLasso`, a scikit-learn compatible regressor that penalizes
+successive differences in coefficients (fused penalty), promoting piecewise-constant
+solutions — useful for spectral data where important features form contiguous regions.
+
+Requires ``cvxpy`` (optional dependency): ``pip install spectrascope[fused_lasso]``.
+"""
+
 import logging
 import numpy as np
 from sklearn.base import BaseEstimator, RegressorMixin
@@ -10,8 +19,11 @@ class FusedLasso(BaseEstimator, RegressorMixin):
     """Fused lasso regression using CVXPY.
 
     Solves:
-        minimize  (1 / (2n)) * ||y - (X w + b)||_2^2
-                  + alpha * sum_j |w_{j+1} - w_j|
+
+    .. code-block:: text
+
+        minimize  (1 / (2n)) * ||y - (X w + b)||^2
+                  + alpha  * sum_j abs(w[j+1] - w[j])
                   + l1_ratio * ||w||_1   (optional)
 
     Input X is optionally standardized by dividing by max standard deviation

@@ -16,13 +16,13 @@ def load_data(fn):
     -----------
     fn : str
         The file path.
-        
+
     Returns
     -------
     pd.DataFrame or np.array or dict
         The loaded data.
     """
-    
+
     if fn.endswith("json"):
         df = pd.read_json(fn)
         with open(fn) as f:
@@ -35,8 +35,8 @@ def load_data(fn):
 
 
 def oxidation_state_worker(queue, struct):
-    """Helper function for add_oxidation_state_by_guess taking too long. 
-    
+    """Helper function for add_oxidation_state_by_guess taking too long.
+
     Calculate the oxidation state of a structure and return the output;
     to deal with possible long calculations.
 
@@ -47,7 +47,7 @@ def oxidation_state_worker(queue, struct):
         struct: pymatgen.core.structure.Structure
             pymatgen Structure object.
     """
-    
+
     ret = struct.add_oxidation_state_by_guess()
     queue.put(ret)
 
@@ -70,32 +70,32 @@ def linear(x, m, b):
     float
         The calculated value of y.
     """
-    
+
     return m * x + b
 
 
 def find_nearest(x, value):
     """Find the index of the nearest value in an array.
-    
+
     Parameters
     ----------
     x : np.array
         The array to search.
     value : float
         The value to search for.
-    
+
     Returns
     -------
     int
         The index of the nearest value.
     """
-    
+
     return np.argmin(np.abs(x - value))
 
 
 def get_mean_nn(struct, nnalgo, el):
     """Calculate the mean nearest neighbor distance for a specific element in a structure
-    
+
     Parameters
     ----------
     struct : pymatgen.core.structure.Structure
@@ -104,13 +104,13 @@ def get_mean_nn(struct, nnalgo, el):
         algorithm to calculate nearest neighbor distances.
     el : str
         element to calculate nearest neighbor distances for.
-    
+
     Returns
     -------
     float
         mean nearest neighbor distance for the specified element in the structure.
     """
-    
+
     nn_distances = []
     for i, label in enumerate(struct.labels):
         if label == el:
@@ -122,7 +122,7 @@ def get_mean_nn(struct, nnalgo, el):
 
 def func_unfix_width_reg(eng, *params):
     """Helper function for gaussian peak fitting and plotting.
-    
+
     Parameters
     ----------
     eng : np.array
@@ -131,10 +131,10 @@ def func_unfix_width_reg(eng, *params):
         parameters from the gaussian peak fitting.
 
     Returns
-    y : np.array 
+    y : np.array
         fit values across the energy range.
     """
-    
+
     y = np.zeros_like(eng)
     for i in range(0, len(params), 3):
         ctr = params[i]
@@ -149,15 +149,15 @@ def NormalizeData(arr):
 
     Parameters
     ----------
-    arr : np.array or list 
+    arr : np.array or list
         input array.
-        
+
     Returns
     -------
     np.array
         input array normalized between 0, 1.
     """
-    
+
     arr = np.array(arr)
     return (arr - arr.min()) / (arr.max() - arr.min())
 
@@ -180,7 +180,7 @@ def sort_get_value(my_dict: dict, id2: int = 20, id1: int = 0):
     values : list
         sorted values in the range id1 to id2.
     """
-    
+
     labels = np.array([str(l) for l in list(my_dict.keys())])
     values = np.array(list(my_dict.values()))
     sorted_values = np.argsort(values)[::-1]
@@ -190,22 +190,22 @@ def sort_get_value(my_dict: dict, id2: int = 20, id1: int = 0):
 
 def tamimoto(s1: np.array, s2: np.array):
     """Tamimoto similarity index between two binary (T/F or 0/1) arrays s1 and s2.
-    
+
     The tamimoto coefficient is a ratio that measures the similarity between two sets of data.
-    
+
     Parameters
     ----------
     s1 : np.array
         binary array.
     s2 : np.array
         binary array.
-        
+
     Returns
     -------
     J : np.array
         Tamimoto similarity index.
     """
-    
+
     # If s2 is a single array, make it a 2D array
     if len(s2.shape) == 1:
         s2 = np.expand_dims(s2, axis=0)
@@ -220,8 +220,8 @@ def tamimoto(s1: np.array, s2: np.array):
 
 
 def entropy(p0, p1):
-    """Calculate entropy of a random variable. 
-    
+    """Calculate entropy of a random variable.
+
     Entropy of a random variable is the avarage level of "information", "surprise", or
     "uncertainty" inherent in the variable's possible outcomes.
 
@@ -231,13 +231,13 @@ def entropy(p0, p1):
         The probability of choosing class 1.
     p1 : float
         The probability of choosing class 2.
-        
+
     Returns
     -------
     float
         entropy of random variable.
     """
-    
+
     return -p0 * np.log2(p0) - p1 * np.log2(p1)
 
 
@@ -254,7 +254,7 @@ def arr_entropy(arr):
     entropy : float
         entropy of the array.
     """
-    
+
     Ny = arr.shape[0]
     p0 = arr.sum(axis=0) / Ny
     p1 = (Ny - arr.sum(axis=0)) / Ny
@@ -270,13 +270,13 @@ def LCEN_selected_features(model, top_features: int):
         Fitted LCEN model from main.SPA.
     top_features : int
         The number of top X features to return.
-        
+
     Returns
     -------
     vals : list
         The value of the top "top_features" features.
     """
-    
+
     params = model["model_params"]
     num_selected = len(params)
     par_names = np.array(params)[:, 0]
@@ -379,7 +379,7 @@ def predict_LCEN(model: dict, X: np.ndarray) -> np.ndarray:
 
 def maximal_correlation_from_ace(X, y):
     """Calculate the maximal correlation between X and y using ACE.
-    
+
     Parameters
     ----------
     X : np.array
@@ -387,11 +387,11 @@ def maximal_correlation_from_ace(X, y):
     y : np.array
         The target variable.
     """
-    if 'model' not in globals():
+    if "model" not in globals():
         from ace import model
-    if 'pearsonr' not in globals():
+    if "pearsonr" not in globals():
         from scipy.stats import pearsonr
-        
+
     # 1) Convert to the format this ACE wants: list of 1-D arrays
     x_list = [X[:, j] for j in range(X.shape[1])]
 
@@ -400,11 +400,11 @@ def maximal_correlation_from_ace(X, y):
     myace.build_model_from_xy(x_list, y)  # runs ACE internally
 
     # 3) Grab learned transforms
-    x_transforms = myace.ace.x_transforms   # list of length M, arrays of shape (N,)
-    y_transform = myace.ace.y_transform     # array of shape (N,)
+    x_transforms = myace.ace.x_transforms  # list of length M, arrays of shape (N,)
+    y_transform = myace.ace.y_transform  # array of shape (N,)
 
     # 4) Sum predictor transforms across features for each sample
-    # theta(Y) is calculated based on the sum of the x_transforms 
+    # theta(Y) is calculated based on the sum of the x_transforms
     sum_phi = np.sum(np.column_stack(x_transforms), axis=1)  # shape (N,)
 
     # 5) Pearson correlation between sum(phi_j(X_j)) and theta(Y)

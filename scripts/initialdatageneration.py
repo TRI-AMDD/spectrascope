@@ -10,7 +10,6 @@ import time
 from multiprocessing import Process, Queue
 from spectrascope.utils import oxidation_state_worker
 
-
 # TODO: Figure out how to pull xas and structure information with the same query, right now not doing that
 # TODO: MP has multiple spectrum per structure, and is returning a linear combination here, need to think about
 # TODO: Add mean nearest neighbor distance calculation

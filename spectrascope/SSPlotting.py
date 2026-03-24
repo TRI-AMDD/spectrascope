@@ -534,6 +534,7 @@ class PlotModel(SpectraScopePlotting):
         """Not implemented yet.
 
         Parameters
+        ----------
         wavelet : str, optional, Default = "mexh"
             wavelet used in model fitting.
         """
