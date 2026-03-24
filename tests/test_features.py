@@ -1,8 +1,12 @@
 from spectrascope.Features import *
 
-x1, y1 = np.load("test_files/test_xas.npy")
-fnX = "test_files/X_testfile.npy"
-fny = "test_files/y_testfile.npy"
+import os
+
+test_dir = os.path.join(os.path.dirname(__file__), "test_files")
+x1y1 = np.load(os.path.join(test_dir, "test_xas.npy"), allow_pickle=True)
+x1, y1 = x1y1[0], x1y1[1]
+fnX = os.path.join(test_dir, "X_testfile.npy")
+fny = os.path.join(test_dir, "y_testfile.npy")
 X = np.load(fnX)
 X = X[0]
 # y = np.load(fny)
