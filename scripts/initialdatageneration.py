@@ -3,7 +3,7 @@ import pandas as pd
 from mp_api.client import MPRester
 from emmet.core.xas import Edge, XASDoc, Type
 from pymatgen.analysis.local_env import CrystalNN
-from spectrascope.features import spectral_features
+from spectrascope.Features import spectral_features
 import json
 from tqdm import tqdm
 import time
