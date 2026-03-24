@@ -3,7 +3,7 @@ import pandas as pd
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import plotly.express as px
-from spectrascope.plot_spectral_features import PlotModel as pm
+from spectrascope.SSPlotting import PlotModel as pm
 import numpy as np
 
 st.set_page_config(
@@ -160,7 +160,7 @@ if (
             yaxis_label=yaxis_label,
         )
         plotter.show_scale = st.session_state["scale_X"]
-        try: # hardcoding this for now
+        try:  # hardcoding this for now
             plotter.__getattribute__(f"plot_{feat}").__call__(**model_kwargs[feat])
             fig.layout.annotations[0].update(text="Top 2 Components/Clusters")
         except AttributeError:

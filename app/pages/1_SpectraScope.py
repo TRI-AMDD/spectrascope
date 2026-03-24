@@ -2,12 +2,11 @@ import contextlib
 
 import streamlit as st
 
-from spectrascope.ss_classification import *
-from spectrascope.plot_spectral_features import PlotSpectralFeatures as psf
+from spectrascope.SSClassification import *
+from spectrascope.SSPlotting import SpectraScopePlotting as psf
 
 from plotly.subplots import make_subplots
 import plotly.express as px
-
 
 st.set_page_config(
     page_title="Feature Generation and Model Training",

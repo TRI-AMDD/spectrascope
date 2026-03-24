@@ -5,20 +5,19 @@ from attr import dataclass
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 
 from app.google_analytics import inject_google_analytics
-from spectrascope.ss_classification import *
-from spectrascope.plot_spectral_features import PlotSpectralFeatures as psf
+from spectrascope.SSClassification import *
+from spectrascope.SSPlotting import PlotSpectralFeatures as psf
 
 st.set_page_config(page_title="SpectraScope", page_icon="👋", layout="wide")
 
 inject_google_analytics()
 
 st.write("# Welcome to SpectraScope! 👋")
-st.markdown(
-    """
+st.markdown("""
     SpectraScope is an app and python package for machine learning on spectral data.
-    """
-)
+    """)
 
+TEST_DIR = os.path.join(os.path.dirname(__file__), "../tests/test_files")
 
 @dataclass
 class SpecMetadata:
@@ -52,8 +51,9 @@ def load_default_data(option):
 
 
 def load_pdf_xanes_data():
-    fnX = "../tests/test_files/X_testfile.npy"
-    fny = "../tests/test_files/y_testfile.npy"
+    
+    fnX = os.path.join(TEST_DIR, "X_testfile.npy")
+    fny = os.path.join(TEST_DIR, "y_testfile.npy")
     spec_metadata = {
         "PDF": SpecMetadata(
             name="PDF",
@@ -78,11 +78,11 @@ def load_pdf_xanes_data():
 
 
 def load_wine_data():
-    XSF_br = np.load("../tests/test_files/grapes_example/XSF_br.npy")
-    XRF_br = np.load("../tests/test_files/grapes_example/XRF_br.npy")
-    br = np.load("../tests/test_files/grapes_example/br.npy")
-    nir_wls = np.load("../tests/test_files/grapes_example/nir_xaxis.npy")
-    raman_wls = np.load("../tests/test_files/grapes_example/rm_xaxis.npy")
+    XSF_br = np.load(os.path.join(TEST_DIR, "grapes_example/XSF_br.npy"))
+    XRF_br = np.load(os.path.join(TEST_DIR, "grapes_example/XRF_br.npy"))
+    br = np.load(os.path.join(TEST_DIR, "grapes_example/br.npy"))
+    nir_wls = np.load(os.path.join(TEST_DIR, "grapes_example/nir_xaxis.npy"))
+    raman_wls = np.load(os.path.join(TEST_DIR, "grapes_example/rm_xaxis.npy"))
     spec_metadata = {
         "NIR": SpecMetadata(
             name="NIR",
@@ -175,12 +175,12 @@ def plot_raw_data(data, spec_input):
 
 def main():
     st.markdown("Please Load Your Data")
-    
+
     # Add a button to clear cache if needed
     if st.button("Clear Cache ( if data not updating)"):
         st.cache_data.clear()
         st.rerun()
-    
+
     data_option = st.radio(
         "Select Data Option", ("Default (PDF,XANES)", "Default (Wine)", "custom")
     )
