@@ -5,10 +5,10 @@ __pycache__/
 spectrascope/__pycache__/
 tests/__pycache__/
 
-# Clean up 
-/docs/*
+# Clean up
 /JOSS/*
 /docsrc/*
+docs/.doctrees/
 /examples/TMNA.ipynb
 /examples/volume_prediction.ipynb
 /examples/maly_correlation.ipynb
