@@ -8,20 +8,17 @@ wrappers for sklearn pipelines and the LCEN regression model.
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
-import json
 from spectrascope.Features import *
 
 import datetime
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
-from sklearn.pipeline import make_pipeline, Pipeline
+from sklearn.pipeline import make_pipeline
 from sklearn.model_selection import GridSearchCV
 import os
 import pickle
 import spectrascope.StructurePropertyFeatures as structure_property_featurization
-import plotly.express as px
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 from spectrascope.utils import LCEN_selected_features, maximal_correlation_from_ace
 from sklearn.preprocessing import StandardScaler
 from sklearn.utils.validation import check_is_fitted
@@ -180,7 +177,7 @@ class SpectraScope:
             data = pd.read_json(fn)
         else:
             raise ValueError(
-                f"Please provide a filename with extension in {{.txt, .csv, .tsv, .xls, .xlsx, .npy, .json}}. You passed {filename}"
+                f"Please provide a filename with extension in {{.txt, .csv, .tsv, .xls, .xlsx, .npy, .json}}. You passed {fn}"
             )
         return data.to_numpy()
 
@@ -484,7 +481,6 @@ class SpectraScope:
         param_grid: dict = {"n_estimators": [50, 100], "criterion": ["squared_error"]},
         refit=True,
         metric=mean_squared_error,
-        savef=None,
     ):
         """Build pipeline for sklearn model training and hyperparameter tuning using GridSearchCV.
 
@@ -510,8 +506,6 @@ class SpectraScope:
             whether to refit an estimator using the best found parameters on the whole dataset. best_estimator is this final estimator.
         metric : function, optional
             sklearn metric, or any metric function for score, by default mean_squared_error
-        savef : str or None, optional, default None
-            path to save final model; not implemented currently.
 
         Returns
         -------
@@ -527,8 +521,7 @@ class SpectraScope:
             check_is_fitted(estimator)
             print("already fitted")
             estimator = clone(estimator)
-        except NotFittedError as exc:
-            # print(f"Model is not fitted yet.")
+        except NotFittedError:
             pass
 
         P = make_pipeline(
@@ -544,11 +537,6 @@ class SpectraScope:
         P.fit(X_train, y_train)
         ypred = P.predict(X_test)
         score = metric(y_test, ypred)
-
-        # if savef is not None:
-        #     with open(savef, 'wb') as f:
-        #         pickle.dump(P,f)
-
         return P, score, ypred
 
     def sk(
@@ -559,8 +547,6 @@ class SpectraScope:
         y_test,
         estimator=RandomForestRegressor(),
         metric=mean_squared_error,
-        savef=None,
-        **kwargs,
     ):
         """Fit sklearn estimator without hyperparameter tuning.
 
@@ -578,8 +564,6 @@ class SpectraScope:
             initialized sklearn estimator for training.
         metric : function, optional
             sklearn metric, or any metric function for score, by default mean_squared_error
-        savef : str or None, optional, default None
-            path to save final model; not implemented currently.
 
         Returns
         -------
@@ -594,8 +578,7 @@ class SpectraScope:
             check_is_fitted(estimator)
             print("already fitted")
             estimator = clone(estimator)
-        except NotFittedError as exc:
-            # print(f"Model is not fitted yet.")
+        except NotFittedError:
             pass
 
         est = estimator
@@ -684,8 +667,6 @@ class SpectraScope:
         }
         setattr(self, Xattr + "_" + yattr + "_" + model_name, fit_dict)
 
-        perc_err = np.mean(np.abs((y_test - ypred) / y_test)) * 100
-
         if model_name not in self.best_fits:
             self.best_fits[model_name] = {Xattr + "_" + yattr: score}  # score
         else:
@@ -768,7 +749,6 @@ class SpectraScope:
 
         setattr(self, Xattr + "_" + yattr + "_LCEN", out[0]["LCEN"])
         ypred = out[0]["LCEN"]["yhat_test_nontrans"]
-        perc_err = np.mean(np.abs((y_test - ypred) / y_test)) * 100
 
         if metric == "MAE":
             score = out[0]["LCEN"]["MSE_test_nontrans"]
@@ -1041,11 +1021,6 @@ class SpectraScope:
         yattr : str
             Target variable to select features for.
         """
-        if "r_regression" not in globals():
-            from sklearn.feature_selection import r_regression
-        if "model" not in globals():
-            from ace import model
-
         if feature_list == []:
             feature_list = self.generated_features
             print(
