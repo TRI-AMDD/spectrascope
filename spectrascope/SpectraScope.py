@@ -734,25 +734,33 @@ class SpectraScope:
         y_train = getattr(self, yattr + "_train")
         y_test = getattr(self, yattr + "_test")
 
-        np.save("X_train_temp", X_train)
-        np.save("X_test_temp", X_test)
-        np.save("y_train_temp", y_train)
-        np.save("y_test_temp", y_test)
-
         if "metric" not in kwargs:
             metric = "MAE"
         else:
             metric = kwargs["metric"]
             kwargs.pop("metric")
 
-        out = SPA.main_SPA(
-            "X_train_temp.npy",
-            "y_train_temp.npy",
-            "X_test_temp.npy",
-            "y_test_temp.npy",
-            model_name=["LCEN"],
-            **kwargs,
-        )
+        import os
+        import tempfile
+
+        with tempfile.TemporaryDirectory() as _tmpdir:
+            _orig_dir = os.getcwd()
+            try:
+                os.chdir(_tmpdir)
+                np.save("X_train_temp", X_train)
+                np.save("X_test_temp", X_test)
+                np.save("y_train_temp", y_train)
+                np.save("y_test_temp", y_test)
+                out = SPA.main_SPA(
+                    "X_train_temp.npy",
+                    "y_train_temp.npy",
+                    "X_test_temp.npy",
+                    "y_test_temp.npy",
+                    model_name=["LCEN"],
+                    **kwargs,
+                )
+            finally:
+                os.chdir(_orig_dir)
         vals, selected_features = LCEN_selected_features(out[0]["LCEN"], top_features)
         out[0]["LCEN"]["scaled"] = True
         out[0]["LCEN"]["selected_features"] = selected_features
