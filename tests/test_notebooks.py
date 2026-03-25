@@ -28,8 +28,8 @@ import pytest
 REPO_ROOT = pathlib.Path(__file__).parent.parent
 EXAMPLES_DIR = REPO_ROOT / "examples"
 
-GRAPES_NB = EXAMPLES_DIR / "Grapes_example.ipynb"
-XANES_NB = EXAMPLES_DIR / "XANES_PDF_example.ipynb"
+GRAPES_NB = EXAMPLES_DIR / "GRAPES.ipynb"
+XANES_NB = EXAMPLES_DIR / "XANES_PDF.ipynb"
 
 
 # ---------------------------------------------------------------------------
@@ -98,14 +98,14 @@ GRAPES_EXPECTED_SECTIONS = [
     "Load Data",
     "Preprocess",
     "Initialize SpectraScope",
-    "Generate Spectral Features",
     "Set Up Hyperparameter",
-    "Train Scikit-Learn Models",
-    "Train Fused Lasso",
-    "Train LCEN",
+    "Train Scikit-Learn and LCEN Models",
+    "Random Variable Control Experiment",
     "Correlation Analysis",
-    "Random Variable",
     "LCEN Hyperparameter Sensitivity",
+    "Figure 4",
+    "Figure 5",
+    "Figure 6",
 ]
 
 XANES_EXPECTED_SECTIONS = [
