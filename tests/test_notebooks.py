@@ -18,8 +18,6 @@ Skip slow tests (default):
 import ast
 import json
 import pathlib
-import shutil
-import tempfile
 
 import pytest
 
