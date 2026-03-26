@@ -32,9 +32,9 @@ setup(
         "python-dotenv",
         "ace",
         "tqdm",
+        "cvxpy",
     ],
     extras_require={
-        "fused_lasso": ["cvxpy"],
         "dev": ["pytest", "pre-commit", "black"],
     },
     classifiers=[
