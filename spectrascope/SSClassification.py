@@ -141,7 +141,6 @@ class BinaryClassifications(SpectraScope):
     def plot_bar(self, labels, values, xaxis_title="", yaxis_title="", title="", return_fig=False):
         fig = px.bar(x=labels, y=values)
         fig.update_layout(xaxis_title=xaxis_title, yaxis_title=yaxis_title, title=title)
-        fig.show()
 
         if return_fig:
             return fig
@@ -150,7 +149,7 @@ class BinaryClassifications(SpectraScope):
 
     def plot_nns(self):
         self.plot_hist(
-            self.nns_present, "nn mean distance, per site", "counts", nbins=30
+            self.nns_present, "nn mean distance, per site", "counts", "", nbins=30
         )
 
     def plot_my_dict(self, my_dict, xaxis_title, yaxis_title, title, id2, id1):

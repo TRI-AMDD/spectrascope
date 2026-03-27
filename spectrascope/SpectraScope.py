@@ -93,6 +93,9 @@ class SpectraScope:
         if X is not None:
             if isinstance(X, list):
                 self.X = X
+            elif isinstance(X, np.ndarray) and X.ndim >= 3:
+                # Assumption: first axis indexes separate spectra (e.g. shape (n_spectra, n_samples, n_points))
+                self.X = list(X)
             else:
                 self.X = [X]
         elif fnX is not None:
@@ -730,26 +733,28 @@ class SpectraScope:
             kwargs.pop("metric")
 
         import os
+        import shutil
         import tempfile
 
-        with tempfile.TemporaryDirectory() as _tmpdir:
-            _orig_dir = os.getcwd()
-            try:
-                os.chdir(_tmpdir)
-                np.save("X_train_temp", X_train)
-                np.save("X_test_temp", X_test)
-                np.save("y_train_temp", y_train)
-                np.save("y_test_temp", y_test)
-                out = SPA.main_SPA(
-                    "X_train_temp.npy",
-                    "y_train_temp.npy",
-                    "X_test_temp.npy",
-                    "y_test_temp.npy",
-                    model_name=["LCEN"],
-                    **kwargs,
-                )
-            finally:
-                os.chdir(_orig_dir)
+        _tmpdir = tempfile.mkdtemp()
+        _orig_dir = os.getcwd()
+        try:
+            os.chdir(_tmpdir)
+            np.save("X_train_temp", X_train)
+            np.save("X_test_temp", X_test)
+            np.save("y_train_temp", y_train)
+            np.save("y_test_temp", y_test)
+            out = SPA.main_SPA(
+                "X_train_temp.npy",
+                "y_train_temp.npy",
+                "X_test_temp.npy",
+                "y_test_temp.npy",
+                model_name=["LCEN"],
+                **kwargs,
+            )
+        finally:
+            os.chdir(_orig_dir)
+            shutil.rmtree(_tmpdir, ignore_errors=True)
         vals, selected_features = LCEN_selected_features(out[0]["LCEN"], top_features)
         out[0]["LCEN"]["scaled"] = True
         out[0]["LCEN"]["selected_features"] = selected_features
@@ -946,7 +951,7 @@ class SpectraScope:
         self.add_generated_feature(feat + "_tsfresh_selected")
 
     def pearson_feature_selection(
-        self, yattr, feature_list=[], k=3, return_top_k=False, return_vals=False
+        self, yattr, feature_list=None, k=3, return_top_k=False, return_vals=False
     ):
         """Use Pearson's correlation coefficient to identify
         top k linearly correlated features.
@@ -966,7 +971,7 @@ class SpectraScope:
         if "r_regression" not in globals():
             from sklearn.feature_selection import r_regression
 
-        if feature_list == []:
+        if feature_list is None:
             feature_list = self.generated_features
 
         max_pearsons = []
@@ -986,7 +991,7 @@ class SpectraScope:
             return all_pearsons
 
     def mutual_info_feature_selection(
-        self, yattr, feature_list=[], k=3, return_top_k=False, return_vals=False
+        self, yattr, feature_list=None, k=3, return_top_k=False, return_vals=False
     ):
         """Use mutual information to identify top k features most correlated with the target variable.
 
@@ -1003,7 +1008,7 @@ class SpectraScope:
         """
         if "mutual_info_regression" not in globals():
             from sklearn.feature_selection import mutual_info_regression
-        if feature_list == []:
+        if feature_list is None:
             feature_list = self.generated_features
         max_mutual_infos = []
         all_mutual_infos = {}
@@ -1022,7 +1027,7 @@ class SpectraScope:
             return all_mutual_infos
 
     def maximal_correlation_feature_selection(
-        self, yattr, feature_list=[], k=3, return_top_k=False, return_vals=False
+        self, yattr, feature_list=None, k=3, return_top_k=False, return_vals=False
     ):
         """Use maximal correlation to identify top k features most correlated with the target variable.
 
@@ -1031,7 +1036,7 @@ class SpectraScope:
         yattr : str
             Target variable to select features for.
         """
-        if feature_list == []:
+        if feature_list is None:
             feature_list = self.generated_features
             print(
                 "Warning: running on all features, this can take ~2 min per feature."
@@ -1056,7 +1061,7 @@ class SpectraScope:
         if return_vals:
             return all_maximal_correlations
 
-    def auto_feature_generation(self, feature_generation_dict={}):
+    def auto_feature_generation(self, feature_generation_dict=None):
         """Generate features for all loaded spectra.
 
         Parameters
@@ -1066,7 +1071,8 @@ class SpectraScope:
             If empty (default), generates all available features with default
             parameters for every spectrum in ``self.specnames``.
         """
-        if feature_generation_dict == {}:
+        if feature_generation_dict is None:
+            feature_generation_dict = {}
             print(
                 "Generating features on all spectra with default parameters."
             )

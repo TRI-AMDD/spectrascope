@@ -172,31 +172,12 @@ class PlotSpectralFeatures(SpectraScopePlotting):
         # TODO: This method is broken and unused (dead code). Issues:
         #  - `x` is undefined (never passed in or computed).
         #  - `func_unfix_width_reg` is undefined (not imported or defined).
-        #  - `fitted` on line 190 is undefined (never assigned).
+        #  - `fitted` is undefined (never assigned).
         #  - First `add_trace` call passes positional args instead of a
         #    go.Scatter object, which is the wrong Plotly API.
         #  - Second `add_trace` passes `linestyle` and `color` kwargs that
         #    are matplotlib-style, not valid for go.Scatter.
-        if self.fig is None:
-            pass
-        else:
-            pass
-        self.fig.add_trace(
-            self.xaxis,
-            func_unfix_width_reg(x, *self.feature),
-            label="Reconstructed spectrum",
-        )
-        for i in range(0, len(self.feature), 3):
-            ctr = self.feature[i]
-            amp = self.feature[i + 1]
-            wid = self.feature[i + 2]
-            yfit = amp * np.exp(-((x - ctr) ** 2 / (2 * (wid / 2.355) ** 2)))
-            self.fig.add_trace(
-                go.Scatter(self.xaxis, yfit, linestyle="-.", color="grey", **kwargs)
-            )
-
-        fitted = np.array(fitted).ravel()
-        return np.arange(len(fitted)), fitted
+        raise NotImplementedError("plot_gaussian_peaks is not yet implemented")
 
     def plot_cwt(self, **kwargs):
         """Plot continuous wavelet transform.
