@@ -28,13 +28,14 @@ setup(
         "matminer==0.9.2",
         "pillow==10.3.0",
         "matplotlib==3.8.3",
-        "setuptools<82",
+        "setuptools==80.10.2",
         "python-dotenv",
         "ace",
         "tqdm",
+        "cvxpy",
+        "seaborn",
     ],
     extras_require={
-        "fused_lasso": ["cvxpy"],
         "dev": ["pytest", "pre-commit", "black"],
     },
     classifiers=[
