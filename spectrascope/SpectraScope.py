@@ -641,8 +641,8 @@ class SpectraScope:
             except AttributeError:
                 feature_importances = P[0].best_estimator_.feature_importances_
             # choose top features
-            selected_features = np.argsort(feature_importances[::-1])[:top_features]
-            selected_vals = feature_importances[np.argsort(feature_importances[::-1])][
+            selected_features = np.argsort(feature_importances)[::-1][:top_features]
+            selected_vals = feature_importances[np.argsort(feature_importances)[::-1]][
                 :top_features
             ]
         elif "LogisticRegression" in model_name:
