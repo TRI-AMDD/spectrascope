@@ -95,7 +95,6 @@ class SpectraScope:
                 self.X = X
             else:
                 self.X = [X]
-            self.X = X
         elif fnX is not None:
             self.X = self.load_file(fnX)
 
@@ -134,6 +133,8 @@ class SpectraScope:
                 "Pass save_path to override."
             )
             self.save_path = "/examples/models/"
+        else:
+            self.save_path = save_path
 
     def add_generated_feature(self, feat):
         """Register a feature name in the generated features list (idempotent).
@@ -182,7 +183,7 @@ class SpectraScope:
             raise ValueError(
                 f"Please provide a filename with extension in {{.txt, .csv, .tsv, .xls, .xlsx, .npy, .json}}. You passed {fn}"
             )
-        return data.to_numpy()
+        return np.asarray(data)
 
     def add_x_axis(self, specname: str, value: np.array):
         """
@@ -649,8 +650,8 @@ class SpectraScope:
             except AttributeError:
                 feature_importances = P[0].best_estimator_.feature_importances_
             # choose top features
-            selected_features = np.argsort(feature_importances[::-1])[:top_features]
-            selected_vals = feature_importances[np.argsort(feature_importances[::-1])][
+            selected_features = np.argsort(feature_importances)[::-1][:top_features]
+            selected_vals = feature_importances[np.argsort(feature_importances)[::-1]][
                 :top_features
             ]
         elif "LogisticRegression" in model_name:
@@ -780,7 +781,7 @@ class SpectraScope:
         feats: dict,
         yattr,
         test_size,
-        sk_kwargs=[],
+        sk_kwargs=None,
         lcen_kwargs=None,
         multi_modal=None,
         savef=None,
@@ -815,6 +816,8 @@ class SpectraScope:
         scale_X : bool, optional, default=True
             If True, will scale X data before fitting.
         """
+        if sk_kwargs is None:
+            sk_kwargs = []
         self.timenow = datetime.datetime.now().time().strftime("%H_%M_%S_%f")
 
         if do_all_existing:
@@ -1095,7 +1098,7 @@ class SpectraScope:
     def auto_ss(
         self,
         yattr,
-        auto_dict={"feature_generation": {}, "RF": {}, "LCEN": {}},
+        auto_dict=None,
         do_ace=False,
         k=3,
     ):
@@ -1117,6 +1120,8 @@ class SpectraScope:
         k : int, optional, default=3
             Number of top features to select for moddel training.
         """
+        if auto_dict is None:
+            auto_dict = {"feature_generation": {}, "RF": {}, "LCEN": {}}
         if auto_dict["RF"] == {}:
             print(
                 "0a. No RF hyperparameter grid provided; using defaults for cross-validation."
@@ -1187,5 +1192,5 @@ class SpectraScope:
 
         for feat in ace_selected:
             self.do_sk(feat, yattr, **auto_dict["RF"])
-            self.do_lcen(feat, yattr=yattr, **auto_dict["LCEN"])
+            self.do_LCEN(feat, yattr=yattr, **auto_dict["LCEN"])
         print("   Model training done ✅")

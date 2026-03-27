@@ -447,7 +447,7 @@ def fitted_callback():
     st.session_state["fitted"] = True
 
 
-run_it = st.button("Run it!", False, on_click=fitted_callback())
+run_it = st.button("Run it!", False, on_click=fitted_callback)
 
 if run_it:
     print(test_size)

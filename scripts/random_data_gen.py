@@ -2,7 +2,7 @@ import numpy as np
 from numpy import ndarray
 
 
-def generate_linear_5var_polynomial_data(X=None, noise=0.1) -> tuple(ndarray, ndarray):
+def generate_linear_5var_polynomial_data(X=None, noise=0.1) -> tuple[ndarray, ndarray]:
     # Where X is a vector of Nx5 variables
     if X is None:
         X = np.random.uniform(0, 10, (1000, 5))

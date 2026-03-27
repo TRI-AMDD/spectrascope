@@ -141,7 +141,7 @@ if (
                 )
                 st.write(temp)
                 print(raw.shape)
-        except:
+        except Exception:
             pass
         st.stop()
 

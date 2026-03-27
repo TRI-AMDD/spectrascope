@@ -138,7 +138,7 @@ class BinaryClassifications(SpectraScope):
         else:
             fig.show()
 
-    def plot_bar(self, labels, values, return_fig=False):
+    def plot_bar(self, labels, values, xaxis_title="", yaxis_title="", title="", return_fig=False):
         fig = px.bar(x=labels, y=values)
         fig.update_layout(xaxis_title=xaxis_title, yaxis_title=yaxis_title, title=title)
         fig.show()

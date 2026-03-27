@@ -14,7 +14,10 @@ import matplotlib.pyplot as plt
 import pywt
 from scipy.optimize import curve_fit
 from scipy.fft import fft, fftfreq
-from pyts.transformation import ShapeletTransform, BagOfPatterns, BOSS, ROCKET, WEASEL
+try:
+    from pyts.transformation import ShapeletTransform, BagOfPatterns, BOSS, ROCKET, WEASEL
+except ImportError:
+    ShapeletTransform = BagOfPatterns = BOSS = ROCKET = WEASEL = None
 from scipy.ndimage import gaussian_filter
 from sklearn.cluster import FeatureAgglomeration
 from sklearn.decomposition import PCA
@@ -250,7 +253,7 @@ class SpectralFeatures:
     def polynomial_featuresall(
         self,
         degree: int = 3,
-        Narr: np.array = np.array([4, 5, 10, 20]),
+        Narr: np.array = None,
         interpolate: bool = True,
         return_features: bool = False,
         **kwargs,
@@ -276,6 +279,8 @@ class SpectralFeatures:
             An array of polynomial coefficients for the bins. Shape is sum((degree + 1) * n for n in Narr) + 1 (max energy position).
         """
 
+        if Narr is None:
+            Narr = np.array([4, 5, 10, 20])
         self.polyfeatures_all = np.zeros([self.intensities.shape[0], 1])
 
         for N in Narr:
@@ -295,9 +300,9 @@ class SpectralFeatures:
 
     def uneven_features(
         self,
-        eV_splits: list[int] = [20, 40],
-        N_dict: dict = {0: 10, 1: 4, 2: 5},
-        degree_dict: dict = {0: 3, 1: 5, 2: 3},
+        eV_splits: list[int] = None,
+        N_dict: dict = None,
+        degree_dict: dict = None,
         verbose: bool = False,
         plot: bool = False,
         return_features: bool = False,
@@ -322,6 +327,12 @@ class SpectralFeatures:
             Flag indicating whether to return the features. Currently not implemented.
         """
 
+        if eV_splits is None:
+            eV_splits = [20, 40]
+        if N_dict is None:
+            N_dict = {0: 10, 1: 4, 2: 5}
+        if degree_dict is None:
+            degree_dict = {0: 3, 1: 5, 2: 3}
         idx_arr = [
             find_nearest(self.energies, self.energies.min() + eV) for eV in eV_splits
         ]
@@ -421,7 +432,7 @@ class SpectralFeatures:
 
     def cwt(
         self,
-        scales=np.arange(1, 11),
+        scales=None,
         wavelet="mexh",
         verbose=False,
         return_features: bool = False,
@@ -449,6 +460,8 @@ class SpectralFeatures:
             if the unit of sampling period are seconds and given, then frequencies are in herts, otherwise a sampling period of 1 assumed.
         """
 
+        if scales is None:
+            scales = np.arange(1, 11)
         x, y = self.check_xinterp(verbose)
 
         scales = np.array(scales).astype(int)

@@ -169,6 +169,14 @@ class PlotSpectralFeatures(SpectraScopePlotting):
         fitted : np.array
             y values for plotting gaussian peaks.
         """
+        # TODO: This method is broken and unused (dead code). Issues:
+        #  - `x` is undefined (never passed in or computed).
+        #  - `func_unfix_width_reg` is undefined (not imported or defined).
+        #  - `fitted` on line 190 is undefined (never assigned).
+        #  - First `add_trace` call passes positional args instead of a
+        #    go.Scatter object, which is the wrong Plotly API.
+        #  - Second `add_trace` passes `linestyle` and `color` kwargs that
+        #    are matplotlib-style, not valid for go.Scatter.
         if self.fig is None:
             pass
         else:

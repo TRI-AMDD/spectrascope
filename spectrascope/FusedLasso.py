@@ -82,8 +82,8 @@ class FusedLasso(BaseEstimator, RegressorMixin):
         X = np.asarray(X)
         if self.standardize_X:
             stds = X.std(axis=0)
-            max_std = stds.max()
-            X = X / max_std
+            self.max_std_ = stds.max()
+            X = X / self.max_std_
         y = np.asarray(y).ravel()
         n_samples, n_features = X.shape
 
@@ -137,4 +137,6 @@ class FusedLasso(BaseEstimator, RegressorMixin):
             Predicted target values.
         """
         X = np.asarray(X)
+        if self.standardize_X:
+            X = X / self.max_std_
         return X @ self.coef_ + self.intercept_

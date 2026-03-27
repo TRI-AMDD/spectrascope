@@ -124,7 +124,7 @@ def test_is_in_space_group():
     assert not is_in_space_group(copper_structure, 224)
 
 
-def is_crystal_system():
+def test_is_crystal_system():
 
     copper_structure = comp_to_structure[Composition(("Cu") * 4)]
 
