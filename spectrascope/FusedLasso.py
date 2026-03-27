@@ -80,6 +80,7 @@ class FusedLasso(BaseEstimator, RegressorMixin):
             If the CVXPY optimization does not converge.
         """
         X = np.asarray(X)
+        self.max_std_ = 1
         if self.standardize_X:
             stds = X.std(axis=0)
             self.max_std_ = stds.max()
@@ -136,7 +137,5 @@ class FusedLasso(BaseEstimator, RegressorMixin):
         y_pred : np.ndarray of shape (n_samples,)
             Predicted target values.
         """
-        X = np.asarray(X)
-        if self.standardize_X:
-            X = X / self.max_std_
+        X = np.asarray(X) / self.max_std_
         return X @ self.coef_ + self.intercept_
