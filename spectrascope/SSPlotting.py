@@ -6,16 +6,21 @@ Provides three main classes:
 - ``PlotModel``: overlay model-selected features on spectra for result interpretation.
 """
 
+import warnings
+
 import plotly.graph_objects as go
 import numpy as np
-from spectrascope.utils import *
+from spectrascope.utils import find_nearest, func_unfix_width_reg
 from PIL import Image
 from matplotlib.colors import rgb2hex
 import matplotlib.cm as cm
 import matplotlib.colors as mcolors
 from scipy.fft import fftfreq
+from pathlib import Path
 
 __docformat__ = "numpy"
+
+_STATIC_DIR = Path(__file__).resolve().parent.parent / "app" / "static"
 
 
 class SpectraScopePlotting:
@@ -473,7 +478,7 @@ class PlotModel(SpectraScopePlotting):
             height_id = find_nearest(self.xaxis, center)
             height = self.raw[height_id]
             # plot_key[selected_id] = (center, poly_label, height)
-            im = Image.open(f"../app/static/{poly_label}.png")
+            im = Image.open(_STATIC_DIR / f"{poly_label}.png")
 
             self.fig.add_layout_image(
                 dict(
@@ -722,7 +727,6 @@ class PlotModel(SpectraScopePlotting):
                     )
                 )
 
-            # self.fig.update_layout(coloraxis_colorbar=dict(title="Coefficient or Importance"))
             self.fig.update_layout(hovermode="x")
         self.fig.update_xaxes(title_text=xaxis_label, row=self.row, col=self.col)
         self.fig.update_yaxes(title_text=y_name, row=self.row, col=self.col)
@@ -756,12 +760,7 @@ class PlotModel(SpectraScopePlotting):
                 ),
             )
 
-        # self.fig.update_layout(coloraxis_colorbar=dict(title="Coefficient or Importance"))
         self.fig.update_layout(hovermode="x")
-
-        # self.fig.layout.yaxis2.update(showticklabels=False)
-
-        # customdata=self.xaxis[self.selected_features], hovertemplate="x:%{customdata[0]}"
 
 
 from spectrascope.Features import SpectralFeatures
@@ -845,9 +844,9 @@ def plot_spectral_features_matplotlib(
                     height = raw[height_id]
 
                     # Load image
-                    img_path = f"../app/static/{poly_label}.png"
+                    img_path = _STATIC_DIR / f"{poly_label}.png"
                     if not os.path.exists(img_path):
-                        print(f"Warning: {img_path} not found.")
+                        warnings.warn(f"{img_path} not found.")
                         continue
                     im = Image.open(img_path)
 
@@ -867,11 +866,9 @@ def plot_spectral_features_matplotlib(
                     ax.add_artist(ab)
                     break  # stop after first matching range
     except ValueError as e:
-        print(e)
-        print(
-            "Warning : Image size too large. You probably have to plot something else on this axis first."
-        )
-        print(
-            "Try reducing the zoom, set plot_raw=True, or plotting other spectra on the axis first"
+        warnings.warn(
+            f"{e}\n"
+            "Image size may be too large. Try reducing zoom, setting plot_raw=True, "
+            "or plotting other spectra on the axis first."
         )
     return ax

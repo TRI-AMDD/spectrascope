@@ -3,6 +3,8 @@ Spectral Features class for Spectrascope
 
 """
 
+import warnings
+
 import numpy as np
 from scipy.interpolate import interp1d
 from numpy.polynomial import Polynomial
@@ -124,8 +126,6 @@ class SpectralFeatures:
             if bin_indices[i] == N:
                 bin_indices[i] -= 1
 
-        # if bin_indices.max() != N-1:
-        #     raise ValueError('Cannot generate even bins with the given N on this range')
         if len(np.unique(bin_indices)) == len(np.arange(N)):
             if (np.unique(bin_indices) == np.arange(N)).all():
 
@@ -147,7 +147,7 @@ class SpectralFeatures:
                         )
 
         else:
-            print("proper number of bins not generated, attribute not created")
+            warnings.warn("Proper number of bins not generated; attribute not created.")
 
     def polynomial_featuresN(
         self,
@@ -184,7 +184,8 @@ class SpectralFeatures:
             if hasattr(self, "xinterp") == False:
                 if verbose:
                     print(
-                        "generating features on self.energies, self.intensities...are these already interpolated? "
+                        "Generating features on raw energies/intensities. "
+                        "Consider running pointwise_features() first for interpolation."
                     )
                 x = self.energies
                 y = self.intensities
@@ -339,20 +340,19 @@ class SpectralFeatures:
             degree = degree_dict[i]
             if i == 0:
                 start, stop = 0, idx
-                x, y = x_full[start:stop], y_full[start:stop]
+                x, y = x_full[start:stop], y_full[:, start:stop]
                 self.polynomial_featuresN(N, degree=degree, x=x, y=y, verbose=verbose)
                 if plot:
                     plt.plot(x, y)
             elif i < len(idx_arr):
                 start, stop = idx_arr[i - 1], idx
-                x, y = x_full[start:stop], y_full[start:stop]
+                x, y = x_full[start:stop], y_full[:, start:stop]
                 if plot:
                     plt.plot(x, y)
                 self.polynomial_featuresN(N, degree=degree, x=x, y=y, verbose=verbose)
         N = N_dict[i + 1]
         degree = degree_dict[i + 1]
-        start, stop = idx, -1
-        x, y = x_full[start:], y_full[start:]
+        x, y = x_full[idx:], y_full[:, idx:]
         self.polynomial_featuresN(N, degree=degree, x=x, y=y, verbose=verbose)
         if plot:
             plt.plot(x, y)
@@ -525,8 +525,8 @@ class SpectralFeatures:
 
         if hasattr(self, "xinterp") == False:
             if "xrange" not in kwargs:
-                print(
-                    "to perform fft need evenly spaced data, please provide xrange to perform interpolation need to perform interpolation"
+                warnings.warn(
+                    "FFT requires evenly spaced data. Provide xrange to interpolate first."
                 )
                 return
             else:
@@ -571,25 +571,8 @@ class SpectralFeatures:
     def gaussian_mixture_features(
         self, n_components: int, return_features: bool = False, **kwargs
     ):
-        """Representation of a Gaussian mixture model probability distribution.
-
-        Not impplemented yet.
-
-        Parameters
-        ----------
-        n_components : int
-            number of mixture components.
-        return_features : bool, optional
-            return features. Default False.
-        **kwargs: dict
-            additional parameters to pass to Gaussian
-
-        Attributes
-        ----------
-
-        """
-
-        pass
+        """Representation of a Gaussian mixture model probability distribution."""
+        raise NotImplementedError
 
     def pca(
         self,
@@ -633,13 +616,21 @@ class SpectralFeatures:
     ):
         """Recursively merges pairs of clusters of features that minimally increases a given linkage distance.
 
-        Args:
-            n_clusters (int, optional): Number of clusters. Defaults to 10.
-            verbose (bool, optional): _description_. Defaults to False.
-            return_features (bool, optional): _description_. Defaults to False.
-            **kwargs: Additional parameters to pass to FeatureAgglomeration.
-        Returns:
-            _type_: _description_
+        Parameters
+        ----------
+        n_clusters : int, optional
+            Number of clusters. Default 10.
+        verbose : bool, optional
+            Print progress. Default False.
+        return_features : bool, optional
+            Return features. Default False.
+        **kwargs : dict
+            Additional parameters to pass to FeatureAgglomeration.
+
+        Returns
+        -------
+        np.array or None
+            Feature agglomeration features if return_features is True.
         """
 
         x, y = self.check_xinterp(verbose)
@@ -677,33 +668,28 @@ class SpectralFeatures:
             return self.shapelet_features
 
     def b_splines(self):
-        """Not implemented yet."""
-        pass
+        """B-spline feature extraction."""
+        raise NotImplementedError
 
     def bow_features(self, **kwargs):
-        """Not implemented yet."""
-        bow = BagOfWords(**kwargs)
-        pass
+        """Bag of Words feature extraction."""
+        raise NotImplementedError
 
     def bop_features(self, **kwargs):
-        """Not implemented yet."""
-        bop = BagOfPatterns(**kwargs)
-        pass
+        """Bag of Patterns feature extraction."""
+        raise NotImplementedError
 
     def boss_features(self, **kwargs):
-        """Not implemented yet."""
-        boss = BOSS(**kwargs)
-        pass
+        """BOSS (Bag-of-SFA-Symbols) feature extraction."""
+        raise NotImplementedError
 
     def WEASEL_features(self, **kwargs):
-        """Not implemented yet."""
-        wsl = WEASEL(**kwargs)
-        pass
+        """WEASEL feature extraction."""
+        raise NotImplementedError
 
     def ROCKET_features(self, **kwargs):
-        """Not implemented yet."""
-        rkt = ROCKET(**kwargs)
-        pass
+        """ROCKET feature extraction."""
+        raise NotImplementedError
 
     def check_xinterp(self, verbose=False):
         """Check if interpolated data exists and return either interpolated data or raw data.

@@ -1,8 +1,11 @@
+import pytest
+
+SPA = pytest.importorskip("SPA", reason="SPA (SmartProcessAnalytics) not installed")
+sns = pytest.importorskip("seaborn", reason="seaborn not installed")
+
 from spectrascope.SpectraScope import *
 from spectrascope.Features import *
 from sklearn.linear_model import Ridge, Lasso, ElasticNet
-import SPA
-import seaborn as sns
 from spectrascope.SSClassification import *
 
 test_dir = os.path.join(os.path.dirname(__file__), "test_files")

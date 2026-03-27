@@ -113,9 +113,7 @@ def test_polynomial_features_all():
 
 
 def test_uneven():
-    "print: uneven currently unsure"
-    return
-    x, y = np.load("test_data/test_xas.npy")
+    x, y = x1, y1
     temp = SpectralFeatures(x, y)
 
     eV_splits = [20, 50]
@@ -132,22 +130,21 @@ def test_uneven():
         degree = degree_dict[i]
         if i == 0:
             start, stop = 0, idx
-            tempx, tempy = x[start:stop], y[start:stop]
+            tempx = x[start:stop]
             assert hasattr(
                 temp,
                 f"polyfeatures_{round(tempx.min())}_{round(tempx.max())}_{N}_{degree}deg",
             )
         elif i < len(idx_arr):
             start, stop = idx_arr[i - 1], idx
-            tempx, tempy = x[start:stop], y[start:stop]
+            tempx = x[start:stop]
             assert hasattr(
                 temp,
                 f"polyfeatures_{round(tempx.min())}_{round(tempx.max())}_{N}_{degree}deg",
             )
     N = N_dict[i + 1]
     degree = degree_dict[i + 1]
-    start, stop = idx, -1
-    tempx, tempy = x[start:], y[start:]
+    tempx = x[idx:]
     assert hasattr(
         temp, f"polyfeatures_{round(tempx.min())}_{round(tempx.max())}_{N}_{degree}deg"
     )
@@ -213,13 +210,6 @@ def test_fft():
         assert hasattr(temp, "fft_feat")
         assert hasattr(temp, "fft_freq")
         assert temp.fft_freq.shape[0] == temp.fft_feat.shape[-1] == 400 // 2
-
-        # x, y = np.load('test_data/test_xas.npy')
-        # temp = SpectralFeatures(x, y)
-        # temp.fft_features(xrange = np.linspace(x.min(), x.max(), 300))
-        # assert hasattr(temp, 'fft_feat')
-        # assert hasattr(temp, 'fft_freq')
-        # assert temp.fft_freq.shape[0] == temp.fft_feat.shape[-1] == 300//2
 
 
 def test_gaussian_filter():

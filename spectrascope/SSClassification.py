@@ -1,12 +1,24 @@
-from spectrascope.SpectraScope import *
-from spectrascope.Features import *
-from spectrascope.StructurePropertyFeatures import *
+import warnings
+
+import numpy as np
+import pandas as pd
+from spectrascope.SpectraScope import SpectraScope
+from spectrascope.StructurePropertyFeatures import (
+    CrystalNN,
+    SpacegroupAnalyzer,
+    identify_crystal_system,
+    is_element_present,
+    is_cn_present,
+    is_oxidation_state_present,
+    is_in_space_group,
+    is_nn_distance_present,
+)
+from spectrascope.utils import sort_get_value, tanimoto, arr_entropy
 from collections import OrderedDict
 from tqdm.auto import tqdm
 import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from spectrascope.utils import *
 
 from scipy.spatial.distance import cdist
 from matminer.featurizers.structure import SiteStatsFingerprint
@@ -284,8 +296,6 @@ class BinaryClassifications(SpectraScope):
                 if mpids[i] not in self.structures_library:
                     self.structures_library[mpids[i]] = {}
                 self.structures_library[mpids[i]][label] = value
-                # print(mpids[i])
-            # print(pd.DataFrame(self.structures_library).T.head())
 
     def update_structures_library_defaults(self):
         self.update_structures_library(
@@ -308,8 +318,6 @@ class BinaryClassifications(SpectraScope):
         df = pd.DataFrame(self.structures_library).T
         self.structures_df = df
 
-        # vog = np.array([f for f in self.structures_df['structure_vector']])
-        # self.og_similarity = self.av_distance(vog)
         self.ground_truth_df = self.structures_df[
             [col for col in self.structures_df if "structure" not in col]
         ]
@@ -319,7 +327,7 @@ class BinaryClassifications(SpectraScope):
         self.ground_truth = self.ground_truth_df.to_numpy()
 
         for i, s1 in enumerate(self.ground_truth):
-            J = tamimoto(s1, self.ground_truth)
+            J = tanimoto(s1, self.ground_truth)
             self.ground_truth_similarity[i] = J.ravel()
 
     def av_distance(self, v):
@@ -343,15 +351,7 @@ class BinaryClassifications(SpectraScope):
 
         self.add_y(yattr, self.structures_df[yattr].astype(int))
         self.split_y(yattr, test_size)
-        from sklearn.utils.validation import check_is_fitted
-        from sklearn.exceptions import NotFittedError
-
         estimator = kwargs["estimator"]
-        # try:
-        #     check_is_fitted(estimator)
-        #     print('already fitted')
-        # except NotFittedError as exc:
-        #     print('not fitted')
 
         self.do_sk(
             Xattr,
@@ -426,14 +426,14 @@ class BinaryClassifications(SpectraScope):
         result_mat = np.zeros([mat1.shape[0], mat1.shape[0]])
 
         for i, s1 in enumerate(mat1):
-            J = tamimoto(s1, mat2)
+            J = tanimoto(s1, mat2)
             result_mat[i] = J.ravel()
         return result_mat
 
     def plot_structure_entropy(self, **plotly_kwargs):
         temp = pd.DataFrame(self.entropy_dict)
         if len(self.entropy_dict) == 0:
-            print("you havent done any fitting yet")
+            warnings.warn("No models have been fitted yet.")
 
         self.plot_df_heatmap(temp, **plotly_kwargs)
 
@@ -450,7 +450,7 @@ class BinaryClassifications(SpectraScope):
 
         s1 = np.array(spec_classifications)
         mat2 = self.ground_truth_df[selected_yattrs].to_numpy()
-        J = tamimoto(s1, mat2)
+        J = tanimoto(s1, mat2)
         top10 = np.argsort(J)[::-1][:top]
         return spec_classifications, np.array(self.mpids)[top10]
 

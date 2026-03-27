@@ -1,11 +1,15 @@
+import os
 import pathlib
 
+import numpy as np
+import pandas as pd
 import streamlit as st
 from attr import dataclass
+from plotly.subplots import make_subplots
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 
 from app.google_analytics import inject_google_analytics
-from spectrascope.SSClassification import *
+from spectrascope.SpectraScope import SpectraScope
 from spectrascope.SSPlotting import PlotSpectralFeatures as psf
 
 st.set_page_config(page_title="SpectraScope", page_icon="👋", layout="wide")

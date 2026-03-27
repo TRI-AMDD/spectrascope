@@ -3,6 +3,7 @@ Miscellaneous utility functions for SpectraScope
 """
 
 from multiprocessing import Queue
+import json
 import numpy as np
 import pandas as pd
 
@@ -188,10 +189,10 @@ def sort_get_value(my_dict: dict, id2: int = 20, id1: int = 0):
     return labels[sorted_values][id1:id2], values[sorted_values][id1:id2]
 
 
-def tamimoto(s1: np.array, s2: np.array):
-    """Tamimoto similarity index between two binary (T/F or 0/1) arrays s1 and s2.
+def tanimoto(s1: np.array, s2: np.array):
+    """Tanimoto similarity index between two binary (T/F or 0/1) arrays s1 and s2.
 
-    The tamimoto coefficient is a ratio that measures the similarity between two sets of data.
+    The Tanimoto coefficient is a ratio that measures the similarity between two sets of data.
 
     Parameters
     ----------

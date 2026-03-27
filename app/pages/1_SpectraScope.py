@@ -1,12 +1,14 @@
 import contextlib
 
+import numpy as np
+import pandas as pd
 import streamlit as st
-
-from spectrascope.SSClassification import *
-from spectrascope.SSPlotting import SpectraScopePlotting as psf
-
 from plotly.subplots import make_subplots
 import plotly.express as px
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error
+
+from spectrascope.SSPlotting import SpectraScopePlotting as psf
 
 st.set_page_config(
     page_title="Feature Generation and Model Training",

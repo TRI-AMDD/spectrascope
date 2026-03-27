@@ -5,10 +5,12 @@ datasets, coordinates feature extraction via :mod:`spectrascope.Features`, and p
 wrappers for sklearn pipelines and the LCEN regression model.
 """
 
+import warnings
+
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from spectrascope.Features import *
+from spectrascope.Features import SpectralFeatures
 
 import datetime
 from sklearn.ensemble import RandomForestRegressor
@@ -38,7 +40,7 @@ class SpectraScope:
         y=None,
         fnX: str = None,
         fny: str = None,
-        specnames: list = [],
+        specnames: list = None,
         yname: str = "",
         random_seed: int = None,
         save_path: str = None,
@@ -97,7 +99,7 @@ class SpectraScope:
         elif fnX is not None:
             self.X = self.load_file(fnX)
 
-        if specnames == []:
+        if specnames is None:
             specnames = [f"spec{i}" for i in range(len(self.X))]
 
         for i, specname in enumerate(specnames):
@@ -116,8 +118,8 @@ class SpectraScope:
             self.add_y(yname, y)
 
         if type(random_seed) is not int:
-            print(
-                "no random seed selected, when splitting data, will always give different split"
+            warnings.warn(
+                "No random seed set; data splits will differ between runs."
             )
             self.random_seed = random_seed
         else:
@@ -127,8 +129,9 @@ class SpectraScope:
         self.specnames = specnames
         self.generated_features = []
         if save_path is None:
-            print(
-                "saving to /examples/models, change save_path kwarg if youd like to change"
+            warnings.warn(
+                "No save_path specified; defaulting to '/examples/models/'. "
+                "Pass save_path to override."
             )
             self.save_path = "/examples/models/"
 
@@ -303,8 +306,8 @@ class SpectraScope:
         structfeat : _type_
             Name of the structure_property_featurization method to call
         additional_naming : str, optional
-            _description_, by default ""
-        **kwargs : _type_
+            Extra string appended to the generated attribute name. Default "".
+        **kwargs : dict
             Additional kwargs for the structure_property_featurization method called
         """
         structure_arr = getattr(self, structarr)
@@ -323,7 +326,6 @@ class SpectraScope:
             + additional_naming,
             y,
         )
-        # self.structural_features()
 
     def structural_labels(self):
         """Not implemented yet.
@@ -387,7 +389,7 @@ class SpectraScope:
         degree : int, optional
             Degree of polynomial transformations. Must be in [1,2,3]. Default 2
         interaction : bool, optional
-            _description_, by default True
+            Whether to include interaction terms between features. Default True.
         trans_type : str in {'all', 'poly', 'simple_interaction'}, optional, default "all"
             Whether to include all transforms (polynomial, log, sqrt, inverse) only polynomial transform, or just interaction terms.
         all_pos_y : bool, optional, default=True
@@ -475,10 +477,10 @@ class SpectraScope:
         X_test,
         y_train,
         y_test,
-        estimator=RandomForestRegressor(),
+        estimator=None,
         scoring="r2",
         cv=5,
-        param_grid: dict = {"n_estimators": [50, 100], "criterion": ["squared_error"]},
+        param_grid: dict = None,
         refit=True,
         metric=mean_squared_error,
     ):
@@ -517,9 +519,13 @@ class SpectraScope:
             predicted y values
         """
 
+        if estimator is None:
+            estimator = RandomForestRegressor()
+        if param_grid is None:
+            param_grid = {"n_estimators": [50, 100], "criterion": ["squared_error"]}
+
         try:
             check_is_fitted(estimator)
-            print("already fitted")
             estimator = clone(estimator)
         except NotFittedError:
             pass
@@ -545,7 +551,7 @@ class SpectraScope:
         X_test,
         y_train,
         y_test,
-        estimator=RandomForestRegressor(),
+        estimator=None,
         metric=mean_squared_error,
     ):
         """Fit sklearn estimator without hyperparameter tuning.
@@ -574,9 +580,11 @@ class SpectraScope:
         ypred : np.array
             predicted y values
         """
+        if estimator is None:
+            estimator = RandomForestRegressor()
+
         try:
             check_is_fitted(estimator)
-            print("already fitted")
             estimator = clone(estimator)
         except NotFittedError:
             pass
@@ -646,7 +654,6 @@ class SpectraScope:
                 :top_features
             ]
         elif "LogisticRegression" in model_name:
-            print(top_features)
             selected_features = np.argsort(np.abs(P.coef_))[::-1][:top_features]
             selected_vals = P.coef_[np.argsort(np.abs(P.coef_))[::-1]][:top_features]
         elif "FusedLasso" in model_name:
@@ -891,8 +898,8 @@ class SpectraScope:
         Parameters
         ----------
         df : pd.DataFrame
-            _description_
-        fig : _type_, optional, default None
+            DataFrame to visualize as a heatmap (e.g. model scores indexed by feature set and model type).
+        fig : plotly.graph_objects.Figure, optional, default None
             plotly figure for plotting. If None, will create a new figure.
         """
         if fig == None:
@@ -1024,7 +1031,7 @@ class SpectraScope:
         if feature_list == []:
             feature_list = self.generated_features
             print(
-                "WARNING : running on all features,this can take ~2 min per feature to run"
+                "Warning: running on all features, this can take ~2 min per feature."
             )
 
         max_maximal_correlations = []
@@ -1058,12 +1065,12 @@ class SpectraScope:
         """
         if feature_generation_dict == {}:
             print(
-                "generating features on all input spectra for all available features with default ranges"
+                "Generating features on all spectra with default parameters."
             )
             for spec in self.specnames:
                 if not hasattr(self, spec + "_xaxis"):
-                    print(
-                        f"warning, {spec} does not have x-axis, adding x-axis that is just np.arange(len({spec}))"
+                    warnings.warn(
+                        f"'{spec}' has no x-axis; using np.arange as placeholder."
                     )
                     self.add_x_axis(spec, np.arange(getattr(self, spec).shape[1]))
                 feature_generation_dict[spec] = {
@@ -1112,7 +1119,7 @@ class SpectraScope:
         """
         if auto_dict["RF"] == {}:
             print(
-                "0.a. No model hyperparameter grid input for random forest, using default hyperparams for cross validation."
+                "0a. No RF hyperparameter grid provided; using defaults for cross-validation."
             )
             auto_dict["RF"] = {
                 "estimator": RandomForestRegressor(),
@@ -1127,7 +1134,7 @@ class SpectraScope:
 
         if auto_dict["LCEN"] == {}:
             print(
-                "0.b. No model hyperparameter grid input for LCEN, using default hyperparams for cross validation."
+                "0b. No LCEN hyperparameter grid provided; using defaults for cross-validation."
             )
             auto_dict["LCEN"] = {
                 "l1_ratio": [0.01, 0.1, 0.3, 0.5, 0.6, 0.99],
@@ -1143,34 +1150,34 @@ class SpectraScope:
                 "verbosity_level": 1,
             }
 
-        print("1. Generating Features")
+        print("1. Generating features")
         feature_generation_dict = auto_dict["feature_generation"]
         self.auto_feature_generation(feature_generation_dict)
-        print("Feature generation Done ✅")
+        print("   Feature generation done ✅")
 
-        print(f"2. Selecting {k} Features to build each model on")
+        print(f"2. Selecting top {k} features for model training")
         feature_list = self.generated_features
         if do_ace:
-            print("Running Maximum Correlation Analysis")
+            print("   Running maximum correlation analysis")
             ace_selected = self.maximal_correlation_feature_selection(
                 yattr, feature_list, k, return_top_k=True
             )
-            print(f"Maximum Correlation Analysis selected {ace_selected}")
+            print(f"   Maximum correlation selected {ace_selected}")
         else:
             ace_selected = []
-        print("Running Mutual Information Analysis")
+        print("   Running mutual information analysis")
         mif_selected = self.mutual_info_feature_selection(
             yattr, feature_list, k, return_top_k=True
         )
-        print("Running Pearson's Correlation Analysis")
+        print("   Running Pearson correlation analysis")
         r_selected = self.pearson_feature_selection(
             yattr, feature_list, k, return_top_k=True
         )
-        print(f"Mutual Information selected {mif_selected}")
-        print(f"Pearson's correlation selected {r_selected}")
-        print("Feature Selection Done ✅")
+        print(f"   Mutual information selected {mif_selected}")
+        print(f"   Pearson correlation selected {r_selected}")
+        print("   Feature selection done ✅")
 
-        print("3. Running LCEN and RF models")
+        print("3. Training LCEN and RF models")
 
         for feat in r_selected:
             self.do_LCEN(feat, yattr=yattr, **auto_dict["LCEN"])
@@ -1181,4 +1188,4 @@ class SpectraScope:
         for feat in ace_selected:
             self.do_sk(feat, yattr, **auto_dict["RF"])
             self.do_lcen(feat, yattr=yattr, **auto_dict["LCEN"])
-        print("Model Training Done ✅")
+        print("   Model training done ✅")
