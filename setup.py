@@ -36,7 +36,7 @@ setup(
         "seaborn",
     ],
     extras_require={
-        "dev": ["pytest", "pre-commit", "black"],
+        "dev": ["pytest", "pytest-cov", "pre-commit", "black"],
     },
     classifiers=[
         "Development Status :: 4 - Beta",
