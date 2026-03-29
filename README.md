@@ -43,9 +43,9 @@ pip install -e .
 ## Getting Started
 
 SpectraScope is most flexible when used directly with Python.
-Start with the [Quick Start notebook](examples/Quick_Start.ipynb) for an introduction to the core workflow.
+The [examples](examples) directory leads a user through the core workflow of spectrascope, and contains notebooks that reproduce the main text figures from the manuscript. The [README](examples/README.md) outlines further details on how to run the files. 
 
-The [examples](examples) directory also contains notebooks that reproduce the main-text figures from the manuscript:
+- Start with the [Quick Start notebook](examples/Quick_Start.ipynb) for an introduction to the basic functions of Spectra-Scope
 - [GRAPES.ipynb](examples/GRAPES.ipynb) — grape spectral data analysis
 - [XANES_PDF.ipynb](examples/XANES_PDF.ipynb) — multi-modal XANES + PDF analysis
 
