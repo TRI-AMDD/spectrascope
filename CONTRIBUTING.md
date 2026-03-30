@@ -4,7 +4,7 @@ Thank you for your interest in contributing!
 
 ## Prerequisites
 
-- Python 3.8 or higher
+- Python 3.9 or higher
 - [Git](https://git-scm.com/)
 
 ## Development Setup
@@ -13,12 +13,6 @@ Thank you for your interest in contributing!
 git clone https://github.com/TRI-AMDD/spectrascope.git
 cd spectrascope
 pip install -e ".[dev]"
-```
-
-To use the FusedLasso model, install the optional dependency:
-
-```bash
-pip install -e ".[fused_lasso]"
 ```
 
 ## Running Tests
