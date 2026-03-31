@@ -67,7 +67,7 @@ class SpectraScope:
         random_seed : int, optional
             Random seed for splitting data and training. Suggested to set a random seed to keep same splits when comparing across models. Defaults to None.
         save_path : str, optional
-            Path for saving results. Defaults to None (saves to /examples/models).
+            Path for saving results. Defaults to None (saves to 'output/').
 
         Attributes
         ----------
@@ -132,10 +132,10 @@ class SpectraScope:
         self.generated_features = []
         if save_path is None:
             warnings.warn(
-                "No save_path specified; defaulting to '/examples/models/'. "
+                "No save_path specified; defaulting to 'output/'. "
                 "Pass save_path to override."
             )
-            self.save_path = "/examples/models/"
+            self.save_path = "output/"
         else:
             self.save_path = save_path
 
