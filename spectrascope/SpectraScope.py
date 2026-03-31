@@ -487,6 +487,7 @@ class SpectraScope:
         param_grid: dict = None,
         refit=True,
         metric=mean_squared_error,
+        n_jobs=1,
     ):
         """Build pipeline for sklearn model training and hyperparameter tuning using GridSearchCV.
 
@@ -512,6 +513,8 @@ class SpectraScope:
             whether to refit an estimator using the best found parameters on the whole dataset. best_estimator is this final estimator.
         metric : function, optional
             sklearn metric, or any metric function for score, by default mean_squared_error
+        n_jobs : int, optional, default 1
+            number of parallel jobs for GridSearchCV. Use -1 for all cores (caution: high memory usage).
 
         Returns
         -------
@@ -541,7 +544,7 @@ class SpectraScope:
                 cv=cv,
                 refit=refit,
                 scoring=scoring,
-                n_jobs=-1,
+                n_jobs=n_jobs,
             )
         )
         P.fit(X_train, y_train)
