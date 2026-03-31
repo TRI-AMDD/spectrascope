@@ -184,7 +184,9 @@ examples/X_train_temp.npy
 examples/y_test_temp.npy
 examples/y_train_temp.npy
 
+*SPA_results*
 examples/*SPA*
+examples/output/
 app/*.json
 app/*.p
 app/*.npy

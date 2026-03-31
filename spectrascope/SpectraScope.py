@@ -67,7 +67,7 @@ class SpectraScope:
         random_seed : int, optional
             Random seed for splitting data and training. Suggested to set a random seed to keep same splits when comparing across models. Defaults to None.
         save_path : str, optional
-            Path for saving results. Defaults to None (saves to /examples/models).
+            Path for saving results. Defaults to None (saves to 'output/').
 
         Attributes
         ----------
@@ -132,10 +132,10 @@ class SpectraScope:
         self.generated_features = []
         if save_path is None:
             warnings.warn(
-                "No save_path specified; defaulting to '/examples/models/'. "
+                "No save_path specified; defaulting to 'output/'. "
                 "Pass save_path to override."
             )
-            self.save_path = "/examples/models/"
+            self.save_path = "output/"
         else:
             self.save_path = save_path
 
@@ -487,6 +487,7 @@ class SpectraScope:
         param_grid: dict = None,
         refit=True,
         metric=mean_squared_error,
+        n_jobs=1,
     ):
         """Build pipeline for sklearn model training and hyperparameter tuning using GridSearchCV.
 
@@ -512,6 +513,8 @@ class SpectraScope:
             whether to refit an estimator using the best found parameters on the whole dataset. best_estimator is this final estimator.
         metric : function, optional
             sklearn metric, or any metric function for score, by default mean_squared_error
+        n_jobs : int, optional, default 1
+            number of parallel jobs for GridSearchCV. Use -1 for all cores (caution: high memory usage).
 
         Returns
         -------
@@ -541,7 +544,7 @@ class SpectraScope:
                 cv=cv,
                 refit=refit,
                 scoring=scoring,
-                n_jobs=-1,
+                n_jobs=n_jobs,
             )
         )
         P.fit(X_train, y_train)
@@ -737,23 +740,22 @@ class SpectraScope:
         import tempfile
 
         _tmpdir = tempfile.mkdtemp()
-        _orig_dir = os.getcwd()
         try:
-            os.chdir(_tmpdir)
-            np.save("X_train_temp", X_train)
-            np.save("X_test_temp", X_test)
-            np.save("y_train_temp", y_train)
-            np.save("y_test_temp", y_test)
+            # Use absolute paths to avoid os.chdir — changing cwd breaks
+            # loky worker pools whose processes inherit the deleted tmpdir.
+            np.save(os.path.join(_tmpdir, "X_train_temp"), X_train)
+            np.save(os.path.join(_tmpdir, "X_test_temp"), X_test)
+            np.save(os.path.join(_tmpdir, "y_train_temp"), y_train)
+            np.save(os.path.join(_tmpdir, "y_test_temp"), y_test)
             out = SPA.main_SPA(
-                "X_train_temp.npy",
-                "y_train_temp.npy",
-                "X_test_temp.npy",
-                "y_test_temp.npy",
+                os.path.join(_tmpdir, "X_train_temp.npy"),
+                os.path.join(_tmpdir, "y_train_temp.npy"),
+                os.path.join(_tmpdir, "X_test_temp.npy"),
+                os.path.join(_tmpdir, "y_test_temp.npy"),
                 model_name=["LCEN"],
                 **kwargs,
             )
         finally:
-            os.chdir(_orig_dir)
             shutil.rmtree(_tmpdir, ignore_errors=True)
         vals, selected_features = LCEN_selected_features(out[0]["LCEN"], top_features)
         out[0]["LCEN"]["scaled"] = True
@@ -1014,7 +1016,7 @@ class SpectraScope:
         all_mutual_infos = {}
         for feat in tqdm(feature_list):
             feat_arr = getattr(self, feat)
-            mutual_infos = mutual_info_regression(feat_arr, getattr(self, yattr))
+            mutual_infos = mutual_info_regression(feat_arr, getattr(self, yattr), random_state=42)
             max_mutual_infos.append(np.max(mutual_infos))
             all_mutual_infos[feat] = mutual_infos
         top_k_mutual_infos = np.argsort(max_mutual_infos)[::-1][:k]
