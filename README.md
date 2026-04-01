@@ -75,7 +75,9 @@ Material PDF & XANES data comes from:
 
 Grape data comes from the following manuscript:
 ``` Iman Ebrahimi, Ricardo de Castro, Reza Ehsani, Luca Brillante, Shuang Feng,
-Advancing grape chemical analysis through machine learning and multi-sensor spectroscopy, Journal of Agriculture and Food Research, Volume 16, 2024, https://doi.org/10.1016/j.jafr.2024.101085 ```
+Advancing grape chemical analysis through machine learning and multi-sensor spectroscopy, Journal of Agriculture and Food Research, Volume 16, 2024, https://doi.org/10.1016/j.jafr.2024.101085 
+```
+
 And is hosted here. https://github.com/imeb/Grape-Chemical-Composition/tree/main
 
 ## AI Usage
