@@ -8,9 +8,10 @@ from attr import dataclass
 from plotly.subplots import make_subplots
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 
-from app.google_analytics import inject_google_analytics
+from google_analytics import inject_google_analytics
 from spectrascope.SpectraScope import SpectraScope
 from spectrascope.SSPlotting import PlotSpectralFeatures as psf
+
 
 st.set_page_config(page_title="SpectraScope", page_icon="👋", layout="wide")
 
@@ -82,17 +83,38 @@ def load_pdf_xanes_data():
 
 
 def load_wine_data():
+    st.write('The wine dataset shown here is centered and scaled as described in the paper')
+    
     XSF_br = np.load(os.path.join(TEST_DIR, "grapes_example/XSF_br.npy"))
     XRF_br = np.load(os.path.join(TEST_DIR, "grapes_example/XRF_br.npy"))
     br = np.load(os.path.join(TEST_DIR, "grapes_example/br.npy"))
     nir_wls = np.load(os.path.join(TEST_DIR, "grapes_example/nir_xaxis.npy"))
     raman_wls = np.load(os.path.join(TEST_DIR, "grapes_example/rm_xaxis.npy"))
+
+    # Mean-center each spectrum
+    XSF_br_centered = np.zeros(XSF_br.shape)
+    for i, arr in enumerate(XSF_br):
+        XSF_br_centered[i] = arr - np.mean(arr)
+
+    XRF_br_centered = np.zeros(XRF_br.shape)
+    for i, arr in enumerate(XRF_br):
+        XRF_br_centered[i] = arr - np.mean(arr)
+
+    from sklearn.preprocessing import StandardScaler
+    scaler = StandardScaler()
+    XSF_br_centered_scaled = scaler.fit_transform(XSF_br_centered)
+    XRF_br_centered_scaled = scaler.fit_transform(XRF_br_centered)
+
+    # Restrict NIR to 400-1300 nm
+    selected_wls = np.argwhere((nir_wls > 400) & (nir_wls < 1300))[:, 0]
+    XSF_br_centered_scaled = XSF_br_centered_scaled[:, selected_wls]
+
     spec_metadata = {
         "NIR": SpecMetadata(
             name="NIR",
             xaxis_label="NIR",
             yaxis_label="Reflection [%]",
-            xaxis=nir_wls,
+            xaxis=nir_wls[selected_wls],
         ),
         "Raman": SpecMetadata(
             name="Raman",
@@ -102,7 +124,7 @@ def load_wine_data():
         ),
     }
     return SpectraScopeInput(
-        X=[XSF_br, XRF_br],
+        X=[XSF_br_centered_scaled, XRF_br_centered_scaled],
         y=br,
         specnames=["NIR", "Raman"],
         yname="sugarcontent",
