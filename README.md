@@ -4,7 +4,7 @@ SpectraScope is a Python package for feature generation, model training, and fea
 SpectraScope is primarily built for spectral data, but can be applied to any 1D array-like data currently.
 Future development will expand to 2D data for more advanced experimentation techniques.
 
-**Requires Python ≥ 3.9** | [Apache-2.0 License](LICENSE)
+**Requires Python ≥ 3.11** | [Apache-2.0 License](LICENSE)
 
 ## Installation
 
@@ -27,7 +27,7 @@ The publication notebooks assume LCEN is installed. You can install it via the o
 pip install -e ".[lcen]"
 ```
 
-Or manually install v1.5.1 of SmartProcessAnalytics ([releases](https://github.com/PedroSeber/SmartProcessAnalytics/releases)):
+Or manually install v1.5.0 of SmartProcessAnalytics ([releases](https://github.com/PedroSeber/SmartProcessAnalytics/releases)):
 
 ```bash
 git clone https://github.com/PedroSeber/SmartProcessAnalytics.git
@@ -35,6 +35,7 @@ cd SmartProcessAnalytics
 pip install -e .
 # note : if there are errors with ace-cream installation, can comment out
 ```
+If there are errors with ace-cream installation, may need to do manual installation. 
 
 ## Getting Started
 

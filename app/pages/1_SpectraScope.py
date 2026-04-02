@@ -8,7 +8,7 @@ import plotly.express as px
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 
-from spectrascope.SSPlotting import SpectraScopePlotting as psf
+from spectrascope.SSPlotting import PlotSpectralFeatures as psf
 
 st.set_page_config(
     page_title="Feature Generation and Model Training",
@@ -359,7 +359,7 @@ elif cross_validate:
 sk_kwargs = [rf_kwargs]
 
 st.markdown("## 5. Run!")
-seed = st.number_input("Random Seed", 1, 100, 20, 1)
+seed = st.number_input("Random Seed", 1, 100, 42, 1)
 test_size = st.number_input("Test Set Size", 0.0, 1.0, 0.25)
 
 data.random_seed = int(seed)
