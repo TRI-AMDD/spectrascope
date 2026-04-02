@@ -27,7 +27,7 @@ The publication notebooks assume LCEN is installed. You can install it via the o
 pip install -e ".[lcen]"
 ```
 
-Or manually install v1.5.1 of SmartProcessAnalytics ([releases](https://github.com/PedroSeber/SmartProcessAnalytics/releases)):
+Or manually install v1.5.0 of SmartProcessAnalytics ([releases](https://github.com/PedroSeber/SmartProcessAnalytics/releases)):
 
 ```bash
 git clone https://github.com/PedroSeber/SmartProcessAnalytics.git
@@ -35,6 +35,7 @@ cd SmartProcessAnalytics
 pip install -e .
 # note : if there are errors with ace-cream installation, can comment out
 ```
+If there are errors with ace-cream installation, may need to do manual installation. 
 
 ## Getting Started
 
