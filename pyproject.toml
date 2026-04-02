@@ -8,7 +8,7 @@ version = "1.0.0"
 description = "Interpretable Machine learning toolkit for spectral data: feature generation, model training, and visualization."
 readme = "README.md"
 license = {text = "Apache-2.0"}
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 authors = [
     { name = "Toyota Research Institute" },
 ]
@@ -28,7 +28,7 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-lcen = ["Code-SPA @ git+https://github.com/PedroSeber/SmartProcessAnalytics.git@v1.5.1"]
+lcen = ["smart-process-analytics @ git+https://github.com/PedroSeber/SmartProcessAnalytics.git@v1.5.0"]
 dev = ["pytest", "pre-commit", "black"]
 
 [project.urls]

@@ -15,4 +15,4 @@ python-dotenv==1.2.2
 ace==0.3.3
 tqdm==4.67.3
 cvxpy==1.7.5
-seaborn
+seaborn 
