@@ -42,7 +42,7 @@ class SpectraScope:
         fny: str = None,
         specnames: list = None,
         yname: str = "",
-        random_seed: int = None,
+        random_seed: int = 42,
         save_path: str = None,
     ) -> None:
         """
@@ -747,6 +747,7 @@ class SpectraScope:
             np.save(os.path.join(_tmpdir, "X_test_temp"), X_test)
             np.save(os.path.join(_tmpdir, "y_train_temp"), y_train)
             np.save(os.path.join(_tmpdir, "y_test_temp"), y_test)
+            np.random.seed(self.random_seed)
             out = SPA.main_SPA(
                 os.path.join(_tmpdir, "X_train_temp.npy"),
                 os.path.join(_tmpdir, "y_train_temp.npy"),
