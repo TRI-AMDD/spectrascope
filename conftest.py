@@ -1,4 +1,8 @@
+import sys
+import pathlib
 import pytest
+
+sys.path.insert(0, str(pathlib.Path(__file__).parent / "app"))
 
 
 def pytest_addoption(parser):
