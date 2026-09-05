@@ -22,6 +22,217 @@ __docformat__ = "numpy"
 
 _STATIC_DIR = Path(__file__).resolve().parent.parent / "app" / "static"
 
+# Icon per polynomial coefficient degree. This is the meaningful mapping: a
+# feature's icon should show the basis function whose coefficient it holds.
+POLY_ICONS = {0: "const", 1: "line", 2: "par", 3: "cubic"}
+
+# Legacy mapping, icon per bin-count block (all features in the N=4 block drew
+# "const", the N=5 block "line", and so on). Kept for reproducing older figures.
+BLOCK_ICONS = {4: "const", 5: "line", 10: "par", 20: "cubic"}
+
+
+def even_bin_indices(x, N):
+    """Bin index of every point in ``x`` for ``N`` even-width bins.
+
+    Reproduces ``SpectralFeatures.generate_bins`` exactly, including the
+    truncating division and folding the top edge into the last bin.
+
+    Parameters
+    ----------
+    x : array-like
+        Axis the features were computed on.
+    N : int
+        Number of bins.
+
+    Returns
+    -------
+    np.ndarray of int, shape (len(x),)
+    """
+    x = np.asarray(x, dtype=float)
+    N = int(N)
+    bin_width = (x.max() - x.min()) / N
+    indices = np.clip(((x - x.min()) / bin_width).astype(int), 0, N - 1)
+    if len(np.unique(indices)) != N:
+        raise ValueError(
+            f"an axis of {len(x)} points cannot fill {N} even-width bins; "
+            "generate_bins would have skipped this N, so no feature block exists"
+        )
+    return indices
+
+
+def poly_index_map(Narr=(4, 5, 10, 20), degree=3, trailing_max_feature=True):
+    """Map each ``polynomial_featuresall`` column to the bin and coefficient it holds.
+
+    ``polynomial_featuresall`` nests three loops: for each ``N`` in ``Narr``, for
+    each of the ``N`` bins left to right, for each of the ``degree + 1``
+    coefficients. ``np.polyfit`` returns coefficients highest-degree-first, so
+    within a bin's group the order is ``a_degree ... a_0``. One trailing column
+    (the x-position of the maximum intensity) is appended by
+    ``polynomial_featuresall``, giving ``(degree + 1) * sum(Narr) + 1`` columns.
+
+    Parameters
+    ----------
+    Narr : sequence of int, optional
+        Bin counts, in the same order passed to ``polynomial_featuresall``.
+    degree : int, optional
+        Polynomial degree used for the fits.
+    trailing_max_feature : bool, optional
+        Whether the vector ends with the x-at-max column. True for
+        ``polynomial_featuresall``, False for a bare ``polynomial_featuresN``.
+
+    Returns
+    -------
+    dict
+        ``{column index: (N, bin_index, coefficient_degree)}``, with the trailing
+        x-at-max column mapped to ``None``.
+
+    Example
+    -------
+    >>> poly_index_map()[18]
+    (5, 0, 1)
+    """
+    index_map, i = {}, 0
+    for N in Narr:
+        for bin_index in range(int(N)):
+            for k in range(degree + 1):
+                index_map[i] = (int(N), bin_index, degree - k)
+                i += 1
+    if trailing_max_feature:
+        index_map[i] = None
+    return index_map
+
+
+def _normalize_segments(segments, Narr):
+    """Validate segment dicts and precompute their bin indices."""
+    prepared = []
+    for segment in segments:
+        seg_x = np.asarray(segment["xaxis"], dtype=float)
+        seg_y = np.asarray(segment["raw"], dtype=float)
+        plot_x = np.asarray(segment.get("plot_x", seg_x), dtype=float)
+        if not (len(seg_x) == len(seg_y) == len(plot_x)):
+            raise ValueError(
+                "segment 'xaxis', 'raw' and 'plot_x' must be the same length; got "
+                f"{len(seg_x)}, {len(seg_y)}, {len(plot_x)}"
+            )
+        prepared.append(
+            {
+                "y": seg_y,
+                "plot_x": plot_x,
+                "bins": {int(N): even_bin_indices(seg_x, N) for N in Narr},
+            }
+        )
+    return prepared
+
+
+def locate_poly_features(
+    selected_features,
+    segments,
+    Narr=(4, 5, 10, 20),
+    degree=3,
+    trailing_max_feature=True,
+    icon_by="coefficient",
+):
+    """Resolve polynomial feature indices to positions on one or more spectra.
+
+    Shared by the matplotlib and plotly plotters so both place icons identically.
+
+    Each feature index is split into ``(segment, local index)`` by the
+    per-spectrum feature count, so a multi-modal vector built by
+    ``SpectraScope.combine_feature`` (a plain column concatenation) resolves its
+    second half onto the second spectrum. The position of a coefficient feature
+    is the mean of its bin's x values -- the point ``polynomial_featuresN``
+    centers the fit on -- expressed in the target axes via ``plot_x``.
+
+    Parameters
+    ----------
+    selected_features : array-like of int
+        Column indices into the (possibly concatenated) polynomial feature vector.
+    segments : list of dict
+        One entry per concatenated spectrum, in feature-vector order:
+        ``'xaxis'`` the axis the features were computed on (used for binning),
+        ``'raw'`` its intensities, and optionally ``'plot_x'`` the x coordinates
+        to draw at (defaults to ``'xaxis'``).
+    Narr, degree, trailing_max_feature : optional
+        Feature-layout parameters, see ``poly_index_map``.
+    icon_by : {'coefficient', 'block'}, optional
+        Choose the icon from the coefficient degree, or from the bin-count block
+        to reproduce pre-fix figures.
+
+    Returns
+    -------
+    list of dict
+        One record per input feature, in input order:
+        ``feature_id``, ``segment``, ``N``, ``bin``, ``coef_degree``, ``icon``
+        (None where no icon image applies), ``center``, ``height``, and
+        ``stack`` (how many earlier features share this position).
+
+    Raises
+    ------
+    ValueError
+        If any index falls outside the described layout, rather than silently
+        dropping it.
+    """
+    if icon_by not in ("coefficient", "block"):
+        raise ValueError(f"icon_by must be 'coefficient' or 'block', got {icon_by!r}")
+
+    prepared = _normalize_segments(segments, Narr)
+    index_map = poly_index_map(Narr, degree, trailing_max_feature)
+    n_per_segment = len(index_map)
+
+    records, unmapped, occupied = [], [], {}
+    for feature_id in np.asarray(selected_features).ravel():
+        feature_id = int(feature_id)
+        segment_id, local = divmod(feature_id, n_per_segment)
+        if feature_id < 0 or segment_id >= len(prepared) or local not in index_map:
+            unmapped.append(feature_id)
+            continue
+
+        segment = prepared[segment_id]
+        entry = index_map[local]
+        if entry is None:
+            # trailing feature: x-position of this spectrum's maximum
+            N = bin_index = coef_degree = None
+            center = float(segment["plot_x"][np.argmax(segment["y"])])
+            icon = None
+        else:
+            N, bin_index, coef_degree = entry
+            bin_mask = segment["bins"][N] == bin_index
+            center = float(segment["plot_x"][bin_mask].mean())
+            icon = (
+                POLY_ICONS.get(coef_degree)
+                if icon_by == "coefficient"
+                else BLOCK_ICONS.get(N)
+            )
+        height = float(segment["y"][np.abs(segment["plot_x"] - center).argmin()])
+
+        key = (segment_id, round(center, 6))
+        stack = occupied.get(key, 0)
+        occupied[key] = stack + 1
+
+        records.append(
+            {
+                "feature_id": feature_id,
+                "segment": segment_id,
+                "N": N,
+                "bin": bin_index,
+                "coef_degree": coef_degree,
+                "icon": icon,
+                "center": center,
+                "height": height,
+                "stack": stack,
+            }
+        )
+
+    if unmapped:
+        raise ValueError(
+            f"{len(unmapped)} feature index/indices fall outside a "
+            f"{len(prepared)}-segment layout of {n_per_segment} features each "
+            f"(valid range 0..{len(prepared) * n_per_segment - 1}): {unmapped}. "
+            "For multi-modal features pass one 'segments' entry per spectrum; "
+            "otherwise check Narr, degree and trailing_max_feature."
+        )
+    return records
+
 
 class SpectraScopePlotting:
     """Base class for plotting spectral features."""
@@ -419,8 +630,21 @@ class PlotModel(SpectraScopePlotting):
             rgba = cmap(i)
             self.colors.append(rgb2hex(rgba))
 
-    def plot_polynomial_featuresall(self, sizex=100, sizey=10):
+    def plot_polynomial_featuresall(
+        self,
+        sizex=100,
+        sizey=10,
+        segments=None,
+        Narr=(4, 5, 10, 20),
+        degree=3,
+        trailing_max_feature=True,
+        icon_by="coefficient",
+    ):
         """Plot polynomial features selected features.
+
+        Overlays a basis-function icon at the bin each selected coefficient was
+        fit on. Index resolution is shared with
+        ``plot_spectral_features_matplotlib`` via ``locate_poly_features``.
 
         Parameters
         ----------
@@ -428,46 +652,68 @@ class PlotModel(SpectraScopePlotting):
             x size of polynomial annotation. Defaults to 100.
         sizey : int, optional
             y size of polynomial annotation. Defaults to 10.
+        segments : list of dict, optional
+            One entry per concatenated spectrum for multi-modal feature vectors,
+            see ``locate_poly_features``. Default treats ``self.xaxis`` /
+            ``self.raw`` as a single spectrum.
+        Narr, degree, trailing_max_feature : optional
+            Feature-layout parameters, see ``poly_index_map``.
+        icon_by : {'coefficient', 'block'}, optional
+            Icon from the coefficient degree, or from the bin-count block to
+            reproduce pre-fix figures.
+
+        Returns
+        -------
+        records : list of dict
+            Located features, see ``locate_poly_features``.
         """
+
+        # resolve indices before drawing, so a bad layout fails before the
+        # figure is half-populated
+        if segments is None:
+            segments = [{"xaxis": self.xaxis, "raw": self.raw}]
+        records = locate_poly_features(
+            self.selected_features,
+            segments,
+            Narr=Narr,
+            degree=degree,
+            trailing_max_feature=trailing_max_feature,
+            icon_by=icon_by,
+        )
 
         self.fig.add_trace(
             go.Scatter(x=self.xaxis, y=self.raw, showlegend=False),
             row=self.row,
             col=self.col,
         )
-        from spectrascope.Features import SpectralFeatures
 
-        temp = SpectralFeatures(self.xaxis, self.raw)
+        for record in records:
+            # keep co-located features from hiding one another
+            height = record["height"] + record["stack"] * sizey * 0.6
 
-        temp.generate_bins(4)
-        temp.generate_bins(5)
-        temp.generate_bins(10)
-        temp.generate_bins(20)
+            if record["icon"] is None:
+                # trailing x-at-max feature, or a coefficient above cubic that
+                # has no icon image: label it instead
+                text = (
+                    "max"
+                    if record["coef_degree"] is None
+                    else f"a<sub>{record['coef_degree']}</sub>"
+                )
+                self.fig.add_annotation(
+                    x=record["center"],
+                    y=height,
+                    text=text,
+                    showarrow=False,
+                    row=self.row,
+                    col=self.col,
+                )
+                continue
 
-        # plot_key = {}
-        for selected_id in self.selected_features:
-            if selected_id < 16:
-                bin_label = "bin_indices_4"
-                poly_label = "const"
-                search_party = np.linspace(0, 16, 4)
-            elif selected_id >= 16 and selected_id < 36:
-                bin_label = "bin_indices_5"
-                poly_label = "line"
-                search_party = np.linspace(16, 36, 5)
-            elif selected_id >= 36 and selected_id < 76:
-                bin_label = "bin_indices_10"
-                poly_label = "par"
-                search_party = np.linspace(36, 76, 10)
-            elif selected_id >= 76:
-                bin_label = "bin_indices_20"
-                poly_label = "cubic"
-                search_party = np.linspace(76, 156, 20)
-            located_bin = np.argwhere(selected_id < search_party)[0][0]
-            center = np.median(self.xaxis[getattr(temp, bin_label) == located_bin])
-            height_id = find_nearest(self.xaxis, center)
-            height = self.raw[height_id]
-            # plot_key[selected_id] = (center, poly_label, height)
-            im = Image.open(_STATIC_DIR / f"{poly_label}.png")
+            img_path = _STATIC_DIR / f"{record['icon']}.png"
+            if not img_path.exists():
+                warnings.warn(f"{img_path} not found.")
+                continue
+            im = Image.open(img_path)
 
             self.fig.add_layout_image(
                 dict(
@@ -476,7 +722,7 @@ class PlotModel(SpectraScopePlotting):
                     yref="y",
                     xanchor="center",
                     yanchor="middle",
-                    x=center,
+                    x=record["center"],
                     y=height,
                     sizex=sizex,
                     sizey=sizey,
@@ -489,6 +735,7 @@ class PlotModel(SpectraScopePlotting):
             )
         self.fig.update_xaxes(title_text=self.xaxis_label, row=self.row, col=self.col)
         self.fig.update_yaxes(title_text=self.yaxis_label, row=self.row, col=self.col)
+        return records
 
     def plot_pointwise_features(self, **kwargs):
         """Plot pointwise features selected features.
@@ -758,16 +1005,53 @@ import matplotlib.pyplot as plt
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 
 
+def _load_icon(icon, img_dir=None, resize=True, max_size=128):
+    """Open an icon image, optionally downsampled so overlays stay light."""
+    img_path = Path(img_dir if img_dir is not None else _STATIC_DIR) / f"{icon}.png"
+    if not img_path.exists():
+        warnings.warn(f"{img_path} not found.")
+        return None
+    im = Image.open(img_path)
+    if not resize:
+        return im
+    width, height = im.size
+    scale = min(max_size / width, max_size / height, 1.0)
+    return np.asarray(
+        im.resize((int(width * scale), int(height * scale)), resample=Image.LANCZOS)
+    )
+
+
 def plot_spectral_features_matplotlib(
-    xaxis, raw, selected_features, ax=None, zoom=0.1, plot_raw=True, print_centers=False
+    xaxis,
+    raw,
+    selected_features,
+    ax=None,
+    zoom=0.1,
+    plot_raw=True,
+    print_centers=False,
+    plot=True,
+    resize=True,
+    segments=None,
+    Narr=(4, 5, 10, 20),
+    degree=3,
+    trailing_max_feature=True,
+    icon_by="coefficient",
+    img_dir=None,
 ):
     """
     Plot spectral features using matplotlib with annotated representative images.
+
+    Each selected polynomial feature is drawn as the basis-function icon for the
+    coefficient it holds, positioned at the bin that coefficient was fit on.
+    Index resolution is shared with ``PlotModel.plot_polynomial_featuresall`` via
+    ``locate_poly_features``.
 
     Parameters
     ----------
     xaxis : np.ndarray
         Array representing the x-axis values of the spectrum (e.g., energy or wavelength).
+        Used for drawing the spectrum line, and for locating features when
+        ``segments`` is not given.
     raw : np.ndarray
         The raw intensity values of the spectrum corresponding to xaxis.
     selected_features : list or np.ndarray
@@ -780,23 +1064,49 @@ def plot_spectral_features_matplotlib(
         Whether to plot the raw spectrum as a black line. Default is True.
     print_centers : bool, optional
         If True, prints the center x-values and corresponding selected feature indices.
+    plot : bool, optional
+        Whether to draw the icons. False locates features without drawing.
+    resize : bool, optional
+        Downsample icon images before overlaying them. Default True.
+    segments : list of dict, optional
+        One entry per concatenated spectrum, required for multi-modal feature
+        vectors built by ``SpectraScope.combine_feature``. See
+        ``locate_poly_features``. Default treats ``xaxis`` / ``raw`` as a single
+        spectrum.
+    Narr, degree, trailing_max_feature : optional
+        Feature-layout parameters, see ``poly_index_map``.
+    icon_by : {'coefficient', 'block'}, optional
+        Icon from the coefficient degree, or from the bin-count block to
+        reproduce pre-fix figures.
+    img_dir : str or pathlib.Path, optional
+        Directory holding the icon PNGs. Defaults to the packaged app/static.
 
     Returns
     -------
     ax : matplotlib.axes.Axes
         The axis object containing the generated plot.
+    centers : np.ndarray, shape (len(selected_features), 2)
+        ``(feature_id, x_center)`` pairs, one row per input feature in input
+        order, so positional indexing stays aligned with ``selected_features``.
+
+    Raises
+    ------
+    ValueError
+        If a feature index falls outside the described layout.
 
     Notes
     -----
-    This function overlays annotated images (e.g., icons of feature types) at the
-    bin centers of selected spectral features, using images from static files.
-    The images corresponding to feature types are matched using a pre-defined mapping.
-    The function assumes the existence of static images for each feature type in the
-    '../app/static/' directory.
+    A coefficient's position is the mean of its bin's x values, the point
+    ``polynomial_featuresN`` centers the fit on. Features sharing a position
+    (different coefficients of one bin) are staggered vertically. The trailing
+    x-at-max feature, and any coefficient above cubic, have no icon image and
+    are drawn as a marker or text label instead.
 
     Example
     -------
-    >>> plot_spectral_features_matplotlib(xaxis, spectrum, selected_features, ax=ax, zoom=0.03)
+    >>> ax, centers = plot_spectral_features_matplotlib(
+    ...     xaxis, spectrum, selected_features, ax=ax, zoom=0.03
+    ... )
     """
     if ax is None:
         fig, ax = plt.subplots(figsize=(10, 5))
@@ -804,60 +1114,55 @@ def plot_spectral_features_matplotlib(
     if plot_raw:
         ax.plot(xaxis, raw, color="black", lw=1)
 
-    # Generate binned features
-    temp = SpectralFeatures(xaxis, raw)
-    for bins in [4, 5, 10, 20]:
-        temp.generate_bins(bins)
+    if segments is None:
+        segments = [{"xaxis": xaxis, "raw": raw}]
+    records = locate_poly_features(
+        selected_features,
+        segments,
+        Narr=Narr,
+        degree=degree,
+        trailing_max_feature=trailing_max_feature,
+        icon_by=icon_by,
+    )
 
-    # Feature ID config
-    feature_config = [
-        (0, 16, "bin_indices_4", "const", 4),
-        (16, 36, "bin_indices_5", "line", 5),
-        (36, 76, "bin_indices_10", "par", 10),
-        (76, 156, "bin_indices_20", "cubic", 20),
-    ]
+    spread = np.ptp(np.asarray(raw, dtype=float))
+    for record in records:
+        center, height = record["center"], record["height"]
+        if print_centers:
+            print(center, record["feature_id"])
+        if not plot:
+            continue
 
-    def find_nearest(array, value):
-        return np.abs(array - value).argmin()
+        # keep co-located features (different coefficients of one bin) visible
+        height += record["stack"] * 0.08 * spread
 
-    try:
-        centers_used = []
-        for selected_id in selected_features:
-            for id_min, id_max, bin_label, poly_label, num_bins in feature_config:
-                if id_min <= selected_id < id_max:
-                    search_bins = np.linspace(id_min, id_max, num_bins)
-                    located_bin = np.argwhere(selected_id < search_bins)[0][0]
-                    bin_mask = getattr(temp, bin_label) == located_bin
-                    center = np.median(xaxis[bin_mask])
-                    height_id = find_nearest(xaxis, center)
-                    height = raw[height_id]
+        if record["icon"] is None:
+            if record["coef_degree"] is None:
+                ax.plot(center, height, marker="*", markersize=14, color="black", zorder=5)
+            else:
+                ax.annotate(
+                    f"$a_{record['coef_degree']}$",
+                    (center, height),
+                    ha="center",
+                    va="center",
+                )
+            continue
 
-                    # Load image
-                    img_path = _STATIC_DIR / f"{poly_label}.png"
-                    if not os.path.exists(img_path):
-                        warnings.warn(f"{img_path} not found.")
-                        continue
-                    im = Image.open(img_path)
+        im = _load_icon(record["icon"], img_dir=img_dir, resize=resize)
+        if im is None:
+            continue
+        try:
+            ax.add_artist(
+                AnnotationBbox(OffsetImage(im, zoom=zoom), (center, height), frameon=False)
+            )
+        except ValueError as e:
+            warnings.warn(
+                f"{e}\n"
+                "Image size may be too large. Try reducing zoom, setting plot_raw=True, "
+                "or plotting other spectra on the axis first."
+            )
 
-                    # Convert image to matplotlib offsetbox
-                    imagebox = OffsetImage(im, zoom=zoom)
-                    if center in centers_used:
-                        add_to_height = 1  # slight offset to avoid overlap
-                    else:
-                        add_to_height = 0
-                    ab = AnnotationBbox(
-                        imagebox, (center, height + add_to_height), frameon=False
-                    )
-                    centers_used.append(center)
-                    if print_centers:
-                        print(center, selected_id)
-
-                    ax.add_artist(ab)
-                    break  # stop after first matching range
-    except ValueError as e:
-        warnings.warn(
-            f"{e}\n"
-            "Image size may be too large. Try reducing zoom, setting plot_raw=True, "
-            "or plotting other spectra on the axis first."
-        )
-    return ax
+    centers = np.array(
+        [[record["feature_id"], record["center"]] for record in records], dtype=float
+    ).reshape(-1, 2)
+    return ax, centers

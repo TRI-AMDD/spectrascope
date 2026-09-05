@@ -15,6 +15,8 @@ docs/.doctrees/
 /jupyter_execute
 spectrascope_manuscript.zip
 /examples/gaussian_xanes_*
+# Local working notes, never committed
+/notes/
 # C extensions
 *.so
 
