@@ -6,14 +6,16 @@ Future development will expand to 2D data for more advanced experimentation tech
 
 **Requires Python ≥ 3.11** | [Apache-2.0 License](LICENSE)
 
+Stable release: [SpectraScope 1.0.0](https://github.com/TRI-AMDD/spectrascope/releases/tag/v1.0.0).
+
 ## Installation
+
+Install the stable release directly from GitHub (requires Git).
 
 ### Without LCEN
 
 ```bash
-git clone git@github.com:TRI-AMDD/spectrascope.git
-cd spectrascope
-pip install -e .
+pip install "spectrascope @ git+https://github.com/TRI-AMDD/spectrascope.git@v1.0.0"
 ```
 
 This installs all the required packages except for SmartProcessAnalytics, which holds the LCEN algorithm.
@@ -24,7 +26,7 @@ SpectraScope can run without LCEN, however you will lose feature selection and p
 The publication notebooks assume LCEN is installed. You can install it via the optional extra:
 
 ```bash
-pip install -e ".[lcen]"
+pip install "spectrascope[lcen] @ git+https://github.com/TRI-AMDD/spectrascope.git@v1.0.0"
 ```
 
 Or manually install v1.5.0 of SmartProcessAnalytics ([releases](https://github.com/PedroSeber/SmartProcessAnalytics/releases)):
@@ -32,10 +34,24 @@ Or manually install v1.5.0 of SmartProcessAnalytics ([releases](https://github.c
 ```bash
 git clone https://github.com/PedroSeber/SmartProcessAnalytics.git
 cd SmartProcessAnalytics
+git checkout v1.5.0
 pip install -e .
 # note : if there are errors with ace-cream installation, can comment out
 ```
 If there are errors with ace-cream installation, may need to do manual installation. 
+
+### Development setup
+
+To work with the latest code on `main`, clone the repository and install it in editable mode:
+
+```bash
+git clone https://github.com/TRI-AMDD/spectrascope.git
+cd spectrascope
+pip install -e ".[dev]"
+```
+
+For development with LCEN support, use `pip install -e ".[dev,lcen]"` instead.
+The repository also contains the example notebooks and Streamlit app described below.
 
 ## Getting Started
 
