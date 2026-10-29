@@ -28,6 +28,9 @@ RUN adduser \
     --uid "${UID}" \
     appuser
 
+# Build stage: compilers and git stay here so their libs (e.g. libbrotli1) are not in the final image.
+FROM base as build
+
 # Install build-essential which includes gcc
 RUN apt-get update && apt-get install -y build-essential gfortran git && apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -46,9 +49,13 @@ RUN python -m pip install -e SmartProcessAnalytics
 COPY app app
 COPY spectrascope spectrascope
 COPY tests tests
-COPY setup.py setup.py
+COPY setup.py pyproject.toml requirements.txt README.md ./
 RUN python -m pip install -e .
-RUN chown -R appuser:appuser /app
+
+# Final stage: copy the installed Python env and source from the build stage.
+FROM base
+COPY --from=build /usr/local /usr/local
+COPY --from=build --chown=appuser:appuser /app /app
 
 # Switch to the non-privileged user to run the application.
 USER appuser
