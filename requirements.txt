@@ -5,11 +5,10 @@ scikit-learn==1.5.0
 PyWavelets==1.5.0
 scipy==1.13.1
 pyts==0.13.0
-streamlit==1.36.0
+streamlit==1.66.1
 plotly==5.22.0
-pdoc3==0.11.1
 matminer==0.9.2
-pillow==10.3.0
+pillow==13.0.0
 matplotlib==3.8.3
 python-dotenv==1.2.2
 ace==0.3.3
