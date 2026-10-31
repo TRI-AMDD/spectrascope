@@ -29,7 +29,7 @@ classifiers = [
 
 [project.optional-dependencies]
 lcen = ["smart-process-analytics @ git+https://github.com/PedroSeber/SmartProcessAnalytics.git@v1.5.0"]
-dev = ["pytest", "pre-commit", "black"]
+dev = ["pytest", "pre-commit", "black", "pdoc3==0.11.6"]
 
 [project.urls]
 Homepage = "https://github.com/TRI-AMDD/spectrascope"
