@@ -18,13 +18,13 @@ WORKDIR /app
 
 # Create a non-privileged user that the app will run under.
 # See https://docs.docker.com/go/dockerfile-user-best-practices/
+# Streamlit writes to $HOME; without a writable home, sessions fail to init and file uploads break.
 ARG UID=10001
 RUN adduser \
     --disabled-password \
     --gecos "" \
-    --home "/nonexistent" \
+    --home "/home/appuser" \
     --shell "/sbin/nologin" \
-    --no-create-home \
     --uid "${UID}" \
     appuser
 
@@ -42,7 +42,10 @@ RUN python -m pip install -U pip
 RUN --mount=type=cache,target=/root/.cache/pip \
     --mount=type=bind,source=requirements.txt,target=requirements.txt \
     python -m pip install -r requirements.txt
-RUN git clone --branch main https://github.com/AmalyaJohnson-TRI/SmartProcessAnalytics.git
+# v1.5.0: spectrascope passes all_pos_X to _feature_trans, which v1.4.1 (main) lacks.
+RUN git clone --branch master https://github.com/AmalyaJohnson-TRI/SmartProcessAnalytics.git \
+    && git -C SmartProcessAnalytics checkout 8d053f8a4e79a52fb7ba52a86fcecb36d6816bad \
+    && sed -i "s/^\( *\)'ace-cream/\1# 'ace-cream/" SmartProcessAnalytics/setup.py  # optional in SPA; fails to build
 RUN python -m pip install -e SmartProcessAnalytics
 
 # Copy the source code into the container.
